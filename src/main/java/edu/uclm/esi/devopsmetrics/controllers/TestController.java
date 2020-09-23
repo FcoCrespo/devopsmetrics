@@ -15,5 +15,10 @@ public class TestController {
     public String getHello(){
         return "hola en hola!";
     }
+    
+    @GetMapping("/adios")
+    public String getAdios(){
+        return "adios!";
+    }
 
 }
