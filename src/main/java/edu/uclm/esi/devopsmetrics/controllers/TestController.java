@@ -16,6 +16,11 @@ public class TestController {
         return "hola en hola!";
     }
     
+    @GetMapping("/prueba")
+    public String getPrueba(){
+        return "prueba!";
+    }
+    
     @GetMapping("/adios")
     public String getAdios(){
         return "adios!";
