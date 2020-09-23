@@ -18,7 +18,7 @@ public class TestController {
     
     @GetMapping("/prueba")
     public String getPrueba(){
-        return "pruebaaaaa!";
+        return "prueba heroku!";
     }
     
     @GetMapping("/adios")
