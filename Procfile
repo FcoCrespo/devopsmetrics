@@ -1,1 +1,0 @@
-web: java -Dspring.mail.username=${SPRING_MAIL_SENDER_USERNAME} -jar target/*.jar
