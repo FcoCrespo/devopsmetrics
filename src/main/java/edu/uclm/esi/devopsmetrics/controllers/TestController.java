@@ -8,7 +8,8 @@ public class TestController {
 		
 	@GetMapping("/")
     public String get0(){
-        return "hola Bienvenido!";
+		String env = System.getenv("SPRING_MAIL_SENDER_USERNAME");
+        return env;
     }
     
     @GetMapping("/hola")
