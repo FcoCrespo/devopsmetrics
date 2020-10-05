@@ -58,10 +58,10 @@ public class UserController {
     final String usernameEncriptado = Utilities.encriptar(username);
     final String contrasenaEncrip = Utilities.encriptar(password);
 
-    final User usuario = usersService.getUserByUsernameAndPassword(usernameEncriptado, contrasenaEncrip);
-    if (usuario != null) {
-      LOG.info("[SERVER] Usuario encontrado: " + usuario.getUsername());
-      return ResponseEntity.ok(usuario);
+    final User usuariologin = usersService.getUserByUsernameAndPassword(usernameEncriptado, contrasenaEncrip);
+    if (usuariologin != null) {
+      LOG.info("[SERVER] Usuario encontrado: " + usuariologin.getUsername());
+      return ResponseEntity.ok(usuariologin);
     } else {
       LOG.info("[SERVER] No se ha encontrado ningún usuario con esos datos.");
       return ResponseEntity.badRequest().build();
@@ -76,26 +76,49 @@ public class UserController {
   @RequestMapping(value = "/{username}", method = RequestMethod.GET)
   @ApiOperation(value = "Find an user", notes = "Return a user by username")
 
-  public ResponseEntity<User> userByUsername(@PathVariable final String username) throws UserNotFoundException {
-    LOG.info("[SERVER] Buscando usuario: " + username);
-    User user;
-    try {
-      final String usernameEncriptado = Utilities.encriptar(username);
-      user = usersService.findByUsername(usernameEncriptado);
-      LOG.info("[SERVER] Usuario encontrado.");
-    } catch (UserNotFoundException e) {
-      user = null;
-      LOG.error("[SERVER] Usuario no encontrado.");
-    }
-    return ResponseEntity.ok(user);
+  public ResponseEntity<User> userByUsername(@PathVariable final String username, @RequestParam("username") final String usernamelogin,
+	      @RequestParam("password") final String passwordlogin) throws UserNotFoundException {
+	
+    final String usernameloginEncriptado = Utilities.encriptar(usernamelogin);
+    final String contrasenaloginEncriptado = Utilities.encriptar(passwordlogin);
+
+    final User usuariologin = usersService.getUserByUsernameAndPassword(usernameloginEncriptado, contrasenaloginEncriptado);
+    if (usuariologin != null) {
+    	LOG.info("[SERVER] Buscando usuario: " + username);
+        User user;
+        try {
+          final String usernameEncriptado = Utilities.encriptar(username);
+          user = usersService.findByUsername(usernameEncriptado);
+          LOG.info("[SERVER] Usuario encontrado.");
+        } catch (UserNotFoundException e) {
+          user = null;
+          LOG.error("[SERVER] Usuario no encontrado.");
+        }
+        return ResponseEntity.ok(user);
+    } else {
+      LOG.info("[SERVER] No se ha encontrado ningún usuario con esos datos.");
+      return ResponseEntity.badRequest().build();
+    } 
   }
 
   @RequestMapping(value = "/all", method = RequestMethod.GET)
   @ApiOperation(value = "Find all user", notes = "Return all users")
 
-  public ResponseEntity<List<User>> allUsers() {
-    LOG.info("Get allUsers");
-    return ResponseEntity.ok(usersService.findAll());
+  public ResponseEntity<List<User>> allUsers(@RequestParam("username") final String usernamelogin,
+	      @RequestParam("password") final String passwordlogin) {
+	
+	final String usernameloginEncriptado = Utilities.encriptar(usernamelogin);
+    final String contrasenaloginEncriptado = Utilities.encriptar(passwordlogin);
+
+    final User usuario = usersService.getUserByUsernameAndPassword(usernameloginEncriptado, contrasenaloginEncriptado);
+    if (usuario != null) {
+      LOG.info("Get allUsers");
+      return ResponseEntity.ok(usersService.findAll());
+    } else {
+      LOG.info("[SERVER] No se ha encontrado ningún usuario con esos datos.");
+      return ResponseEntity.badRequest().build();
+    }
+	
   }
 
   /**
@@ -106,10 +129,22 @@ public class UserController {
   @RequestMapping(value = "/{userId}", method = RequestMethod.DELETE)
   @ApiOperation(value = "Delete an user", notes = "Delete a user by Id")
 
-  public ResponseEntity<Void> deleteUser(@PathVariable final String userId) {
-    LOG.info("Delete user " + userId);
-    usersService.deleteUser(userId);
-    return ResponseEntity.noContent().build();
+  public ResponseEntity<Void> deleteUser(@PathVariable final String userId, @RequestParam("username") final String usernamelogin,
+	      @RequestParam("password") final String passwordlogin) {
+	
+	final String usernameloginEncriptado = Utilities.encriptar(usernamelogin);
+    final String contrasenaloginEncriptado = Utilities.encriptar(passwordlogin);
+
+    final User usuariologin = usersService.getUserByUsernameAndPassword(usernameloginEncriptado, contrasenaloginEncriptado);
+    if (usuariologin != null) {
+      LOG.info("Delete user " + userId);
+      usersService.deleteUser(userId);
+      return ResponseEntity.noContent().build();
+    } else {
+      LOG.info("[SERVER] No se ha encontrado ningún usuario con esos datos.");
+      return ResponseEntity.badRequest().build();
+    }
+
   }
 
   /**
@@ -119,74 +154,96 @@ public class UserController {
    */
   @RequestMapping(method = RequestMethod.POST)
 
-  public ResponseEntity<User> registrarUsuario(@RequestBody final String usuario) {
-    final JSONObject jso = new JSONObject(usuario);
-    final String username = jso.getString("username");
-    final String password = jso.getString("password");
+  public ResponseEntity<User> registrarUsuario(@RequestBody final String usuario, @RequestParam("username") final String usernamelogin,
+	      @RequestParam("password") final String passwordlogin) {
+	  
+	final String usernameloginEncriptado = Utilities.encriptar(usernamelogin);
+    final String contrasenaloginEncriptado = Utilities.encriptar(passwordlogin);
 
-    final String usernameEncriptado = Utilities.encriptar(username);
+    final User usuariologin = usersService.getUserByUsernameAndPassword(usernameloginEncriptado, contrasenaloginEncriptado);
+    if (usuariologin != null) {
+    	final JSONObject jso = new JSONObject(usuario);
+        final String username = jso.getString("username");
+        final String password = jso.getString("password");
 
-    final String passwordEncrip = Utilities.encriptar(password);
+        final String usernameEncriptado = Utilities.encriptar(username);
 
-    User usuario1 = usersService.getUserByUsernameAndPassword(usernameEncriptado, passwordEncrip);
-    if (usuario1 == null) {
-      String role = null;
-      try {
-        LOG.info("[SERVER] Registrando usuario...");
-        role = jso.getString("role");
-      } catch (JSONException j) {
-        LOG.info("[SERVER] Error en la lectura del JSON.");
-        LOG.info(j.getMessage());
-        return ResponseEntity.badRequest().build();
-      }
+        final String passwordEncrip = Utilities.encriptar(password);
 
-      usuario1 = new User(username, password, role);
-      usersService.saveUser(usuario1);
-      LOG.info("[SERVER] Usuario registrado.");
-      LOG.info("[SERVER] " + usuario1.toString());
-      return ResponseEntity.ok().build();
+        User usuario1 = usersService.getUserByUsernameAndPassword(usernameEncriptado, passwordEncrip);
+        if (usuario1 == null) {
+          String role = null;
+          try {
+            LOG.info("[SERVER] Registrando usuario...");
+            role = jso.getString("role");
+          } catch (JSONException j) {
+            LOG.info("[SERVER] Error en la lectura del JSON.");
+            LOG.info(j.getMessage());
+            return ResponseEntity.badRequest().build();
+          }
+
+          usuario1 = new User(username, password, role);
+          usersService.saveUser(usuario1);
+          LOG.info("[SERVER] Usuario registrado.");
+          LOG.info("[SERVER] " + usuario1.toString());
+          return ResponseEntity.ok().build();
+        } else {
+          LOG.info("[SERVER] Error: El usuario ya está registrado.");
+          LOG.info("[SERVER] " + usuario1.toString());
+          return ResponseEntity.badRequest().build();
+        }
     } else {
-      LOG.info("[SERVER] Error: El usuario ya está registrado.");
-      LOG.info("[SERVER] " + usuario1.toString());
+      LOG.info("[SERVER] No se ha encontrado ningún usuario con esos datos.");
       return ResponseEntity.badRequest().build();
-    }
+    }   
   }
 
   @RequestMapping(value = "/{username}", method = RequestMethod.PUT)
   @ApiOperation(value = "Update usuario", notes = "Finds a username and updates its fields")
   public ResponseEntity<User> updateUsuario(@RequestBody final String mensajerecibido,
-      @PathVariable final String username) {
-    final JSONObject jso = new JSONObject(mensajerecibido);
-    final String usernameEncriptado = Utilities.encriptar(username);
-    final User usuario = usersService.findByUsername(usernameEncriptado);
-    if (usuario == null) {
-      LOG.info("[SERVER] Error: el usuario no existe.");
-      return ResponseEntity.badRequest().build();
+      @PathVariable final String username, @RequestParam("username") final String usernamelogin,
+      @RequestParam("password") final String passwordlogin) {
+    
+	final String usernameloginEncriptado = Utilities.encriptar(usernamelogin);
+    final String contrasenaloginEncriptado = Utilities.encriptar(passwordlogin);
+
+    final User usuariologin = usersService.getUserByUsernameAndPassword(usernameloginEncriptado, contrasenaloginEncriptado);
+    if (usuariologin != null) {
+    	final JSONObject jso = new JSONObject(mensajerecibido);
+        final String usernameEncriptado = Utilities.encriptar(username);
+        final User usuario = usersService.findByUsername(usernameEncriptado);
+        if (usuario == null) {
+          LOG.info("[SERVER] Error: el usuario no existe.");
+          return ResponseEntity.badRequest().build();
+        } else {
+          try {
+            LOG.info("[SERVER] Actualizando usuario...");
+
+            // Depende de los campos que queramos que puedan actualizarse
+            final String role = jso.getString("role");
+            final String password = jso.getString("password");
+
+            
+            
+            final String passwordEncriptado = Utilities.encriptar(password);
+            final String roleEncriptado = Utilities.encriptar(role);
+            usuario.setUsername(usernameEncriptado);
+            usuario.setRole(roleEncriptado);
+            usuario.setPassword(passwordEncriptado);
+          } catch (JSONException j) {
+            LOG.error("[SERVER] Error en la lectura del JSON.");
+            LOG.info(j.getMessage());
+            return ResponseEntity.badRequest().build();
+          }
+
+          usersService.updateUser(usuario);
+          LOG.info("[SERVER] Usuario actualizada.");
+          LOG.info("[SERVER] " + usuario.toString());
+          return ResponseEntity.ok().build();
+        }
     } else {
-      try {
-        LOG.info("[SERVER] Actualizando usuario...");
-
-        // Depende de los campos que queramos que puedan actualizarse
-        final String role = jso.getString("role");
-        final String password = jso.getString("password");
-
-        
-        
-        final String passwordEncriptado = Utilities.encriptar(password);
-        final String roleEncriptado = Utilities.encriptar(role);
-        usuario.setUsername(usernameEncriptado);
-        usuario.setRole(roleEncriptado);
-        usuario.setPassword(passwordEncriptado);
-      } catch (JSONException j) {
-        LOG.error("[SERVER] Error en la lectura del JSON.");
-        LOG.info(j.getMessage());
-        return ResponseEntity.badRequest().build();
-      }
-
-      usersService.updateUser(usuario);
-      LOG.info("[SERVER] Usuario actualizada.");
-      LOG.info("[SERVER] " + usuario.toString());
-      return ResponseEntity.ok().build();
+      LOG.info("[SERVER] No se ha encontrado ningún usuario con esos datos.");
+      return ResponseEntity.badRequest().build();
     }
   }
 
