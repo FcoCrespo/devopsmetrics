@@ -56,7 +56,7 @@ public class UserRepositoryImpl implements UserRepository {
 	  }
 
 	  /**
-	   * Devuelve un usuario en función de su dni.
+	   * Devuelve un usuario en función de su username.
 	   * 
 	   * @author FcoCrespo
 	   */

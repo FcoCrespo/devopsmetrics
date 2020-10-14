@@ -43,11 +43,11 @@ public interface UserRepository {
   void deleteUser(String userId);
 
   /**
-   * Método para obtener un usuario por su id.
+   * Método para obtener un usuario por su username.
    * 
    * @author FcoCrespo
    */
-  Optional<User> findOne(String userId);
+  Optional<User> findOne(String username);
 
   /**
    * Método para obtener un usuario por su nombre de usuario y contraseña.

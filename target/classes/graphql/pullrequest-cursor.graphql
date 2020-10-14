@@ -1,0 +1,29 @@
+query GitHub($owner: String!, $repo: String!, $cursor: String!) {
+        repository(owner:$owner, name:$repo) {
+            name
+            pullRequests(first:100, after:$cursor) {
+                totalCount
+                nodes {
+                    createdAt
+                    state
+                    mergedAt
+                    closedAt
+                    author {
+                        login
+                    }
+                    authorAssociation
+                }
+                pageInfo {
+                    startCursor
+                    hasNextPage
+                    endCursor
+                }
+            }
+        }  
+        rateLimit {
+            limit
+            cost
+            remaining
+            resetAt
+        }
+    }
