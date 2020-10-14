@@ -70,22 +70,23 @@ public class CommitController {
 	  @RequestMapping(value = "/allbranches", method = RequestMethod.GET)
 	  @ApiOperation(value = "Find all branches", notes = "Return all branches")
 
-	  //public ResponseEntity<List<Commit>> allCommits(@RequestParam("username") final String usernamelogin,
-	  public ResponseEntity<List<Branch>> allBranches(@RequestParam("reponame") final String reponame,
+	  public ResponseEntity<List<Branch>> allBranches(@RequestParam("username") final String usernamelogin,
+		      @RequestParam("password") final String passwordlogin,
+		      @RequestParam("reponame") final String reponame,
 		      @RequestParam("owner") final String owner) throws InvalidRemoteException, TransportException, IOException, GitAPIException, InterruptedException {
 		
-		//final String usernameloginEncriptado = Utilities.encriptar(usernamelogin);
-	    //final String contrasenaloginEncriptado = Utilities.encriptar(passwordlogin);
+		final String usernameloginEncriptado = Utilities.encriptar(usernamelogin);
+	    final String contrasenaloginEncriptado = Utilities.encriptar(passwordlogin);
 
-	    //final User usuario = usersService.getUserByUsernameAndPassword(usernameloginEncriptado, contrasenaloginEncriptado);
-	    //if (usuario != null) {
+	    final User usuario = usersService.getUserByUsernameAndPassword(usernameloginEncriptado, contrasenaloginEncriptado);
+	    if (usuario != null) {
 	      LOG.info("Get commit");
-	      //cg.getBranches(reponame, owner);
+	      cg.getBranches(reponame, owner);
 	      return ResponseEntity.ok(branchService.getBranchesByRepository(reponame));
-	    /*} else {
+	    } else {
 	      LOG.info("[SERVER] No se ha encontrado ningún usuario con esos datos.");
 	      return ResponseEntity.badRequest().build();
-	    }*/
+	    }
 		
 	  }
 
