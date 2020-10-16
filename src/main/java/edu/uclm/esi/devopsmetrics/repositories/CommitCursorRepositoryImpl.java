@@ -98,11 +98,9 @@ public class CommitCursorRepositoryImpl implements CommitCursorRepository {
 	  }
 
 	  @Override
-	  public CommitCursor findByEndCursoryHasNextPage(final String endCursor, final String hasNextPage, String branch, String repository) {
+	  public CommitCursor findByEndCursoryHasNextPage(String branch, String repository) {
 	    CommitCursor commitCursor = this.mongoOperations
-	        .findOne(new Query(Criteria.where("endCursor").is(endCursor)
-	        		.and("hasNextPage").is(hasNextPage)
-	        		.and("branch").is(branch)
+	        .findOne(new Query(Criteria.where("branch").is(branch)
 	        		.and("repository").is(repository)), CommitCursor.class);
 	    return commitCursor;
 	  }

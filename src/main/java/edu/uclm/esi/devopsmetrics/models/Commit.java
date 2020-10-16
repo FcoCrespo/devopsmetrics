@@ -37,6 +37,18 @@ public class Commit {
   @NotNull
   private String oid;
   /**
+   * messageHeadline.
+   * 
+   * @author FcoCrespo
+   */
+  private String messageHeadline;
+  /**
+   * message.
+   * 
+   * @author FcoCrespo
+   */
+  private String message;
+  /**
    * messageBody.
    * 
    * @author FcoCrespo
@@ -59,7 +71,7 @@ public class Commit {
    * 
    * @author FcoCrespo
    */
-  private String authoredByCommiter;
+  private String authoredByCommitter;
   /**
    * authoredDate.
    * 
@@ -110,11 +122,13 @@ public class Commit {
    * @author FcoCrespo
    */
   public Commit(@NotNull final String idGithub, 
-		  		@NotNull final String oid, 
+		  		@NotNull final String oid,
+		  				 final String messageHeadline,
+		  				 final String message,
 		  				 final String messageBody,
 		  				 final String pushedDate,
 		  				 final String changedFiles,
-		  				 final String authoredByCommiter,
+		  				 final String authoredByCommitter,
 		  				 final String authoredDate,
 		  				 final String authorName,
 		  				 final String authorEmail,
@@ -126,6 +140,8 @@ public class Commit {
     this.id = UUID.randomUUID().toString();
     this.idGithub = idGithub;
     this.oid = messageBody;
+    this.messageHeadline = messageHeadline;
+    this.message = message;
     this.pushedDate = pushedDate;
     this.authoredDate = authoredDate;
     this.authorName = authorName;
@@ -136,126 +152,166 @@ public class Commit {
     this.repository = repository;
   }
 
-  /**
-   * Constructor vacío de Commit.
-   * 
-   * @author FcoCrespo
-   */
-  public Commit() {
-
-  }
 
 	public String getId() {
 		return id;
 	}
 	
+	
 	public void setId(String id) {
 		this.id = id;
 	}
+	
 	
 	public String getIdGithub() {
 		return idGithub;
 	}
 	
+	
 	public void setIdGithub(String idGithub) {
 		this.idGithub = idGithub;
 	}
+	
 	
 	public String getOid() {
 		return oid;
 	}
 	
+	
 	public void setOid(String oid) {
 		this.oid = oid;
 	}
+	
+	
+	public String getMessageHeadline() {
+		return messageHeadline;
+	}
+	
+	
+	public void setMessageHeadline(String messageHeadline) {
+		this.messageHeadline = messageHeadline;
+	}
+	
+	
+	public String getMessage() {
+		return message;
+	}
+	
+	
+	public void setMessage(String message) {
+		this.message = message;
+	}
+	
 	
 	public String getMessageBody() {
 		return messageBody;
 	}
 	
+	
 	public void setMessageBody(String messageBody) {
 		this.messageBody = messageBody;
 	}
+	
 	
 	public String getPushedDate() {
 		return pushedDate;
 	}
 	
+	
 	public void setPushedDate(String pushedDate) {
 		this.pushedDate = pushedDate;
 	}
+	
 	
 	public String getChangedFiles() {
 		return changedFiles;
 	}
 	
+	
 	public void setChangedFiles(String changedFiles) {
 		this.changedFiles = changedFiles;
 	}
 	
-	public String getAuthoredByCommiter() {
-		return authoredByCommiter;
+	
+	public String getAuthoredByCommitter() {
+		return authoredByCommitter;
 	}
 	
-	public void setAuthoredByCommiter(String authoredByCommiter) {
-		this.authoredByCommiter = authoredByCommiter;
+	
+	public void setAuthoredByCommitter(String authoredByCommitter) {
+		this.authoredByCommitter = authoredByCommitter;
 	}
+	
 	
 	public String getAuthoredDate() {
 		return authoredDate;
 	}
 	
+	
 	public void setAuthoredDate(String authoredDate) {
 		this.authoredDate = authoredDate;
 	}
+	
 	
 	public String getAuthorName() {
 		return authorName;
 	}
 	
+	
 	public void setAuthorName(String authorName) {
 		this.authorName = authorName;
 	}
+	
 	
 	public String getAuthorEmail() {
 		return authorEmail;
 	}
 	
+	
 	public void setAuthorEmail(String authorEmail) {
 		this.authorEmail = authorEmail;
 	}
+	
 	
 	public String getAuthorDate() {
 		return authorDate;
 	}
 	
+	
 	public void setAuthorDate(String authorDate) {
 		this.authorDate = authorDate;
 	}
+	
 	
 	public String getAuthorId() {
 		return authorId;
 	}
 	
+	
 	public void setAuthorId(String authorId) {
 		this.authorId = authorId;
 	}
+	
 	
 	public String getBranch() {
 		return branch;
 	}
 	
+	
 	public void setBranch(String branch) {
 		this.branch = branch;
 	}
+	
 	
 	public String getRepository() {
 		return repository;
 	}
 	
+	
 	public void setRepository(String repository) {
 		this.repository = repository;
 	}
+	
 	
 	@Override
 	public int hashCode() {
@@ -265,18 +321,21 @@ public class Commit {
 		result = prime * result + ((authorEmail == null) ? 0 : authorEmail.hashCode());
 		result = prime * result + ((authorId == null) ? 0 : authorId.hashCode());
 		result = prime * result + ((authorName == null) ? 0 : authorName.hashCode());
-		result = prime * result + ((authoredByCommiter == null) ? 0 : authoredByCommiter.hashCode());
+		result = prime * result + ((authoredByCommitter == null) ? 0 : authoredByCommitter.hashCode());
 		result = prime * result + ((authoredDate == null) ? 0 : authoredDate.hashCode());
 		result = prime * result + ((branch == null) ? 0 : branch.hashCode());
 		result = prime * result + ((changedFiles == null) ? 0 : changedFiles.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((idGithub == null) ? 0 : idGithub.hashCode());
+		result = prime * result + ((message == null) ? 0 : message.hashCode());
 		result = prime * result + ((messageBody == null) ? 0 : messageBody.hashCode());
+		result = prime * result + ((messageHeadline == null) ? 0 : messageHeadline.hashCode());
 		result = prime * result + ((oid == null) ? 0 : oid.hashCode());
 		result = prime * result + ((pushedDate == null) ? 0 : pushedDate.hashCode());
 		result = prime * result + ((repository == null) ? 0 : repository.hashCode());
 		return result;
 	}
+	
 	
 	@Override
 	public boolean equals(Object obj) {
@@ -307,10 +366,10 @@ public class Commit {
 				return false;
 		} else if (!authorName.equals(other.authorName))
 			return false;
-		if (authoredByCommiter == null) {
-			if (other.authoredByCommiter != null)
+		if (authoredByCommitter == null) {
+			if (other.authoredByCommitter != null)
 				return false;
-		} else if (!authoredByCommiter.equals(other.authoredByCommiter))
+		} else if (!authoredByCommitter.equals(other.authoredByCommitter))
 			return false;
 		if (authoredDate == null) {
 			if (other.authoredDate != null)
@@ -337,10 +396,20 @@ public class Commit {
 				return false;
 		} else if (!idGithub.equals(other.idGithub))
 			return false;
+		if (message == null) {
+			if (other.message != null)
+				return false;
+		} else if (!message.equals(other.message))
+			return false;
 		if (messageBody == null) {
 			if (other.messageBody != null)
 				return false;
 		} else if (!messageBody.equals(other.messageBody))
+			return false;
+		if (messageHeadline == null) {
+			if (other.messageHeadline != null)
+				return false;
+		} else if (!messageHeadline.equals(other.messageHeadline))
 			return false;
 		if (oid == null) {
 			if (other.oid != null)
@@ -360,15 +429,17 @@ public class Commit {
 		return true;
 	}
 	
+	
 	@Override
 	public String toString() {
-		return "Commit [id=" + id + ", idGithub=" + idGithub + ", oid=" + oid + ", messageBody=" + messageBody
-				+ ", pushedDate=" + pushedDate + ", changedFiles=" + changedFiles + ", authoredByCommiter="
-				+ authoredByCommiter + ", authoredDate=" + authoredDate + ", authorName=" + authorName + ", authorEmail="
-				+ authorEmail + ", authorDate=" + authorDate + ", authorId=" + authorId + ", branch=" + branch
-				+ ", repository=" + repository + "]";
+		return "Commit [id=" + id + ", idGithub=" + idGithub + ", oid=" + oid + ", messageHeadline=" + messageHeadline
+				+ ", message=" + message + ", messageBody=" + messageBody + ", pushedDate=" + pushedDate + ", changedFiles="
+				+ changedFiles + ", authoredByCommitter=" + authoredByCommitter + ", authoredDate=" + authoredDate
+				+ ", authorName=" + authorName + ", authorEmail=" + authorEmail + ", authorDate=" + authorDate
+				+ ", authorId=" + authorId + ", branch=" + branch + ", repository=" + repository + "]";
 	}
-	
 	  
 	  
+		  
+		  
 }

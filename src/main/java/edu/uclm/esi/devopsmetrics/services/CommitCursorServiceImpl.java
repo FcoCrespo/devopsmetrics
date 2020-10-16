@@ -111,9 +111,9 @@ public class CommitCursorServiceImpl implements CommitCursorService {
   }
 
   @Override
-  public CommitCursor getCommitCursorByEndCursoryHasNextPage(final String endCursor, final String hasNextPage, String branch, String repository) {
+  public CommitCursor getCommitCursorByEndCursoryHasNextPage(String branch, String repository) {
 
-    final CommitCursor commit = commitCursorRepository.findByEndCursoryHasNextPage(endCursor, hasNextPage, branch, repository);
+    final CommitCursor commit = commitCursorRepository.findByEndCursoryHasNextPage(branch, repository);
     return commit;
     
   }

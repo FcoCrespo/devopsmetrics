@@ -56,6 +56,13 @@ public interface CommitRepository {
    */
   Commit findByOidyBranch(String oid, String branch);
   
+  /**
+   * Método para obtener un commit por su oid y su branch.
+   * 
+   * @author FcoCrespo
+   */
+  List<Commit> findAllByBranch(String branch);
+  
 
 
 }

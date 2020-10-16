@@ -118,6 +118,13 @@ public class CommitServiceImpl implements CommitService {
     
   }
 
+  @Override
+  public List<Commit> getAllByBranch(final String branch) {
+
+    final List<Commit> commits = commitRepository.findAllByBranch(branch);
+    return commits;
+    
+  }
 
 
 

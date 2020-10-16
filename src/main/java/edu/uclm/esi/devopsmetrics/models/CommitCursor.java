@@ -27,7 +27,7 @@ public class CommitCursor {
    * 
    * @author FcoCrespo
    */
-  private String hasNextPage;
+  private boolean hasNextPage;
   /**
    * endCursor.
    * 
@@ -59,7 +59,7 @@ public class CommitCursor {
    * 
    * @author FcoCrespo
    */
-  public CommitCursor(final String hasNextPage, 
+  public CommitCursor(final boolean hasNextPage, 
 			  		  final String endCursor, 
 			  		  final String startCursor,
 			  		  final String branch,
@@ -90,11 +90,11 @@ public class CommitCursor {
 		this.id = id;
 	}
 	
-	public String getHasNextPage() {
+	public boolean getHasNextPage() {
 		return hasNextPage;
 	}
 	
-	public void setHasNextPage(String hasNextPage) {
+	public void setHasNextPage(boolean hasNextPage) {
 		this.hasNextPage = hasNextPage;
 	}
 	
@@ -130,19 +130,21 @@ public class CommitCursor {
 		this.repository = repository;
 	}
 	
+	
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((branch == null) ? 0 : branch.hashCode());
 		result = prime * result + ((endCursor == null) ? 0 : endCursor.hashCode());
-		result = prime * result + ((hasNextPage == null) ? 0 : hasNextPage.hashCode());
+		result = prime * result + (hasNextPage ? 1231 : 1237);
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((repository == null) ? 0 : repository.hashCode());
 		result = prime * result + ((startCursor == null) ? 0 : startCursor.hashCode());
 		return result;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -162,10 +164,7 @@ public class CommitCursor {
 				return false;
 		} else if (!endCursor.equals(other.endCursor))
 			return false;
-		if (hasNextPage == null) {
-			if (other.hasNextPage != null)
-				return false;
-		} else if (!hasNextPage.equals(other.hasNextPage))
+		if (hasNextPage != other.hasNextPage)
 			return false;
 		if (id == null) {
 			if (other.id != null)
@@ -184,7 +183,7 @@ public class CommitCursor {
 			return false;
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "CommitCursor [id=" + id + ", hasNextPage=" + hasNextPage + ", endCursor=" + endCursor + ", startCursor="

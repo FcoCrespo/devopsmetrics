@@ -103,6 +103,13 @@ public class CommitRepositoryImpl implements CommitRepository {
 	        .findOne(new Query(Criteria.where("oid").is(oid).and("branch").is(branch)), Commit.class);
 	    return commit;
 	  }
+	  
+	  @Override
+	  public List<Commit> findAllByBranch(final String branch) {
+		List<Commit> commits = this.mongoOperations
+	        .find(new Query(Criteria.where("branch").is(branch)), Commit.class);
+	    return commits;
+	  }
 
 	
 }

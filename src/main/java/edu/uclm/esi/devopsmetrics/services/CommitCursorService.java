@@ -36,7 +36,7 @@ public interface CommitCursorService {
   /**
    * @author FcoCrespo
    */
-  CommitCursor getCommitCursorByEndCursoryHasNextPage(String endCursor, String hasNextPage, String branch, String repository);
+  CommitCursor getCommitCursorByEndCursoryHasNextPage(String branch, String repository);
 
  
 }

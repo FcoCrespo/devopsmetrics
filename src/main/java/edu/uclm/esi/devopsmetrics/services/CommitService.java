@@ -38,5 +38,9 @@ public interface CommitService {
    */
   Commit getCommitByOidyBranch(String oid, String branch);
 
+  /**
+   * @author FcoCrespo
+   */
+  List<Commit> getAllByBranch(String branch);
  
 }
