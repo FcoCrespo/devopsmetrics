@@ -252,27 +252,36 @@ public class CommitsGithub{
         JsonNode nodes = jsonNode.path("data").path("repository").path("refs").path("nodes");
         Iterator<JsonNode> iter = nodes.iterator();
         JsonNode parameterNode = iter.next();
-        
-        Branch branch;
-        Branch branchBD;
-        
-        String branchName;
-        String idGithub;
+   
+        introducirRama(parameterNode, reponame);
         
         while(iter.hasNext()){
-        	branchName = parameterNode.get("branchName").textValue();
-    		branchBD = branchService.getBranchByRepositoryyName(reponame, branchName);	
-    		if(branchBD==null) {
-    			
-        		idGithub = parameterNode.get("id").textValue();
-        		branch = new Branch(idGithub, reponame, branchName);
-    			branchService.saveBranch(branch);
-    		}
+        	introducirRama(parameterNode, reponame);
     		parameterNode = iter.next();
+    		if (!iter.hasNext()) {
+    			introducirRama(parameterNode, reponame);
+    		}
     	}
        
 	}
 	
+	
+	
+	private void introducirRama(JsonNode parameterNode, String reponame) {
+		String idGithub;
+		Branch branch;
+        Branch branchBD;
+        
+        String branchName = parameterNode.get("branchName").textValue();
+        branchBD = branchService.getBranchByRepositoryyName(reponame, branchName);	
+		if(branchBD==null) {
+			
+    		idGithub = parameterNode.get("id").textValue();
+    		branch = new Branch(idGithub, reponame, branchName);
+			branchService.saveBranch(branch);
+		}
+	}
+
 	private Response prepareResponse(String graphqlPayload, OkHttpClient client, String graphqlUri) throws IOException {
 		 
 	    RequestBody body = RequestBody.create(MediaType.get("application/json; charset=utf-8"), graphqlPayload);

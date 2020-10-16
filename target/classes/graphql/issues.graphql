@@ -4,6 +4,19 @@ query GitHub($owner: String!, $repo: String!) {
             issues(first:100) {
                 totalCount
                 nodes {
+                	repository{ 
+                      name
+                    }
+                    assignees(first:100){
+                    	totalCount 
+                      nodes{
+                        email
+                        name
+                        id
+                      }
+                    }
+                    title
+                    body
                     createdAt
                     state
                     closedAt
