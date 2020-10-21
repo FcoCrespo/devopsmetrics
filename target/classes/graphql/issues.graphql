@@ -8,7 +8,7 @@ query GitHub($owner: String!, $repo: String!) {
                       name
                     }
                     assignees(first:100){
-                    	totalCount 
+                      totalCount 
                       nodes{
                         email
                         name

@@ -103,7 +103,7 @@ public class BranchRepositoryImpl implements BranchRepository {
 	@Override
 	public List<Branch> findAllbyRepository(String repository) {
 		List<Branch> listBranches = this.mongoOperations.find(new Query(Criteria.where("repository").is(repository)), Branch.class);
-	    return listBranches;
+		return listBranches;
 	}
 
 	

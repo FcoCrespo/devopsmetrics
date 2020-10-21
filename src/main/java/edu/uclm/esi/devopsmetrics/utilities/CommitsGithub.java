@@ -1,26 +1,19 @@
 package edu.uclm.esi.devopsmetrics.utilities;
 
-import java.io.BufferedReader;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+
 import java.io.IOException;
-import java.util.ArrayList;
+import java.text.ParseException;
+import java.time.Instant;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
-import javax.annotation.PostConstruct;
-import javax.validation.constraints.NotNull;
-
-import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.InvalidRemoteException;
 import org.eclipse.jgit.api.errors.TransportException;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
-import org.eclipse.jgit.transport.CredentialsProvider;
-import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.core.env.Environment;
@@ -58,6 +51,7 @@ public class CommitsGithub{
 	private final CommitCursorService commitCursorService;
 	
 	private final OkHttpClient client = new OkHttpClient();
+	
 	private final String graphqlUri = "https://api.github.com/graphql";
 
 
@@ -73,126 +67,158 @@ public class CommitsGithub{
 
 	}
 	
-	public void getCommits(String reponame, String owner) throws IOException, InvalidRemoteException, TransportException, GitAPIException, InterruptedException{
+	public void getCommits(String reponame, String owner) throws IOException, InvalidRemoteException, TransportException, GitAPIException, InterruptedException, ParseException{
 		
-		//hace falta un comprobacion previa de nuevos commits en el repositorio
 		
-		String graphqlPayload;
+		    //hace falta un comprobacion previa de nuevos commits en el repositorio
 		
-		String filename = "src/main/resources/graphql/commits.graphql";
-	    
-	    File file = new File(filename);
-	    
-	    // Create a variables to pass to the graphql query
-        ObjectNode variables;
-        Commit commit;
-        CommitCursor commitCursor=null;
-        
-        String idGithub, oid;
-  		String messageHeadline, message, messageBody;
-  		String pushedDate, changedFiles;
-  		String authoredByCommitter, authoredDate;
-  		String authorName, authorEmail, authorDate, authorId;
- 
-  		String jsonData;
-  		JsonNode jsonNode, nodes, cursorNode, parameterNode, nodeAuthor, nodeAuthorId;
-  		Response response;
-  		Iterator<JsonNode> iter;
-  		
-  		//Actualizamos las ramas
-  		getBranches(reponame, owner);
-        
-        List<Branch> branches = branchService.getBranchesByRepository(reponame);
-        
-
-		for(int i= 0; i<branches.size(); ) {
-			if(filename.equals("src/main/resources/graphql/commits.graphql")) {
-				variables= new ObjectMapper().createObjectNode();
-		        variables.put("owner", owner);
-		        variables.put("repo", reponame);
-		        variables.put("branch", branches.get(i).getName());
-
-			}
-			else {
-				variables= new ObjectMapper().createObjectNode();
-		        variables.put("owner", owner);
-		        variables.put("repo", reponame);
-		        System.out.println(commitCursor.getEndCursor());
-		        variables.put("branch", branches.get(i).getName());
-			}
-			System.out.println(file.getPath());
-	    
-	        // Now parse the graphql file to a request payload string
-	        graphqlPayload = GraphqlTemplate.parseGraphql(file, variables);
-	        
-	        response = prepareResponse(graphqlPayload, client, graphqlUri);
+			String graphqlPayload;
 			
-	        jsonData = response.body().string();
-	        jsonNode = new ObjectMapper().readTree(jsonData);
+			String filename = "src/main/resources/graphql/commits.graphql";
+		    
+		    File file = new File(filename);
+		    
+		    // Create a variables to pass to the graphql query
+	        ObjectNode variables;
 	        
-	        commitCursor = updateCommitCursor(jsonNode, branches.get(i).getName(), reponame);
+	        CommitCursor commitCursor=null;
 	        
-	    
-	        nodes = jsonNode.path("data").path("repository").path("ref").path("target").path("history").path("nodes");
-	        iter = nodes.iterator();
-	        parameterNode = iter.next();
 	        
-	        while(iter.hasNext()){
-	        	
-	        	idGithub = comprobarValor(parameterNode, "id");
-	      		oid = comprobarValor(parameterNode,"oid");
-	      	    messageHeadline = comprobarValor(parameterNode,"messageHeadline");
-	      		message = comprobarValor(parameterNode,"message");
-	      		messageBody = comprobarValor(parameterNode,"messageBody");
-	      		pushedDate = comprobarValor(parameterNode,"pushedDate");
-	      		changedFiles = comprobarValor(parameterNode,"changedFiles");
-	      		authoredByCommitter = comprobarValor(parameterNode,"authoredByCommitter");
-	      		authoredDate = comprobarValor(parameterNode,"authoredDate");
-	      		
-	      		nodeAuthor = parameterNode.path("author");
-	      		if(nodeAuthor==null) {
-	      			authorId = "";
-	      			authorName = "";
-		      		authorEmail = "";
-		      		authorDate = "";
-	      		}
-	      		else {
-	      			authorName = comprobarValor(nodeAuthor,"name");
-		      		authorEmail = comprobarValor(nodeAuthor,"email");
-		      		authorDate =comprobarValor(nodeAuthor,"date");
-		      		
-		      		nodeAuthorId = nodeAuthor.path("user");
-		      		if(nodeAuthorId==null) {
-		      			authorId = ""; 
-		      		}
-		      		else {
-		      			authorId = comprobarValor(nodeAuthorId,"id");
-		      		}
-	      		}
-	  	
-	      		commit = new Commit(idGithub, oid, messageHeadline, message, messageBody, pushedDate, changedFiles, authoredByCommitter,
-	      							authoredDate, authorName, authorEmail, authorDate, authorId, branches.get(i).getName(), reponame);
-	      		
-	      		commitService.saveCommit(commit);
-	      		
-	      		parameterNode = iter.next();
-	    	}
+	  		String jsonData;
+	  		JsonNode jsonNode, nodes, parameterNode;
+	  		Response response;
+	  		Iterator<JsonNode> iter;
+	  		
+	  		//Actualizamos las ramas
+	  		getBranches(reponame, owner);
 	        
-	        if(commitCursor.getHasNextPage()==true) {
-	        	filename = "src/main/resources/graphql/commits-cursor.graphql";
-	        	file = new File(filename);
-	        }
-	        else {
-	        	filename = "src/main/resources/graphql/commits.graphql";
-	        	file = new File(filename);
-	        	i++;
-	        }
-		}
+	        List<Branch> branches = branchService.getBranchesByRepository(reponame);
+	        
+
+			for(int i= 0; i<branches.size(); ) {
+				System.out.println(file.getPath());
+				variables= new ObjectMapper().createObjectNode();
+		        variables.put("owner", owner);
+		        variables.put("repo", reponame);
+		        variables.put("branch", branches.get(i).getName());
+		        System.out.println("Estamos en la rama: "+branches.get(i).getName());
+				if(filename.equals("src/main/resources/graphql/commits-cursor.graphql")) {
+					variables.put("cursor", commitCursor.getEndCursor());
+				}
+		        // Now parse the graphql file to a request payload string
+		        graphqlPayload = GraphqlTemplate.parseGraphql(file, variables);
+		        
+		        response = prepareResponse(graphqlPayload, graphqlUri);
+				
+		        jsonData = response.body().string();
+		        jsonNode = new ObjectMapper().readTree(jsonData);
+		        
+		        commitCursor = updateCommitCursor(jsonNode, branches.get(i).getName(), reponame);
+		        
+		        nodes = jsonNode.path("data").path("repository").path("ref").path("target").path("history").path("nodes");
+		        iter = nodes.iterator();
+		        parameterNode = iter.next();
+
+		        
+		        while(iter.hasNext()){
+		        	introducirCommit(parameterNode, reponame, branches.get(i).getName());
+		    		parameterNode = iter.next();
+		    		if (!iter.hasNext()) {
+		    			introducirCommit(parameterNode, reponame, branches.get(i).getName());
+		    		}
+		    	}
+		        
+		        if(commitCursor.getHasNextPage()==true) {
+		        	filename = "src/main/resources/graphql/commits-cursor.graphql";
+		        	file = new File(filename);
+		        }
+		        else {
+		        	filename = "src/main/resources/graphql/commits.graphql";
+		        	file = new File(filename);
+		        	i++;
+		        }
+			}
 
 	}
 
-	private String comprobarValor(JsonNode parameterNode, String textValue) {
+	private void introducirCommit(JsonNode parameterNode, String reponame, String branch) throws ParseException {
+		Commit commit;
+        String idGithub, oid;
+  		String messageHeadline, message, messageBody;
+  		int changedFiles;
+  		String authoredByCommitter, authorName, authorEmail, authorDate, authorId;
+  		Instant pushedDate, authoredDate; 
+  		
+  		String pushedDateExtraido, authoredDateExtraido; 
+  		
+  		JsonNode nodeAuthor, nodeAuthorId;
+ 
+  		idGithub = comprobarValor(parameterNode, "id");
+  		oid = comprobarValor(parameterNode,"oid");
+  	    messageHeadline = comprobarValor(parameterNode,"messageHeadline");
+  		message = comprobarValor(parameterNode,"message");
+  		messageBody = comprobarValor(parameterNode,"messageBody");
+  		pushedDateExtraido = comprobarValor(parameterNode,"pushedDate");
+  		changedFiles = comprobarValorchangedFiles(parameterNode,"changedFiles");
+  		authoredByCommitter = comprobarValor(parameterNode,"authoredByCommitter");
+  		authoredDateExtraido = comprobarValor(parameterNode,"authoredDate");
+  		
+  		if(pushedDateExtraido==null || pushedDateExtraido.equals("")) {
+  			pushedDate = null;
+  		}
+  		else {
+  			pushedDate = Instant.parse(pushedDateExtraido);
+  		}
+  		
+  		if(authoredDateExtraido==null || authoredDateExtraido.equals("")) {
+  			authoredDate = null;
+  		}
+  		else {
+  			authoredDate = Instant.parse(authoredDateExtraido);
+  		}
+  		
+  		nodeAuthor = parameterNode.path("author");
+  		if(nodeAuthor==null) {
+  			authorId = "";
+  			authorName = "";
+      		authorEmail = "";
+      		authorDate = "";
+  		}
+  		else {
+  			authorName = comprobarValor(nodeAuthor,"name");
+      		authorEmail = comprobarValor(nodeAuthor,"email");
+      		authorDate =comprobarValor(nodeAuthor,"date");
+      		
+      		nodeAuthorId = nodeAuthor.path("user");
+      		if(nodeAuthorId==null) {
+      			authorId = ""; 
+      		}
+      		else {
+      			authorId = comprobarValor(nodeAuthorId,"id");
+      		}
+  		}
+  		
+  		System.out.println(idGithub +" : idGithub y oid : "+ oid);
+  		System.out.println("MessageHeadline: "+messageHeadline);
+	
+  		commit = new Commit(idGithub, oid, messageHeadline, message, messageBody, pushedDate, changedFiles, authoredByCommitter,
+  							authoredDate, authorName, authorEmail, authorDate, authorId, branch, reponame);
+  		
+  		commitService.saveCommit(commit);
+	}
+
+	private int comprobarValorchangedFiles(JsonNode parameterNode, String value) {		
+		if(parameterNode.get(value)==null) {
+			return 0;
+		}
+		else {
+			return parameterNode.get(value).intValue();
+		}
 		
+	}
+
+	private String comprobarValor(JsonNode parameterNode, String textValue) {
+
 		if(parameterNode.get(textValue)==null) {
 			return "";
 		}
@@ -229,7 +255,7 @@ public class CommitsGithub{
 		
 	}
 
-	public void getBranches(String reponame, String owner) throws IOException, InvalidRemoteException, TransportException, GitAPIException, InterruptedException{
+	public void getBranches(String reponame, String owner){
 		
 	    String graphqlPayload;
 	    
@@ -241,28 +267,31 @@ public class CommitsGithub{
         variables.put("repo", reponame);
 
         // Now parse the graphql file to a request payload string
-        graphqlPayload = GraphqlTemplate.parseGraphql(file, variables);
-
-        // Build and trigger the request
-        Response response = prepareResponse(graphqlPayload, client, graphqlUri);
-		
-        String jsonData = response.body().string();
-        JsonNode jsonNode = new ObjectMapper().readTree(jsonData);
-        
-        JsonNode nodes = jsonNode.path("data").path("repository").path("refs").path("nodes");
-        Iterator<JsonNode> iter = nodes.iterator();
-        JsonNode parameterNode = iter.next();
-   
-        introducirRama(parameterNode, reponame);
-        
-        while(iter.hasNext()){
-        	introducirRama(parameterNode, reponame);
-    		parameterNode = iter.next();
-    		if (!iter.hasNext()) {
-    			introducirRama(parameterNode, reponame);
-    		}
-    	}
-       
+        try {
+			graphqlPayload = GraphqlTemplate.parseGraphql(file, variables);
+			 // Build and trigger the request
+	        Response response = prepareResponse(graphqlPayload, graphqlUri);
+			
+	        String jsonData = response.body().string();
+	        JsonNode jsonNode = new ObjectMapper().readTree(jsonData);
+	        
+	        JsonNode nodes = jsonNode.path("data").path("repository").path("refs").path("nodes");
+	        Iterator<JsonNode> iter = nodes.iterator();
+	        JsonNode parameterNode = iter.next();
+	   
+	        introducirRama(parameterNode, reponame);
+	        
+	        while(iter.hasNext()){
+	        	introducirRama(parameterNode, reponame);
+	    		parameterNode = iter.next();
+	    		if (!iter.hasNext()) {
+	    			introducirRama(parameterNode, reponame);
+	    		}
+	    	}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	
@@ -274,23 +303,38 @@ public class CommitsGithub{
         
         String branchName = parameterNode.get("branchName").textValue();
         branchBD = branchService.getBranchByRepositoryyName(reponame, branchName);	
-		if(branchBD==null) {
-			
+		if(branchBD==null && !branchName.contains("dependabot/npm_and_yarn")) {
     		idGithub = parameterNode.get("id").textValue();
     		branch = new Branch(idGithub, reponame, branchName);
 			branchService.saveBranch(branch);
 		}
 	}
 
-	private Response prepareResponse(String graphqlPayload, OkHttpClient client, String graphqlUri) throws IOException {
-		 
+	private Response prepareResponse(String graphqlPayload, String graphqlUri) {
+		OkHttpClient client = new OkHttpClient().newBuilder()
+	            .connectTimeout(5, TimeUnit.MINUTES) 
+	            .writeTimeout(5, TimeUnit.MINUTES) 
+	            .readTimeout(5, TimeUnit.MINUTES) 
+	            .build();
+		
 	    RequestBody body = RequestBody.create(MediaType.get("application/json; charset=utf-8"), graphqlPayload);
         Request request = new Request.Builder()
         		.url(graphqlUri)
         		.addHeader("Authorization", "Bearer " + env.getProperty("github.token") )
         		.post(body)
         		.build();
-        return client.newCall(request).execute();
+        Response response;
+		try {
+			response = client.newCall(request).execute();
+			 if(response.isSuccessful()){
+		            return response;             
+		     }else return null;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+       
 	
 	}
 

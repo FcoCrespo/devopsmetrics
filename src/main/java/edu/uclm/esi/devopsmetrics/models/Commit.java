@@ -1,12 +1,14 @@
 package edu.uclm.esi.devopsmetrics.models;
 
 
+import java.time.Instant;
 import java.util.UUID;
 
 import javax.validation.constraints.NotNull;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * Documento commit en la base de datos.
@@ -59,13 +61,14 @@ public class Commit {
    * 
    * @author FcoCrespo
    */
-  private String pushedDate;
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+  private Instant pushedDate;
   /**
    * changedFiles.
    * 
    * @author FcoCrespo
    */
-  private String changedFiles;
+  private int changedFiles;
   /**
    * authoredByCommiter.
    * 
@@ -77,7 +80,8 @@ public class Commit {
    * 
    * @author FcoCrespo
    */
-  private String authoredDate;
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+  private Instant authoredDate;
   /**
    * messageBody.
    * 
@@ -126,10 +130,10 @@ public class Commit {
 		  				 final String messageHeadline,
 		  				 final String message,
 		  				 final String messageBody,
-		  				 final String pushedDate,
-		  				 final String changedFiles,
+		  				 final Instant pushedDate,
+		  				 final int changedFiles,
 		  				 final String authoredByCommitter,
-		  				 final String authoredDate,
+		  				 final Instant authoredDate,
 		  				 final String authorName,
 		  				 final String authorEmail,
 		  				 final String authorDate,
@@ -139,10 +143,11 @@ public class Commit {
     super();
     this.id = UUID.randomUUID().toString();
     this.idGithub = idGithub;
-    this.oid = messageBody;
+    this.oid = oid;
     this.messageHeadline = messageHeadline;
     this.message = message;
     this.pushedDate = pushedDate;
+    this.changedFiles = changedFiles;
     this.authoredDate = authoredDate;
     this.authorName = authorName;
     this.authorEmail = authorEmail;
@@ -213,22 +218,22 @@ public class Commit {
 	}
 	
 	
-	public String getPushedDate() {
+	public Instant getPushedDate() {
 		return pushedDate;
 	}
 	
 	
-	public void setPushedDate(String pushedDate) {
+	public void setPushedDate(Instant pushedDate) {
 		this.pushedDate = pushedDate;
 	}
 	
 	
-	public String getChangedFiles() {
+	public int getChangedFiles() {
 		return changedFiles;
 	}
 	
 	
-	public void setChangedFiles(String changedFiles) {
+	public void setChangedFiles(int changedFiles) {
 		this.changedFiles = changedFiles;
 	}
 	
@@ -243,12 +248,12 @@ public class Commit {
 	}
 	
 	
-	public String getAuthoredDate() {
+	public Instant getAuthoredDate() {
 		return authoredDate;
 	}
 	
 	
-	public void setAuthoredDate(String authoredDate) {
+	public void setAuthoredDate(Instant authoredDate) {
 		this.authoredDate = authoredDate;
 	}
 	
@@ -324,7 +329,7 @@ public class Commit {
 		result = prime * result + ((authoredByCommitter == null) ? 0 : authoredByCommitter.hashCode());
 		result = prime * result + ((authoredDate == null) ? 0 : authoredDate.hashCode());
 		result = prime * result + ((branch == null) ? 0 : branch.hashCode());
-		result = prime * result + ((changedFiles == null) ? 0 : changedFiles.hashCode());
+		result = prime * result + changedFiles;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((idGithub == null) ? 0 : idGithub.hashCode());
 		result = prime * result + ((message == null) ? 0 : message.hashCode());
@@ -381,10 +386,7 @@ public class Commit {
 				return false;
 		} else if (!branch.equals(other.branch))
 			return false;
-		if (changedFiles == null) {
-			if (other.changedFiles != null)
-				return false;
-		} else if (!changedFiles.equals(other.changedFiles))
+		if (changedFiles != other.changedFiles)
 			return false;
 		if (id == null) {
 			if (other.id != null)
@@ -438,8 +440,6 @@ public class Commit {
 				+ ", authorName=" + authorName + ", authorEmail=" + authorEmail + ", authorDate=" + authorDate
 				+ ", authorId=" + authorId + ", branch=" + branch + ", repository=" + repository + "]";
 	}
-	  
-	  
-		  
-		  
+
+
 }

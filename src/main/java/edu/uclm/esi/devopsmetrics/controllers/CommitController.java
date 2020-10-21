@@ -1,6 +1,7 @@
 package edu.uclm.esi.devopsmetrics.controllers;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -97,7 +98,7 @@ public class CommitController {
 	  public String allCommits(@RequestParam("username") final String usernamelogin,
 		      @RequestParam("password") final String passwordlogin,
 		      @RequestParam("reponame") final String reponame,
-		      @RequestParam("owner") final String owner) throws InvalidRemoteException, TransportException, IOException, GitAPIException, InterruptedException {
+		      @RequestParam("owner") final String owner){
 		
 		final String usernameloginEncriptado = Utilities.encriptar(usernamelogin);
 	    final String contrasenaloginEncriptado = Utilities.encriptar(passwordlogin);
@@ -105,7 +106,12 @@ public class CommitController {
 	    final User usuario = usersService.getUserByUsernameAndPassword(usernameloginEncriptado, contrasenaloginEncriptado);
 	    if (usuario != null) {
 	      LOG.info("Get commits");
-	      cg.getCommits(reponame, owner);   
+	      try {
+	    	  cg.getCommits(reponame, owner); 
+		  } catch (IOException | GitAPIException | InterruptedException | ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+		  } 
 	      
 	      return "bien";
 	      //return ResponseEntity.ok(branchService.getBranchesByRepository(reponame));
