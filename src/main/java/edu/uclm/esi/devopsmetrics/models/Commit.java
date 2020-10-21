@@ -157,6 +157,14 @@ public class Commit {
     this.repository = repository;
   }
 
+  /**
+   * Constructor vacío de Commit.
+   * 
+   * @author FcoCrespo
+   */
+  public Commit() {
+
+  }
 
 	public String getId() {
 		return id;

@@ -105,9 +105,9 @@ public class CommitRepositoryImpl implements CommitRepository {
 	  }
 	  
 	  @Override
-	  public List<Commit> findAllByBranch(final String branch) {
+	  public List<Commit> findAllByBranch(final String reponame, final String branch) {
 		List<Commit> commits = this.mongoOperations
-	        .find(new Query(Criteria.where("branch").is(branch)), Commit.class);
+	        .find(new Query(Criteria.where("branch").is(branch).and("repository").is(reponame)), Commit.class);
 	    return commits;
 	  }
 

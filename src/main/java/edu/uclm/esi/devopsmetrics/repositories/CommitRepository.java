@@ -61,7 +61,7 @@ public interface CommitRepository {
    * 
    * @author FcoCrespo
    */
-  List<Commit> findAllByBranch(String branch);
+  List<Commit> findAllByBranch(String reponame, String branch);
   
 
 

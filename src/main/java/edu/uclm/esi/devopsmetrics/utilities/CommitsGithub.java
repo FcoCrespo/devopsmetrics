@@ -305,7 +305,7 @@ public class CommitsGithub{
         branchBD = branchService.getBranchByRepositoryyName(reponame, branchName);	
 		if(branchBD==null && !branchName.contains("dependabot/npm_and_yarn")) {
     		idGithub = parameterNode.get("id").textValue();
-    		branch = new Branch(idGithub, reponame, branchName);
+    		branch = new Branch(idGithub, reponame, branchName, 0);
 			branchService.saveBranch(branch);
 		}
 	}

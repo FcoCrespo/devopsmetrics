@@ -36,6 +36,14 @@ public class Branch {
    * @author FcoCrespo
    */
   private String name;
+  /**
+   * order.
+   * 
+   * @author FcoCrespo
+   */
+  private int order;
+  
+  
   
   /**
    * Constructor de Branch.
@@ -44,11 +52,13 @@ public class Branch {
    */
   public Branch(@NotNull final String idGithub, 
 		  				 final String repository, 
-		  				 final String name) {
+		  				 final String name,
+		  				 final int order) {
     super();
     this.idGithub = idGithub;
     this.repository = repository;
     this.name = name;
+    this.order = order;
   }
 
   /**
@@ -84,12 +94,21 @@ public class Branch {
 		this.name = name;
 	}
 	
+	public int getOrder() {
+		return order;
+	}
+	
+	public void setOrder(int order) {
+		this.order = order;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((idGithub == null) ? 0 : idGithub.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + order;
 		result = prime * result + ((repository == null) ? 0 : repository.hashCode());
 		return result;
 	}
@@ -113,6 +132,8 @@ public class Branch {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
+		if (order != other.order)
+			return false;
 		if (repository == null) {
 			if (other.repository != null)
 				return false;
@@ -123,9 +144,10 @@ public class Branch {
 	
 	@Override
 	public String toString() {
-		return "Branch [idGithub=" + idGithub + ", repository=" + repository + ", name=" + name + "]";
+		return "Branch [idGithub=" + idGithub + ", repository=" + repository + ", name=" + name + ", order=" + order + "]";
 	}
-	
 	  
+	  
+
 	  
 }
