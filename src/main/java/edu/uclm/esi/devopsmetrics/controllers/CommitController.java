@@ -76,7 +76,7 @@ public class CommitController {
 		      @RequestParam("password") final String passwordlogin,
 		      @RequestParam("reponame") final String reponame,
 		      @RequestParam("owner") final String owner) throws InvalidRemoteException, TransportException, IOException, GitAPIException, InterruptedException {
-		System.out.println("estoy dentro");
+		
 		final String usernameloginEncriptado = Utilities.encriptar(usernamelogin);
 	    final String contrasenaloginEncriptado = Utilities.encriptar(passwordlogin);
 
@@ -139,29 +139,10 @@ public class CommitController {
 	    final User usuario = usersService.getUserByUsernameAndPassword(usernameloginEncriptado, contrasenaloginEncriptado);
 	    if (usuario != null) {
 	      LOG.info("Get commits");
-	      List <Commit> list1 = commitsService.getAllByBranch(reponame, branch);
-	      System.out.println(list1.size());
-	      List <Commit> list2 = commitsService.getAllByBranch(reponame, "0.7-stable");
-	      System.out.println(list2.size());
-	      
-	      boolean existe = false, seguir=true;
-	      List <Commit> listaNueva =  new ArrayList<Commit>();
-	      
-	      
-	      for(int i = 0; i<list2.size(); i++) {
-	    	  for(int j = 0; j<list1.size()&&seguir==true; j++) {
-	    		  if (list2.get(i).getOid().equals(list1.get(j).getOid())){
-	    			  seguir=false;
-	    		  }
-	    	  }
-	    	  if(seguir==true) {
-	    		  listaNueva.add(list2.get(i));
-	    	  }
-	    	  seguir=true;
-	      }
-	      
-	      System.out.println(listaNueva.size());
-	      return ResponseEntity.ok(listaNueva);
+	      List <Commit> commits = commitsService.getAllByBranch(reponame, branch);
+	      System.out.println("Size: "+commits.size());
+	     
+	      return ResponseEntity.ok(commits);
 	    } else {
 	    	LOG.info("[SERVER] No se ha encontrado ningún usuario con esos datos.");
 		    return ResponseEntity.badRequest().build();

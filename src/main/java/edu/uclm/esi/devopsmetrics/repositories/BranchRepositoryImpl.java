@@ -106,5 +106,13 @@ public class BranchRepositoryImpl implements BranchRepository {
 		return listBranches;
 	}
 
+	@Override
+	public Branch findBeforeBranchByOrder(String repository, int order) {
+		Branch branch = this.mongoOperations.findOne(new Query(Criteria.where("repository")
+				.is(repository).and("order").is(order-1)), Branch.class);
+		return branch;
+		
+	}
+
 	
 }

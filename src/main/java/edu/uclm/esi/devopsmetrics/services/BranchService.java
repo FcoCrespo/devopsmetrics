@@ -42,5 +42,10 @@ public interface BranchService {
    * @author FcoCrespo
    */
   List<Branch> getBranchesByRepository(String repository);
+  
+  /**
+   * @author FcoCrespo
+   */
+  Branch getBeforeBranchByOrder(String repository, int order);
  
 }

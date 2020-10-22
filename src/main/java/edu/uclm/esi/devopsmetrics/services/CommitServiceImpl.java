@@ -1,6 +1,8 @@
 package edu.uclm.esi.devopsmetrics.services;
 
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.uclm.esi.devopsmetrics.exceptions.CommitNotFoundException;
+import edu.uclm.esi.devopsmetrics.models.Branch;
 import edu.uclm.esi.devopsmetrics.models.Commit;
 import edu.uclm.esi.devopsmetrics.repositories.CommitRepository;
 
@@ -35,10 +38,12 @@ public class CommitServiceImpl implements CommitService {
    * @author FcoCrespo
    */
   @Autowired
+  private final BranchService branchService;
 
-  public CommitServiceImpl(final CommitRepository commitRepository) {
+  public CommitServiceImpl(final CommitRepository commitRepository, final BranchService branchService) {
 
     this.commitRepository = commitRepository;
+    this.branchService = branchService;
 
   }
 
@@ -119,13 +124,44 @@ public class CommitServiceImpl implements CommitService {
   }
 
   @Override
-  public List<Commit> getAllByBranch(final String reponame, final String branch) {
-
-    final List<Commit> commits = commitRepository.findAllByBranch(reponame, branch);
-    return commits;
+  public List<Commit> getAllByBranch(final String reponame, final String branchname) {
+	 
+	Branch branch = branchService.getBranchByRepositoryyName(reponame, branchname);
+	
+	if(branch.getOrder()==0 || branch.getOrder()==1) {
+		final List<Commit> commits = commitRepository.findAllByBranch(reponame, branchname);
+	    return commits;
+	}
+	else {
+		  
+		  Branch branchBefore = branchService.getBeforeBranchByOrder(reponame, branch.getOrder());
+		
+		  List <Commit> listQuery = commitRepository.findAllByBranch(reponame, branchname);
+			
+		  List <Commit> listBefore = commitRepository.findAllByBranch(reponame, branchBefore.getName());
+	      
+	      boolean seguir=true;
+	      List <Commit> commits =  new ArrayList<Commit>();
+	      
+	      
+	      for(int i = 0; i<listQuery.size(); i++) {
+	    	  for(int j = 0; j<listBefore.size()&&seguir==true; j++) {
+	    		  if (listQuery.get(i).getOid().equals(listBefore.get(j).getOid())){
+	    			  seguir=false;
+	    		  }
+	    	  }
+	    	  if(seguir==true) {
+	    		  commits.add(listQuery.get(i));
+	    	  }
+	    	  seguir=true;
+	      }
+	      
+	      Collections.sort(commits);
+	      return commits;
+		}
+	}
+	
+    
     
   }
 
-
-
-}

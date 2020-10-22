@@ -63,6 +63,13 @@ public interface BranchRepository {
    * @author FcoCrespo
    */
   List<Branch> findAllbyRepository(String repository);
+  
+  /**
+   * Método para obtener la branch siguiente a la consultada
+   * 
+   * @author FcoCrespo
+   */
+  Branch findBeforeBranchByOrder(String repository, int order);
 
 
 }

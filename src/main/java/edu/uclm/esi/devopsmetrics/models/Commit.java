@@ -16,7 +16,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author FcoCrespo
  */
 @Document(collection = "commits")
-public class Commit {
+public class Commit implements Comparable< Commit >{
   /**
    * ID.
    * 
@@ -165,6 +165,17 @@ public class Commit {
   public Commit() {
 
   }
+   
+    @Override
+	public int compareTo(Commit o) {
+		if(this.getAuthoredDate()==null) {
+			return this.getPushedDate().compareTo(o.getPushedDate());
+		}
+		else{
+			return this.getAuthoredDate().compareTo(o.getAuthoredDate());
+		}
+	     
+	}
 
 	public String getId() {
 		return id;
