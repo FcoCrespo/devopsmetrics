@@ -76,7 +76,7 @@ public class CommitController {
 		      @RequestParam("password") final String passwordlogin,
 		      @RequestParam("reponame") final String reponame,
 		      @RequestParam("owner") final String owner) throws InvalidRemoteException, TransportException, IOException, GitAPIException, InterruptedException {
-		
+		System.out.println("estoy dentro");
 		final String usernameloginEncriptado = Utilities.encriptar(usernamelogin);
 	    final String contrasenaloginEncriptado = Utilities.encriptar(passwordlogin);
 
