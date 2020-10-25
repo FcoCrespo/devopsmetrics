@@ -130,6 +130,8 @@ public class CommitServiceImpl implements CommitService {
 	
 	if(branch.getOrder()==0 || branch.getOrder()==1) {
 		final List<Commit> commits = commitRepository.findAllByBranch(reponame, branchname);
+		Collections.sort(commits);
+		
 	    return commits;
 	}
 	else {
@@ -156,7 +158,8 @@ public class CommitServiceImpl implements CommitService {
 	    	  seguir=true;
 	      }
 	      
-	      Collections.sort(commits, Collections.reverseOrder());
+	      Collections.sort(commits);
+	      
 	      return commits;
 		}
 	}
