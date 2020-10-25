@@ -156,7 +156,7 @@ public class CommitServiceImpl implements CommitService {
 	    	  seguir=true;
 	      }
 	      
-	      Collections.sort(commits);
+	      Collections.sort(commits, Collections.reverseOrder());
 	      return commits;
 		}
 	}

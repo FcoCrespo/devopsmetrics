@@ -168,11 +168,17 @@ public class Commit implements Comparable< Commit >{
    
     @Override
 	public int compareTo(Commit o) {
-		if(this.getAuthoredDate()==null) {
+		if(this.getAuthoredDate()==null && !(o.getPushedDate()==null) && !(this.getPushedDate()==null)) {
 			return this.getPushedDate().compareTo(o.getPushedDate());
 		}
-		else{
+		else if(this.getPushedDate()==null && !(o.getAuthoredDate()==null) && !(this.getAuthoredDate()==null)){
 			return this.getAuthoredDate().compareTo(o.getAuthoredDate());
+		}
+		else if(this.getPushedDate()==null && o.getAuthoredDate()==null && !(o.getPushedDate()==null)){
+			return this.getAuthoredDate().compareTo(o.getPushedDate());
+		}
+		else{
+			return this.getPushedDate().compareTo(o.getAuthoredDate());
 		}
 	     
 	}
