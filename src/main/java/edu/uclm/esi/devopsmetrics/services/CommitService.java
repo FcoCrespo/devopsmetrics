@@ -42,5 +42,10 @@ public interface CommitService {
    * @author FcoCrespo
    */
   List<Commit> getAllByBranch(String reponame, String branch);
+  
+  /**
+   * @author FcoCrespo
+   */
+  List<Commit> getAllByBranchAndAuthorName(String reponame, String branch, String authorName);
  
 }

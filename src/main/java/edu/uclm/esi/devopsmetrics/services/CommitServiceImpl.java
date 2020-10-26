@@ -163,8 +163,47 @@ public class CommitServiceImpl implements CommitService {
 	      return commits;
 		}
 	}
+
+	@Override
+	public List<Commit> getAllByBranchAndAuthorName(String reponame, String branchname, String authorName) {
+		Branch branch = branchService.getBranchByRepositoryyName(reponame, branchname);
+		
+		if(branch.getOrder()==0 || branch.getOrder()==1) {
+			final List<Commit> commits = commitRepository.findAllByBranchAndAuthorName(reponame, branchname, authorName);
+			Collections.sort(commits);
+			
+		    return commits;
+		}
+		else {
+			  
+			  Branch branchBefore = branchService.getBeforeBranchByOrder(reponame, branch.getOrder());
+			
+			  List <Commit> listQuery = commitRepository.findAllByBranchAndAuthorName(reponame, branchname, authorName);
+				
+			  List <Commit> listBefore = commitRepository.findAllByBranchAndAuthorName(reponame, branchBefore.getName(), authorName);
+		      
+		      boolean seguir=true;
+		      List <Commit> commits =  new ArrayList<Commit>();
+		      
+		      
+		      for(int i = 0; i<listQuery.size(); i++) {
+		    	  for(int j = 0; j<listBefore.size()&&seguir==true; j++) {
+		    		  if (listQuery.get(i).getOid().equals(listBefore.get(j).getOid())){
+		    			  seguir=false;
+		    		  }
+		    	  }
+		    	  if(seguir==true) {
+		    		  commits.add(listQuery.get(i));
+		    	  }
+		    	  seguir=true;
+		      }
+		      
+		      Collections.sort(commits);
+		      
+		      return commits;
+			}
+	}
 	
-    
     
   }
 

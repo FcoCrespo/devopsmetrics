@@ -149,5 +149,32 @@ public class CommitController {
 	    }
 		
 	  }
+	  
+	  @RequestMapping(value = "/commitsbranchauthor", method = RequestMethod.GET)
+	  @ApiOperation(value = "Find all commits from a repository branch", notes = "Return all commits from a repository branch")
+	  
+	  public ResponseEntity<List<Commit>> allCommitsBranchAuthor(@RequestParam("username") final String usernamelogin,
+		      @RequestParam("password") final String passwordlogin,
+		      @RequestParam("reponame") final String reponame,
+		      @RequestParam("branch") final String branch,
+		      @RequestParam("authorName") final String authorName,
+		      @RequestParam("owner") final String owner){
+		System.out.println(authorName);
+		final String usernameloginEncriptado = Utilities.encriptar(usernamelogin);
+	    final String contrasenaloginEncriptado = Utilities.encriptar(passwordlogin);
+
+	    final User usuario = usersService.getUserByUsernameAndPassword(usernameloginEncriptado, contrasenaloginEncriptado);
+	    if (usuario != null) {
+	      LOG.info("Get commits");
+	      List <Commit> commits = commitsService.getAllByBranchAndAuthorName(reponame, branch, authorName);
+	      System.out.println("Size: "+commits.size());
+	     
+	      return ResponseEntity.ok(commits);
+	    } else {
+	    	LOG.info("[SERVER] No se ha encontrado ningún usuario con esos datos.");
+		    return ResponseEntity.badRequest().build();
+	    }
+		
+	  }
 
 }

@@ -111,5 +111,16 @@ public class CommitRepositoryImpl implements CommitRepository {
 	    return commits;
 	  }
 
+	@Override
+	public List<Commit> findAllByBranchAndAuthorName(String reponame, String branch, String authorName) {
+		System.out.println("repo: "+authorName);
+		List<Commit> commits = this.mongoOperations
+		        .find(new Query(Criteria.where("branch").is(branch).
+		        		and("repository").is(reponame).
+		        		and("authorName").is(authorName)), Commit.class);
+		System.out.println("size aqui: "+commits.size());
+	    return commits;
+	}
+
 	
 }
