@@ -15,7 +15,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author FcoCrespo
  */
 @Document(collection = "branches")
-public class Branch {
+public class Branch implements Comparable< Branch >{
   
   /**
    * idGithub.
@@ -69,6 +69,11 @@ public class Branch {
   public Branch() {
 
   }
+  
+    @Override
+	public int compareTo(Branch o) {
+    	return Integer.compare(this.getOrder(), o.getOrder());
+	}
 
 	public String getIdGithub() {
 		return idGithub;
