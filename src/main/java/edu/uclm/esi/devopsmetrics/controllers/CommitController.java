@@ -2,8 +2,16 @@ package edu.uclm.esi.devopsmetrics.controllers;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -159,7 +167,7 @@ public class CommitController {
 		      @RequestParam("branch") final String branch,
 		      @RequestParam("authorName") final String authorName,
 		      @RequestParam("owner") final String owner){
-		System.out.println(authorName);
+		
 		final String usernameloginEncriptado = Utilities.encriptar(usernamelogin);
 	    final String contrasenaloginEncriptado = Utilities.encriptar(passwordlogin);
 
@@ -168,6 +176,42 @@ public class CommitController {
 	      LOG.info("Get commits");
 	      List <Commit> commits = commitsService.getAllByBranchAndAuthorName(reponame, branch, authorName);
 	      System.out.println("Size: "+commits.size());
+	     
+	      return ResponseEntity.ok(commits);
+	    } else {
+	    	LOG.info("[SERVER] No se ha encontrado ningún usuario con esos datos.");
+		    return ResponseEntity.badRequest().build();
+	    }
+		
+	  }
+	  
+	  @RequestMapping(value = "/commitsbranchbeginenddate", method = RequestMethod.GET)
+	  @ApiOperation(value = "Find all commits from a repository branch", notes = "Return all commits from a repository branch")
+	  
+	  public ResponseEntity<List<Commit>> allCommitsBranchBeginEndDate(@RequestParam("username") final String usernamelogin,
+		      @RequestParam("password") final String passwordlogin,
+		      @RequestParam("reponame") final String reponame,
+		      @RequestParam("branch") final String branch,
+		      @RequestParam("begindate") final String beginDateString,
+		      @RequestParam("enddate") final String endDateString,
+		      @RequestParam("owner") final String owner){
+		final String usernameloginEncriptado = Utilities.encriptar(usernamelogin);
+	    final String contrasenaloginEncriptado = Utilities.encriptar(passwordlogin);
+
+	    final User usuario = usersService.getUserByUsernameAndPassword(usernameloginEncriptado, contrasenaloginEncriptado);
+	    if (usuario != null) {
+	      LOG.info("Get commits");
+	      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu hh:mm");
+	      LocalDate ldtBegin = LocalDate.parse( beginDateString , formatter );
+	      LocalDate ldtEnd = LocalDate.parse( endDateString , formatter );
+	      
+	      Instant beginDate = ldtBegin.atStartOfDay(ZoneId.systemDefault()).toInstant();
+	      Instant endDate = ldtEnd.atStartOfDay(ZoneId.systemDefault()).toInstant();
+	      
+	      String [] bestDataDates = commitsService.getBestBeginEndData(reponame, branch, beginDate, endDate);
+	      
+	      List <Commit> commits = commitsService.getAllByBranchBeginEndDate(reponame, branch, beginDate, bestDataDates[0], endDate, bestDataDates[1]);
+	      
 	     
 	      return ResponseEntity.ok(commits);
 	    } else {

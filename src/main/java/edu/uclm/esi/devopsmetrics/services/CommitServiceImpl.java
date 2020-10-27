@@ -1,6 +1,7 @@
 package edu.uclm.esi.devopsmetrics.services;
 
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -124,25 +125,89 @@ public class CommitServiceImpl implements CommitService {
   }
 
   @Override
-  public List<Commit> getAllByBranch(final String reponame, final String branchname) {
+  	public List<Commit> getAllByBranch(final String reponame, final String branchname) {
 	 
-	Branch branch = branchService.getBranchByRepositoryyName(reponame, branchname);
-	
-	if(branch.getOrder()==0 || branch.getOrder()==1) {
-		final List<Commit> commits = commitRepository.findAllByBranch(reponame, branchname);
-		Collections.sort(commits);
+		Branch branch = branchService.getBranchByRepositoryyName(reponame, branchname);
 		
-	    return commits;
-	}
-	else {
-		  
-		  Branch branchBefore = branchService.getBeforeBranchByOrder(reponame, branch.getOrder());
-		
-		  List <Commit> listQuery = commitRepository.findAllByBranch(reponame, branchname);
+		if(branch==null) {
+			return null;
+		}
+		else if(branch.getOrder()==0 || branch.getOrder()==1) {
+			final List<Commit> commits = commitRepository.findAllByBranch(reponame, branchname);
+			Collections.sort(commits);
 			
-		  List <Commit> listBefore = commitRepository.findAllByBranch(reponame, branchBefore.getName());
-	      
-	      boolean seguir=true;
+		    return commits;
+		}
+		else {
+			  
+			  Branch branchBefore = branchService.getBeforeBranchByOrder(reponame, branch.getOrder());
+			
+			  List <Commit> listQuery = commitRepository.findAllByBranch(reponame, branchname);
+				
+			  List <Commit> listBefore = commitRepository.findAllByBranch(reponame, branchBefore.getName());
+		      
+			  List <Commit> commits = decantarCommits(listQuery, listBefore);
+		      
+		      return commits;
+		}
+	}
+
+	@Override
+	public List<Commit> getAllByBranchAndAuthorName(String reponame, String branchname, String authorName) {
+		Branch branch = branchService.getBranchByRepositoryyName(reponame, branchname);
+		
+		if(branch==null) {
+			return null;
+		}
+		else if(branch.getOrder()==0 || branch.getOrder()==1) {
+			final List<Commit> commits = commitRepository.findAllByBranchAndAuthorName(reponame, branchname, authorName);
+			Collections.sort(commits);
+			
+		    return commits;
+		}
+		else {
+			  
+			  Branch branchBefore = branchService.getBeforeBranchByOrder(reponame, branch.getOrder());
+			
+			  List <Commit> listQuery = commitRepository.findAllByBranchAndAuthorName(reponame, branchname, authorName);
+				
+			  List <Commit> listBefore = commitRepository.findAllByBranchAndAuthorName(reponame, branchBefore.getName(), authorName);
+		      
+			  List <Commit> commits = decantarCommits(listQuery, listBefore);
+		      
+		      return commits;
+		}
+	}
+	
+	@Override
+	public List<Commit> getAllByBranchBeginEndDate(String reponame, String branchname, Instant beginDate, String bestBeginData, Instant endDate, String bestEndData) {
+		Branch branch = branchService.getBranchByRepositoryyName(reponame, branchname);
+		
+		if(branch==null) {
+			return null;
+		}
+		else if(branch.getOrder()==0 || branch.getOrder()==1) {
+			final List<Commit> commits = commitRepository.findAllByBranchBeginEndDate(reponame, branchname, beginDate, bestBeginData, endDate, bestEndData);
+			Collections.sort(commits);
+			
+		    return commits;
+		}
+		else {
+			  
+			  Branch branchBefore = branchService.getBeforeBranchByOrder(reponame, branch.getOrder());
+			
+			  List <Commit> listQuery = commitRepository.findAllByBranchBeginEndDate(reponame, branchname, beginDate, bestBeginData, endDate, bestEndData);
+				
+			  List <Commit> listBefore = commitRepository.findAllByBranchBeginEndDate(reponame, branchBefore.getName(), beginDate, bestBeginData, endDate, bestEndData);
+		      
+			  List <Commit> commits = decantarCommits(listQuery, listBefore);
+		      
+		      return commits;
+		}
+	}
+
+	private List<Commit> decantarCommits(List<Commit> listQuery, List<Commit> listBefore) {
+		  boolean seguir=true;
 	      List <Commit> commits =  new ArrayList<Commit>();
 	      
 	      
@@ -161,48 +226,14 @@ public class CommitServiceImpl implements CommitService {
 	      Collections.sort(commits);
 	      
 	      return commits;
-		}
 	}
 
 	@Override
-	public List<Commit> getAllByBranchAndAuthorName(String reponame, String branchname, String authorName) {
-		Branch branch = branchService.getBranchByRepositoryyName(reponame, branchname);
-		
-		if(branch.getOrder()==0 || branch.getOrder()==1) {
-			final List<Commit> commits = commitRepository.findAllByBranchAndAuthorName(reponame, branchname, authorName);
-			Collections.sort(commits);
-			
-		    return commits;
-		}
-		else {
-			  
-			  Branch branchBefore = branchService.getBeforeBranchByOrder(reponame, branch.getOrder());
-			
-			  List <Commit> listQuery = commitRepository.findAllByBranchAndAuthorName(reponame, branchname, authorName);
-				
-			  List <Commit> listBefore = commitRepository.findAllByBranchAndAuthorName(reponame, branchBefore.getName(), authorName);
-		      
-		      boolean seguir=true;
-		      List <Commit> commits =  new ArrayList<Commit>();
-		      
-		      
-		      for(int i = 0; i<listQuery.size(); i++) {
-		    	  for(int j = 0; j<listBefore.size()&&seguir==true; j++) {
-		    		  if (listQuery.get(i).getOid().equals(listBefore.get(j).getOid())){
-		    			  seguir=false;
-		    		  }
-		    	  }
-		    	  if(seguir==true) {
-		    		  commits.add(listQuery.get(i));
-		    	  }
-		    	  seguir=true;
-		      }
-		      
-		      Collections.sort(commits);
-		      
-		      return commits;
-			}
+	public String[] getBestBeginEndData(String reponame, String branch, Instant beginDate, Instant endDate) {
+		return commitRepository.findBestBeginEndData(reponame, branch, beginDate, endDate);
 	}
+
+	
 	
     
   }

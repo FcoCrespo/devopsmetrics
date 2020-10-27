@@ -1,5 +1,6 @@
 package edu.uclm.esi.devopsmetrics.repositories;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -69,6 +70,20 @@ public interface CommitRepository {
    * @author FcoCrespo
    */
   List<Commit> findAllByBranchAndAuthorName(String reponame, String branch, String authorName);
+  
+  /**
+   * Método para obtener commits por su fecha de inicio y de fin
+   * 
+   * @author FcoCrespo
+   */
+  List<Commit> findAllByBranchBeginEndDate(String reponame, String branch, Instant beginDate, String bestBeginDate, Instant endDate, String bestEndDate);
+  
+  /**
+   * Método para obtener commits por su fecha de inicio y de fin
+   * 
+   * @author FcoCrespo
+   */
+  String [] findBestBeginEndData(String reponame, String branch, Instant beginDate, Instant endDate);
   
 
 

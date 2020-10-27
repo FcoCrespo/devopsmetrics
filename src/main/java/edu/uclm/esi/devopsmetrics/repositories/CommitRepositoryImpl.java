@@ -1,5 +1,7 @@
 package edu.uclm.esi.devopsmetrics.repositories;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
@@ -113,13 +115,102 @@ public class CommitRepositoryImpl implements CommitRepository {
 
 	@Override
 	public List<Commit> findAllByBranchAndAuthorName(String reponame, String branch, String authorName) {
-		System.out.println("repo: "+authorName);
 		List<Commit> commits = this.mongoOperations
 		        .find(new Query(Criteria.where("branch").is(branch).
 		        		and("repository").is(reponame).
 		        		and("authorName").is(authorName)), Commit.class);
-		System.out.println("size aqui: "+commits.size());
 	    return commits;
+	}
+
+	@Override
+	public List<Commit> findAllByBranchBeginEndDate(String reponame, String branch, Instant beginDate, String bestBeginDate,
+			Instant endDate, String bestEndDate) {
+		
+		if(bestBeginDate.equals(bestEndDate)) {
+			List<Commit> commits = this.mongoOperations
+			        .find(new Query(Criteria.where("branch").is(branch).
+			        		and("repository").is(reponame).
+			        		and(bestBeginDate).gte(beginDate).lte(endDate)), Commit.class);
+		    return commits;
+		}
+		List<Commit> commits = this.mongoOperations
+		        .find(new Query(Criteria.where("branch").is(branch).
+		        		and("repository").is(reponame).
+		        		and(bestBeginDate).gte(beginDate).
+		        		and(bestEndDate).lte(endDate)), Commit.class);
+	    return commits;
+	}
+
+	@Override
+	public String[] findBestBeginEndData(String reponame, String branch, Instant beginDate, Instant endDate) {
+		Commit commitPushedBegin = this.mongoOperations
+		        .findOne(new Query(Criteria.where("branch").is(branch).
+		        		and("repository").is(reponame).
+		        		and("pushedDate").gte(beginDate)), Commit.class);
+		
+		Commit commitAuthoredBegin = this.mongoOperations
+		        .findOne(new Query(Criteria.where("branch").is(branch).
+		        		and("repository").is(reponame).
+		        		and("authoredDate").gte(beginDate)), Commit.class);
+		
+		String beginDateData="";
+		
+		if(commitPushedBegin==null) {
+			beginDateData="authoredDate";
+		}
+		else if(commitPushedBegin.getPushedDate()==null) {
+			beginDateData="authoredDate";
+		}
+		else if(commitAuthoredBegin==null) {
+			beginDateData="pushedDate";
+		}
+		else if(commitAuthoredBegin.getAuthoredDate()==null) {
+			beginDateData="pushedDate";
+		}
+		else if(commitPushedBegin.getPushedDate().truncatedTo(ChronoUnit.DAYS).isAfter(commitAuthoredBegin.getAuthoredDate().truncatedTo(ChronoUnit.DAYS))){
+			beginDateData="authoredDate";
+		}
+		else {
+			beginDateData="pushedDate";
+		}
+		
+		Commit commitPushedEnd = this.mongoOperations
+		        .findOne(new Query(Criteria.where("branch").is(branch).
+		        		and("repository").is(reponame).
+		        		and("pushedDate").lte(endDate)), Commit.class);
+		
+		Commit commitAuthoredEnd = this.mongoOperations
+		        .findOne(new Query(Criteria.where("branch").is(branch).
+		        		and("repository").is(reponame).
+		        		and("authoredDate").lte(endDate)), Commit.class);
+
+		String endDateData="";
+		
+		if(commitPushedEnd==null) {
+			endDateData="authoredDate";
+		}
+		else if(commitPushedEnd.getPushedDate()==null) {
+			endDateData="authoredDate";
+		}
+		else if(commitAuthoredEnd==null) {
+			endDateData="pushedDate";
+		}
+		else if(commitAuthoredEnd.getAuthoredDate()==null) {
+			endDateData="pushedDate";
+		}
+		else if(commitPushedBegin.getPushedDate().truncatedTo(ChronoUnit.DAYS).isAfter(commitAuthoredBegin.getAuthoredDate().truncatedTo(ChronoUnit.DAYS))){
+			endDateData="pushedDate";
+		}
+		else {
+			endDateData="authoredDate";
+		}
+		
+		String [] datasDate = new String[2];
+		datasDate[0]=beginDateData;
+		datasDate[1]=beginDateData;
+		
+		
+		return datasDate;
 	}
 
 	
