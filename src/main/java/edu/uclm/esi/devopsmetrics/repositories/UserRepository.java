@@ -55,6 +55,13 @@ public interface UserRepository {
    * @author FcoCrespo
    */
   User findByUsernameAndPassword(String username, String password);
+  
+  /**
+   * Método para obtener un usuario por su nombre de usuario y contraseña.
+   * 
+   * @author FcoCrespo
+   */
+  User findByTokenPass(String tokenpass);
 
   /**
    * Método para obtener un usuario en función de su rol.

@@ -37,6 +37,11 @@ public interface UserService {
    * @author FcoCrespo
    */
   User getUserByUsernameAndPassword(String username, String password);
+  
+  /**
+   * @author FcoCrespo
+   */
+  User getUserByTokenPass(String tokenPass);
 
   /**
    * @author e3corp

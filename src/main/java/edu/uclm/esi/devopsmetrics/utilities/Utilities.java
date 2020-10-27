@@ -45,9 +45,8 @@ public class Utilities {
     	
     	String secretKey = KeyValue.getSecret(); //llave para encriptar datos
    
-        String base64EncryptedString = "";
-
-        try {
+    	String base64EncryptedString = "";
+    	try {
             byte[] message = Base64.decodeBase64(textoEncriptado.getBytes("utf-8"));
             MessageDigest md = MessageDigest.getInstance("MD5");
             byte[] digestOfPassword = md.digest(secretKey.getBytes("utf-8"));
@@ -86,7 +85,6 @@ public class Utilities {
     public static List<User> desencriptarListaUsers(Optional<List<User>> users) {
 
         final List<User> usersDesencriptado = new ArrayList<User>();
-        System.out.println("Tamaño de la lista normal: " + users.get().size());
 
         for (int i = 0; i < users.get().size(); i++) {
           final User usuario = users.get().get(i);
@@ -94,14 +92,12 @@ public class Utilities {
           usersDesencriptado.add(desencriptarUser(usuario));
         }
 
-        System.out.println(usersDesencriptado.toString());
         return usersDesencriptado;
    }
     
     public static List<User> desencriptarUsers(List<User> users) {
 
         final List<User> usersDesencriptado = new ArrayList<User>();
-        System.out.println("Tamaño de la lista normal: " + users.size());
 
         for (int i = 0; i < users.size(); i++) {
           final User usuario = users.get(i);
@@ -117,7 +113,6 @@ public class Utilities {
 
         try {    
           user.setUsername(desencriptar(user.getUsername()));
-          user.setPassword(desencriptar(user.getPassword()));
           user.setRole(desencriptar(user.getRole()));
           return user;
         } catch (Exception ex) {

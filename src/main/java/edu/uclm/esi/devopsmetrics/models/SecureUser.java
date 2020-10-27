@@ -17,29 +17,21 @@ import edu.uclm.esi.devopsmetrics.utilities.Utilities;
  * 
  * @author FcoCrespo
  */
-@Document(collection = "users")
-public class User {
+
+public class SecureUser {
   /**
    * ID.
    * 
    * @author FcoCrespo
    */
-  @Id
   private String id;
   /**
    * username.
    * 
    * @author FcoCrespo
    */
-  @NotNull
   private String username;
-  /**
-   * Password.
-   * 
-   * @author FcoCrespo
-   */
-  @NotNull
-  private String password;
+  
   /**
    * Role.
    * 
@@ -66,11 +58,12 @@ public class User {
    * 
    * @author FcoCrespo
    */
-  public User(@NotNull final String username, @NotNull final String password, final String role) {
-    super();
-    this.username = username;
-    this.password = password;
-    this.role = role;
+  public SecureUser(String id, String username, String role, String tokenPass, Instant tokenValidity) {
+    this.id=id;
+    this.username=username;
+    this.role=role;
+    this.tokenPass=tokenPass;
+    this.tokenValidity=tokenValidity;
   }
 
 	public String getId() {
@@ -89,14 +82,6 @@ public class User {
 		this.username = username;
 	}
 	
-	public String getPassword() {
-		return password;
-	}
-	
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	
 	public String getRole() {
 		return role;
 	}
@@ -113,16 +98,12 @@ public class User {
 		this.tokenPass = tokenPass;
 	}
 	
-	public void newTokenPass() {
-		this.tokenPass=UUID.randomUUID().toString();
-	}
-	
 	public Instant getTokenValidity() {
 		return tokenValidity;
 	}
 	
-	public void setTokenValidity() {
-		this.tokenValidity = Instant.now().plus(3, ChronoUnit.HOURS);
+	public void setTokenValidity(Instant tokenValidity) {
+		this.tokenValidity = tokenValidity;
 	}
 	
 	@Override
@@ -130,7 +111,6 @@ public class User {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((role == null) ? 0 : role.hashCode());
 		result = prime * result + ((tokenPass == null) ? 0 : tokenPass.hashCode());
 		result = prime * result + ((tokenValidity == null) ? 0 : tokenValidity.hashCode());
@@ -146,16 +126,11 @@ public class User {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		User other = (User) obj;
+		SecureUser other = (SecureUser) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
-			return false;
-		if (password == null) {
-			if (other.password != null)
-				return false;
-		} else if (!password.equals(other.password))
 			return false;
 		if (role == null) {
 			if (other.role != null)
@@ -182,9 +157,8 @@ public class User {
 	
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", role=" + role + ", tokenPass="
-				+ tokenPass + ", tokenValidity=" + tokenValidity + "]";
+		return "SecureUser [id=" + id + ", username=" + username + ", role=" + role + ", tokenPass=" + tokenPass
+				+ ", tokenValidity=" + tokenValidity + "]";
 	}
-	
-	  
+
 }

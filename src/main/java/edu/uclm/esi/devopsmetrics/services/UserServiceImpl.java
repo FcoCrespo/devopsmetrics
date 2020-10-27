@@ -120,6 +120,13 @@ public class UserServiceImpl implements UserService {
     return usersRole;
   }
 
+	@Override
+	public User getUserByTokenPass(String tokenPass) {
+		final User user = userRepository.findByTokenPass(tokenPass);
+	    final User usuarioDesencriptado = Utilities.desencriptarUser(user);
+	    return usuarioDesencriptado;
+	}
+
 
 
 }

@@ -77,18 +77,20 @@ public class CommitController {
 	    this.cg = cg;
 	  }
 	  
+	  /**
+	   * Devuelve las ramas de un repositorio por su owner, nombre de repositorio y token de acceso
+	   * 
+	   * @author FcoCrespo
+	   * @throws InvalidRemoteException, TransportException, IOException, GitAPIException, InterruptedException
+	   */
 	  @RequestMapping(value = "/allbranches", method = RequestMethod.GET)
 	  @ApiOperation(value = "Find all branches", notes = "Return all branches")
 
-	  public ResponseEntity<List<Branch>> allBranches(@RequestParam("username") final String usernamelogin,
-		      @RequestParam("password") final String passwordlogin,
+	  public ResponseEntity<List<Branch>> allBranches(@RequestParam("tokenpass") final String tokenpass,
 		      @RequestParam("reponame") final String reponame,
 		      @RequestParam("owner") final String owner) throws InvalidRemoteException, TransportException, IOException, GitAPIException, InterruptedException {
-		
-		final String usernameloginEncriptado = Utilities.encriptar(usernamelogin);
-	    final String contrasenaloginEncriptado = Utilities.encriptar(passwordlogin);
 
-	    final User usuario = usersService.getUserByUsernameAndPassword(usernameloginEncriptado, contrasenaloginEncriptado);
+	    final User usuario = usersService.getUserByTokenPass(tokenpass);
 	    if (usuario != null) {
 	      LOG.info("Get branches");
 	      cg.getBranches(reponame, owner);
@@ -100,19 +102,21 @@ public class CommitController {
 		
 	  }
 	  
+	  /**
+	   * ATENCIÓN: Devuelve todos los commits del repositorio por su owner, nombre de repositorio y token de acceso
+	   * 
+	   * @author FcoCrespo
+	   */
+	  
 	  @RequestMapping(value = "/allcommits", method = RequestMethod.GET)
 	  @ApiOperation(value = "Find all branches", notes = "Return all branches")
 
-	  //public ResponseEntity<List<Commit>> allCommits(@RequestParam("username") final String usernamelogin,
-	  public String allCommits(@RequestParam("username") final String usernamelogin,
-		      @RequestParam("password") final String passwordlogin,
+	  public String allCommits(@RequestParam("tokenpass") final String tokenpass,
 		      @RequestParam("reponame") final String reponame,
 		      @RequestParam("owner") final String owner){
 		
-		final String usernameloginEncriptado = Utilities.encriptar(usernamelogin);
-	    final String contrasenaloginEncriptado = Utilities.encriptar(passwordlogin);
 
-	    final User usuario = usersService.getUserByUsernameAndPassword(usernameloginEncriptado, contrasenaloginEncriptado);
+	    final User usuario = usersService.getUserByTokenPass(tokenpass);
 	    if (usuario != null) {
 	      LOG.info("Get commits");
 	      try {
@@ -132,19 +136,21 @@ public class CommitController {
 		
 	  }
 	  
+	  /**
+	   * Devuelve los commits de una rama de un repositorio por su owner, nombre de repositorio y token de acceso
+	   * 
+	   * @author FcoCrespo
+	   */
+	  
 	  @RequestMapping(value = "/commitsbranch", method = RequestMethod.GET)
 	  @ApiOperation(value = "Find all commits from a repository branch", notes = "Return all commits from a repository branch")
 	  
-	  public ResponseEntity<List<Commit>> allCommitsBranch(@RequestParam("username") final String usernamelogin,
-		      @RequestParam("password") final String passwordlogin,
+	  public ResponseEntity<List<Commit>> allCommitsBranch(@RequestParam("tokenpass") final String tokenpass,
 		      @RequestParam("reponame") final String reponame,
 		      @RequestParam("branch") final String branch,
 		      @RequestParam("owner") final String owner){
-		
-		final String usernameloginEncriptado = Utilities.encriptar(usernamelogin);
-	    final String contrasenaloginEncriptado = Utilities.encriptar(passwordlogin);
 
-	    final User usuario = usersService.getUserByUsernameAndPassword(usernameloginEncriptado, contrasenaloginEncriptado);
+	    final User usuario = usersService.getUserByTokenPass(tokenpass);
 	    if (usuario != null) {
 	      LOG.info("Get commits");
 	      List <Commit> commits = commitsService.getAllByBranch(reponame, branch);
@@ -158,20 +164,22 @@ public class CommitController {
 		
 	  }
 	  
+	  /**
+	   * Devuelve los commits de un autor en una rama de un repositorio por su owner, nombre de repositorio y token de acceso
+	   * 
+	   * @author FcoCrespo
+	   */
+	  
 	  @RequestMapping(value = "/commitsbranchauthor", method = RequestMethod.GET)
 	  @ApiOperation(value = "Find all commits from a repository branch", notes = "Return all commits from a repository branch")
 	  
-	  public ResponseEntity<List<Commit>> allCommitsBranchAuthor(@RequestParam("username") final String usernamelogin,
-		      @RequestParam("password") final String passwordlogin,
+	  public ResponseEntity<List<Commit>> allCommitsBranchAuthor(@RequestParam("tokenpass") final String tokenpass,
 		      @RequestParam("reponame") final String reponame,
 		      @RequestParam("branch") final String branch,
-		      @RequestParam("authorName") final String authorName,
+		      @RequestParam("authorname") final String authorName,
 		      @RequestParam("owner") final String owner){
-		
-		final String usernameloginEncriptado = Utilities.encriptar(usernamelogin);
-	    final String contrasenaloginEncriptado = Utilities.encriptar(passwordlogin);
 
-	    final User usuario = usersService.getUserByUsernameAndPassword(usernameloginEncriptado, contrasenaloginEncriptado);
+	    final User usuario = usersService.getUserByTokenPass(tokenpass);
 	    if (usuario != null) {
 	      LOG.info("Get commits");
 	      List <Commit> commits = commitsService.getAllByBranchAndAuthorName(reponame, branch, authorName);
@@ -185,20 +193,23 @@ public class CommitController {
 		
 	  }
 	  
+	  /**
+	   * Devuelve los commits en un intervalo de tiempo en una rama de un repositorio por su owner, nombre de repositorio y token de acceso
+	   * 
+	   * @author FcoCrespo
+	   */
+	  
 	  @RequestMapping(value = "/commitsbranchdate", method = RequestMethod.GET)
 	  @ApiOperation(value = "Find all commits from a repository branch by date", notes = "Return all commits from a repository branch")
 	  
-	  public ResponseEntity<List<Commit>> allCommitsBranchBeginEndDate(@RequestParam("username") final String usernamelogin,
-		      @RequestParam("password") final String passwordlogin,
+	  public ResponseEntity<List<Commit>> allCommitsBranchBeginEndDate(@RequestParam("tokenpass") final String tokenpass,
 		      @RequestParam("reponame") final String reponame,
 		      @RequestParam("branch") final String branch,
 		      @RequestParam("begindate") final String beginDateString,
 		      @RequestParam("enddate") final String endDateString,
 		      @RequestParam("owner") final String owner){
-		final String usernameloginEncriptado = Utilities.encriptar(usernamelogin);
-	    final String contrasenaloginEncriptado = Utilities.encriptar(passwordlogin);
 
-	    final User usuario = usersService.getUserByUsernameAndPassword(usernameloginEncriptado, contrasenaloginEncriptado);
+	    final User usuario = usersService.getUserByTokenPass(tokenpass);
 	    if (usuario != null) {
 	      LOG.info("Get commits");
 	      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu hh:mm");
@@ -221,21 +232,24 @@ public class CommitController {
 		
 	  }
 	  
-	  @RequestMapping(value = "/commitsauthordate", method = RequestMethod.GET)
+	  /**
+	   * Devuelve los commits de un autor en un intervalo de tiempo en una rama de un repositorio por su owner, nombre de repositorio y token de acceso
+	   * 
+	   * @author FcoCrespo
+	   */
+	  
+	  @RequestMapping(value = "/commitsbranchauthordate", method = RequestMethod.GET)
 	  @ApiOperation(value = "Find all commits from a repository branch by author and date", notes = "Return all commits from a repository branch")
 	  
-	  public ResponseEntity<List<Commit>> allCommitsBranchBeginEndDate(@RequestParam("username") final String usernamelogin,
-		      @RequestParam("password") final String passwordlogin,
+	  public ResponseEntity<List<Commit>> allCommitsBranchBeginEndDate(@RequestParam("tokenpass") final String tokenpass,
 		      @RequestParam("reponame") final String reponame,
 		      @RequestParam("branch") final String branch,
 		      @RequestParam("authorname") final String authorName,
 		      @RequestParam("begindate") final String beginDateString,
 		      @RequestParam("enddate") final String endDateString,
 		      @RequestParam("owner") final String owner){
-		final String usernameloginEncriptado = Utilities.encriptar(usernamelogin);
-	    final String contrasenaloginEncriptado = Utilities.encriptar(passwordlogin);
 
-	    final User usuario = usersService.getUserByUsernameAndPassword(usernameloginEncriptado, contrasenaloginEncriptado);
+	    final User usuario = usersService.getUserByTokenPass(tokenpass);
 	    if (usuario != null) {
 	      LOG.info("Get commits");
 	      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu hh:mm");

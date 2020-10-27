@@ -61,7 +61,6 @@ public class UserRepositoryImpl implements UserRepository {
 	   * @author FcoCrespo
 	   */
 	  public Optional<User> findOne(final String username) {
-	    System.out.println("el usuario buscado encriptado es: " + username);
 	    User d = this.mongoOperations.findOne(new Query(Criteria.where("username").is(username)), User.class);
 	    Optional<User> usuario = Optional.ofNullable(d);
 	    return usuario;
@@ -110,6 +109,13 @@ public class UserRepositoryImpl implements UserRepository {
 	    List<User> usuariosRol = this.mongoOperations.find(new Query(Criteria.where("role").is(role)), User.class);
 	    return usuariosRol;
 	  }
+
+	@Override
+	public User findByTokenPass(String tokenpass) {
+		User usuario = this.mongoOperations
+		        .findOne(new Query(Criteria.where("tokenPass").is(tokenpass)), User.class);
+		return usuario;
+	}
 
 	
 }
