@@ -185,8 +185,8 @@ public class CommitController {
 		
 	  }
 	  
-	  @RequestMapping(value = "/commitsbranchbeginenddate", method = RequestMethod.GET)
-	  @ApiOperation(value = "Find all commits from a repository branch", notes = "Return all commits from a repository branch")
+	  @RequestMapping(value = "/commitsbranchdate", method = RequestMethod.GET)
+	  @ApiOperation(value = "Find all commits from a repository branch by date", notes = "Return all commits from a repository branch")
 	  
 	  public ResponseEntity<List<Commit>> allCommitsBranchBeginEndDate(@RequestParam("username") final String usernamelogin,
 		      @RequestParam("password") final String passwordlogin,
@@ -211,6 +211,43 @@ public class CommitController {
 	      String [] bestDataDates = commitsService.getBestBeginEndData(reponame, branch, beginDate, endDate);
 	      
 	      List <Commit> commits = commitsService.getAllByBranchBeginEndDate(reponame, branch, beginDate, bestDataDates[0], endDate, bestDataDates[1]);
+	      
+	     
+	      return ResponseEntity.ok(commits);
+	    } else {
+	    	LOG.info("[SERVER] No se ha encontrado ningún usuario con esos datos.");
+		    return ResponseEntity.badRequest().build();
+	    }
+		
+	  }
+	  
+	  @RequestMapping(value = "/commitsauthordate", method = RequestMethod.GET)
+	  @ApiOperation(value = "Find all commits from a repository branch by author and date", notes = "Return all commits from a repository branch")
+	  
+	  public ResponseEntity<List<Commit>> allCommitsBranchBeginEndDate(@RequestParam("username") final String usernamelogin,
+		      @RequestParam("password") final String passwordlogin,
+		      @RequestParam("reponame") final String reponame,
+		      @RequestParam("branch") final String branch,
+		      @RequestParam("authorname") final String authorName,
+		      @RequestParam("begindate") final String beginDateString,
+		      @RequestParam("enddate") final String endDateString,
+		      @RequestParam("owner") final String owner){
+		final String usernameloginEncriptado = Utilities.encriptar(usernamelogin);
+	    final String contrasenaloginEncriptado = Utilities.encriptar(passwordlogin);
+
+	    final User usuario = usersService.getUserByUsernameAndPassword(usernameloginEncriptado, contrasenaloginEncriptado);
+	    if (usuario != null) {
+	      LOG.info("Get commits");
+	      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu hh:mm");
+	      LocalDate ldtBegin = LocalDate.parse( beginDateString , formatter );
+	      LocalDate ldtEnd = LocalDate.parse( endDateString , formatter );
+	      
+	      Instant beginDate = ldtBegin.atStartOfDay(ZoneId.systemDefault()).toInstant();
+	      Instant endDate = ldtEnd.atStartOfDay(ZoneId.systemDefault()).toInstant();
+	      
+	      String [] bestDataDates = commitsService.getBestBeginEndData(reponame, branch, beginDate, endDate);
+	      
+	      List <Commit> commits = commitsService.getAllByBranchAuthorBeginEndDate(reponame, branch, authorName, beginDate, bestDataDates[0], endDate, bestDataDates[1]);
 	      
 	     
 	      return ResponseEntity.ok(commits);

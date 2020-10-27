@@ -83,6 +83,13 @@ public interface CommitRepository {
    * 
    * @author FcoCrespo
    */
+  List<Commit> findAllByBranchAuthorBeginEndDate(String reponame, String branch, String authorName, Instant beginDate, String bestBeginDate, Instant endDate, String bestEndDate);
+  
+  /**
+   * Método para obtener commits por su fecha de inicio y de fin
+   * 
+   * @author FcoCrespo
+   */
   String [] findBestBeginEndData(String reponame, String branch, Instant beginDate, Instant endDate);
   
 

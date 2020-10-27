@@ -213,5 +213,24 @@ public class CommitRepositoryImpl implements CommitRepository {
 		return datasDate;
 	}
 
+	@Override
+	public List<Commit> findAllByBranchAuthorBeginEndDate(String reponame, String branch, String authorName,
+			Instant beginDate, String bestBeginDate, Instant endDate, String bestEndDate) {
+		if(bestBeginDate.equals(bestEndDate)) {
+			List<Commit> commits = this.mongoOperations
+			        .find(new Query(Criteria.where("branch").is(branch).
+			        		and("repository").is(reponame).
+			        		and("authorName").is(authorName).
+			        		and(bestBeginDate).gte(beginDate).lte(endDate)), Commit.class);
+		    return commits;
+		}
+		List<Commit> commits = this.mongoOperations
+		        .find(new Query(Criteria.where("branch").is(branch).
+		        		and("repository").is(reponame).
+		        		and(bestBeginDate).gte(beginDate).
+		        		and(bestEndDate).lte(endDate)), Commit.class);
+	    return commits;
+	}
+
 	
 }
