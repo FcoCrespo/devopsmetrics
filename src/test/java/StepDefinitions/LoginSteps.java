@@ -38,7 +38,7 @@ public class LoginSteps {
   @Then("user is navigated to the home page")
   public void user_is_navigated_to_the_home_page(){
 	  System.out.println("Inside step - user is navigated to the home page");
-	  assertEquals("hola", "hola");
+	  assertEquals("hola", "adios");
   }
 
 }
