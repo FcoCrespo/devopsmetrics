@@ -33,6 +33,7 @@ public class TestRunner {
     public static void setupBefore() throws InterruptedException {
 		
     	try {
+    		
     		 String dir = "C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\Reports-"+dtf.format(now);
 
     		  Path path = Paths.get(dir);
