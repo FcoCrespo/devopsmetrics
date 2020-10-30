@@ -28,18 +28,19 @@ plugin = {"json:target/JSONReports/TestReport.json","pretty", "junit:target/JUni
 		)
 public class TestRunner {
 
+	
     @AfterClass	    
     public static void setupAfter() {	 
     	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy-HH-mm");
     	LocalDateTime now = LocalDateTime.now();  
     	
     	File fJSONoriginal = new File("target/JSONReports/TestReport.json");
-    	File fJSONrenombrado = new File("target/JSONReports/TestReport"+dtf.format(now)+".json");
+    	File fJSONrenombrado = new File("target/reports/Reports"+dtf.format(now)+"JSONReports/TestReport"+dtf.format(now)+".json");
     	
-    	File fJUnitoriginal = new File("target/JUnitReports/TestReport.xml");
+    	File fJUnitoriginal = new File("target/reports/Reports/"+dtf.format(now)+"JUnitReports/TestReport.xml");
     	File fJUnitrenombrado = new File("target/JUnitReports/TestReport"+dtf.format(now)+".xml");
     	
-    	File fHTMLoriginal = new File("target/HTMLReports/TestReport.html");
+    	File fHTMLoriginal = new File("target/reports/Reports/"+dtf.format(now)+"HTMLReports/TestReport.html");
     	File fHTMLrenombrado = new File("target/HTMLReports/TestReport"+dtf.format(now)+".html");
     	
     	fJSONoriginal.renameTo(fJSONrenombrado);
