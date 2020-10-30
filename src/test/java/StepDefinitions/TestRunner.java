@@ -31,21 +31,45 @@ public class TestRunner {
 	
     @AfterClass	    
     public static void setupAfter() {	 
+    	
     	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy-HH-mm");
     	LocalDateTime now = LocalDateTime.now();  
     	
+    	String dir = "reports/Reports-"+dtf.format(now);
+
+    	 try {
+
+             Path path = Paths.get(dir);
+
+             Files.createDirectories(path);
+
+             System.out.println("Directory is created!");
+
+         } catch (IOException e) {
+             System.err.println("Failed to create directory!" + e.getMessage());
+         }
+    	
     	File fJSONoriginal = new File("reports/JSONReports/TestReport.json");
-    	File fJSONrenombrado = new File("reports/Reports"+dtf.format(now)+"/JSONReports/TestReport"+dtf.format(now)+".json");
+    	File fJSONrenombrado = new File("reports/Reports-"+dtf.format(now)+"/TestReport"+dtf.format(now)+".json");
     	
     	File fJUnitoriginal = new File("reports/JUnitReports/TestReport.xml");
-    	File fJUnitrenombrado = new File("reports/Reports"+dtf.format(now)+"/JUnitReports/TestReport"+dtf.format(now)+".xml");
+    	File fJUnitrenombrado = new File("reports/Reports-"+dtf.format(now)+"/TestReport"+dtf.format(now)+".xml");
     	
     	File fHTMLoriginal = new File("reports/HTMLReports/TestReport.html");
-    	File fHTMLrenombrado = new File("reports/Reports"+dtf.format(now)+"/HTMLReports/TestReport"+dtf.format(now)+".html");
+    	File fHTMLrenombrado = new File("reports/Reports-"+dtf.format(now)+"/TestReport"+dtf.format(now)+".html");
     	
     	fJSONoriginal.renameTo(fJSONrenombrado);
     	fJUnitoriginal.renameTo(fJUnitrenombrado);
     	fHTMLoriginal.renameTo(fHTMLrenombrado);
+    	
+    	File folder = new File("reports/JSONReports");
+    	folder.delete();
+    	folder =new File("reports/JUnitReports");
+    	folder.delete();
+    	folder =new File("reports/HTMLReports");
+    	folder.delete();
+    	
+    	
     }
     
 }
