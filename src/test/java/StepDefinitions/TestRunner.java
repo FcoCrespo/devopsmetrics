@@ -28,6 +28,20 @@ plugin = {"json:reports/JSONReports/TestReport.json","pretty", "junit:reports/JU
 		)
 public class TestRunner {
 
+	@BeforeClass	    
+    public static void setupBefore() {
+		String source = "C:/Users/Crespo/.jenkins/workspace/devopsmetrics/reports";
+		File srcDir = new File(source);
+
+		String destination = "C:/Users/Crespo/eclipse-workspace/devopsmetrics/reports";
+		File destDir = new File(destination);
+
+		try {
+		    FileUtils.copyDirectory(srcDir, destDir);
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+	}
 	
     @AfterClass	    
     public static void setupAfter() {	 
@@ -47,7 +61,6 @@ public class TestRunner {
     	fJSONoriginal.renameTo(fJSONrenombrado);
     	fJUnitoriginal.renameTo(fJUnitrenombrado);
     	fHTMLoriginal.renameTo(fHTMLrenombrado);
-    	
     	
     }
     
