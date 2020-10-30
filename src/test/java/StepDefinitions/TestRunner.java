@@ -28,13 +28,12 @@ plugin = {"json:target/reports/JSONReports/TestReport.json","pretty", "junit:tar
 		)
 public class TestRunner {
 
+	final static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy-HH-mm");
+	final static LocalDateTime now = LocalDateTime.now();
 	
 	@BeforeClass	    
     public static void setupBefore() {
 		
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy-HH-mm");
-    	LocalDateTime now = LocalDateTime.now();  
-    	
     	try {
     		 String dir = "C:/Users/Crespo/.jenkins/workspace/devopsmetrics/target/reports/Reports-"+dtf.format(now);
 
@@ -68,8 +67,7 @@ public class TestRunner {
     @AfterClass	    
     public static void setupAfter() {	 
     	
-    	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy-HH-mm");
-    	LocalDateTime now = LocalDateTime.now();  
+    	  
     	
     	File fJSONoriginal = new File("C:/Users/Crespo/.jenkins/workspace/devopsmetrics/target/reports/JSONReports/TestReport.json");
     	File fJSONrenombrado = new File("C:/Users/Crespo/.jenkins/workspace/devopsmetrics/target/reports/Reports-"+dtf.format(now)+"/TestReport"+dtf.format(now)+".json");
