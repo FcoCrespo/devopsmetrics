@@ -27,5 +27,10 @@ monochrome =true,
 plugin = {"json:target/cucumber/TestReport.json","pretty", "junit:target/cucumber/TestReport.xml","html:target/cucumber/TestReport.html"}
 		)
 public class TestRunner {
+
+	@BeforeClass
+    public static void setupAfter() {
+    	System.out.println("prueba estable");
+    }
     
 }
