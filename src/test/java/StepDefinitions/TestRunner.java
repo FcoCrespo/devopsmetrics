@@ -36,7 +36,7 @@ public class TestRunner {
     	LocalDateTime now = LocalDateTime.now();  
     	
     	try {
-    		 String dir = "target/reports/Reports-"+dtf.format(now);
+    		 String dir = "C:/Users/Crespo/.jenkins/workspace/devopsmetrics/target/reports/Reports-"+dtf.format(now);
 
     		  Path path = Paths.get(dir);
 
@@ -71,24 +71,24 @@ public class TestRunner {
     	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy-HH-mm");
     	LocalDateTime now = LocalDateTime.now();  
     	
-    	File fJSONoriginal = new File("target/reports/JSONReports/TestReport.json");
-    	File fJSONrenombrado = new File("target/reports/Reports-"+dtf.format(now)+"/TestReport"+dtf.format(now)+".json");
+    	File fJSONoriginal = new File("C:/Users/Crespo/.jenkins/workspace/devopsmetrics/target/reports/JSONReports/TestReport.json");
+    	File fJSONrenombrado = new File("C:/Users/Crespo/.jenkins/workspace/devopsmetrics/target/reports/Reports-"+dtf.format(now)+"/TestReport"+dtf.format(now)+".json");
     	
-    	File fJUnitoriginal = new File("target/reports/JUnitReports/TestReport.xml");
-    	File fJUnitrenombrado = new File("target/reports/Reports-"+dtf.format(now)+"/TestReport"+dtf.format(now)+".xml");
+    	File fJUnitoriginal = new File("C:/Users/Crespo/.jenkins/workspace/devopsmetrics/target/reports/JUnitReports/TestReport.xml");
+    	File fJUnitrenombrado = new File("C:/Users/Crespo/.jenkins/workspace/devopsmetrics/target/reports/Reports-"+dtf.format(now)+"/TestReport"+dtf.format(now)+".xml");
     	
-    	File fHTMLoriginal = new File("target/reports/HTMLReports/TestReport.html");
-    	File fHTMLrenombrado = new File("target/reports/Reports-"+dtf.format(now)+"/TestReport"+dtf.format(now)+".html");
+    	File fHTMLoriginal = new File("C:/Users/Crespo/.jenkins/workspace/devopsmetrics/target/reports/HTMLReports/TestReport.html");
+    	File fHTMLrenombrado = new File("C:/Users/Crespo/.jenkins/workspace/devopsmetrics/target/reports/Reports-"+dtf.format(now)+"/TestReport"+dtf.format(now)+".html");
     	
     	fJSONoriginal.renameTo(fJSONrenombrado);
     	fJUnitoriginal.renameTo(fJUnitrenombrado);
     	fHTMLoriginal.renameTo(fHTMLrenombrado);
     	
-    	File folder = new File("target/reports/JSONReports");
+    	File folder = new File("C:/Users/Crespo/.jenkins/workspace/devopsmetrics/target/reports/JSONReports");
     	folder.delete();
-    	folder = new File("target/reports/JUnitReports");
+    	folder = new File("C:/Users/Crespo/.jenkins/workspace/devopsmetrics/target/reports/JUnitReports");
     	folder.delete();
-    	folder = new File("target/reports/HTMLReports");
+    	folder = new File("C:/Users/Crespo/.jenkins/workspace/devopsmetrics/target/reports/HTMLReports");
     	folder.delete();
     	
     	
