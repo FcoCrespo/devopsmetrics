@@ -24,7 +24,7 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(features = "src/test/resources/features", glue="StepDefinitions",
 monochrome =true,
-plugin = {"json:target/testreports/JSONReports/TestReport.json","pretty", "junit:target/testreports/JUnitReports/TestReport.xml","html:target/testreports/HTMLReports/TestReport.html"}
+plugin = {"json:target/reports/JSONReports/TestReport.json","pretty", "junit:target/reports/JUnitReports/TestReport.xml","html:target/reports/HTMLReports/TestReport.html"}
 		)
 public class TestRunner {
 
@@ -35,7 +35,7 @@ public class TestRunner {
     public static void setupBefore() {
 		
     	try {
-    		 String dir = "C:/Users/Crespo/.jenkins/workspace/devopsmetrics/target/testreports/Reports-"+dtf.format(now);
+    		 String dir = "C:/Users/Crespo/.jenkins/workspace/devopsmetrics/target/reports/Reports-"+dtf.format(now);
 
     		  Path path = Paths.get(dir);
 
@@ -50,10 +50,10 @@ public class TestRunner {
 
     	}
 		
-		String source = "C:/Users/Crespo/.jenkins/workspace/devopsmetrics/target/testreports";
+		String source = "C:/Users/Crespo/.jenkins/workspace/devopsmetrics/target/reports";
 		File srcDir = new File(source);
 
-		String destination = "C:/Users/Crespo/eclipse-workspace/devopsmetrics/target/testreports";
+		String destination = "C:/Users/Crespo/eclipse-workspace/devopsmetrics/target/reports";
 		File destDir = new File(destination);
 
 		try {
@@ -69,25 +69,26 @@ public class TestRunner {
     	
     	  
     	
-    	File fJSONoriginal = new File("C:/Users/Crespo/.jenkins/workspace/devopsmetrics/target/testreports/JSONReports/TestReport.json");
-    	File fJSONrenombrado = new File("C:/Users/Crespo/.jenkins/workspace/devopsmetrics/target/testreports/Reports-"+dtf.format(now)+"/TestReport"+dtf.format(now)+".json");
+    	File fJSONoriginal = new File("C:/Users/Crespo/.jenkins/workspace/devopsmetrics/target/reports/JSONReports/TestReport.json");
+    	File fJSONrenombrado = new File("C:/Users/Crespo/.jenkins/workspace/devopsmetrics/target/reports/Reports-"+dtf.format(now)+"/TestReport"+dtf.format(now)+".json");
     	
-    	File fJUnitoriginal = new File("C:/Users/Crespo/.jenkins/workspace/devopsmetrics/target/testreports/JUnitReports/TestReport.xml");
-    	File fJUnitrenombrado = new File("C:/Users/Crespo/.jenkins/workspace/devopsmetrics/target/testreports/Reports-"+dtf.format(now)+"/TestReport"+dtf.format(now)+".xml");
+    	File fJUnitoriginal = new File("C:/Users/Crespo/.jenkins/workspace/devopsmetrics/target/reports/JUnitReports/TestReport.xml");
+    	File fJUnitrenombrado = new File("C:/Users/Crespo/.jenkins/workspace/devopsmetrics/target/reports/Reports-"+dtf.format(now)+"/TestReport"+dtf.format(now)+".xml");
     	
-    	File fHTMLoriginal = new File("C:/Users/Crespo/.jenkins/workspace/devopsmetrics/target/testreports/HTMLReports/TestReport.html");
-    	File fHTMLrenombrado = new File("C:/Users/Crespo/.jenkins/workspace/devopsmetrics/target/testreports/Reports-"+dtf.format(now)+"/TestReport"+dtf.format(now)+".html");
+    	File fHTMLoriginal = new File("C:/Users/Crespo/.jenkins/workspace/devopsmetrics/target/reports/HTMLReports/TestReport.html");
+    	File fHTMLrenombrado = new File("C:/Users/Crespo/.jenkins/workspace/devopsmetrics/target/reports/Reports-"+dtf.format(now)+"/TestReport"+dtf.format(now)+".html");
     	
     	fJSONoriginal.renameTo(fJSONrenombrado);
     	fJUnitoriginal.renameTo(fJUnitrenombrado);
     	fHTMLoriginal.renameTo(fHTMLrenombrado);
     	
-    	File folder = new File("C:/Users/Crespo/.jenkins/workspace/devopsmetrics/target/testreports/JSONReports");
+    	File folder = new File("C:/Users/Crespo/.jenkins/workspace/devopsmetrics/target/reports/JSONReports");
     	folder.delete();
-    	folder = new File("C:/Users/Crespo/.jenkins/workspace/devopsmetrics/target/testreports/JUnitReports");
+    	folder = new File("C:/Users/Crespo/.jenkins/workspace/devopsmetrics/target/reports/JUnitReports");
     	folder.delete();
-    	folder = new File("C:/Users/Crespo/.jenkins/workspace/devopsmetrics/target/testreports/HTMLReports");
+    	folder = new File("C:/Users/Crespo/.jenkins/workspace/devopsmetrics/target/reports/HTMLReports");
     	folder.delete();
+    	
     	
     }
     
