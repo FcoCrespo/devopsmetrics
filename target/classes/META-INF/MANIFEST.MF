@@ -3,5 +3,6 @@ Build-Jdk-Spec: 11
 Implementation-Title: devopsmetrics
 Implementation-Version: 0.0.1-SNAPSHOT
 Implementation-Vendor: Pivotal Software, Inc.
+Main-Class: edu.uclm.esi.devopsmetrics.App
 Created-By: Maven Integration for Eclipse
 
