@@ -89,7 +89,6 @@ public class TestRunner {
     	folder = new File("C:/Users/Crespo/.jenkins/workspace/devopsmetrics/target/reports/HTMLReports");
     	folder.delete();
     	
-    	
     }
     
 }
