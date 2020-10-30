@@ -9,8 +9,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.Instant;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -61,12 +59,12 @@ public class TestRunner {
 		} catch (IOException e) {
 		    e.printStackTrace();
 		}
-		
 	}
 	
 	
     @AfterClass	    
     public static void setupAfter() {	 
+    
     	
     	File fJSONoriginal = new File("C:/Users/Crespo/.jenkins/workspace/devopsmetrics/target/reports/JSONReports/TestReport.json");
     	File fJSONrenombrado = new File("C:/Users/Crespo/.jenkins/workspace/devopsmetrics/target/reports/Reports-"+dtf.format(now)+"/TestReport"+dtf.format(now)+".json");
