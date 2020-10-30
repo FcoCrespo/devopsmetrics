@@ -3,7 +3,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2020-10-30T17:31:39.503Z",
+        "start_timestamp": "2020-10-30T17:56:38.803Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -13,7 +13,7 @@
         "steps": [
           {
             "result": {
-              "duration": 22000500,
+              "duration": 24000900,
               "status": "passed"
             },
             "line": 4,
@@ -25,6 +25,7 @@
           },
           {
             "result": {
+              "duration": 999500,
               "status": "passed"
             },
             "line": 5,
@@ -47,7 +48,7 @@
           },
           {
             "result": {
-              "duration": 2000100,
+              "duration": 1997800,
               "status": "passed"
             },
             "line": 7,
