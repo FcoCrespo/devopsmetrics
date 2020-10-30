@@ -5,6 +5,10 @@ import io.cucumber.junit.CucumberOptions;
 import io.cucumber.spring.CucumberContextConfiguration;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -23,16 +27,33 @@ plugin = {"json:target/cucumber/TestReport.json","pretty", "junit:target/cucumbe
 		)
 public class TestRunner {
 
-    @BeforeClass
+    @AfterClass
     public static void setupAfter() {
     	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy-HH-mm");  
- 	   	LocalDateTime now = LocalDateTime.now();  
-    	File fJSONoriginal = new File("C:/Users/Crespo/.jenkins/workspace/devopsmetrics/target/cucumber/TestReport.json");
-    	File fJSONrenombrado = new File("target/cucumber/TestReport"+dtf.format(now)+".json");
-    	File fJUnitoriginal = new File("C:/Users/Crespo/.jenkins/workspace/devopsmetrics/target/cucumber/TestReport.xml");
-    	File fJUnitrenombrado = new File("target/cucumber/TestReport"+dtf.format(now)+".xml");
-    	File fHTMLoriginal = new File("C:/Users/Crespo/.jenkins/workspace/devopsmetrics/target/cucumber/TestReport.html");
-    	File fHTMLrenombrado = new File("target/cucumber/TestReport"+dtf.format(now)+".html");
+ 	   	LocalDateTime now = LocalDateTime.now(); 
+ 	   	
+    	String dir = "C:\\Users\\Crespo\\eclipse-workspace\\devopsmetrics\\target\\cucumber"+dtf.format(now);
+
+        try {
+
+            Path path = Paths.get(dir);
+
+            Files.createDirectories(path);
+
+            System.out.println("Directory is created!");
+
+            //Files.createDirectory(path);
+
+        } catch (IOException e) {
+            System.err.println("Failed to create directory!" + e.getMessage());
+        }
+    	
+    	File fJSONoriginal = new File("target/cucumber/TestReport.json");
+    	File fJSONrenombrado = new File("target/cucumber"+dtf.format(now)+"/TestReport"+dtf.format(now)+".json");
+    	File fJUnitoriginal = new File("target/cucumber/TestReport.xml");
+    	File fJUnitrenombrado = new File("target/cucumber"+dtf.format(now)+"/TestReport"+dtf.format(now)+".xml");
+    	File fHTMLoriginal = new File("target/cucumber/TestReport.html");
+    	File fHTMLrenombrado = new File("target/cucumber"+dtf.format(now)+"/TestReport"+dtf.format(now)+".html");
     	fJSONoriginal.renameTo(fJSONrenombrado);
     	fJUnitoriginal.renameTo(fJUnitrenombrado);
     	fHTMLoriginal.renameTo(fHTMLrenombrado);
