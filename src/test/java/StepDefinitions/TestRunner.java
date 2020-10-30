@@ -24,55 +24,27 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(features = "src/test/resources/features", glue="StepDefinitions",
 monochrome =true,
-plugin = {"json:target/cucumber/TestReport.json","pretty", "junit:target/cucumber/TestReport.xml","html:target/cucumber/TestReport.html"}
+plugin = {"json:target/JSONReports/TestReport.json","pretty", "junit:target/JUnitReports/TestReport.xml","html:target/HTMLReports/TestReport.html"}
 		)
 public class TestRunner {
 
-	final static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy-HH-mm");  
-	final static LocalDateTime now = LocalDateTime.now(); 
-	@BeforeClass
-    public static void setupBefore() {
-		
-    	String dir = "C:\\Users\\Crespo\\eclipse-workspace\\devopsmetrics\\target\\cucumber"+dtf.format(now);
-
-        try {
-
-            Path path = Paths.get(dir);
-
-            Files.createDirectories(path);
-
-            System.out.println("Directory is created!");
-
-        } catch (IOException e) {
-            System.err.println("Failed to create directory!" + e.getMessage());
-        }
-	}
-	
-	@AfterClass
-    public static void setupAfter() throws InterruptedException {
-		
- 	    Thread.sleep(1000);
-    	File fJSONoriginal = new File("target/cucumber/TestReport.json");
-    	File fJSONrenombrado = new File("target/cucumber"+dtf.format(now)+"/TestReport"+dtf.format(now)+".json");
-    	Thread.sleep(1000);
-    	File fJUnitoriginal = new File("target/cucumber/TestReport.xml");
-    	File fJUnitrenombrado = new File("target/cucumber"+dtf.format(now)+"/TestReport"+dtf.format(now)+".xml");
-    	Thread.sleep(1000);
-    	File fHTMLoriginal = new File("target/cucumber/TestReport.html");
-    	File fHTMLrenombrado = new File("target/cucumber"+dtf.format(now)+"/TestReport"+dtf.format(now)+".html");
-    	Thread.sleep(1000);
+    @AfterClass	    
+    public static void setupAfter() {	 
+    	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy-HH-mm");
+    	LocalDateTime now = LocalDateTime.now();  
+    	
+    	File fJSONoriginal = new File("target/JSONReports/TestReport.json");
+    	File fJSONrenombrado = new File("target/JSONReports/TestReport"+dtf.format(now)+".json");
+    	
+    	File fJUnitoriginal = new File("target/JUnitReports/TestReport.xml");
+    	File fJUnitrenombrado = new File("target/JUnitReports/TestReport"+dtf.format(now)+".xml");
+    	
+    	File fHTMLoriginal = new File("target/HTMLReports/TestReport.html");
+    	File fHTMLrenombrado = new File("target/HTMLReports/TestReport"+dtf.format(now)+".html");
+    	
     	fJSONoriginal.renameTo(fJSONrenombrado);
-    	Thread.sleep(1000);
     	fJUnitoriginal.renameTo(fJUnitrenombrado);
-    	Thread.sleep(1000);
     	fHTMLoriginal.renameTo(fHTMLrenombrado);
-    	
-    	
-    	File folder = new File("target/cucumber");
-    	Thread.sleep(1000);
-    	folder.delete();
-    	Thread.sleep(5000);
     }
-	
     
 }
