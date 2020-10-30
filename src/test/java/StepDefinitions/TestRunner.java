@@ -24,16 +24,37 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(features = "src/test/resources/features", glue="StepDefinitions",
 monochrome =true,
-plugin = {"json:reports/JSONReports/TestReport.json","pretty", "junit:reports/JUnitReports/TestReport.xml","html:reports/HTMLReports/TestReport.html"}
+plugin = {"json:target/reports/JSONReports/TestReport.json","pretty", "junit:target/reports/JUnitReports/TestReport.xml","html:target/reports/HTMLReports/TestReport.html"}
 		)
 public class TestRunner {
 
+	
 	@BeforeClass	    
     public static void setupBefore() {
-		String source = "C:/Users/Crespo/.jenkins/workspace/devopsmetrics/reports";
+		
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy-HH-mm");
+    	LocalDateTime now = LocalDateTime.now();  
+    	
+    	try {
+    		 String dir = "target/reports/Reports-"+dtf.format(now);
+
+    		  Path path = Paths.get(dir);
+
+    		  //java.nio.file.Files;
+    		  Files.createDirectories(path);
+
+    		  System.out.println("Directory is created!");
+
+    	} catch (IOException e) {
+
+    		  System.err.println("Failed to create directory!" + e.getMessage());
+
+    	}
+		
+		String source = "C:/Users/Crespo/.jenkins/workspace/devopsmetrics/target/reports";
 		File srcDir = new File(source);
 
-		String destination = "C:/Users/Crespo/eclipse-workspace/devopsmetrics/reports";
+		String destination = "C:/Users/Crespo/eclipse-workspace/devopsmetrics/target/reports";
 		File destDir = new File(destination);
 
 		try {
@@ -43,24 +64,33 @@ public class TestRunner {
 		}
 	}
 	
+	
     @AfterClass	    
     public static void setupAfter() {	 
     	
     	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy-HH-mm");
     	LocalDateTime now = LocalDateTime.now();  
     	
-    	File fJSONoriginal = new File("reports/JSONReports/TestReport.json");
-    	File fJSONrenombrado = new File("reports/JSONReports/TestReport"+dtf.format(now)+".json");
+    	File fJSONoriginal = new File("target/reports/JSONReports/TestReport.json");
+    	File fJSONrenombrado = new File("target/reports/Reports-"+dtf.format(now)+"/TestReport"+dtf.format(now)+".json");
     	
-    	File fJUnitoriginal = new File("reports/JUnitReports/TestReport.xml");
-    	File fJUnitrenombrado = new File("reports/JUnitReports/TestReport"+dtf.format(now)+".xml");
+    	File fJUnitoriginal = new File("target/reports/JUnitReports/TestReport.xml");
+    	File fJUnitrenombrado = new File("target/reports/Reports-"+dtf.format(now)+"/TestReport"+dtf.format(now)+".xml");
     	
-    	File fHTMLoriginal = new File("reports/HTMLReports/TestReport.html");
-    	File fHTMLrenombrado = new File("reports/HTMLReports/TestReport"+dtf.format(now)+".html");
+    	File fHTMLoriginal = new File("target/reports/HTMLReports/TestReport.html");
+    	File fHTMLrenombrado = new File("target/reports/Reports-"+dtf.format(now)+"/TestReport"+dtf.format(now)+".html");
     	
     	fJSONoriginal.renameTo(fJSONrenombrado);
     	fJUnitoriginal.renameTo(fJUnitrenombrado);
     	fHTMLoriginal.renameTo(fHTMLrenombrado);
+    	
+    	File folder = new File("target/reports/JSONReports");
+    	folder.delete();
+    	folder = new File("target/reports/JUnitReports");
+    	folder.delete();
+    	folder = new File("target/reports/HTMLReports");
+    	folder.delete();
+    	
     	
     }
     
