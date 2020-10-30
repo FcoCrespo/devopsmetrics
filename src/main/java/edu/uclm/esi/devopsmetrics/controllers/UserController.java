@@ -45,6 +45,13 @@ public class UserController {
   public UserController(final UserService usersService) {
     this.usersService = usersService;
   }
+  
+  
+  @RequestMapping(value = "/hola", method = RequestMethod.GET)
+
+  public String getHola() throws Exception {
+	  return "hola";
+  }
 
   /**
    * Comprueba que el usuario existe por su username y su pass.
