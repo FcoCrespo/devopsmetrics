@@ -64,16 +64,13 @@ public class TestRunner {
     	
     	try {
     		Thread.sleep(1000);
-			FileUtils.copyDirectory(fJSONoriginal,fJSONrenombrado);
+    		fJSONoriginal.renameTo(fJSONrenombrado);
 			Thread.sleep(1000);
-			FileUtils.copyDirectory(fJUnitoriginal,fJUnitrenombrado);
+			fJUnitoriginal.renameTo(fJUnitrenombrado);
 			Thread.sleep(1000);
-			FileUtils.copyDirectory(fHTMLoriginal,fHTMLrenombrado);
+			fHTMLoriginal.renameTo(fHTMLrenombrado);
 			Thread.sleep(1000);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    	}
     	/*fJSONoriginal.renameTo(fJSONrenombrado);
     	fJUnitoriginal.renameTo(fJUnitrenombrado);
     	fHTMLoriginal.renameTo(fHTMLrenombrado);*/ 
@@ -81,6 +78,6 @@ public class TestRunner {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    }
+	}
     
 }
