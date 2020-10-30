@@ -50,7 +50,7 @@ public class UserController {
   @RequestMapping(value = "/hola", method = RequestMethod.GET)
 
   public String getHola() throws Exception {
-	  return "hola";
+	  return "hola amigo";
   }
 
   /**
