@@ -67,8 +67,6 @@ public class TestRunner {
     @AfterClass	    
     public static void setupAfter() {	 
     	
-    	  
-    	
     	File fJSONoriginal = new File("C:/Users/Crespo/.jenkins/workspace/devopsmetrics/target/reports/JSONReports/TestReport.json");
     	File fJSONrenombrado = new File("C:/Users/Crespo/.jenkins/workspace/devopsmetrics/target/reports/Reports-"+dtf.format(now)+"/TestReport"+dtf.format(now)+".json");
     	
