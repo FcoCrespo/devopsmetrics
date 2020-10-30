@@ -48,11 +48,11 @@ public class TestRunner {
             System.err.println("Failed to create directory!" + e.getMessage());
         }
     	
-    	File fJSONoriginal = new File("target/cucumber/TestReport.json");
+    	File fJSONoriginal = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\cucumber\\TestReport.json");
     	File fJSONrenombrado = new File("target/cucumber"+dtf.format(now)+"/TestReport"+dtf.format(now)+".json");
-    	File fJUnitoriginal = new File("target/cucumber/TestReport.xml");
+    	File fJUnitoriginal = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\cucumber\\TestReport.xml");
     	File fJUnitrenombrado = new File("target/cucumber"+dtf.format(now)+"/TestReport"+dtf.format(now)+".xml");
-    	File fHTMLoriginal = new File("target/cucumber/TestReport.html");
+    	File fHTMLoriginal = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\cucumber\\TestReport.html");
     	File fHTMLrenombrado = new File("target/cucumber"+dtf.format(now)+"/TestReport"+dtf.format(now)+".html");
     	fJSONoriginal.renameTo(fJSONrenombrado);
     	fJUnitoriginal.renameTo(fJUnitrenombrado);
