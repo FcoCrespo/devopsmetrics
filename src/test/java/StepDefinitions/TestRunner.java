@@ -27,7 +27,7 @@ plugin = {"json:target/cucumber/TestReport.json","pretty", "junit:target/cucumbe
 		)
 public class TestRunner {
 
-    @AfterClass
+	@BeforeClass
     public static void setupAfter() {
     	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy-HH-mm");  
  	   	LocalDateTime now = LocalDateTime.now(); 
@@ -57,15 +57,15 @@ public class TestRunner {
     	else {
     		System.out.println("No Existe");
     	}
-    	File fJSONrenombrado = new File("target/cucumber"+dtf.format(now)+"/TestReport"+dtf.format(now)+".json");
+    	File fJSONrenombrado = new File("C:\\Users\\Crespo\\eclipse-workspace\\devopsmetrics\\target/cucumber"+dtf.format(now)+"/TestReport"+dtf.format(now)+".json");
     	
     	//File fJUnitoriginal = new File("target/cucumber/TestReport.xml");
     	File fJUnitoriginal = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\cucumber\\TestReport.xml");
-    	File fJUnitrenombrado = new File("target/cucumber"+dtf.format(now)+"/TestReport"+dtf.format(now)+".xml");
+    	File fJUnitrenombrado = new File("C:\\Users\\Crespo\\eclipse-workspace\\devopsmetrics\\target\\cucumber"+dtf.format(now)+"\\TestReport"+dtf.format(now)+".xml");
     	
     	//File fHTMLoriginal = new File("target/cucumber/TestReport.html");
     	File fHTMLoriginal = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\cucumber\\TestReport.html");
-    	File fHTMLrenombrado = new File("target/cucumber"+dtf.format(now)+"/TestReport"+dtf.format(now)+".html");
+    	File fHTMLrenombrado = new File("C:\\Users\\Crespo\\eclipse-workspace\\devopsmetrics\\target/cucumber"+dtf.format(now)+"/TestReport"+dtf.format(now)+".html");
     	
     	fJSONoriginal.renameTo(fJSONrenombrado);
     	fJUnitoriginal.renameTo(fJUnitrenombrado);
