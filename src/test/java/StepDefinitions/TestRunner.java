@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
@@ -33,8 +34,8 @@ public class TestRunner {
  	   	LocalDateTime now = LocalDateTime.now(); 
  	   	
     	String dir = "C:\\Users\\Crespo\\eclipse-workspace\\devopsmetrics\\target\\cucumber"+dtf.format(now);
-
-        try {
+        
+    	try {
 
             Path path = Paths.get(dir);
 
@@ -48,21 +49,30 @@ public class TestRunner {
             System.err.println("Failed to create directory!" + e.getMessage());
         }
     	
-    	File fJSONoriginal = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\cucumber\\TestReport.json");
+    	File fJSONoriginal = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\cucumber");
         //File fJSONoriginal = new File("target/cucumber/TestReport.json");
-    	File fJSONrenombrado = new File("C:\\Users\\Crespo\\eclipse-workspace\\devopsmetrics\\target\\cucumber"+dtf.format(now)+"\\TestReport"+dtf.format(now)+".json");
+    	File fJSONrenombrado = new File("C:\\Users\\Crespo\\eclipse-workspace\\devopsmetrics\\target\\cucumber"+dtf.format(now));
     	
     	//File fJUnitoriginal = new File("target/cucumber/TestReport.xml");
-    	File fJUnitoriginal = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\cucumber\\TestReport.xml");
-    	File fJUnitrenombrado = new File("C:\\Users\\Crespo\\eclipse-workspace\\devopsmetrics\\target\\cucumber"+dtf.format(now)+"\\TestReport"+dtf.format(now)+".xml");
+    	File fJUnitoriginal = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\cucumber");
+    	File fJUnitrenombrado = new File("C:\\Users\\Crespo\\eclipse-workspace\\devopsmetrics\\target\\cucumber"+dtf.format(now));
     	
     	//File fHTMLoriginal = new File("target/cucumber/TestReport.html");
-    	File fHTMLoriginal = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\cucumber\\TestReport.html");
-    	File fHTMLrenombrado = new File("C:\\Users\\Crespo\\eclipse-workspace\\devopsmetrics\\target\\cucumber"+dtf.format(now)+"\\TestReport"+dtf.format(now)+".html");
+    	File fHTMLoriginal = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\cucumber");
+    	File fHTMLrenombrado = new File("C:\\Users\\Crespo\\eclipse-workspace\\devopsmetrics\\target\\cucumber"+dtf.format(now));
     	
-    	fJSONoriginal.renameTo(fJSONrenombrado);
+    	
+    	try {
+			FileUtils.copyDirectory(fJSONoriginal,fJSONrenombrado);
+			FileUtils.copyDirectory(fJUnitoriginal,fJUnitrenombrado);
+			FileUtils.copyDirectory(fHTMLoriginal,fHTMLrenombrado);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	/*fJSONoriginal.renameTo(fJSONrenombrado);
     	fJUnitoriginal.renameTo(fJUnitrenombrado);
-    	fHTMLoriginal.renameTo(fHTMLrenombrado);
+    	fHTMLoriginal.renameTo(fHTMLrenombrado);*/
     }
     
 }
