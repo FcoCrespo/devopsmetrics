@@ -24,7 +24,7 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(features = "src/test/resources/features", glue="StepDefinitions",
 monochrome =true,
-plugin = {"json:target/JSONReports/TestReport.json","pretty", "junit:target/JUnitReports/TestReport.xml","html:target/HTMLReports/TestReport.html"}
+plugin = {"json:reports/JSONReports/TestReport.json","pretty", "junit:reports/JUnitReports/TestReport.xml","html:reports/HTMLReports/TestReport.html"}
 		)
 public class TestRunner {
 
@@ -34,14 +34,14 @@ public class TestRunner {
     	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy-HH-mm");
     	LocalDateTime now = LocalDateTime.now();  
     	
-    	File fJSONoriginal = new File("target/JSONReports/TestReport.json");
-    	File fJSONrenombrado = new File("target/reports/Reports"+dtf.format(now)+"JSONReports/TestReport"+dtf.format(now)+".json");
+    	File fJSONoriginal = new File("reports/JSONReports/TestReport.json");
+    	File fJSONrenombrado = new File("reports/Reports"+dtf.format(now)+"/JSONReports/TestReport"+dtf.format(now)+".json");
     	
-    	File fJUnitoriginal = new File("target/reports/Reports/"+dtf.format(now)+"JUnitReports/TestReport.xml");
-    	File fJUnitrenombrado = new File("target/JUnitReports/TestReport"+dtf.format(now)+".xml");
+    	File fJUnitoriginal = new File("reports/JUnitReports/TestReport.xml");
+    	File fJUnitrenombrado = new File("reports/Reports"+dtf.format(now)+"/JUnitReports/TestReport"+dtf.format(now)+".xml");
     	
-    	File fHTMLoriginal = new File("target/reports/Reports/"+dtf.format(now)+"HTMLReports/TestReport.html");
-    	File fHTMLrenombrado = new File("target/HTMLReports/TestReport"+dtf.format(now)+".html");
+    	File fHTMLoriginal = new File("reports/HTMLReports/TestReport.html");
+    	File fHTMLrenombrado = new File("reports/Reports"+dtf.format(now)+"/HTMLReports/TestReport"+dtf.format(now)+".html");
     	
     	fJSONoriginal.renameTo(fJSONrenombrado);
     	fJUnitoriginal.renameTo(fJUnitrenombrado);
