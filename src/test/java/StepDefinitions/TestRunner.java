@@ -28,9 +28,51 @@ plugin = {"json:target/cucumber/TestReport.json","pretty", "junit:target/cucumbe
 		)
 public class TestRunner {
 
+	final static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy-HH-mm");  
+	final static LocalDateTime now = LocalDateTime.now(); 
 	@BeforeClass
-    public static void setupAfter() {
-    	System.out.println("prueba estable");
+    public static void setupBefore() {
+		
+    	String dir = "C:\\Users\\Crespo\\eclipse-workspace\\devopsmetrics\\target\\cucumber"+dtf.format(now);
+
+        try {
+
+            Path path = Paths.get(dir);
+
+            Files.createDirectories(path);
+
+            System.out.println("Directory is created!");
+
+        } catch (IOException e) {
+            System.err.println("Failed to create directory!" + e.getMessage());
+        }
+	}
+	
+	@AfterClass
+    public static void setupAfter() throws InterruptedException {
+		
+ 	    Thread.sleep(1000);
+    	File fJSONoriginal = new File("target/cucumber/TestReport.json");
+    	File fJSONrenombrado = new File("target/cucumber"+dtf.format(now)+"/TestReport"+dtf.format(now)+".json");
+    	Thread.sleep(1000);
+    	File fJUnitoriginal = new File("target/cucumber/TestReport.xml");
+    	File fJUnitrenombrado = new File("target/cucumber"+dtf.format(now)+"/TestReport"+dtf.format(now)+".xml");
+    	Thread.sleep(1000);
+    	File fHTMLoriginal = new File("target/cucumber/TestReport.html");
+    	File fHTMLrenombrado = new File("target/cucumber"+dtf.format(now)+"/TestReport"+dtf.format(now)+".html");
+    	Thread.sleep(1000);
+    	fJSONoriginal.renameTo(fJSONrenombrado);
+    	Thread.sleep(1000);
+    	fJUnitoriginal.renameTo(fJUnitrenombrado);
+    	Thread.sleep(1000);
+    	fHTMLoriginal.renameTo(fHTMLrenombrado);
+    	
+    	
+    	File folder = new File("target/cucumber");
+    	Thread.sleep(1000);
+    	folder.delete();
+    	Thread.sleep(5000);
     }
+	
     
 }

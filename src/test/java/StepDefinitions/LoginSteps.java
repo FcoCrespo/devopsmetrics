@@ -18,7 +18,6 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class LoginSteps {
-
 	@Given("user is on login page")
 	public void user_is_on_login_page() {
 		System.out.println("Inside step - user is on login page");
@@ -42,6 +41,7 @@ public class LoginSteps {
 		System.out.println("Inside step - user is navigated to the home page");
 		assertEquals("hola", "hola");
 	}
+	
 
 
 }
