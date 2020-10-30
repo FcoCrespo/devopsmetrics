@@ -52,10 +52,38 @@ public class TestRunner {
         //File fJSONoriginal = new File("target/cucumber/TestReport.json");
     	System.out.println("Hola");
     	if(fJSONoriginal.exists()) {
-    		System.out.println("Existe");
+    		String dir1 = "C:\\Users\\Crespo\\eclipse-workspace\\devopsmetrics\\target\\cucumberEXISTE"+dtf.format(now);
+
+            try {
+
+                Path path = Paths.get(dir1);
+
+                Files.createDirectories(path);
+
+                System.out.println("Directory is created!");
+
+                //Files.createDirectory(path);
+
+            } catch (IOException e) {
+                System.err.println("Failed to create directory!" + e.getMessage());
+            }
     	}
     	else {
-    		System.out.println("No Existe");
+    		String dir2 = "C:\\Users\\Crespo\\eclipse-workspace\\devopsmetrics\\target\\cucumberNOEXISTE"+dtf.format(now);
+
+            try {
+
+                Path path = Paths.get(dir2);
+
+                Files.createDirectories(path);
+
+                System.out.println("Directory is created!");
+
+                //Files.createDirectory(path);
+
+            } catch (IOException e) {
+                System.err.println("Failed to create directory!" + e.getMessage());
+            }
     	}
     	File fJSONrenombrado = new File("C:\\Users\\Crespo\\eclipse-workspace\\devopsmetrics\\target/cucumber"+dtf.format(now)+"/TestReport"+dtf.format(now)+".json");
     	
