@@ -57,7 +57,7 @@ public class LoginSteps {
 	@Then("user is navigated to the home page")
 	public void user_is_navigated_to_the_home_page() throws InterruptedException {
 		
-		Thread.sleep(1000);
+		Thread.sleep(2000);
 		String expectedUrl = driver.getCurrentUrl();
 		assertEquals("https://esidevopsmetrics.herokuapp.com/admin", expectedUrl);
 		
