@@ -29,6 +29,8 @@ public class TestRunner {
 	final static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy-HH-mm");
 	final static LocalDateTime now = LocalDateTime.now();
 	
+	
+	
 	@BeforeClass	    
     public static void setupBefore() throws InterruptedException {
 		
