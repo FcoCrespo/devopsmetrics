@@ -1,0 +1,72 @@
+[
+  {
+    "line": 1,
+    "elements": [
+      {
+        "start_timestamp": "2020-11-02T19:22:28.320Z",
+        "line": 3,
+        "name": "",
+        "description": "",
+        "id": "feature-to-test-login-functionality;",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 10147676800,
+              "status": "passed"
+            },
+            "line": 4,
+            "name": "user is on login page",
+            "match": {
+              "location": "StepDefinitions.LoginSteps.user_is_on_login_page()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 117997600,
+              "status": "passed"
+            },
+            "line": 5,
+            "name": "user enters username and password",
+            "match": {
+              "location": "StepDefinitions.LoginSteps.user_enters_username_and_password()"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 56004600,
+              "status": "passed"
+            },
+            "line": 6,
+            "name": "clicks on login button",
+            "match": {
+              "location": "StepDefinitions.LoginSteps.clicks_on_login_button()"
+            },
+            "keyword": "And "
+          },
+          {
+            "result": {
+              "duration": 2008998800,
+              "status": "passed"
+            },
+            "line": 7,
+            "name": "user is navigated to the home page",
+            "match": {
+              "location": "StepDefinitions.LoginSteps.user_is_navigated_to_the_home_page()"
+            },
+            "keyword": "Then "
+          }
+        ]
+      }
+    ],
+    "name": "feature to test login functionality",
+    "description": "",
+    "id": "feature-to-test-login-functionality",
+    "keyword": "Feature",
+    "uri": "file:src/test/resources/features/Login.feature",
+    "tags": []
+  }
+]

@@ -103,6 +103,31 @@ public class CommitController {
 	  }
 	  
 	  /**
+	   * Devuelve el primer commit de cada rama para poner el orden correcto de creacion de cada rama
+	   * 
+	   * @author FcoCrespo
+	   * @throws InvalidRemoteException, TransportException, IOException, GitAPIException, InterruptedException
+	   */
+	  @RequestMapping(value = "/branchesfirstcommit", method = RequestMethod.GET)
+	  @ApiOperation(value = "Find all branches", notes = "Return all branches")
+
+	  public ResponseEntity<String> allBranchesFirstCommit(@RequestParam("tokenpass") final String tokenpass,
+		      @RequestParam("reponame") final String reponame,
+		      @RequestParam("owner") final String owner) throws InvalidRemoteException, TransportException, IOException, GitAPIException, InterruptedException {
+
+	    final User usuario = usersService.getUserByTokenPass(tokenpass);
+	    if (usuario != null) {
+	      LOG.info("Get branches");
+	      cg.getFirstCommitByBranch(reponame);
+	      return ResponseEntity.ok("ok");
+	    } else {
+	      LOG.info("[SERVER] No se ha encontrado ningún usuario con esos datos.");
+	      return ResponseEntity.badRequest().build();
+	    }
+		
+	  }
+	  
+	  /**
 	   * ATENCIÓN: Devuelve todos los commits del repositorio por su owner, nombre de repositorio y token de acceso
 	   * 
 	   * @author FcoCrespo
@@ -135,6 +160,8 @@ public class CommitController {
 	    }
 		
 	  }
+	  
+	  
 	  
 	  /**
 	   * Devuelve los commits de una rama de un repositorio por su owner, nombre de repositorio y token de acceso

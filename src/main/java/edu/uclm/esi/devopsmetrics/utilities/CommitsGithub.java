@@ -4,12 +4,29 @@ package edu.uclm.esi.devopsmetrics.utilities;
 import java.io.File;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.InvalidRemoteException;
 import org.eclipse.jgit.api.errors.TransportException;
@@ -305,9 +322,91 @@ public class CommitsGithub{
         branchBD = branchService.getBranchByRepositoryyName(reponame, branchName);	
 		if(branchBD==null && !branchName.contains("dependabot/npm_and_yarn")) {
     		idGithub = parameterNode.get("id").textValue();
-    		branch = new Branch(idGithub, reponame, branchName, 0);
+    		branch = new Branch(idGithub, reponame, branchName, -1);
 			branchService.saveBranch(branch);
 		}
+	}
+	
+	public void getFirstCommitByBranch(String reponame) throws ClientProtocolException, IOException {
+		  //Creating a HttpClient object
+	      CloseableHttpClient httpclient = HttpClients.createDefault();
+
+	      //Creating a HttpGet object
+	      HttpGet httpget = new HttpGet("http://localhost:5050/branchesorder?reponame="+reponame);
+
+	      //Printing the method used
+	      System.out.println("Request Type: "+httpget.getMethod());
+	      
+	      HttpResponse httpresponse = httpclient.execute(httpget);
+
+	      HttpEntity entity = httpresponse.getEntity();
+	      String jsonData = EntityUtils.toString(entity, "UTF-8");
+	      JsonNode jsonNode = new ObjectMapper().readTree(jsonData);
+	      
+	      Iterator<JsonNode> iter;
+	      iter=jsonNode.iterator();
+	      
+	      JsonNode parameterNode;
+	      parameterNode = iter.next();
+	      
+	      String branchname, commitoid;
+	      
+	      List<Commit> firstCommitByBranch = new ArrayList<Commit>();
+	      List<String> branchesEmpty = new ArrayList<String>();
+	      Commit commit;
+	      
+	      while(iter.hasNext()){
+	        	branchname=parameterNode.get("branchname").textValue();
+	        	commitoid=parameterNode.get("commit").textValue();
+	        	
+	        	if(!commitoid.equals("empty")){
+		        	commit = commitService.getCommitByOidyBranch(commitoid, branchname);
+		        	firstCommitByBranch.add(commit);
+	        	}
+	        	else {
+	        		branchesEmpty.add(branchname);
+	        	}
+	    		parameterNode = iter.next();
+	    		if (!iter.hasNext()) {
+	    			branchname=parameterNode.get("branchname").textValue();
+	    			commitoid=parameterNode.get("commit").textValue();
+		        	if(!commitoid.equals("empty")){
+			        	commit = commitService.getCommitByOidyBranch(commitoid, branchname);
+			        	firstCommitByBranch.add(commit);
+		        	}
+		        	else {
+		        		branchesEmpty.add(branchname);
+		        	}
+	    		}
+	      }
+	      Collections.sort(firstCommitByBranch);
+	      Branch branch;
+	      boolean seguir = true;
+	      for(int i=0; i<firstCommitByBranch.size()&&seguir==true; i++) {
+	    	  if(firstCommitByBranch.get(i).getBranch().equals("master")) {
+	    		  firstCommitByBranch.remove(i);
+	    		  seguir=false;
+	    	  }
+	      }
+	      System.out.println(firstCommitByBranch.size());
+	      
+	      for(int i=0; i<firstCommitByBranch.size(); i++) {
+	    	  System.out.println(firstCommitByBranch.get(i).getOid()+ " " + firstCommitByBranch.get(i).getBranch()+" "+ firstCommitByBranch.get(i).getAuthorDate());
+	    	  branch=branchService.getBranchByRepositoryyName(reponame,  firstCommitByBranch.get(i).getBranch());
+	     	  branch.setOrder(i+1);
+	     	  branchService.saveBranch(branch);
+	      }
+	      
+	      for(int i=0; i<branchesEmpty.size(); i++) {
+	    	  branch=branchService.getBranchByRepositoryyName(reponame,  branchesEmpty.get(i));
+	     	  branch.setOrder(-1);
+	     	  branchService.saveBranch(branch);
+	      }
+	      
+	      branch=branchService.getBranchByRepositoryyName(reponame,  "master");
+     	  branch.setOrder(0);
+     	  branchService.updateBranch(branch);
+	      
 	}
 
 	private Response prepareResponse(String graphqlPayload, String graphqlUri) {

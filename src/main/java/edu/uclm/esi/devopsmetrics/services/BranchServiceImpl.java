@@ -1,6 +1,7 @@
 package edu.uclm.esi.devopsmetrics.services;
 
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -117,7 +118,13 @@ public class BranchServiceImpl implements BranchService {
 	public List<Branch> getBranchesByRepository(String repository) {
 		final List<Branch> branches = branchRepository.findAllbyRepository(repository);
 		Collections.sort(branches);
-		return branches;
+		List <Branch> branchesRight = new ArrayList<Branch>();
+		for(int i=0; i<branches.size(); i++) {
+			if(branches.get(i).getOrder()!=-1) {
+				branchesRight.add(branches.get(i));
+			}
+		}
+		return branchesRight;
 	}
 
 	@Override
