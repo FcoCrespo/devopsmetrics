@@ -261,6 +261,12 @@ public class CommitServiceImpl implements CommitService {
 		}
 	}
 
+	@Override
+	public Commit getRepository(String repository) {
+		final Commit commit = commitRepository.findRepository(repository);
+	    return commit;
+	}
+
 	
 	
     

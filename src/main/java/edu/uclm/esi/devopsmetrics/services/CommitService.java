@@ -63,5 +63,10 @@ public interface CommitService {
    * @author FcoCrespo
    */
   String [] getBestBeginEndData(String reponame, String branch, Instant beginDate, Instant endDate);
+  
+  /**
+   * @author FcoCrespo
+   */
+  Commit getRepository(String repository);
  
 }

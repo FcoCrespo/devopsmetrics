@@ -232,5 +232,12 @@ public class CommitRepositoryImpl implements CommitRepository {
 	    return commits;
 	}
 
+	@Override
+	public Commit findRepository(String reponame) {
+		Commit commit = this.mongoOperations
+		        .findOne(new Query(Criteria.where("repository").is(reponame)), Commit.class);
+		    return commit;
+	}
+
 	
 }

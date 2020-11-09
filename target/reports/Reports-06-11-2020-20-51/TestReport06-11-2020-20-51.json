@@ -3,7 +3,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2020-11-06T19:53:10.735Z",
+        "start_timestamp": "2020-11-06T19:51:33.258Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -13,7 +13,7 @@
         "steps": [
           {
             "result": {
-              "duration": 6855321100,
+              "duration": 17173711400,
               "status": "passed"
             },
             "line": 4,
@@ -25,7 +25,7 @@
           },
           {
             "result": {
-              "duration": 138002700,
+              "duration": 120060300,
               "status": "passed"
             },
             "line": 5,
@@ -37,7 +37,7 @@
           },
           {
             "result": {
-              "duration": 48006200,
+              "duration": 42024700,
               "status": "passed"
             },
             "line": 6,
@@ -49,8 +49,9 @@
           },
           {
             "result": {
-              "duration": 2008780700,
-              "status": "passed"
+              "error_message": "org.junit.ComparisonFailure: expected:\u003c...trics.herokuapp.com/[adm]in\u003e but was:\u003c...trics.herokuapp.com/[log]in\u003e\r\n\tat org.junit.Assert.assertEquals(Assert.java:117)\r\n\tat org.junit.Assert.assertEquals(Assert.java:146)\r\n\tat StepDefinitions.LoginSteps.user_is_navigated_to_the_home_page(LoginSteps.java:62)\r\n\tat ✽.user is navigated to the home page(file:///C:/Users/Crespo/.jenkins/workspace/devopsmetrics/src/test/resources/features/Login.feature:7)\r\n",
+              "duration": 2008512000,
+              "status": "failed"
             },
             "line": 7,
             "name": "user is navigated to the home page",

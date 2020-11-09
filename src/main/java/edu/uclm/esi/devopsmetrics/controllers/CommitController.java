@@ -94,7 +94,7 @@ public class CommitController {
 	    if (usuario != null) {
 	      LOG.info("Get branches");
 	      cg.getBranches(reponame, owner);
-	      return ResponseEntity.ok(branchService.getBranchesByRepository(reponame));
+	      return ResponseEntity.ok(branchService.getBranchesByRepository(reponame, true));
 	    } else {
 	      LOG.info("[SERVER] No se ha encontrado ningún usuario con esos datos.");
 	      return ResponseEntity.badRequest().build();

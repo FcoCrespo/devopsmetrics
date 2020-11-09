@@ -115,16 +115,23 @@ public class BranchServiceImpl implements BranchService {
   }
 
 	@Override
-	public List<Branch> getBranchesByRepository(String repository) {
+	public List<Branch> getBranchesByRepository(String repository, boolean order) {
 		final List<Branch> branches = branchRepository.findAllbyRepository(repository);
-		Collections.sort(branches);
-		List <Branch> branchesRight = new ArrayList<Branch>();
-		for(int i=0; i<branches.size(); i++) {
-			if(branches.get(i).getOrder()!=-1) {
-				branchesRight.add(branches.get(i));
+		
+		if(order==true) {
+			Collections.sort(branches);
+			List <Branch> branchesRight = new ArrayList<Branch>();
+			for(int i=0; i<branches.size(); i++) {
+				if(branches.get(i).getOrder()!=-1) {
+					branchesRight.add(branches.get(i));
+				}
 			}
+			return branchesRight;
 		}
-		return branchesRight;
+		else {
+			return branches;
+		}
+		
 	}
 
 	@Override

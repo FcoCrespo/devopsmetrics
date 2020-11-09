@@ -92,6 +92,13 @@ public interface CommitRepository {
    */
   String [] findBestBeginEndData(String reponame, String branch, Instant beginDate, Instant endDate);
   
+  
+  /**
+   * Método para comprobar si existen commits de un repositorio en la BBDD
+   * 
+   * @author FcoCrespo
+   */
+  Commit findRepository(String reponame);
 
 
 }

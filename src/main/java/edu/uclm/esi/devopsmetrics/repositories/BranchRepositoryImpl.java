@@ -99,12 +99,14 @@ public class BranchRepositoryImpl implements BranchRepository {
 	    Optional<Branch> branch = Optional.ofNullable(d);
 	    return branch;
 	}
-
+	
 	@Override
 	public List<Branch> findAllbyRepository(String repository) {
 		List<Branch> listBranches = this.mongoOperations.find(new Query(Criteria.where("repository").is(repository)), Branch.class);
 		return listBranches;
 	}
+
+	
 
 	@Override
 	public Branch findBeforeBranchByOrder(String repository, int order) {

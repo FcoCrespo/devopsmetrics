@@ -86,79 +86,192 @@ public class CommitsGithub{
 	
 	public void getCommits(String reponame, String owner) throws IOException, InvalidRemoteException, TransportException, GitAPIException, InterruptedException, ParseException{
 		
-		
-		    //hace falta un comprobacion previa de nuevos commits en el repositorio
-		
-			String graphqlPayload;
+			String graphqlPayload, filename;
 			
-			String filename = "src/main/resources/graphql/commits.graphql";
-		    
-		    File file = new File(filename);
-		    
-		    // Create a variables to pass to the graphql query
+			// Create a variables to pass to the graphql query
 	        ObjectNode variables;
 	        
 	        CommitCursor commitCursor=null;
-	        
 	        
 	  		String jsonData;
 	  		JsonNode jsonNode, nodes, parameterNode;
 	  		Response response;
 	  		Iterator<JsonNode> iter;
+		
+	  		//Comprobamos si ya existen commits de dicho repositorio
+	  		Commit commitDeRepo = commitService.getRepository(reponame);
 	  		
-	  		//Actualizamos las ramas
-	  		getBranches(reponame, owner);
-	        
-	        List<Branch> branches = branchService.getBranchesByRepository(reponame);
-	        
+	  		//Si ya hay commits de este repositorio habra que introducir los nuevos commits
+	  		if(commitDeRepo!=null) {
+	  			
+	  			
+		  		System.out.println("oid: "+ commitDeRepo.getOid()+ " "+ commitDeRepo.getBranch() +" y " + commitDeRepo.getRepository());
+		  		//Actualizamos las ramas
+		  		getBranches(reponame, owner);
+		  		
+		  		filename = "src/main/resources/graphql/commits-cursor-before.graphql";
+		  		
+		  		File file = new File(filename);
+		  		
+		        List<Branch> branches = branchService.getBranchesByRepository(reponame, false);
+		        
+		        System.out.println("El total de ramas es: "+branches.size());
+		  		
+		        boolean initialStarCursorFind = false;
+		        
+		        List <CommitCursor> commitCursorInitials = new ArrayList<CommitCursor>();
+		        
+		        List <String> commitCursorStarts = new ArrayList<String>();
 
-			for(int i= 0; i<branches.size(); ) {
-				System.out.println(file.getPath());
-				variables= new ObjectMapper().createObjectNode();
-		        variables.put("owner", owner);
-		        variables.put("repo", reponame);
-		        variables.put("branch", branches.get(i).getName());
-		        System.out.println("Estamos en la rama: "+branches.get(i).getName());
-				if(filename.equals("src/main/resources/graphql/commits-cursor.graphql")) {
-					variables.put("cursor", commitCursor.getEndCursor());
+		        CommitCursor commitcursorinitial =  null;
+		        
+		        for(int i = 0 ; i<branches.size(); i++) {
+		        	
+		        	commitcursorinitial = commitCursorService.getCommitCursorByEndCursoryHasNextPage(branches.get(i).getName(), reponame);
+		        	commitCursorInitials.add(commitcursorinitial);
+		        	commitCursorStarts.add(commitcursorinitial.getStartCursor().substring(0, commitcursorinitial.getStartCursor().indexOf(" ")));
+
+		        }
+		        
+		       List <Commit> commitsBranch =  new ArrayList<Commit>();
+		        
+		       for(int i= 0; i<branches.size(); ) {
+		        	
+					System.out.println(file.getPath());
+					variables= new ObjectMapper().createObjectNode();
+			        variables.put("owner", owner);
+			        variables.put("repo", reponame);
+			        variables.put("branch", branches.get(i).getName());
+			        System.out.println("Estamos en la rama: "+branches.get(i).getName());
+					if(filename.equals("src/main/resources/graphql/commits-cursor.graphql")) {
+						variables.put("cursor", commitCursor.getEndCursor());
+					}
+					else {
+						variables.put("cursor", commitCursorInitials.get(i).getStartCursor());
+					}
+					
+			        // Now parse the graphql file to a request payload string
+			        graphqlPayload = GraphqlTemplate.parseGraphql(file, variables);
+			        
+			        response = prepareResponse(graphqlPayload, graphqlUri);
+					
+			        jsonData = response.body().string();
+			        jsonNode = new ObjectMapper().readTree(jsonData);
+			        
+			        commitCursor = updateCommitCursor(jsonNode, branches.get(i).getName(), reponame);
+			        
+			        nodes = jsonNode.path("data").path("repository").path("ref").path("target").path("history").path("nodes");
+			        iter = nodes.iterator();
+			        parameterNode = iter.next();
+
+			        
+			        while(iter.hasNext()){
+			        	commitDeRepo = introducirCommit(parameterNode, reponame, branches.get(i).getName());
+			        	
+			        	if(commitCursorStarts.get(i).equals(commitDeRepo.getOid())) {
+			        		initialStarCursorFind=true;
+			        	}
+			        	else if(initialStarCursorFind==false){
+			        		commitsBranch.add(commitDeRepo);
+			        	}
+			        	
+			    		parameterNode = iter.next();
+			    		
+			    		if (!iter.hasNext()) {
+			    			commitDeRepo = introducirCommit(parameterNode, reponame, branches.get(i).getName());
+				        	
+				        	if(commitCursorStarts.get(i).equals(commitDeRepo.getOid())) {
+				        		initialStarCursorFind=true;
+				        	}
+				        	else if(initialStarCursorFind==false){
+				        		commitsBranch.add(commitDeRepo);
+				        	}
+			    		}
+			    	}
+			        
+			        if(initialStarCursorFind == true) {
+			        	i++;
+			        	filename = "src/main/resources/graphql/commits-cursor-before.graphql";
+			        	initialStarCursorFind=false;
+			        	for(int j=0; j<commitsBranch.size(); j++) {
+			        		commitService.saveCommit(commitsBranch.get(j));
+			        	}
+			        	commitsBranch.clear();
+			        }
+			        else {
+			        	filename = "src/main/resources/graphql/commits-cursor.graphql";
+			        	file = new File(filename);
+			        }
+		        }
+	  		}
+	  		
+	  		//Habra que introducir los commits por primera vez
+	  		else {
+	  			System.out.println("No hay nada");
+	  			
+	  			filename = "src/main/resources/graphql/commits.graphql";
+			    
+			    File file = new File(filename);
+			   
+		        List<Branch> branches = branchService.getBranchesByRepository(reponame, false);
+		        
+		        System.out.println("El total de ramas es: "+branches.size());
+				for(int i= 0; i<branches.size(); ) {
+					System.out.println(file.getPath());
+					variables= new ObjectMapper().createObjectNode();
+			        variables.put("owner", owner);
+			        variables.put("repo", reponame);
+			        variables.put("branch", branches.get(i).getName());
+			        System.out.println("Estamos en la rama: "+branches.get(i).getName());
+					if(filename.equals("src/main/resources/graphql/commits-cursor.graphql")) {
+						variables.put("cursor", commitCursor.getEndCursor());
+					}
+			        // Now parse the graphql file to a request payload string
+			        graphqlPayload = GraphqlTemplate.parseGraphql(file, variables);
+			        
+			        response = prepareResponse(graphqlPayload, graphqlUri);
+					
+			        jsonData = response.body().string();
+			        jsonNode = new ObjectMapper().readTree(jsonData);
+			        
+			        commitCursor = updateCommitCursor(jsonNode, branches.get(i).getName(), reponame);
+			        
+			        nodes = jsonNode.path("data").path("repository").path("ref").path("target").path("history").path("nodes");
+			        iter = nodes.iterator();
+			        parameterNode = iter.next();
+
+			        
+			        while(iter.hasNext()){
+			        	commitDeRepo = introducirCommit(parameterNode, reponame, branches.get(i).getName());
+			        	commitService.saveCommit(commitDeRepo);
+			    		parameterNode = iter.next();
+			    		if (!iter.hasNext()) {
+			    			commitDeRepo = introducirCommit(parameterNode, reponame, branches.get(i).getName());
+			    			commitService.saveCommit(commitDeRepo);
+			    		}
+			    	}
+			        
+			        if(commitCursor.getHasNextPage()==true) {
+			        	filename = "src/main/resources/graphql/commits-cursor.graphql";
+			        	file = new File(filename);
+			        }
+			        else {
+			        	filename = "src/main/resources/graphql/commits.graphql";
+			        	file = new File(filename);
+			        	i++;
+			        }
 				}
-		        // Now parse the graphql file to a request payload string
-		        graphqlPayload = GraphqlTemplate.parseGraphql(file, variables);
-		        
-		        response = prepareResponse(graphqlPayload, graphqlUri);
-				
-		        jsonData = response.body().string();
-		        jsonNode = new ObjectMapper().readTree(jsonData);
-		        
-		        commitCursor = updateCommitCursor(jsonNode, branches.get(i).getName(), reponame);
-		        
-		        nodes = jsonNode.path("data").path("repository").path("ref").path("target").path("history").path("nodes");
-		        iter = nodes.iterator();
-		        parameterNode = iter.next();
-
-		        
-		        while(iter.hasNext()){
-		        	introducirCommit(parameterNode, reponame, branches.get(i).getName());
-		    		parameterNode = iter.next();
-		    		if (!iter.hasNext()) {
-		    			introducirCommit(parameterNode, reponame, branches.get(i).getName());
-		    		}
-		    	}
-		        
-		        if(commitCursor.getHasNextPage()==true) {
-		        	filename = "src/main/resources/graphql/commits-cursor.graphql";
-		        	file = new File(filename);
-		        }
-		        else {
-		        	filename = "src/main/resources/graphql/commits.graphql";
-		        	file = new File(filename);
-		        	i++;
-		        }
-			}
+	  		}
+		
+	  		
+	  		
+	  		
+			
 
 	}
 
-	private void introducirCommit(JsonNode parameterNode, String reponame, String branch) throws ParseException {
+	private Commit introducirCommit(JsonNode parameterNode, String reponame, String branch) throws ParseException {
+		
 		Commit commit;
         String idGithub, oid;
   		String messageHeadline, message, messageBody;
@@ -221,7 +334,7 @@ public class CommitsGithub{
   		commit = new Commit(idGithub, oid, messageHeadline, message, messageBody, pushedDate, changedFiles, authoredByCommitter,
   							authoredDate, authorName, authorEmail, authorDate, authorId, branch, reponame);
   		
-  		commitService.saveCommit(commit);
+  		return commit;
 	}
 
 	private int comprobarValorchangedFiles(JsonNode parameterNode, String value) {		
@@ -261,6 +374,7 @@ public class CommitsGithub{
         }
         else {
         	commitCursor.setHasNextPage(hasNextPage);
+        	commitCursor.setStartCursor(startCursor);
         	commitCursor.setEndCursor(endCursor);
         	
         	commitCursorService.updateCommitCursor(commitCursor);
