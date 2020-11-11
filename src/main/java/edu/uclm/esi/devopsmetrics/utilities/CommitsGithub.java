@@ -516,7 +516,8 @@ public class CommitsGithub{
 	            .readTimeout(5, TimeUnit.MINUTES) 
 	            .build();
 		
-	    RequestBody body = RequestBody.create(MediaType.get("application/json; charset=utf-8"), graphqlPayload);
+	    @SuppressWarnings("deprecation")
+		RequestBody body = RequestBody.create(MediaType.get("application/json; charset=utf-8"), graphqlPayload);
         Request request = new Request.Builder()
         		.url(graphqlUri)
         		.addHeader("Authorization", "Bearer " + env.getProperty("github.token") )
