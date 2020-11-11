@@ -41,7 +41,7 @@ public interface CommitRepository {
    * 
    * @author FcoCrespo
    */
-  void deleteCommit(String commitId);
+  void deleteCommit(String repository);
 
   /**
    * Método para obtener un commit por su oid.

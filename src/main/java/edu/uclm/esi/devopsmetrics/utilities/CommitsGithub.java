@@ -4,28 +4,20 @@ package edu.uclm.esi.devopsmetrics.utilities;
 import java.io.File;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.InvalidRemoteException;
@@ -40,8 +32,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import edu.uclm.esi.devopsmetrics.services.UserService;
-import edu.uclm.esi.devopsmetrics.utilities.GraphqlTemplate;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -331,8 +321,8 @@ public class CommitsGithub{
   		System.out.println(idGithub +" : idGithub y oid : "+ oid);
   		System.out.println("MessageHeadline: "+messageHeadline);
 	
-  		commit = new Commit(idGithub, oid, messageHeadline, message, messageBody, pushedDate, changedFiles, authoredByCommitter,
-  							authoredDate, authorName, authorEmail, authorDate, authorId, branch, reponame);
+  		commit = new Commit(oid, messageHeadline, message, pushedDate, changedFiles,
+  							authoredDate, authorName, authorId, branch, reponame);
   		
   		return commit;
 	}
@@ -505,7 +495,7 @@ public class CommitsGithub{
 	      System.out.println(firstCommitByBranch.size());
 	      
 	      for(int i=0; i<firstCommitByBranch.size(); i++) {
-	    	  System.out.println(firstCommitByBranch.get(i).getOid()+ " " + firstCommitByBranch.get(i).getBranch()+" "+ firstCommitByBranch.get(i).getAuthorDate());
+	    	  System.out.println(firstCommitByBranch.get(i).getOid()+ " " + firstCommitByBranch.get(i).getBranch()+" "+ firstCommitByBranch.get(i).getAuthoredDate());
 	    	  branch=branchService.getBranchByRepositoryyName(reponame,  firstCommitByBranch.get(i).getBranch());
 	     	  branch.setOrder(i+1);
 	     	  branchService.saveBranch(branch);
@@ -543,7 +533,6 @@ public class CommitsGithub{
 		            return response;             
 		     }else return null;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}

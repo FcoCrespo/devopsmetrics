@@ -27,6 +27,8 @@ public class BranchRepositoryImpl implements BranchRepository {
 	   * @author FcoCrespo
 	   */
 	  private final MongoOperations mongoOperations;
+	  
+	  
 
 	  /**
 	   * Constructor de la clase.
@@ -48,9 +50,7 @@ public class BranchRepositoryImpl implements BranchRepository {
 	   */
 	  public List<Branch> findAll() {
 
-	    List<Branch> branches = this.mongoOperations.find(new Query(), Branch.class);
-	
-	    return branches;
+	    return this.mongoOperations.find(new Query(), Branch.class);
 
 	  }
 
@@ -86,33 +86,31 @@ public class BranchRepositoryImpl implements BranchRepository {
 	  }
 
 	  @Override
-	  public Branch findByRepositoryyName(final String repository, final String name) {
-	    Branch branch = this.mongoOperations
-	        .findOne(new Query(Criteria.where("repository").is(repository)
+	  public Branch findByRepositoryyName(final String reponame, final String name) {
+	    return this.mongoOperations.findOne(new Query(Criteria.where("repository").is(reponame)
 	        		.and("name").is(name)), Branch.class);
-	    return branch;
+	 
 	  }
 
 	@Override
 	public Optional<Branch> findOne(String idGithub) {
 		Branch d = this.mongoOperations.findOne(new Query(Criteria.where("idGithub").is(idGithub)), Branch.class);
-	    Optional<Branch> branch = Optional.ofNullable(d);
-	    return branch;
+	    return Optional.ofNullable(d);
+	    
 	}
 	
 	@Override
 	public List<Branch> findAllbyRepository(String repository) {
-		List<Branch> listBranches = this.mongoOperations.find(new Query(Criteria.where("repository").is(repository)), Branch.class);
-		return listBranches;
+		return this.mongoOperations.find(new Query(Criteria.where("repository").is(repository)), Branch.class);
 	}
 
 	
 
 	@Override
 	public Branch findBeforeBranchByOrder(String repository, int order) {
-		Branch branch = this.mongoOperations.findOne(new Query(Criteria.where("repository")
+		return this.mongoOperations.findOne(new Query(Criteria.where("repository")
 				.is(repository).and("order").is(order-1)), Branch.class);
-		return branch;
+		
 		
 	}
 

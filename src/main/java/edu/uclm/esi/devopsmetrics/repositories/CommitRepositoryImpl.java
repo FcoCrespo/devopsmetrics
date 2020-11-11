@@ -51,9 +51,7 @@ public class CommitRepositoryImpl implements CommitRepository {
 
 	    List<Commit> commits = this.mongoOperations.find(new Query(), Commit.class);
 
-	    Optional<List<Commit>> optionalCommits = Optional.ofNullable(commits);
-
-	    return optionalCommits;
+	    return Optional.ofNullable(commits);
 
 	  }
 
@@ -64,8 +62,7 @@ public class CommitRepositoryImpl implements CommitRepository {
 	   */
 	  public Optional<Commit> findOne(final String oid) {
 	    Commit d = this.mongoOperations.findOne(new Query(Criteria.where("oid").is(oid)), Commit.class);
-	    Optional<Commit> commit = Optional.ofNullable(d);
-	    return commit;
+	    return Optional.ofNullable(d);
 	  }
 
 	  /**
@@ -88,38 +85,24 @@ public class CommitRepositoryImpl implements CommitRepository {
 
 	  }
 
-	  /**
-	   * Borra un commit en la base de datos.
-	   * 
-	   * @author FcoCrespo
-	   */
-	  public void deleteCommit(final String id) {
-
-	    this.mongoOperations.findAndRemove(new Query(Criteria.where("id").is(id)), Commit.class);
-
-	  }
-
 	  @Override
 	  public Commit findByOidyBranch(final String oid, final String branch) {
-		Commit commit = this.mongoOperations
+		return this.mongoOperations
 	        .findOne(new Query(Criteria.where("oid").is(oid).and("branch").is(branch)), Commit.class);
-	    return commit;
 	  }
 	  
 	  @Override
 	  public List<Commit> findAllByBranch(final String reponame, final String branch) {
-		List<Commit> commits = this.mongoOperations
+		return this.mongoOperations
 	        .find(new Query(Criteria.where("branch").is(branch).and("repository").is(reponame)), Commit.class);
-	    return commits;
 	  }
 
 	@Override
 	public List<Commit> findAllByBranchAndAuthorName(String reponame, String branch, String authorName) {
-		List<Commit> commits = this.mongoOperations
+		return this.mongoOperations
 		        .find(new Query(Criteria.where("branch").is(branch).
 		        		and("repository").is(reponame).
 		        		and("authorName").is(authorName)), Commit.class);
-	    return commits;
 	}
 
 	@Override
@@ -127,18 +110,16 @@ public class CommitRepositoryImpl implements CommitRepository {
 			Instant endDate, String bestEndDate) {
 		
 		if(bestBeginDate.equals(bestEndDate)) {
-			List<Commit> commits = this.mongoOperations
+			return this.mongoOperations
 			        .find(new Query(Criteria.where("branch").is(branch).
 			        		and("repository").is(reponame).
 			        		and(bestBeginDate).gte(beginDate).lte(endDate)), Commit.class);
-		    return commits;
 		}
-		List<Commit> commits = this.mongoOperations
-		        .find(new Query(Criteria.where("branch").is(branch).
-		        		and("repository").is(reponame).
+		
+		return this.mongoOperations
+		        .find(new Query(Criteria.where("branch").is(branch).and("repository").is(reponame).
 		        		and(bestBeginDate).gte(beginDate).
 		        		and(bestEndDate).lte(endDate)), Commit.class);
-	    return commits;
 	}
 
 	@Override
@@ -198,17 +179,21 @@ public class CommitRepositoryImpl implements CommitRepository {
 		else if(commitAuthoredEnd.getAuthoredDate()==null) {
 			endDateData="pushedDate";
 		}
-		else if(commitPushedBegin.getPushedDate().truncatedTo(ChronoUnit.DAYS).isAfter(commitAuthoredBegin.getAuthoredDate().truncatedTo(ChronoUnit.DAYS))){
-			endDateData="pushedDate";
+		else if(commitAuthoredBegin!=null && commitPushedBegin!=null){
+			
+			if(commitPushedBegin.getPushedDate().truncatedTo(ChronoUnit.DAYS).isAfter(commitAuthoredBegin.getAuthoredDate().truncatedTo(ChronoUnit.DAYS))) {
+					endDateData="pushedDate";
+			}
+			else {
+				endDateData="authoredDate";
+			}
+			
 		}
-		else {
-			endDateData="authoredDate";
-		}
+		
 		
 		String [] datasDate = new String[2];
 		datasDate[0]=beginDateData;
-		datasDate[1]=beginDateData;
-		
+		datasDate[1]=endDateData;
 		
 		return datasDate;
 	}
@@ -217,26 +202,34 @@ public class CommitRepositoryImpl implements CommitRepository {
 	public List<Commit> findAllByBranchAuthorBeginEndDate(String reponame, String branch, String authorName,
 			Instant beginDate, String bestBeginDate, Instant endDate, String bestEndDate) {
 		if(bestBeginDate.equals(bestEndDate)) {
-			List<Commit> commits = this.mongoOperations
+			return this.mongoOperations
 			        .find(new Query(Criteria.where("branch").is(branch).
 			        		and("repository").is(reponame).
 			        		and("authorName").is(authorName).
 			        		and(bestBeginDate).gte(beginDate).lte(endDate)), Commit.class);
-		    return commits;
 		}
-		List<Commit> commits = this.mongoOperations
+		return this.mongoOperations
 		        .find(new Query(Criteria.where("branch").is(branch).
 		        		and("repository").is(reponame).
 		        		and(bestBeginDate).gte(beginDate).
 		        		and(bestEndDate).lte(endDate)), Commit.class);
-	    return commits;
+	    
 	}
 
 	@Override
 	public Commit findRepository(String reponame) {
-		Commit commit = this.mongoOperations
+		return this.mongoOperations
 		        .findOne(new Query(Criteria.where("repository").is(reponame)), Commit.class);
-		    return commit;
+	}
+
+	/**
+	   * Borra los commits de un repositorio en la base de datos.
+	   * 
+	   * @author FcoCrespo
+	   */
+	@Override
+	public void deleteCommit(String repository) {
+		this.mongoOperations.findAllAndRemove(new Query(Criteria.where("repository").is(repository)), Commit.class);
 	}
 
 	

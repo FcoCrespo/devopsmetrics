@@ -10,7 +10,11 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -47,9 +51,9 @@ public class UserController {
   }
   
   
-  @RequestMapping(value = "/hola", method = RequestMethod.GET)
+  @GetMapping(value = "/hola")
 
-  public String getHola() throws Exception {
+  public String getHola(){
 	  return "hola amigo";
   }
 
@@ -60,10 +64,9 @@ public class UserController {
    * @throws Exception 
    */
 
-  @RequestMapping(method = RequestMethod.GET)
-
+  @GetMapping
   public ResponseEntity <SecureUser> getUserPassword(@RequestParam("username") final String username,
-      @RequestParam("password") final String password) throws Exception {
+      @RequestParam("password") final String password) {
 
     final String usernameEncriptado = Utilities.encriptar(username);
     final String contrasenaEncrip = Utilities.encriptar(password);
@@ -96,10 +99,10 @@ public class UserController {
    * @author FcoCrespo
    * @throws UserNotFoundException
    */
-  @RequestMapping(value = "/{username}", method = RequestMethod.GET)
+  @GetMapping(value = "/{username}")
   @ApiOperation(value = "Find an user", notes = "Return a user by username")
 
-  public ResponseEntity <SecureUser> userByTokenPass(@PathVariable final String username, @RequestParam("tokenpass") final String tokenpass) throws UserNotFoundException {
+  public ResponseEntity <SecureUser> userByTokenPass(@PathVariable final String username, @RequestParam("tokenpass") final String tokenpass) {
 
     final User usuariologin = usersService.getUserByTokenPass(tokenpass);
     if (usuariologin != null) {
@@ -113,7 +116,6 @@ public class UserController {
           SecureUser secureUser = new SecureUser(user.getId(), user.getUsername(), user.getRole(), user.getTokenPass(), user.getTokenValidity());
           return ResponseEntity.ok(secureUser);
         } catch (UserNotFoundException e) {
-          user = null;
           LOG.error("[SERVER] Usuario no encontrado.");
           return ResponseEntity.badRequest().build();
         }
@@ -129,7 +131,7 @@ public class UserController {
    * 
    * @author FcoCrespo
    */
-  @RequestMapping(value = "/all", method = RequestMethod.GET)
+  @GetMapping(value = "/all")
   @ApiOperation(value = "Find all user", notes = "Return all users")
   
   public ResponseEntity<List<SecureUser>> allUsers(@RequestParam("tokenpass") final String tokenpass) {
@@ -157,7 +159,7 @@ public class UserController {
    * 
    * @author FcoCrespo
    */
-  @RequestMapping(value = "/{userId}", method = RequestMethod.DELETE)
+  @DeleteMapping(value = "/{userId}")
   @ApiOperation(value = "Delete an user", notes = "Delete a user by Id")
 
   public ResponseEntity<Void> deleteUser(@PathVariable final String userId, @RequestParam("tokenpass") final String tokenpass) {
@@ -179,7 +181,7 @@ public class UserController {
    * 
    * @author FcoCrespo
    */
-  @RequestMapping(method = RequestMethod.POST)
+  @PostMapping
   public ResponseEntity<User> registrarUsuario(@RequestBody final String usuario) {
 	  
     	final JSONObject jso = new JSONObject(usuario);
@@ -204,11 +206,11 @@ public class UserController {
           usuario1 = new User(Utilities.encriptar(username), Utilities.encriptar(password), Utilities.encriptar(role));
           usersService.saveUser(usuario1);
           LOG.info("[SERVER] Usuario registrado.");
-          LOG.info("[SERVER] " + usuario1.toString());
+          LOG.info("[SERVER] answer register user: " + usuario1.toString());
           return ResponseEntity.ok().build();
         } else {
           LOG.info("[SERVER] Error: El usuario ya está registrado.");
-          LOG.info("[SERVER] " + usuario1.toString());
+          LOG.info("[SERVER] answer register user fail:" + usuario1.toString());
           return ResponseEntity.badRequest().build();
         }
       
@@ -219,7 +221,7 @@ public class UserController {
    * 
    * @author FcoCrespo
    */
-  @RequestMapping(value = "/{username}", method = RequestMethod.PUT)
+  @PutMapping(value = "/{username}")
   @ApiOperation(value = "Update usuario", notes = "Finds a username and updates its fields")
   public ResponseEntity<User> updateUsuario(@RequestBody final String mensajerecibido,
       @PathVariable final String username, @RequestParam("tokenpass") final String tokenpass) {

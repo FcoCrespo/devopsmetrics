@@ -49,9 +49,7 @@ public class UserRepositoryImpl implements UserRepository {
 
 	    List<User> users = this.mongoOperations.find(new Query(), User.class);
 
-	    Optional<List<User>> optionalUsuarios = Optional.ofNullable(users);
-
-	    return optionalUsuarios;
+	    return Optional.ofNullable(users);
 
 	  }
 
@@ -62,8 +60,7 @@ public class UserRepositoryImpl implements UserRepository {
 	   */
 	  public Optional<User> findOne(final String username) {
 	    User d = this.mongoOperations.findOne(new Query(Criteria.where("username").is(username)), User.class);
-	    Optional<User> usuario = Optional.ofNullable(d);
-	    return usuario;
+	    return Optional.ofNullable(d);
 	  }
 
 	  /**
@@ -99,22 +96,19 @@ public class UserRepositoryImpl implements UserRepository {
 
 	  @Override
 	  public User findByUsernameAndPassword(final String username, final String password) {
-	    User usuario = this.mongoOperations
+	    return this.mongoOperations
 	        .findOne(new Query(Criteria.where("username").is(username).and("password").is(password)), User.class);
-	    return usuario;
 	  }
 
 	  @Override
 	  public List<User> findByRole(final String role) {
-	    List<User> usuariosRol = this.mongoOperations.find(new Query(Criteria.where("role").is(role)), User.class);
-	    return usuariosRol;
+	    return this.mongoOperations.find(new Query(Criteria.where("role").is(role)), User.class);
 	  }
 
 	@Override
 	public User findByTokenPass(String tokenpass) {
-		User usuario = this.mongoOperations
-		        .findOne(new Query(Criteria.where("tokenPass").is(tokenpass)), User.class);
-		return usuario;
+		return this.mongoOperations.findOne(new Query(Criteria.where("tokenPass").is(tokenpass)), User.class);
+
 	}
 
 	

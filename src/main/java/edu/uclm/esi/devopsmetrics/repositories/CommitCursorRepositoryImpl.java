@@ -1,6 +1,5 @@
 package edu.uclm.esi.devopsmetrics.repositories;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,7 +10,6 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 
-import edu.uclm.esi.devopsmetrics.models.Commit;
 import edu.uclm.esi.devopsmetrics.models.CommitCursor;
 
 /**
@@ -51,9 +49,7 @@ public class CommitCursorRepositoryImpl implements CommitCursorRepository {
 
 	    List<CommitCursor> commits = this.mongoOperations.find(new Query(), CommitCursor.class);
 
-	    Optional<List<CommitCursor>> optionalCommits = Optional.ofNullable(commits);
-
-	    return optionalCommits;
+	    return Optional.ofNullable(commits);
 
 	  }
 
@@ -64,8 +60,7 @@ public class CommitCursorRepositoryImpl implements CommitCursorRepository {
 	   */
 	  public Optional<CommitCursor> findOne(final String endCursor) {
 		CommitCursor d = this.mongoOperations.findOne(new Query(Criteria.where("endCursor").is(endCursor)), CommitCursor.class);
-	    Optional<CommitCursor> commit = Optional.ofNullable(d);
-	    return commit;
+	    return Optional.ofNullable(d);
 	  }
 
 	  /**
@@ -101,10 +96,9 @@ public class CommitCursorRepositoryImpl implements CommitCursorRepository {
 
 	  @Override
 	  public CommitCursor findByEndCursoryHasNextPage(String branch, String repository) {
-	    CommitCursor commitCursor = this.mongoOperations
+	    return this.mongoOperations
 	        .findOne(new Query(Criteria.where("branch").is(branch)
 	        		.and("repository").is(repository)), CommitCursor.class);
-	    return commitCursor;
 	  }
 
 	

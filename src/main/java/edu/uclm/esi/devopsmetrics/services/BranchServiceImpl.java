@@ -6,8 +6,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import edu.uclm.esi.devopsmetrics.exceptions.BranchNotFoundException;
 import edu.uclm.esi.devopsmetrics.models.Branch;
 import edu.uclm.esi.devopsmetrics.repositories.BranchRepository;
-import edu.uclm.esi.devopsmetrics.repositories.BranchRepositoryImpl;
 
 
 @Service("BranchService")
@@ -25,10 +22,7 @@ import edu.uclm.esi.devopsmetrics.repositories.BranchRepositoryImpl;
 @Transactional
 
 public class BranchServiceImpl implements BranchService {
-  /**
-   * @author FcoCrespo
-   */
-  private static final Log log = LogFactory.getLog(BranchServiceImpl.class);
+ 
   /**
    * @author FcoCrespo
    */
@@ -54,8 +48,6 @@ public class BranchServiceImpl implements BranchService {
 
     if (branch.isPresent()) {
 
-      log.debug(String.format("Read branch '{}'", branch));
-
       final Optional<Branch> branchOpt = branch;
 
       return branchOpt.get();
@@ -73,9 +65,7 @@ public class BranchServiceImpl implements BranchService {
    */
   public List<Branch> findAll() {
 
-    final List<Branch> branches = branchRepository.findAll();
-    
-    return branches;
+    return branchRepository.findAll();
 
   }
 
@@ -109,8 +99,7 @@ public class BranchServiceImpl implements BranchService {
   @Override
   public Branch getBranchByRepositoryyName(final String repository, final String name) {
 
-    final Branch branch = branchRepository.findByRepositoryyName(repository, name);
-    return branch;
+    return branchRepository.findByRepositoryyName(repository, name);
     
   }
 
@@ -118,7 +107,7 @@ public class BranchServiceImpl implements BranchService {
 	public List<Branch> getBranchesByRepository(String repository, boolean order) {
 		final List<Branch> branches = branchRepository.findAllbyRepository(repository);
 		
-		if(order==true) {
+		if(order) {
 			Collections.sort(branches);
 			List <Branch> branchesRight = new ArrayList<Branch>();
 			for(int i=0; i<branches.size(); i++) {
@@ -136,8 +125,7 @@ public class BranchServiceImpl implements BranchService {
 
 	@Override
 	public Branch getBeforeBranchByOrder(String repository, int order) {
-		Branch branch = branchRepository.findBeforeBranchByOrder(repository, order);
-		return branch;
+		return branchRepository.findBeforeBranchByOrder(repository, order);
 	}
 
 

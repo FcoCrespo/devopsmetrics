@@ -2,9 +2,6 @@ package edu.uclm.esi.devopsmetrics.models;
 
 
 import java.util.UUID;
-
-import javax.validation.constraints.NotNull;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -130,60 +127,6 @@ public class CommitCursor {
 		this.repository = repository;
 	}
 	
-	
-	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((branch == null) ? 0 : branch.hashCode());
-		result = prime * result + ((endCursor == null) ? 0 : endCursor.hashCode());
-		result = prime * result + (hasNextPage ? 1231 : 1237);
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((repository == null) ? 0 : repository.hashCode());
-		result = prime * result + ((startCursor == null) ? 0 : startCursor.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		CommitCursor other = (CommitCursor) obj;
-		if (branch == null) {
-			if (other.branch != null)
-				return false;
-		} else if (!branch.equals(other.branch))
-			return false;
-		if (endCursor == null) {
-			if (other.endCursor != null)
-				return false;
-		} else if (!endCursor.equals(other.endCursor))
-			return false;
-		if (hasNextPage != other.hasNextPage)
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (repository == null) {
-			if (other.repository != null)
-				return false;
-		} else if (!repository.equals(other.repository))
-			return false;
-		if (startCursor == null) {
-			if (other.startCursor != null)
-				return false;
-		} else if (!startCursor.equals(other.startCursor))
-			return false;
-		return true;
-	}
-
 	@Override
 	public String toString() {
 		return "CommitCursor [id=" + id + ", hasNextPage=" + hasNextPage + ", endCursor=" + endCursor + ", startCursor="

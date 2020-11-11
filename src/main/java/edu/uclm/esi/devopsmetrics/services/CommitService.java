@@ -32,7 +32,7 @@ public interface CommitService {
   /**
    * @author FcoCrespo
    */
-  void deleteCommit(String commitId);
+  void deleteCommit(String repository);
 
   /**
    * @author FcoCrespo

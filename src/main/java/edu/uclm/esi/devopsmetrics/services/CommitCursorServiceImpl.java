@@ -1,11 +1,11 @@
 package edu.uclm.esi.devopsmetrics.services;
 
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,10 +22,7 @@ import edu.uclm.esi.devopsmetrics.repositories.CommitCursorRepository;
 @Transactional
 
 public class CommitCursorServiceImpl implements CommitCursorService {
-  /**
-   * @author FcoCrespo
-   */
-  private static final Log log = LogFactory.getLog(CommitServiceImpl.class);
+
   /**
    * @author FcoCrespo
    */
@@ -51,8 +48,6 @@ public class CommitCursorServiceImpl implements CommitCursorService {
 
     if (commit.isPresent()) {
 
-      log.debug(String.format("Read username '{}'", commit));
-
       final Optional<CommitCursor> userOpt = commit;
 
       return userOpt.get();
@@ -68,18 +63,25 @@ public class CommitCursorServiceImpl implements CommitCursorService {
   /**
    * @author FcoCrespo
    */
-  public List<CommitCursor> findAll() {
+  
+public List<CommitCursor> findAll(){
 
     final Optional<List<CommitCursor>> commits = commitCursorRepository.findAll();
 
-    final List<CommitCursor> commitsList = null;
+    final List<CommitCursor> commitsList = new ArrayList<CommitCursor>();
     
-    for (int i = 0; i < commits.get().size(); i++) {
-        final CommitCursor commit = commits.get().get(i);
-        commitsList.add(commit);
-   }
+    if(commits.isPresent()) {
+    	for (int i = 0; i < commits.get().size(); i++) {
+            final CommitCursor commit = commits.get().get(i);
+            commitsList.add(commit);
+        }
 
-    return commitsList;
+        return commitsList;
+    }
+    else {
+    	return Collections.emptyList();
+    }
+    
 
   }
 
@@ -113,9 +115,8 @@ public class CommitCursorServiceImpl implements CommitCursorService {
   @Override
   public CommitCursor getCommitCursorByEndCursoryHasNextPage(String branch, String repository) {
 
-    final CommitCursor commit = commitCursorRepository.findByEndCursoryHasNextPage(branch, repository);
-    return commit;
-    
+    return commitCursorRepository.findByEndCursoryHasNextPage(branch, repository);
+
   }
 
 

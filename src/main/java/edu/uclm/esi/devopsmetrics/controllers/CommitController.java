@@ -4,27 +4,22 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.http.client.ClientProtocolException;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.InvalidRemoteException;
 import org.eclipse.jgit.api.errors.TransportException;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,16 +30,12 @@ import com.wordnik.swagger.annotations.ApiOperation;
 import edu.uclm.esi.devopsmetrics.services.CommitService;
 import edu.uclm.esi.devopsmetrics.services.UserService;
 import edu.uclm.esi.devopsmetrics.services.BranchService;
-import edu.uclm.esi.devopsmetrics.services.CommitCursorService;
-import edu.uclm.esi.devopsmetrics.exceptions.CommitCursorNotFoundException;
-import edu.uclm.esi.devopsmetrics.exceptions.CommitNotFoundException;
-import edu.uclm.esi.devopsmetrics.exceptions.UserNotFoundException;
 import edu.uclm.esi.devopsmetrics.models.Commit;
-import edu.uclm.esi.devopsmetrics.models.CommitCursor;
 import edu.uclm.esi.devopsmetrics.models.User;
 import edu.uclm.esi.devopsmetrics.models.Branch;
 import edu.uclm.esi.devopsmetrics.utilities.CommitsGithub;
 import edu.uclm.esi.devopsmetrics.utilities.Utilities;
+
 
 @RestController
 @RequestMapping("/commits")
@@ -58,7 +49,6 @@ public class CommitController {
 	  private static final Log LOG = LogFactory.getLog(CommitController.class);
 
 	  private final CommitService commitsService;
-	  private final CommitCursorService commitscursorService;
 	  private final UserService usersService;
 	  private final BranchService branchService;
 	  private final CommitsGithub cg;
@@ -68,10 +58,9 @@ public class CommitController {
 	   * @author FcoCrespo
 	   */
 
-	  public CommitController(final CommitService commitsService, CommitCursorService commitscursorService,
+	  public CommitController(final CommitService commitsService,
 			  				  final UserService usersService, final BranchService branchService, final CommitsGithub cg) {
 	    this.commitsService = commitsService;
-	    this.commitscursorService = commitscursorService;
 	    this.usersService = usersService;
 	    this.branchService =  branchService;
 	    this.cg = cg;
@@ -83,12 +72,12 @@ public class CommitController {
 	   * @author FcoCrespo
 	   * @throws InvalidRemoteException, TransportException, IOException, GitAPIException, InterruptedException
 	   */
-	  @RequestMapping(value = "/allbranches", method = RequestMethod.GET)
+	  @GetMapping(value = "/allbranches")
 	  @ApiOperation(value = "Find all branches", notes = "Return all branches")
 
 	  public ResponseEntity<List<Branch>> allBranches(@RequestParam("tokenpass") final String tokenpass,
 		      @RequestParam("reponame") final String reponame,
-		      @RequestParam("owner") final String owner) throws InvalidRemoteException, TransportException, IOException, GitAPIException, InterruptedException {
+		      @RequestParam("owner") final String owner) {
 
 	    final User usuario = usersService.getUserByTokenPass(tokenpass);
 	    if (usuario != null) {
@@ -106,14 +95,16 @@ public class CommitController {
 	   * Devuelve el primer commit de cada rama para poner el orden correcto de creacion de cada rama
 	   * 
 	   * @author FcoCrespo
+	 * @throws IOException 
+	 * @throws ClientProtocolException 
 	   * @throws InvalidRemoteException, TransportException, IOException, GitAPIException, InterruptedException
 	   */
-	  @RequestMapping(value = "/branchesfirstcommit", method = RequestMethod.GET)
+	  @GetMapping(value = "/branchesfirstcommit")
 	  @ApiOperation(value = "Find all branches", notes = "Return all branches")
 
 	  public ResponseEntity<String> allBranchesFirstCommit(@RequestParam("tokenpass") final String tokenpass,
 		      @RequestParam("reponame") final String reponame,
-		      @RequestParam("owner") final String owner) throws InvalidRemoteException, TransportException, IOException, GitAPIException, InterruptedException {
+		      @RequestParam("owner") final String owner) throws IOException {
 
 	    final User usuario = usersService.getUserByTokenPass(tokenpass);
 	    if (usuario != null) {
@@ -131,14 +122,19 @@ public class CommitController {
 	   * ATENCIÓN: Devuelve todos los commits del repositorio por su owner, nombre de repositorio y token de acceso
 	   * 
 	   * @author FcoCrespo
+	 * @throws InterruptedException 
+	 * @throws ParseException 
+	 * @throws GitAPIException 
+	 * @throws TransportException 
+	 * @throws InvalidRemoteException 
 	   */
 	  
-	  @RequestMapping(value = "/allcommits", method = RequestMethod.GET)
+	  @GetMapping(value = "/allcommits")
 	  @ApiOperation(value = "Find all branches", notes = "Return all branches")
 
 	  public String allCommits(@RequestParam("tokenpass") final String tokenpass,
 		      @RequestParam("reponame") final String reponame,
-		      @RequestParam("owner") final String owner){
+		      @RequestParam("owner") final String owner) throws InterruptedException, InvalidRemoteException, TransportException, GitAPIException, ParseException{
 		
 
 	    final User usuario = usersService.getUserByTokenPass(tokenpass);
@@ -146,17 +142,15 @@ public class CommitController {
 	      LOG.info("Get commits");
 	      try {
 	    	  cg.getCommits(reponame, owner); 
-		  } catch (IOException | GitAPIException | InterruptedException | ParseException e) {
-				// TODO Auto-generated catch block
+		  } catch (IOException e) {
 				e.printStackTrace();
 		  } 
 	      
 	      return "bien";
-	      //return ResponseEntity.ok(branchService.getBranchesByRepository(reponame));
+	      
 	    } else {
 	      LOG.info("[SERVER] No se ha encontrado ningún usuario con esos datos.");
 	      return "mal";
-	      //return ResponseEntity.badRequest().build();
 	    }
 		
 	  }
@@ -169,7 +163,7 @@ public class CommitController {
 	   * @author FcoCrespo
 	   */
 	  
-	  @RequestMapping(value = "/commitsbranch", method = RequestMethod.GET)
+	  @GetMapping(value = "/commitsbranch")
 	  @ApiOperation(value = "Find all commits from a repository branch", notes = "Return all commits from a repository branch")
 	  
 	  public ResponseEntity<List<Commit>> allCommitsBranch(@RequestParam("tokenpass") final String tokenpass,
@@ -181,9 +175,9 @@ public class CommitController {
 	    if (usuario != null) {
 	      LOG.info("Get commits");
 	      List <Commit> commits = commitsService.getAllByBranch(reponame, branch);
-	      System.out.println("Size: "+commits.size());
-	     
+	 
 	      return ResponseEntity.ok(commits);
+	      
 	    } else {
 	    	LOG.info("[SERVER] No se ha encontrado ningún usuario con esos datos.");
 		    return ResponseEntity.badRequest().build();
@@ -197,7 +191,7 @@ public class CommitController {
 	   * @author FcoCrespo
 	   */
 	  
-	  @RequestMapping(value = "/commitsbranchauthor", method = RequestMethod.GET)
+	  @GetMapping(value = "/commitsbranchauthor")
 	  @ApiOperation(value = "Find all commits from a repository branch", notes = "Return all commits from a repository branch")
 	  
 	  public ResponseEntity<List<Commit>> allCommitsBranchAuthor(@RequestParam("tokenpass") final String tokenpass,
@@ -210,7 +204,6 @@ public class CommitController {
 	    if (usuario != null) {
 	      LOG.info("Get commits");
 	      List <Commit> commits = commitsService.getAllByBranchAndAuthorName(reponame, branch, authorName);
-	      System.out.println("Size: "+commits.size());
 	     
 	      return ResponseEntity.ok(commits);
 	    } else {
@@ -226,7 +219,7 @@ public class CommitController {
 	   * @author FcoCrespo
 	   */
 	  
-	  @RequestMapping(value = "/commitsbranchdate", method = RequestMethod.GET)
+	  @GetMapping(value = "/commitsbranchdate")
 	  @ApiOperation(value = "Find all commits from a repository branch by date", notes = "Return all commits from a repository branch")
 	  
 	  public ResponseEntity<List<Commit>> allCommitsBranchBeginEndDate(@RequestParam("tokenpass") final String tokenpass,
@@ -265,7 +258,7 @@ public class CommitController {
 	   * @author FcoCrespo
 	   */
 	  
-	  @RequestMapping(value = "/commitsbranchauthordate", method = RequestMethod.GET)
+	  @GetMapping(value = "/commitsbranchauthordate")
 	  @ApiOperation(value = "Find all commits from a repository branch by author and date", notes = "Return all commits from a repository branch")
 	  
 	  public ResponseEntity<List<Commit>> allCommitsBranchBeginEndDate(@RequestParam("tokenpass") final String tokenpass,
@@ -297,6 +290,31 @@ public class CommitController {
 		    return ResponseEntity.badRequest().build();
 	    }
 		
+	  }
+	  
+
+	  /**
+	   * Elimina los commits de una rama de un repositorio de la BBDD
+	   * 
+	   * @author FcoCrespo
+	   */
+	  
+	  @DeleteMapping(value = "/deletebranchcommits")
+	  @ApiOperation(value = "Delete commit from a repository branch", notes = "Delete commit from a repository branch")
+
+	  public ResponseEntity<String> deleteUser(@RequestParam("tokenpass") final String tokenpass, 
+			  @RequestParam("reponame") final String reponame, @RequestParam("owner") final String owner) {
+
+	    final User usuariologin = usersService.getUserByTokenPass(tokenpass);
+	    if (usuariologin != null) {
+	      LOG.info("Delete commits ");
+	      commitsService.deleteCommit(reponame);
+	      return ResponseEntity.ok("ok");
+	    } else {
+	      LOG.info("[SERVER] No se ha encontrado ningún usuario con esos datos.");
+	      return ResponseEntity.badRequest().build();
+	    }
+
 	  }
 
 }

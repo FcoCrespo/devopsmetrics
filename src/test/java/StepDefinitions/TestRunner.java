@@ -17,6 +17,8 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 
+import edu.uclm.esi.devopsmetrics.utilities.SleepClass;
+
 
 @CucumberContextConfiguration 
 @RunWith(Cucumber.class)
@@ -42,7 +44,8 @@ public class TestRunner {
 
     		  //java.nio.file.Files;
     		  Files.createDirectories(path);
-    		  Thread.sleep(1000);
+  		      SleepClass.sleep(1000);
+
 
     		  System.out.println("Directory is created!");
 
@@ -60,7 +63,7 @@ public class TestRunner {
 
 		try {
 		    FileUtils.copyDirectory(srcDir, destDir);
-		    Thread.sleep(1000);
+		    SleepClass.sleep(1000);
 		} catch (IOException e) {
 		    e.printStackTrace();
 		}
@@ -73,28 +76,28 @@ public class TestRunner {
     	
     	File fJSONoriginal = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\JSONReports\\TestReport.json");
     	File fJSONrenombrado = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\Reports-"+dtf.format(now)+"\\TestReport"+dtf.format(now)+".json");
-    	Thread.sleep(1000);
+    	SleepClass.sleep(1000);
     	File fJUnitoriginal = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\JUnitReports\\TestReport.xml");
     	File fJUnitrenombrado = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\Reports-"+dtf.format(now)+"\\TestReport"+dtf.format(now)+".xml");
-    	Thread.sleep(1000);
+    	SleepClass.sleep(1000);
     	File fHTMLoriginal = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\HTMLReports\\TestReport.html");
     	File fHTMLrenombrado = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\Reports-"+dtf.format(now)+"\\TestReport"+dtf.format(now)+".html");
-    	Thread.sleep(1000);
+    	SleepClass.sleep(1000);
     	fJSONoriginal.renameTo(fJSONrenombrado);
-    	Thread.sleep(1000);
+    	SleepClass.sleep(1000);
     	fJUnitoriginal.renameTo(fJUnitrenombrado);
-    	Thread.sleep(1000);
+    	SleepClass.sleep(1000);
     	fHTMLoriginal.renameTo(fHTMLrenombrado);
-    	Thread.sleep(1000);
+    	SleepClass.sleep(1000);
     	File folder = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\JSONReports");
     	folder.delete();
-    	Thread.sleep(1000);
+    	SleepClass.sleep(1000);
     	folder = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\JUnitReports");
     	folder.delete();
-    	Thread.sleep(1000);
+    	SleepClass.sleep(1000);
     	folder = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\HTMLReports");
     	folder.delete();
-    	Thread.sleep(1000);
+    	SleepClass.sleep(1000);
     	
     }
     

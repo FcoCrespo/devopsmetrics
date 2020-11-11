@@ -19,15 +19,11 @@ query GitHub($owner: String!, $repo: String!, $cursor:String!, $branch: String!)
 						oid
 						messageHeadline
 						message
-						messageBody
 						pushedDate
 						changedFiles
-						authoredByCommitter
 						authoredDate
 						author {
 						  name
-						  email
-						  date
 						  user {
 							id
 						  }

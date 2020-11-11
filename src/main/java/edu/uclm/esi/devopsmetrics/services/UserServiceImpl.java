@@ -4,8 +4,6 @@ package edu.uclm.esi.devopsmetrics.services;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,10 +20,7 @@ import edu.uclm.esi.devopsmetrics.utilities.Utilities;
 @Transactional
 
 public class UserServiceImpl implements UserService {
-  /**
-   * @author FcoCrespo
-   */
-  private static final Log log = LogFactory.getLog(UserServiceImpl.class);
+  
   /**
    * @author FcoCrespo
    */
@@ -51,11 +46,14 @@ public class UserServiceImpl implements UserService {
 
     if (user.isPresent()) {
 
-      log.debug(String.format("Read username '{}'", username));
-
       final Optional<User> userDesencriptado = Utilities.desencriptarOptionalUser(user);
 
-      return userDesencriptado.get();
+      if(userDesencriptado.isPresent()){
+    	  return userDesencriptado.get();
+      }
+      else {
+    	  return null;
+      }
 
     } else {
 
@@ -72,9 +70,7 @@ public class UserServiceImpl implements UserService {
 
     final Optional<List<User>> users = userRepository.findAll();
 
-    final List<User> usersDesencrip = Utilities.desencriptarListaUsers(users);
-
-    return usersDesencrip;
+    return Utilities.desencriptarListaUsers(users);
 
   }
 
@@ -109,22 +105,18 @@ public class UserServiceImpl implements UserService {
   public User getUserByUsernameAndPassword(final String username, final String password) {
 
     final User user = userRepository.findByUsernameAndPassword(username, password);
-    final User usuarioDesencriptado = Utilities.desencriptarUser(user);
-    return usuarioDesencriptado;
+    return Utilities.desencriptarUser(user);
     
   }
 
   @Override
   public List<User> getUsersByRole(final String role) {
-    final List<User> usersRole = userRepository.findByRole(role);
-    return usersRole;
+    return userRepository.findByRole(role);
   }
 
 	@Override
 	public User getUserByTokenPass(String tokenPass) {
-		final User user = userRepository.findByTokenPass(tokenPass);
-	    final User usuarioDesencriptado = Utilities.desencriptarUser(user);
-	    return usuarioDesencriptado;
+		return userRepository.findByTokenPass(tokenPass);
 	}
 
 

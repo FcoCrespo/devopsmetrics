@@ -7,8 +7,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,10 +24,7 @@ import edu.uclm.esi.devopsmetrics.repositories.CommitRepository;
 @Transactional
 
 public class CommitServiceImpl implements CommitService {
-  /**
-   * @author FcoCrespo
-   */
-  private static final Log log = LogFactory.getLog(CommitServiceImpl.class);
+
   /**
    * @author FcoCrespo
    */
@@ -57,8 +52,6 @@ public class CommitServiceImpl implements CommitService {
 
     if (commit.isPresent()) {
 
-      log.debug(String.format("Read username '{}'", commit));
-
       final Optional<Commit> userOpt = commit;
 
       return userOpt.get();
@@ -78,14 +71,20 @@ public class CommitServiceImpl implements CommitService {
 
     final Optional<List<Commit>> commits = commitRepository.findAll();
 
-    final List<Commit> commitsList = null;
+    final List<Commit> commitsList = new ArrayList<Commit>();
     
-    for (int i = 0; i < commits.get().size(); i++) {
-        final Commit commit = commits.get().get(i);
-        commitsList.add(commit);
-   }
+    if(commits.isPresent()) {
+    	for (int i = 0; i < commits.get().size(); i++) {
+            final Commit commit = commits.get().get(i);
+            commitsList.add(commit);
+        }
 
-    return commitsList;
+        return commitsList;
+    }
+    else {
+    	return Collections.emptyList();
+    }
+    
 
   }
 
@@ -110,18 +109,17 @@ public class CommitServiceImpl implements CommitService {
   /**
    * @author FcoCrespo
    */
-  public void deleteCommit(final String commitId) {
+  public void deleteCommit(final String reponame) {
 
-	  commitRepository.deleteCommit(commitId);
+	  commitRepository.deleteCommit(reponame);
 
   }
 
   @Override
   public Commit getCommitByOidyBranch(final String oid, final String branch) {
 
-    final Commit commit = commitRepository.findByOidyBranch(oid, branch);
-    return commit;
-    
+    return commitRepository.findByOidyBranch(oid, branch);
+  
   }
 
   @Override
@@ -130,7 +128,7 @@ public class CommitServiceImpl implements CommitService {
 		Branch branch = branchService.getBranchByRepositoryyName(reponame, branchname);
 		
 		if(branch==null) {
-			return null;
+			return Collections.emptyList();  
 		}
 		else if(branch.getOrder()==0 || branch.getOrder()==1) {
 			final List<Commit> commits = commitRepository.findAllByBranch(reponame, branchname);
@@ -146,9 +144,8 @@ public class CommitServiceImpl implements CommitService {
 				
 			  List <Commit> listBefore = commitRepository.findAllByBranch(reponame, branchBefore.getName());
 		      
-			  List <Commit> commits = decantarCommits(listQuery, listBefore);
-		      
-		      return commits;
+			  return decantarCommits(listQuery, listBefore);
+		     
 		}
 	}
 
@@ -157,7 +154,7 @@ public class CommitServiceImpl implements CommitService {
 		Branch branch = branchService.getBranchByRepositoryyName(reponame, branchname);
 		
 		if(branch==null) {
-			return null;
+			return Collections.emptyList();  
 		}
 		else if(branch.getOrder()==0 || branch.getOrder()==1) {
 			final List<Commit> commits = commitRepository.findAllByBranchAndAuthorName(reponame, branchname, authorName);
@@ -173,9 +170,8 @@ public class CommitServiceImpl implements CommitService {
 				
 			  List <Commit> listBefore = commitRepository.findAllByBranchAndAuthorName(reponame, branchBefore.getName(), authorName);
 		      
-			  List <Commit> commits = decantarCommits(listQuery, listBefore);
+			  return decantarCommits(listQuery, listBefore);
 		      
-		      return commits;
 		}
 	}
 	
@@ -184,7 +180,7 @@ public class CommitServiceImpl implements CommitService {
 		Branch branch = branchService.getBranchByRepositoryyName(reponame, branchname);
 		
 		if(branch==null) {
-			return null;
+			return Collections.emptyList();  
 		}
 		else if(branch.getOrder()==0 || branch.getOrder()==1) {
 			final List<Commit> commits = commitRepository.findAllByBranchBeginEndDate(reponame, branchname, beginDate, bestBeginData, endDate, bestEndData);
@@ -200,9 +196,8 @@ public class CommitServiceImpl implements CommitService {
 				
 			  List <Commit> listBefore = commitRepository.findAllByBranchBeginEndDate(reponame, branchBefore.getName(), beginDate, bestBeginData, endDate, bestEndData);
 		      
-			  List <Commit> commits = decantarCommits(listQuery, listBefore);
-		      
-		      return commits;
+			  return decantarCommits(listQuery, listBefore);
+		    
 		}
 	}
 
@@ -212,12 +207,12 @@ public class CommitServiceImpl implements CommitService {
 	      
 	      
 	      for(int i = 0; i<listQuery.size(); i++) {
-	    	  for(int j = 0; j<listBefore.size()&&seguir==true; j++) {
+	    	  for(int j = 0; j<listBefore.size()&&seguir; j++) {
 	    		  if (listQuery.get(i).getOid().equals(listBefore.get(j).getOid())){
 	    			  seguir=false;
 	    		  }
 	    	  }
-	    	  if(seguir==true) {
+	    	  if(seguir) {
 	    		  commits.add(listQuery.get(i));
 	    	  }
 	    	  seguir=true;
@@ -239,7 +234,7 @@ public class CommitServiceImpl implements CommitService {
 		Branch branch = branchService.getBranchByRepositoryyName(reponame, branchname);
 		
 		if(branch==null) {
-			return null;
+			return Collections.emptyList();  
 		}
 		else if(branch.getOrder()==0 || branch.getOrder()==1) {
 			final List<Commit> commits = commitRepository.findAllByBranchAuthorBeginEndDate(reponame, branchname, authorName, beginDate, bestBeginData, endDate, bestEndData);
@@ -255,16 +250,14 @@ public class CommitServiceImpl implements CommitService {
 				
 			  List <Commit> listBefore = commitRepository.findAllByBranchAuthorBeginEndDate(reponame, branchBefore.getName(), authorName, beginDate, bestBeginData, endDate, bestEndData);
 		      
-			  List <Commit> commits = decantarCommits(listQuery, listBefore);
-		      
-		      return commits;
+			  return decantarCommits(listQuery, listBefore);
+		     
 		}
 	}
 
 	@Override
 	public Commit getRepository(String repository) {
-		final Commit commit = commitRepository.findRepository(repository);
-	    return commit;
+		return commitRepository.findRepository(repository);
 	}
 
 	
