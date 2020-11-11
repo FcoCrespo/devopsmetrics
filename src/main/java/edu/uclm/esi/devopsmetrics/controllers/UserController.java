@@ -66,7 +66,7 @@ public class UserController {
 
   @GetMapping
   public ResponseEntity <SecureUser> getUserPassword(@RequestParam("username") final String username,
-      @RequestParam("password") final String password) {
+      @RequestParam("password") final String password) throws Exception {
 
     final String usernameEncriptado = Utilities.encriptar(username);
     final String contrasenaEncrip = Utilities.encriptar(password);

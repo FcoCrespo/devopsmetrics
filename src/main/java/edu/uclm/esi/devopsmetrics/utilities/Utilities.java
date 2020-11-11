@@ -33,8 +33,8 @@ public class Utilities {
             byte[] digestOfPassword = md.digest(secretKey.getBytes(StandardCharsets.UTF_8));
             byte[] keyBytes = Arrays.copyOf(digestOfPassword, 24);
 
-            SecretKey key = new SecretKeySpec(keyBytes, "AES/GCM/NoPadding");
-            Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding"); 
+            SecretKey key = new SecretKeySpec(keyBytes, "DESede");
+            Cipher cipher = Cipher.getInstance("DESede");
             cipher.init(Cipher.ENCRYPT_MODE, key);
 
             byte[] plainTextBytes = texto.getBytes(StandardCharsets.UTF_8);
@@ -43,14 +43,13 @@ public class Utilities {
             base64EncryptedString = new String(base64Bytes);
 
         } catch (Exception ex) {
-        	ex.printStackTrace();
         }
         return base64EncryptedString;
     }
 
-    public static String desencriptar(String textoEncriptado){
+    public static String desencriptar(String textoEncriptado) throws Exception {
     	
-    	String secretKey = KeyValue.getSecret();
+    	String secretKey = KeyValue.getSecret(); 
    
     	String base64EncryptedString = "";
     	try {
@@ -58,9 +57,9 @@ public class Utilities {
             MessageDigest md = MessageDigest.getInstance("MD5");
             byte[] digestOfPassword = md.digest(secretKey.getBytes(StandardCharsets.UTF_8));
             byte[] keyBytes = Arrays.copyOf(digestOfPassword, 24);
-            SecretKey key = new SecretKeySpec(keyBytes, "AES/GCM/NoPadding");
+            SecretKey key = new SecretKeySpec(keyBytes, "DESede");
 
-            Cipher decipher = Cipher.getInstance("AES/GCM/NoPadding");
+            Cipher decipher = Cipher.getInstance("DESede");
             decipher.init(Cipher.DECRYPT_MODE, key);
 
             byte[] plainText = decipher.doFinal(message);
@@ -68,27 +67,28 @@ public class Utilities {
             base64EncryptedString = new String(plainText, StandardCharsets.UTF_8);
 
         } catch (Exception ex) {
-        	ex.printStackTrace();
         }
         return base64EncryptedString;
     }
     
     public static Optional<User> desencriptarOptionalUser(Optional<User> user) {
 
-        if(user.isPresent()) {
-        	 user.get().setUsername(desencriptar(user.get().getUsername()));
-             user.get().setPassword(desencriptar(user.get().getPassword()));
-             user.get().setRole(desencriptar(user.get().getRole()));
-        
-             return user;
-        }
-        else {
-        	return Optional.empty();
-        }
-          
+        try {
+          if(user.isPresent()) {
+        	  user.get().setUsername(desencriptar(user.get().getUsername()));
+              user.get().setPassword(desencriptar(user.get().getPassword()));
+              user.get().setRole(desencriptar(user.get().getRole()));
          
+              return user;
+          }
+          else {
+        	  return Optional.empty();
+          }
           
-        
+        } catch (Exception ex) {
+
+          return Optional.empty();
+        }
 
    }
     
@@ -100,14 +100,14 @@ public class Utilities {
         	for (int i = 0; i < users.get().size(); i++) {
                 final User usuario = users.get().get(i);
                 usersDesencriptado.add(desencriptarUser(usuario));
-              }
+           }
 
-              return usersDesencriptado;
+           return usersDesencriptado;
+        }
+        else {
+        	return Collections.emptyList();
         }
         
-        else {
-        	return Collections.emptyList();  
-        }
    }
     
     public static List<User> desencriptarUsers(List<User> users) {
@@ -115,7 +115,7 @@ public class Utilities {
         final List<User> usersDesencriptado = new ArrayList<User>();
 
         for (int i = 0; i < users.size(); i++) {
-          final User usuario = users.get(i);
+          final User usuario = users.get(i);          
           usersDesencriptado.add(desencriptarUser(usuario));
         }
 
