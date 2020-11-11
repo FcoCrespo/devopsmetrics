@@ -1,6 +1,13 @@
 package edu.uclm.esi.devopsmetrics.services;
 
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 
 import edu.uclm.esi.devopsmetrics.models.User;
 
@@ -15,8 +22,14 @@ public interface UserService {
 
   /**
    * @author FcoCrespo
+ * @throws BadPaddingException 
+ * @throws IllegalBlockSizeException 
+ * @throws InvalidAlgorithmParameterException 
+ * @throws NoSuchPaddingException 
+ * @throws NoSuchAlgorithmException 
+ * @throws InvalidKeyException 
    */
-  User findByUsername(String username);
+  User findByUsername(String username) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException;
 
   /**
    * @author FcoCrespo
@@ -35,8 +48,14 @@ public interface UserService {
 
   /**
    * @author FcoCrespo
+ * @throws BadPaddingException 
+ * @throws IllegalBlockSizeException 
+ * @throws InvalidAlgorithmParameterException 
+ * @throws NoSuchPaddingException 
+ * @throws NoSuchAlgorithmException 
+ * @throws InvalidKeyException 
    */
-  User getUserByUsernameAndPassword(String username, String password);
+  User getUserByUsernameAndPassword(String username, String password) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException;
   
   /**
    * @author FcoCrespo

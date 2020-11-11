@@ -4,7 +4,6 @@ package edu.uclm.esi.devopsmetrics.utilities;
 import java.io.File;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,14 +13,10 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.InvalidRemoteException;
-import org.eclipse.jgit.api.errors.TransportException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -57,9 +52,8 @@ public class CommitsGithub{
 	private final CommitService commitService;
 	private final CommitCursorService commitCursorService;
 	
-	private final OkHttpClient client = new OkHttpClient();
 	
-	private final String graphqlUri = "https://api.github.com/graphql";
+	private static String graphqlUri = "https://api.github.com/graphql";
 
 
 	  /**
@@ -74,9 +68,10 @@ public class CommitsGithub{
 
 	}
 	
-	public void getCommits(String reponame, String owner) throws IOException, InvalidRemoteException, TransportException, GitAPIException, InterruptedException, ParseException{
+	public void getCommits(String reponame, String owner) throws IOException{
 		
-			String graphqlPayload, filename;
+			String graphqlPayload;
+			String filename;
 			
 			// Create a variables to pass to the graphql query
 	        ObjectNode variables;
@@ -84,7 +79,9 @@ public class CommitsGithub{
 	        CommitCursor commitCursor=null;
 	        
 	  		String jsonData;
-	  		JsonNode jsonNode, nodes, parameterNode;
+	  		JsonNode jsonNode;
+	  		JsonNode nodes;
+	  		JsonNode parameterNode;
 	  		Response response;
 	  		Iterator<JsonNode> iter;
 		
@@ -161,7 +158,7 @@ public class CommitsGithub{
 			        	if(commitCursorStarts.get(i).equals(commitDeRepo.getOid())) {
 			        		initialStarCursorFind=true;
 			        	}
-			        	else if(initialStarCursorFind==false){
+			        	else if(!(initialStarCursorFind)){
 			        		commitsBranch.add(commitDeRepo);
 			        	}
 			        	
@@ -173,13 +170,13 @@ public class CommitsGithub{
 				        	if(commitCursorStarts.get(i).equals(commitDeRepo.getOid())) {
 				        		initialStarCursorFind=true;
 				        	}
-				        	else if(initialStarCursorFind==false){
+				        	else if(!(initialStarCursorFind)){
 				        		commitsBranch.add(commitDeRepo);
 				        	}
 			    		}
 			    	}
 			        
-			        if(initialStarCursorFind == true) {
+			        if(initialStarCursorFind) {
 			        	i++;
 			        	filename = "src/main/resources/graphql/commits-cursor-before.graphql";
 			        	initialStarCursorFind=false;
@@ -241,7 +238,7 @@ public class CommitsGithub{
 			    		}
 			    	}
 			        
-			        if(commitCursor.getHasNextPage()==true) {
+			        if(commitCursor.getHasNextPage()) {
 			        	filename = "src/main/resources/graphql/commits-cursor.graphql";
 			        	file = new File(filename);
 			        }
@@ -260,27 +257,29 @@ public class CommitsGithub{
 
 	}
 
-	private Commit introducirCommit(JsonNode parameterNode, String reponame, String branch) throws ParseException {
+	private Commit introducirCommit(JsonNode parameterNode, String reponame, String branch){
 		
 		Commit commit;
-        String idGithub, oid;
-  		String messageHeadline, message, messageBody;
+        String oid;
+  		String messageHeadline; 
+  		String message;
   		int changedFiles;
-  		String authoredByCommitter, authorName, authorEmail, authorDate, authorId;
-  		Instant pushedDate, authoredDate; 
+  		String authorName;
+  		String authorId;
+  		Instant pushedDate;
+  		Instant authoredDate; 
   		
-  		String pushedDateExtraido, authoredDateExtraido; 
+  		String pushedDateExtraido;
+  		String authoredDateExtraido; 
   		
-  		JsonNode nodeAuthor, nodeAuthorId;
+  		JsonNode nodeAuthor;
+  		JsonNode nodeAuthorId;
  
-  		idGithub = comprobarValor(parameterNode, "id");
   		oid = comprobarValor(parameterNode,"oid");
   	    messageHeadline = comprobarValor(parameterNode,"messageHeadline");
   		message = comprobarValor(parameterNode,"message");
-  		messageBody = comprobarValor(parameterNode,"messageBody");
   		pushedDateExtraido = comprobarValor(parameterNode,"pushedDate");
   		changedFiles = comprobarValorchangedFiles(parameterNode,"changedFiles");
-  		authoredByCommitter = comprobarValor(parameterNode,"authoredByCommitter");
   		authoredDateExtraido = comprobarValor(parameterNode,"authoredDate");
   		
   		if(pushedDateExtraido==null || pushedDateExtraido.equals("")) {
@@ -301,13 +300,9 @@ public class CommitsGithub{
   		if(nodeAuthor==null) {
   			authorId = "";
   			authorName = "";
-      		authorEmail = "";
-      		authorDate = "";
   		}
   		else {
   			authorName = comprobarValor(nodeAuthor,"name");
-      		authorEmail = comprobarValor(nodeAuthor,"email");
-      		authorDate =comprobarValor(nodeAuthor,"date");
       		
       		nodeAuthorId = nodeAuthor.path("user");
       		if(nodeAuthorId==null) {
@@ -318,7 +313,7 @@ public class CommitsGithub{
       		}
   		}
   		
-  		System.out.println(idGithub +" : idGithub y oid : "+ oid);
+  		System.out.println("oid : "+ oid);
   		System.out.println("MessageHeadline: "+messageHeadline);
 	
   		commit = new Commit(oid, messageHeadline, message, pushedDate, changedFiles,
@@ -430,7 +425,7 @@ public class CommitsGithub{
 		}
 	}
 	
-	public void getFirstCommitByBranch(String reponame) throws ClientProtocolException, IOException {
+	public void getFirstCommitByBranch(String reponame) throws IOException {
 		  //Creating a HttpClient object
 	      CloseableHttpClient httpclient = HttpClients.createDefault();
 
@@ -452,7 +447,8 @@ public class CommitsGithub{
 	      JsonNode parameterNode;
 	      parameterNode = iter.next();
 	      
-	      String branchname, commitoid;
+	      String branchname;
+	      String commitoid;
 	      
 	      List<Commit> firstCommitByBranch = new ArrayList<Commit>();
 	      List<String> branchesEmpty = new ArrayList<String>();
@@ -485,7 +481,7 @@ public class CommitsGithub{
 	      Collections.sort(firstCommitByBranch);
 	      Branch branch;
 	      boolean seguir = true;
-	      for(int i=0; i<firstCommitByBranch.size()&&seguir==true; i++) {
+	      for(int i=0; i<firstCommitByBranch.size()&&seguir; i++) {
 	    	  if(firstCommitByBranch.get(i).getBranch().equals("master")) {
 	    		  firstCommitByBranch.remove(i);
 	    		  seguir=false;
@@ -510,10 +506,11 @@ public class CommitsGithub{
      	  branch.setOrder(0);
      	  branchService.updateBranch(branch);
 	      
+     	  httpclient.close();
 	}
 
 	private Response prepareResponse(String graphqlPayload, String graphqlUri) {
-		OkHttpClient client = new OkHttpClient().newBuilder()
+		OkHttpClient clientHTTP = new OkHttpClient().newBuilder()
 	            .connectTimeout(5, TimeUnit.MINUTES) 
 	            .writeTimeout(5, TimeUnit.MINUTES) 
 	            .readTimeout(5, TimeUnit.MINUTES) 
@@ -527,7 +524,7 @@ public class CommitsGithub{
         		.build();
         Response response;
 		try {
-			response = client.newCall(request).execute();
+			response = clientHTTP.newCall(request).execute();
 			 if(response.isSuccessful()){
 		            return response;             
 		     }else return null;

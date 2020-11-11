@@ -19,7 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,8 +34,6 @@ import edu.uclm.esi.devopsmetrics.models.Commit;
 import edu.uclm.esi.devopsmetrics.models.User;
 import edu.uclm.esi.devopsmetrics.models.Branch;
 import edu.uclm.esi.devopsmetrics.utilities.CommitsGithub;
-import edu.uclm.esi.devopsmetrics.utilities.Utilities;
-
 
 @RestController
 @RequestMapping("/commits")
@@ -134,7 +132,7 @@ public class CommitController {
 
 	  public String allCommits(@RequestParam("tokenpass") final String tokenpass,
 		      @RequestParam("reponame") final String reponame,
-		      @RequestParam("owner") final String owner) throws InterruptedException, InvalidRemoteException, TransportException, GitAPIException, ParseException{
+		      @RequestParam("owner") final String owner){
 		
 
 	    final User usuario = usersService.getUserByTokenPass(tokenpass);

@@ -1,14 +1,22 @@
 package edu.uclm.esi.devopsmetrics.services;
 
 
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import edu.uclm.esi.devopsmetrics.exceptions.UserNotFoundException;
 import edu.uclm.esi.devopsmetrics.models.User;
 import edu.uclm.esi.devopsmetrics.repositories.UserRepository;
 import edu.uclm.esi.devopsmetrics.utilities.Utilities;
@@ -39,27 +47,35 @@ public class UserServiceImpl implements UserService {
 
   /**
    * @author FcoCrespo
+ * @throws BadPaddingException 
+ * @throws IllegalBlockSizeException 
+ * @throws InvalidAlgorithmParameterException 
+ * @throws NoSuchPaddingException 
+ * @throws NoSuchAlgorithmException 
+ * @throws InvalidKeyException 
    */
-  public User findByUsername(final String username) {
+  public User findByUsername(final String username) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
 
-    final Optional<User> user = userRepository.findOne(username);
-
-    if (user.isPresent()) {
-
-      final Optional<User> userDesencriptado = Utilities.desencriptarOptionalUser(user);
-
-      if(userDesencriptado.isPresent()){
-    	  return userDesencriptado.get();
-      }
-      else {
-    	  return null;
-      }
-
-    } else {
-
-      throw new UserNotFoundException(username);
-
-    }
+	  List <User> usuarios = findAll();
+		
+		String userdesencriptado;
+		
+		User user = null;
+		
+		boolean seguir = true;
+		for(int i = 0; i<usuarios.size()&&seguir; i++) {
+			userdesencriptado = Utilities.desencriptar(usuarios.get(i).getUsername());
+			if(username.equals(userdesencriptado)) {
+				user = usuarios.get(i);
+				seguir=false;
+			}
+		}
+	    if(user!=null) {
+	    	return user;
+	    }
+	    else {
+	    	return null;
+	    }
 
   }
 
@@ -70,7 +86,21 @@ public class UserServiceImpl implements UserService {
 
     final Optional<List<User>> users = userRepository.findAll();
 
-    return Utilities.desencriptarListaUsers(users);
+    final List<User> listaUsuarios = new ArrayList<User>();
+    
+    User usuario;
+
+    if(users.isPresent()) {
+    	for (int i = 0; i < users.get().size(); i++) {
+            usuario = users.get().get(i);
+            listaUsuarios.add(usuario);
+       }
+
+       return listaUsuarios;
+    }
+    else {
+    	return Collections.emptyList();
+    }
 
   }
 
@@ -102,10 +132,30 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public User getUserByUsernameAndPassword(final String username, final String password) {
+  public User getUserByUsernameAndPassword(final String username, final String password) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
 
-    final User user = userRepository.findByUsernameAndPassword(username, password);
-    return Utilities.desencriptarUser(user);
+	List <User> usuarios = findAll();
+	
+	String userdesencriptado;
+	String passworddesencriptado;
+	
+	User user = null;
+	
+	boolean seguir = true;
+	for(int i = 0; i<usuarios.size()&&seguir; i++) {
+		userdesencriptado = Utilities.desencriptar(usuarios.get(i).getUsername());
+		passworddesencriptado = Utilities.desencriptar(usuarios.get(i).getPassword());
+		if(username.equals(userdesencriptado) && password.equals(passworddesencriptado)) {
+			user = usuarios.get(i);
+			seguir=false;
+		}
+	}
+    if(user!=null) {
+    	return user;
+    }
+    else {
+    	return null;
+    }
     
   }
 
@@ -114,10 +164,10 @@ public class UserServiceImpl implements UserService {
     return userRepository.findByRole(role);
   }
 
-	@Override
-	public User getUserByTokenPass(String tokenPass) {
-		return userRepository.findByTokenPass(tokenPass);
-	}
+  @Override
+  public User getUserByTokenPass(String tokenPass) {
+	return userRepository.findByTokenPass(tokenPass);
+  }
 
 
 
