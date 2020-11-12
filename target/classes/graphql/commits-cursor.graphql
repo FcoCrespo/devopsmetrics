@@ -14,21 +14,23 @@ query GitHub($owner: String!, $repo: String!, $cursor:String!, $branch: String!)
 					  endCursor
 					  startCursor
 					}
-					
-					  nodes {
+					nodes {
 						oid
 						messageHeadline
 						message
 						pushedDate
 						changedFiles
 						authoredDate
-						author {
-						  name
+						name
+						  email
+						  avatarUrl
 						  user {
 							id
+							name
+							login
+							location
 						  }
-						}
-					  }
+					}
 					
 				  }
 				}

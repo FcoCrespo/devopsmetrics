@@ -24,8 +24,13 @@ query GitHub($owner: String!, $repo: String!, $branch: String!) {
 						authoredDate
 						author {
 						  name
+						  email
+						  avatarUrl
 						  user {
 							id
+							name
+							login
+							location
 						  }
 						}
 					}

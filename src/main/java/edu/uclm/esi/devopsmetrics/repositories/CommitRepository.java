@@ -76,22 +76,14 @@ public interface CommitRepository {
    * 
    * @author FcoCrespo
    */
-  List<Commit> findAllByBranchBeginEndDate(String reponame, String branch, Instant beginDate, String bestBeginDate, Instant endDate, String bestEndDate);
+  List<Commit> findAllByBranchBeginEndDate(String reponame, String branch, Instant beginDate, Instant endDate);
   
   /**
    * Método para obtener commits por su fecha de inicio y de fin
    * 
    * @author FcoCrespo
    */
-  List<Commit> findAllByBranchAuthorBeginEndDate(String reponame, String branch, String authorName, Instant beginDate, String bestBeginDate, Instant endDate, String bestEndDate);
-  
-  /**
-   * Método para obtener commits por su fecha de inicio y de fin
-   * 
-   * @author FcoCrespo
-   */
-  String [] findBestBeginEndData(String reponame, String branch, Instant beginDate, Instant endDate);
-  
+  List<Commit> findAllByBranchAuthorBeginEndDate(String reponame, String branch, String authorName, Instant beginDate, Instant endDate);
   
   /**
    * Método para comprobar si existen commits de un repositorio en la BBDD

@@ -27,7 +27,7 @@ public class BranchRepositoryImpl implements BranchRepository {
 	   * @author FcoCrespo
 	   */
 	  private final MongoOperations mongoOperations;
-	  
+	  private String repositoryString;
 	  
 
 	  /**
@@ -40,7 +40,7 @@ public class BranchRepositoryImpl implements BranchRepository {
 	  public BranchRepositoryImpl(final MongoOperations mongoOperations) {
 	    Assert.notNull(mongoOperations, "notNull");
 	    this.mongoOperations = mongoOperations;
-
+	    this.repositoryString = "repository";
 	  }
 
 	  /**
@@ -87,7 +87,7 @@ public class BranchRepositoryImpl implements BranchRepository {
 
 	  @Override
 	  public Branch findByRepositoryyName(final String reponame, final String name) {
-	    return this.mongoOperations.findOne(new Query(Criteria.where("repository").is(reponame)
+	    return this.mongoOperations.findOne(new Query(Criteria.where(this.repositoryString).is(reponame)
 	        		.and("name").is(name)), Branch.class);
 	 
 	  }
@@ -101,14 +101,14 @@ public class BranchRepositoryImpl implements BranchRepository {
 	
 	@Override
 	public List<Branch> findAllbyRepository(String repository) {
-		return this.mongoOperations.find(new Query(Criteria.where("repository").is(repository)), Branch.class);
+		return this.mongoOperations.find(new Query(Criteria.where(this.repositoryString).is(repository)), Branch.class);
 	}
 
 	
 
 	@Override
 	public Branch findBeforeBranchByOrder(String repository, int order) {
-		return this.mongoOperations.findOne(new Query(Criteria.where("repository")
+		return this.mongoOperations.findOne(new Query(Criteria.where(this.repositoryString)
 				.is(repository).and("order").is(order-1)), Branch.class);
 		
 		

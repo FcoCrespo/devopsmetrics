@@ -50,6 +50,8 @@ public class CommitController {
 	  private final UserService usersService;
 	  private final BranchService branchService;
 	  private final CommitsGithub cg;
+	  
+	  private final String errorMessage;
 
 	  @Autowired
 	  /**
@@ -62,6 +64,7 @@ public class CommitController {
 	    this.usersService = usersService;
 	    this.branchService =  branchService;
 	    this.cg = cg;
+	    this.errorMessage = "[SERVER] No se ha encontrado ningún usuario con esos datos.";
 	  }
 	  
 	  /**
@@ -83,7 +86,7 @@ public class CommitController {
 	      cg.getBranches(reponame, owner);
 	      return ResponseEntity.ok(branchService.getBranchesByRepository(reponame, true));
 	    } else {
-	      LOG.info("[SERVER] No se ha encontrado ningún usuario con esos datos.");
+	      LOG.info(this.errorMessage);
 	      return ResponseEntity.badRequest().build();
 	    }
 		
@@ -107,10 +110,10 @@ public class CommitController {
 	    final User usuario = usersService.getUserByTokenPass(tokenpass);
 	    if (usuario != null) {
 	      LOG.info("Get branches");
-	      cg.getFirstCommitByBranch(reponame);
+	      //cg.getFirstCommitByBranch(reponame);
 	      return ResponseEntity.ok("ok");
 	    } else {
-	      LOG.info("[SERVER] No se ha encontrado ningún usuario con esos datos.");
+	      LOG.info(this.errorMessage);
 	      return ResponseEntity.badRequest().build();
 	    }
 		
@@ -137,17 +140,18 @@ public class CommitController {
 
 	    final User usuario = usersService.getUserByTokenPass(tokenpass);
 	    if (usuario != null) {
-	      LOG.info("Get commits");
-	      try {
-	    	  cg.getCommits(reponame, owner); 
+	      /*try {
+	    	  //cg.getCommits(reponame, owner); 
+	    	  
 		  } catch (IOException e) {
 				e.printStackTrace();
-		  } 
-	      
+				return "mal excepcion";
+		  } */
 	      return "bien";
 	      
+	      
 	    } else {
-	      LOG.info("[SERVER] No se ha encontrado ningún usuario con esos datos.");
+	      LOG.info(this.errorMessage);
 	      return "mal";
 	    }
 		
@@ -177,7 +181,7 @@ public class CommitController {
 	      return ResponseEntity.ok(commits);
 	      
 	    } else {
-	    	LOG.info("[SERVER] No se ha encontrado ningún usuario con esos datos.");
+	    	LOG.info(this.errorMessage);
 		    return ResponseEntity.badRequest().build();
 	    }
 		
@@ -200,12 +204,11 @@ public class CommitController {
 
 	    final User usuario = usersService.getUserByTokenPass(tokenpass);
 	    if (usuario != null) {
-	      LOG.info("Get commits");
 	      List <Commit> commits = commitsService.getAllByBranchAndAuthorName(reponame, branch, authorName);
 	     
 	      return ResponseEntity.ok(commits);
 	    } else {
-	    	LOG.info("[SERVER] No se ha encontrado ningún usuario con esos datos.");
+	    	LOG.info(this.errorMessage);
 		    return ResponseEntity.badRequest().build();
 	    }
 		
@@ -229,22 +232,20 @@ public class CommitController {
 
 	    final User usuario = usersService.getUserByTokenPass(tokenpass);
 	    if (usuario != null) {
-	      LOG.info("Get commits");
 	      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu hh:mm");
 	      LocalDate ldtBegin = LocalDate.parse( beginDateString , formatter );
 	      LocalDate ldtEnd = LocalDate.parse( endDateString , formatter );
 	      
 	      Instant beginDate = ldtBegin.atStartOfDay(ZoneId.systemDefault()).toInstant();
 	      Instant endDate = ldtEnd.atStartOfDay(ZoneId.systemDefault()).toInstant();
+	      	  
 	      
-	      String [] bestDataDates = commitsService.getBestBeginEndData(reponame, branch, beginDate, endDate);
-	      
-	      List <Commit> commits = commitsService.getAllByBranchBeginEndDate(reponame, branch, beginDate, bestDataDates[0], endDate, bestDataDates[1]);
+	      List <Commit> commits = commitsService.getAllByBranchBeginEndDate(reponame, branch, beginDate, endDate);
 	      
 	     
 	      return ResponseEntity.ok(commits);
 	    } else {
-	    	LOG.info("[SERVER] No se ha encontrado ningún usuario con esos datos.");
+	    	LOG.info(this.errorMessage);
 		    return ResponseEntity.badRequest().build();
 	    }
 		
@@ -269,22 +270,19 @@ public class CommitController {
 
 	    final User usuario = usersService.getUserByTokenPass(tokenpass);
 	    if (usuario != null) {
-	      LOG.info("Get commits");
 	      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu hh:mm");
 	      LocalDate ldtBegin = LocalDate.parse( beginDateString , formatter );
 	      LocalDate ldtEnd = LocalDate.parse( endDateString , formatter );
 	      
 	      Instant beginDate = ldtBegin.atStartOfDay(ZoneId.systemDefault()).toInstant();
-	      Instant endDate = ldtEnd.atStartOfDay(ZoneId.systemDefault()).toInstant();
-	      
-	      String [] bestDataDates = commitsService.getBestBeginEndData(reponame, branch, beginDate, endDate);
-	      
-	      List <Commit> commits = commitsService.getAllByBranchAuthorBeginEndDate(reponame, branch, authorName, beginDate, bestDataDates[0], endDate, bestDataDates[1]);
+	      Instant endDate = ldtEnd.atStartOfDay(ZoneId.systemDefault()).toInstant();   
+	          
+	      List <Commit> commits = commitsService.getAllByBranchAuthorBeginEndDate(reponame, branch, authorName, beginDate, endDate);
 	      
 	     
 	      return ResponseEntity.ok(commits);
 	    } else {
-	    	LOG.info("[SERVER] No se ha encontrado ningún usuario con esos datos.");
+	    	LOG.info(this.errorMessage);
 		    return ResponseEntity.badRequest().build();
 	    }
 		
@@ -309,7 +307,7 @@ public class CommitController {
 	      commitsService.deleteCommit(reponame);
 	      return ResponseEntity.ok("ok");
 	    } else {
-	      LOG.info("[SERVER] No se ha encontrado ningún usuario con esos datos.");
+	      LOG.info(this.errorMessage);
 	      return ResponseEntity.badRequest().build();
 	    }
 

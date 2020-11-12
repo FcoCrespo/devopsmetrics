@@ -3,6 +3,7 @@ package edu.uclm.esi.devopsmetrics.models;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
@@ -10,6 +11,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class KeyValue {
 
+	@Value("${app.key}")
+	private String accessKey;
+
+	public String getSecret() {
+	   return this.accessKey;
+	}
+
+}
+/*
 	@Autowired
 	private Environment env;
 	
@@ -24,4 +34,4 @@ public class KeyValue {
 		return secretKey;
 	}
 
-}
+*/

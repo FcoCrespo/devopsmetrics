@@ -176,14 +176,14 @@ public class CommitServiceImpl implements CommitService {
 	}
 	
 	@Override
-	public List<Commit> getAllByBranchBeginEndDate(String reponame, String branchname, Instant beginDate, String bestBeginData, Instant endDate, String bestEndData) {
+	public List<Commit> getAllByBranchBeginEndDate(String reponame, String branchname, Instant beginDate, Instant endDate) {
 		Branch branch = branchService.getBranchByRepositoryyName(reponame, branchname);
 		
 		if(branch==null) {
 			return Collections.emptyList();  
 		}
 		else if(branch.getOrder()==0 || branch.getOrder()==1) {
-			final List<Commit> commits = commitRepository.findAllByBranchBeginEndDate(reponame, branchname, beginDate, bestBeginData, endDate, bestEndData);
+			final List<Commit> commits = commitRepository.findAllByBranchBeginEndDate(reponame, branchname, beginDate, endDate);
 			Collections.sort(commits);
 			
 		    return commits;
@@ -192,9 +192,9 @@ public class CommitServiceImpl implements CommitService {
 			  
 			  Branch branchBefore = branchService.getBeforeBranchByOrder(reponame, branch.getOrder());
 			
-			  List <Commit> listQuery = commitRepository.findAllByBranchBeginEndDate(reponame, branchname, beginDate, bestBeginData, endDate, bestEndData);
+			  List <Commit> listQuery = commitRepository.findAllByBranchBeginEndDate(reponame, branchname, beginDate, endDate);
 				
-			  List <Commit> listBefore = commitRepository.findAllByBranchBeginEndDate(reponame, branchBefore.getName(), beginDate, bestBeginData, endDate, bestEndData);
+			  List <Commit> listBefore = commitRepository.findAllByBranchBeginEndDate(reponame, branchBefore.getName(), beginDate, endDate);
 		      
 			  return decantarCommits(listQuery, listBefore);
 		    
@@ -223,21 +223,17 @@ public class CommitServiceImpl implements CommitService {
 	      return commits;
 	}
 
-	@Override
-	public String[] getBestBeginEndData(String reponame, String branch, Instant beginDate, Instant endDate) {
-		return commitRepository.findBestBeginEndData(reponame, branch, beginDate, endDate);
-	}
 
 	@Override
 	public List<Commit> getAllByBranchAuthorBeginEndDate(String reponame, String branchname, String authorName,
-			Instant beginDate, String bestBeginData, Instant endDate, String bestEndData) {
+			Instant beginDate, Instant endDate) {
 		Branch branch = branchService.getBranchByRepositoryyName(reponame, branchname);
 		
 		if(branch==null) {
 			return Collections.emptyList();  
 		}
 		else if(branch.getOrder()==0 || branch.getOrder()==1) {
-			final List<Commit> commits = commitRepository.findAllByBranchAuthorBeginEndDate(reponame, branchname, authorName, beginDate, bestBeginData, endDate, bestEndData);
+			final List<Commit> commits = commitRepository.findAllByBranchAuthorBeginEndDate(reponame, branchname, authorName, beginDate, endDate);
 			Collections.sort(commits);
 			
 		    return commits;
@@ -246,9 +242,9 @@ public class CommitServiceImpl implements CommitService {
 			  
 			  Branch branchBefore = branchService.getBeforeBranchByOrder(reponame, branch.getOrder());
 			
-			  List <Commit> listQuery = commitRepository.findAllByBranchAuthorBeginEndDate(reponame, branchname, authorName, beginDate, bestBeginData, endDate, bestEndData);
+			  List <Commit> listQuery = commitRepository.findAllByBranchAuthorBeginEndDate(reponame, branchname, authorName, beginDate, endDate);
 				
-			  List <Commit> listBefore = commitRepository.findAllByBranchAuthorBeginEndDate(reponame, branchBefore.getName(), authorName, beginDate, bestBeginData, endDate, bestEndData);
+			  List <Commit> listBefore = commitRepository.findAllByBranchAuthorBeginEndDate(reponame, branchBefore.getName(), authorName, beginDate, endDate);
 		      
 			  return decantarCommits(listQuery, listBefore);
 		     

@@ -33,16 +33,17 @@ public class UserServiceImpl implements UserService {
    * @author FcoCrespo
    */
   private UserRepository userRepository;
+  private Utilities utilities;
 
   /**
    * @author FcoCrespo
    */
   @Autowired
 
-  public UserServiceImpl(final UserRepository userRepository) {
+  public UserServiceImpl(final UserRepository userRepository, final Utilities utilities) {
 
     this.userRepository = userRepository;
-
+    this.utilities = utilities;
   }
 
   /**
@@ -64,7 +65,7 @@ public class UserServiceImpl implements UserService {
 		
 		boolean seguir = true;
 		for(int i = 0; i<usuarios.size()&&seguir; i++) {
-			userdesencriptado = Utilities.desencriptar(usuarios.get(i).getUsername());
+			userdesencriptado = this.utilities.desencriptar(usuarios.get(i).getUsername());
 			if(username.equals(userdesencriptado)) {
 				user = usuarios.get(i);
 				seguir=false;
@@ -143,8 +144,8 @@ public class UserServiceImpl implements UserService {
 	
 	boolean seguir = true;
 	for(int i = 0; i<usuarios.size()&&seguir; i++) {
-		userdesencriptado = Utilities.desencriptar(usuarios.get(i).getUsername());
-		passworddesencriptado = Utilities.desencriptar(usuarios.get(i).getPassword());
+		userdesencriptado = this.utilities.desencriptar(usuarios.get(i).getUsername());
+		passworddesencriptado = this.utilities.desencriptar(usuarios.get(i).getPassword());
 		if(username.equals(userdesencriptado) && password.equals(passworddesencriptado)) {
 			user = usuarios.get(i);
 			seguir=false;
