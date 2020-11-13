@@ -52,9 +52,9 @@ public class CommitServiceImpl implements CommitService {
 
     if (commit.isPresent()) {
 
-      final Optional<Commit> userOpt = commit;
+      final Optional<Commit> commitOpt = commit;
 
-      return userOpt.get();
+      return commitOpt.get();
 
     } else {
 
@@ -74,8 +74,9 @@ public class CommitServiceImpl implements CommitService {
     final List<Commit> commitsList = new ArrayList<Commit>();
     
     if(commits.isPresent()) {
+    	Commit commit;
     	for (int i = 0; i < commits.get().size(); i++) {
-            final Commit commit = commits.get().get(i);
+            commit = commits.get().get(i);
             commitsList.add(commit);
         }
 

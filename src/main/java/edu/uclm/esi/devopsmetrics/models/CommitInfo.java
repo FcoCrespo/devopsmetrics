@@ -23,6 +23,13 @@ public class CommitInfo implements Comparable<CommitInfo> {
 	@Id
 	private String id;
 	/**
+	 * IdCommit.
+	 * 
+	 * @author FcoCrespo
+	 */
+	@NotNull
+	private String idCommit;
+	/**
 	 * messageHeadline.
 	 * 
 	 * @author FcoCrespo
@@ -46,8 +53,9 @@ public class CommitInfo implements Comparable<CommitInfo> {
 	 * 
 	 * @author FcoCrespo
 	 */
-	public CommitInfo(@NotNull final String messageHeadline, final String message, final int changedFiles) {
+	public CommitInfo(@NotNull final String idCommit, final String messageHeadline, final String message, final int changedFiles) {
 		super();
+		this.idCommit = idCommit;
 		this.messageHeadline = messageHeadline;
 		this.message = message;
 		this.changedFiles = changedFiles;
@@ -64,7 +72,7 @@ public class CommitInfo implements Comparable<CommitInfo> {
 
 	@Override
 	public int compareTo(CommitInfo o) {
-		return this.getId().compareTo(o.getId());
+		return this.getIdCommit().compareTo(o.getIdCommit());
 	}
 
 	@Override
@@ -74,7 +82,7 @@ public class CommitInfo implements Comparable<CommitInfo> {
 		}
 
 		CommitInfo other = (CommitInfo) obj;
-		return this.getId() == other.getId();
+		return this.getIdCommit() == other.getIdCommit();
 
 	}
 
@@ -89,6 +97,14 @@ public class CommitInfo implements Comparable<CommitInfo> {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public String getIdCommit() {
+		return idCommit;
+	}
+
+	public void setIdCommit(String idCommit) {
+		this.idCommit = idCommit;
 	}
 
 	public String getMessageHeadline() {
@@ -117,10 +133,9 @@ public class CommitInfo implements Comparable<CommitInfo> {
 
 	@Override
 	public String toString() {
-		return "CommitInfo [id=" + id + ", messageHeadline=" + messageHeadline + ", message=" + message
-				+ ", changedFiles=" + changedFiles + "]";
+		return "CommitInfo [id=" + id + ", idCommit=" + idCommit + ", messageHeadline=" + messageHeadline + ", message="
+				+ message + ", changedFiles=" + changedFiles + "]";
 	}
 
 	
-
 }
