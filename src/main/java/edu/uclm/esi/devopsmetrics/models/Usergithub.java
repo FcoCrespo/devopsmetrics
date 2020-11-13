@@ -64,7 +64,6 @@ public class Usergithub implements Comparable<Usergithub> {
 		this.avatarURL = avatarURL;
 		this.idGithub = idGithub;
 		this.location = location;
-
 	}
 
 	@Override

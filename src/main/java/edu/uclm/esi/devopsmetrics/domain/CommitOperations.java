@@ -1,4 +1,4 @@
-package edu.uclm.esi.devopsmetrics.utilities;
+package edu.uclm.esi.devopsmetrics.domain;
 
 
 import java.io.File;
@@ -36,6 +36,7 @@ import okhttp3.Response;
 import edu.uclm.esi.devopsmetrics.services.BranchService;
 import edu.uclm.esi.devopsmetrics.services.CommitCursorService;
 import edu.uclm.esi.devopsmetrics.services.CommitService;
+import edu.uclm.esi.devopsmetrics.utilities.GraphqlTemplate;
 import edu.uclm.esi.devopsmetrics.models.Branch;
 import edu.uclm.esi.devopsmetrics.models.Commit;
 import edu.uclm.esi.devopsmetrics.models.CommitCursor;
@@ -43,7 +44,7 @@ import edu.uclm.esi.devopsmetrics.models.CommitCursor;
 
 @Service
 @Scope("singleton")
-public class CommitsGithub{
+public class CommitOperations{
 	
 	@Autowired
 	private Environment env;
@@ -59,7 +60,7 @@ public class CommitsGithub{
 	  /**
 	   * @author FcoCrespo
 	   */
-	public CommitsGithub(final BranchService branchService,
+	public CommitOperations(final BranchService branchService,
 						 final CommitService commitService,
 						 final CommitCursorService commitCursorService) {
 	    this.branchService = branchService;

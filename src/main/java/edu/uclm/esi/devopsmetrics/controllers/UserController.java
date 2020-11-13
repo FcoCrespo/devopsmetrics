@@ -1,14 +1,5 @@
 package edu.uclm.esi.devopsmetrics.controllers;
 
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -27,14 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.wordnik.swagger.annotations.ApiOperation;
-
-import edu.uclm.esi.devopsmetrics.services.UserService;
-import edu.uclm.esi.devopsmetrics.exceptions.UserNotFoundException;
-import edu.uclm.esi.devopsmetrics.models.SecureUser;
-import edu.uclm.esi.devopsmetrics.models.User;
-import edu.uclm.esi.devopsmetrics.utilities.Utilities;
+import edu.uclm.esi.devopsmetrics.domain.UserOperations;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -48,141 +33,82 @@ public class UserController {
 
 	private static final Log LOG = LogFactory.getLog(UserController.class);
 
-	private final UserService usersService;
-
-	private final Utilities utilities;
-
 	private String errorMesage;
+	private UserOperations userOperations;
 
 	@Autowired
 	/**
 	 * @author FcoCrespo
 	 */
-	public UserController(final UserService usersService, final Utilities utilities) {
-		this.usersService = usersService;
+	public UserController(UserOperations userOperations) {
 		this.errorMesage = "No se ha encontrado ningún usuario con esos datos.";
-		this.utilities = utilities;
+		this.userOperations = userOperations;
 	}
 
 	/**
 	 * Comprueba que el usuario existe por su username y su pass.
 	 * 
 	 * @author FcoCrespo
-	 * @throws BadPaddingException
-	 * @throws IllegalBlockSizeException
-	 * @throws InvalidAlgorithmParameterException
-	 * @throws NoSuchPaddingException
-	 * @throws NoSuchAlgorithmException
-	 * @throws InvalidKeyException
 	 */
-
 	@GetMapping
-	public ResponseEntity<SecureUser> getUserPassword(@RequestParam("username") final String username,
-			@RequestParam("password") final String password) throws InvalidKeyException, NoSuchAlgorithmException,
-			NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
+	public ResponseEntity <String> getUserPassword(@RequestParam("username") final String username,
+			@RequestParam("password") final String password){
 
-		final User usuariologin = usersService.getUserByUsernameAndPassword(username, password);
-		if (usuariologin != null) {
-
-			LOG.info("Usuario encontrado: " + usuariologin.getUsername());
-			usuariologin.setUsername(this.utilities.encriptar(username));
-			usuariologin.setPassword(this.utilities.encriptar(password));
-			usuariologin.newTokenPass();
-			usuariologin.setTokenValidity();
-
-			usersService.updateUser(usuariologin);
-
-			SecureUser secureUser = new SecureUser(usuariologin.getId(), username, usuariologin.getRole(),
-					usuariologin.getTokenPass(), usuariologin.getTokenValidity());
-
-			return ResponseEntity.ok(secureUser);
-
+		final boolean existe = this.userOperations.getUserByUsernameAndPassword(username, password);
+		
+		if (existe) {
+			LOG.info("Usuario encontrado");
+			return ResponseEntity.ok(this.userOperations.sendSecureUser(username, password));
 		} else {
 			LOG.info(this.errorMesage);
 			return ResponseEntity.badRequest().build();
 		}
+		
 	}
+	
 
 	/**
 	 * Obtiene un usuario mediante el token de acceso.
 	 * 
 	 * @author FcoCrespo
-	 * @throws BadPaddingException
-	 * @throws IllegalBlockSizeException
-	 * @throws NoSuchPaddingException
-	 * @throws NoSuchAlgorithmException
-	 * @throws InvalidKeyException
-	 * @throws InvalidAlgorithmParameterException
-	 * @throws UserNotFoundException
 	 */
 	@GetMapping(value = "/{username}")
 	@ApiOperation(value = "Find an user", notes = "Return a user by username")
 
-	public ResponseEntity<SecureUser> userByTokenPass(@PathVariable final String username,
-			@RequestParam("tokenpass") final String tokenpass) throws InvalidKeyException, NoSuchAlgorithmException,
-			NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException {
+	public ResponseEntity <String> userByTokenPass(@PathVariable final String username,
+			@RequestParam("tokenpass") final String tokenpass){
 
-		final User usuariologin = usersService.getUserByTokenPass(tokenpass);
-		if (usuariologin != null) {
+		final boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
+		if (existe) {
 			LOG.info("Buscando usuario: " + username);
-			User user;
-			try {
-
-				user = usersService.findByUsername(username);
-				LOG.info("Usuario encontrado.");
-
-				SecureUser secureUser = new SecureUser(user.getId(), username, user.getRole(), user.getTokenPass(),
-						user.getTokenValidity());
-				return ResponseEntity.ok(secureUser);
-			} catch (UserNotFoundException e) {
-				LOG.error("Usuario no encontrado.");
-				return ResponseEntity.badRequest().build();
-			}
-
+			return ResponseEntity.ok(this.userOperations.findByUsername(username));
 		} else {
 			LOG.info(this.errorMesage);
-			return ResponseEntity.badRequest().build();
+			return ResponseEntity.badRequest().body("El usuario, contraseña o ambos campos son incorrectos.");
 		}
 	}
-
+	
 	/**
 	 * Obtiene los usuarios mediante el token de acceso.
 	 * 
 	 * @author FcoCrespo
-	 * @throws BadPaddingException
-	 * @throws IllegalBlockSizeException
-	 * @throws InvalidAlgorithmParameterException
-	 * @throws NoSuchPaddingException
-	 * @throws NoSuchAlgorithmException
-	 * @throws InvalidKeyException
 	 */
 	@GetMapping(value = "/all")
 	@ApiOperation(value = "Find all user", notes = "Return all users")
 
-	public ResponseEntity<List<SecureUser>> allUsers(@RequestParam("tokenpass") final String tokenpass)
-			throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException,
-			InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
+	public ResponseEntity <String> allUsers(@RequestParam("tokenpass") final String tokenpass){
 
-		final User usuario = usersService.getUserByTokenPass(tokenpass);
-		if (usuario != null) {
-			LOG.info("Get allUsers");
-			List<User> users = usersService.findAll();
-			List<SecureUser> listaSecureUsers = new ArrayList<SecureUser>();
-			SecureUser userSecure;
-			for (int i = 0; i < users.size(); i++) {
-				userSecure = new SecureUser(users.get(i).getId(),
-						this.utilities.desencriptar(users.get(i).getUsername()), users.get(i).getRole(),
-						users.get(i).getTokenPass(), users.get(i).getTokenValidity());
-				listaSecureUsers.add(userSecure);
-			}
-			return ResponseEntity.ok(listaSecureUsers);
+		final boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
+		if (existe) {
+			LOG.info("Get all Users");
+			return ResponseEntity.ok(this.userOperations.getAllUsers());
 		} else {
 			LOG.info(this.errorMesage);
-			return ResponseEntity.badRequest().build();
+			return ResponseEntity.badRequest().body("El usuario no tiene iniciada sus sesión.");
 		}
 
 	}
-
+	
 	/**
 	 * Borra un usuario en funcion de su id mediante el token de acceso.
 	 * 
@@ -191,119 +117,95 @@ public class UserController {
 	@DeleteMapping(value = "/{userId}")
 	@ApiOperation(value = "Delete an user", notes = "Delete a user by Id")
 
-	public ResponseEntity<Void> deleteUser(@PathVariable final String userId,
+	public ResponseEntity <String> deleteUser(@PathVariable final String userId,
 			@RequestParam("tokenpass") final String tokenpass) {
 
-		final User usuariologin = usersService.getUserByTokenPass(tokenpass);
-		if (usuariologin != null && usuariologin.getRole().equals("admin")) {
+		final boolean existe = this.userOperations.getUserByTokenPassAdmin(tokenpass);
+		if (existe) {
 			LOG.info("Delete user " + userId);
-			usersService.deleteUser(userId);
-			return ResponseEntity.noContent().build();
+			this.userOperations.deleteUser(userId);
+			return ResponseEntity.ok("Usuario eliminado correctamente.");
 		} else {
-			LOG.info("No se ha encontrado ningún usuario con esos datos.");
-			return ResponseEntity.badRequest().build();
+			LOG.info(this.errorMesage);
+			return ResponseEntity.badRequest().body(this.errorMesage);
 		}
 
 	}
-
+	
 	/**
 	 * Registramos un usuario y guardamos ese usuario en la base de datos.
 	 * 
 	 * @author FcoCrespo
-	 * @throws BadPaddingException
-	 * @throws IllegalBlockSizeException
-	 * @throws InvalidAlgorithmParameterException
-	 * @throws NoSuchPaddingException
-	 * @throws NoSuchAlgorithmException
-	 * @throws InvalidKeyException
 	 * 
 	 */
 	@PostMapping
-	public ResponseEntity<User> registrarUsuario(@RequestBody final String usuario)
-			throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException,
-			InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
+	public ResponseEntity <String> registrarUsuario(@RequestBody final String usuario) {
 
 		final JSONObject jso = new JSONObject(usuario);
 		final String username = jso.getString("username");
 		final String password = jso.getString("password");
 
 
-		User usuario1 = usersService.findByUsername(username);
-		if (usuario1 == null) {
-			String role = null;
-			try {
-				LOG.info("Registrando usuario...");
-				role = jso.getString("role");
-			} catch (JSONException j) {
-				LOG.info("Error en la lectura del JSON.");
-				LOG.info(j.getMessage());
-				return ResponseEntity.badRequest().build();
-			}
-
-			usuario1 = new User(this.utilities.encriptar(username), this.utilities.encriptar(password), role);
-			usersService.saveUser(usuario1);
+		boolean existe = this.userOperations.getByUsername(username);
+		if (!(existe)) {
+			LOG.info("Registrando usuario...");
+			
+			String role = jso.getString("role");
+			
+			this.userOperations.registrarUser(username, password, role);
+			
 			LOG.info("Usuario registrado.");
-			return ResponseEntity.ok().build();
+			return ResponseEntity.ok("Usuario registrado correctamente.");
+			
 		} else {
 			LOG.info("Error: El usuario ya está registrado.");
-			return ResponseEntity.badRequest().build();
+			return ResponseEntity.badRequest().body("Error: El usuario ya está registrado.");
 		}
 
 	}
-
+	
 	/**
 	 * Modificamos los campos de un usuario y guardamos los cambios en la base de
 	 * datos.
 	 * 
 	 * @author FcoCrespo
-	 * @throws BadPaddingException
-	 * @throws IllegalBlockSizeException
-	 * @throws InvalidAlgorithmParameterException
-	 * @throws NoSuchPaddingException
-	 * @throws NoSuchAlgorithmException
-	 * @throws InvalidKeyException
 	 * 
 	 */
 	@PutMapping(value = "/{username}")
 	@ApiOperation(value = "Update usuario", notes = "Finds a username and updates its fields")
-	public ResponseEntity<User> updateUsuario(@RequestBody final String mensajerecibido,
-			@PathVariable final String username, @RequestParam("tokenpass") final String tokenpass)
-			throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException,
-			InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
+	public ResponseEntity <String> updateUsuario(@RequestBody final String mensajerecibido,
+			@PathVariable final String username, @RequestParam("tokenpass") final String tokenpass) {
 
-		final User usuariologin = usersService.getUserByTokenPass(tokenpass);
-		if (usuariologin != null) {
+		final boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
+		if (existe) {
 			final JSONObject jso = new JSONObject(mensajerecibido);
-			final User usuario = usersService.findByUsername(username);
-			if (usuario == null) {
-				LOG.info("Error: el usuario no existe.");
-				return ResponseEntity.badRequest().build();
+			boolean existeUsername = this.userOperations.getByUsername(username);
+			if (!(existeUsername)) {
+				LOG.info("Error: El usuario no existe.");
+				return ResponseEntity.badRequest().body("El usuario no existe.");
 			} else {
 				try {
 					LOG.info("Actualizando usuario...");
-
-					final String role = jso.getString("role");
+					
 					final String password = jso.getString("password");
-					final String usernameEncriptado = this.utilities.encriptar(username);
-					final String passwordEncriptado = this.utilities.encriptar(password);
-					usuario.setUsername(usernameEncriptado);
-					usuario.setRole(role);
-					usuario.setPassword(passwordEncriptado);
-					usersService.updateUser(usuario);
+					final String role = jso.getString("role");
+					
+					this.userOperations.actualizarUsuario(username, password, role);
+					
 					LOG.info("[SERVER] Usuario actualizado.");
-					return ResponseEntity.ok().build();
+					return ResponseEntity.ok("Usuario actualizado correctamente.");
 
-				} catch (JSONException j) {
-					LOG.error("Error en la lectura del JSON.");
-					LOG.info(j.getMessage());
-					return ResponseEntity.badRequest().build();
+				} catch (JSONException e) {
+					LOG.error("Error en la lectura del elemento recibido.");
+					LOG.info(e.getMessage());
+					return ResponseEntity.badRequest().body("Error en la lectura del elemento recibido");
 				}
 
 			}
 		} else {
 			LOG.info("No se ha encontrado ningún usuario con esos datos para actualizar.");
-			return ResponseEntity.badRequest().build();
+			return ResponseEntity.badRequest().body("El usuario no existe.");
 		}
 	}
-
+	
 }

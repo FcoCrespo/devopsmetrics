@@ -32,15 +32,15 @@ import edu.uclm.esi.devopsmetrics.services.UserService;
 import edu.uclm.esi.devopsmetrics.services.BranchService;
 import edu.uclm.esi.devopsmetrics.models.Commit;
 import edu.uclm.esi.devopsmetrics.models.User;
+import edu.uclm.esi.devopsmetrics.domain.CommitOperations;
 import edu.uclm.esi.devopsmetrics.models.Branch;
-import edu.uclm.esi.devopsmetrics.utilities.CommitsGithub;
 
 @RestController
 @RequestMapping("/commits")
 /**
+ * src CORS: https://www.arquitecturajava.com/spring-rest-cors-y-su-configuracion/
  * @author FcoCrespo
  */
-//src CORS: https://www.arquitecturajava.com/spring-rest-cors-y-su-configuracion/
 @CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE}, allowedHeaders = "*")
 public class CommitController {
 
@@ -49,7 +49,7 @@ public class CommitController {
 	  private final CommitService commitsService;
 	  private final UserService usersService;
 	  private final BranchService branchService;
-	  private final CommitsGithub cg;
+	  private final CommitOperations cg;
 	  
 	  private final String errorMessage;
 
@@ -59,7 +59,7 @@ public class CommitController {
 	   */
 
 	  public CommitController(final CommitService commitsService,
-			  				  final UserService usersService, final BranchService branchService, final CommitsGithub cg) {
+			  				  final UserService usersService, final BranchService branchService, final CommitOperations cg) {
 	    this.commitsService = commitsService;
 	    this.usersService = usersService;
 	    this.branchService =  branchService;
@@ -260,7 +260,7 @@ public class CommitController {
 	  @GetMapping(value = "/commitsbranchauthordate")
 	  @ApiOperation(value = "Find all commits from a repository branch by author and date", notes = "Return all commits from a repository branch")
 	  
-	  public ResponseEntity<List<Commit>> allCommitsBranchBeginEndDate(@RequestParam("tokenpass") final String tokenpass,
+	  public ResponseEntity<List<Commit>> allCommitsBranchBeginEndDateByAuthor(@RequestParam("tokenpass") final String tokenpass,
 		      @RequestParam("reponame") final String reponame,
 		      @RequestParam("branch") final String branch,
 		      @RequestParam("authorname") final String authorName,

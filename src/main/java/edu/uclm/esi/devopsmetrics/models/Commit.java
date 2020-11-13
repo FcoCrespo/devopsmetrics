@@ -30,30 +30,12 @@ public class Commit implements Comparable<Commit> {
 	@NotNull
 	private String oid;
 	/**
-	 * messageHeadline.
-	 * 
-	 * @author FcoCrespo
-	 */
-	private String messageHeadline;
-	/**
-	 * message.
-	 * 
-	 * @author FcoCrespo
-	 */
-	private String message;
-	/**
 	 * pushedDate.
 	 * 
 	 * @author FcoCrespo
 	 */
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
 	private Instant pushedDate;
-	/**
-	 * changedFiles.
-	 * 
-	 * @author FcoCrespo
-	 */
-	private int changedFiles;
 	/**
 	 * usergithub.
 	 * 
@@ -72,14 +54,10 @@ public class Commit implements Comparable<Commit> {
 	 * 
 	 * @author FcoCrespo
 	 */
-	public Commit(@NotNull final String oid, final String messageHeadline, final String message,
-			final Instant pushedDate, final int changedFiles, final String usergithub, final String branchId) {
+	public Commit(@NotNull final String oid, final Instant pushedDate, final String usergithub, final String branchId) {
 		super();
 		this.oid = oid;
-		this.messageHeadline = messageHeadline;
-		this.message = message;
 		this.pushedDate = pushedDate;
-		this.changedFiles = changedFiles;
 		this.usergithub = usergithub;
 		this.branchId = branchId;
 	}
@@ -130,36 +108,12 @@ public class Commit implements Comparable<Commit> {
 		this.oid = oid;
 	}
 
-	public String getMessageHeadline() {
-		return messageHeadline;
-	}
-
-	public void setMessageHeadline(String messageHeadline) {
-		this.messageHeadline = messageHeadline;
-	}
-
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
-	}
-
 	public Instant getPushedDate() {
 		return pushedDate;
 	}
 
 	public void setPushedDate(Instant pushedDate) {
 		this.pushedDate = pushedDate;
-	}
-
-	public int getChangedFiles() {
-		return changedFiles;
-	}
-
-	public void setChangedFiles(int changedFiles) {
-		this.changedFiles = changedFiles;
 	}
 
 	public String getUsergithub() {
@@ -180,9 +134,10 @@ public class Commit implements Comparable<Commit> {
 
 	@Override
 	public String toString() {
-		return "Commit [id=" + id + ", oid=" + oid + ", messageHeadline=" + messageHeadline + ", message=" + message
-				+ ", pushedDate=" + pushedDate + ", changedFiles=" + changedFiles + ", usergithub=" + usergithub
+		return "Commit [id=" + id + ", oid=" + oid + ", pushedDate=" + pushedDate + ", usergithub=" + usergithub
 				+ ", branchId=" + branchId + "]";
 	}
+
+	
 
 }

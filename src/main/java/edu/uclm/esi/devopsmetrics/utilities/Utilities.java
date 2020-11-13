@@ -21,8 +21,6 @@ import java.security.InvalidAlgorithmParameterException;
 import java.security.SecureRandom;
 import java.util.Base64;
 
-import edu.uclm.esi.devopsmetrics.models.KeyValue;
-
 @Component
 public class Utilities {
 	
