@@ -29,20 +29,20 @@ public class User implements Comparable<User> {
 	 * @author FcoCrespo
 	 */
 	@NotNull
-	private String username;
+	private String usernameUser;
 	/**
 	 * Password.
 	 * 
 	 * @author FcoCrespo
 	 */
 	@NotNull
-	private String password;
+	private String passwordUser;
 	/**
 	 * Role.
 	 * 
 	 * @author FcoCrespo
 	 */
-	private String role;
+	private String roleUser;
 
 	/**
 	 * tokenPass.
@@ -58,21 +58,22 @@ public class User implements Comparable<User> {
 	 */
 	private Instant tokenValidity;
 
+
 	/**
 	 * Constructor de Usuario.
 	 * 
 	 * @author FcoCrespo
 	 */
-	public User(@NotNull final String username, @NotNull final String password, final String role) {
+	public User(@NotNull final String usernameUser, @NotNull final String passwordUser, final String roleUser) {
 		super();
-		this.username = username;
-		this.password = password;
-		this.role = role;
+		this.usernameUser = usernameUser;
+		this.passwordUser = passwordUser;
+		this.roleUser = roleUser;
 	}
 
 	@Override
 	public int compareTo(User o) {
-		return this.getUsername().compareTo(o.getUsername());
+		return this.getUsernameUser().compareTo(o.getUsernameUser());
 	}
 
 	@Override
@@ -82,7 +83,7 @@ public class User implements Comparable<User> {
 		}
 
 		User other = (User) obj;
-		return this.getUsername() == other.getUsername();
+		return this.getUsernameUser() == other.getUsernameUser();
 
 	}
 
@@ -91,38 +92,38 @@ public class User implements Comparable<User> {
 		return this.hashCode();
 	}
 
-	public String getId() {
+	public String getIdUser() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setIdUser(String id) {
 		this.id = id;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getUsernameUser() {
+		return usernameUser;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUsernameUser(String usernameUser) {
+		this.usernameUser = usernameUser;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getPasswordUser() {
+		return passwordUser;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setPasswordUser(String passwordUser) {
+		this.passwordUser = passwordUser;
 	}
 
-	public String getRole() {
-		return role;
+	public String getRoleUser() {
+		return roleUser;
 	}
 
-	public void setRole(String role) {
-		this.role = role;
+	public void setRoleUser(String roleUser) {
+		this.roleUser = roleUser;
 	}
-
+	
 	public String getTokenPass() {
 		return tokenPass;
 	}
@@ -146,8 +147,9 @@ public class User implements Comparable<User> {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", role=" + role
-				+ ", tokenPass=" + tokenPass + ", tokenValidity=" + tokenValidity + "]";
+		return "User [id=" + id + ", usernameUser=" + usernameUser + ", passwordUser=" + passwordUser + ", roleUser="
+				+ roleUser + ", tokenPass=" + tokenPass + "]";
 	}
 
+	
 }
