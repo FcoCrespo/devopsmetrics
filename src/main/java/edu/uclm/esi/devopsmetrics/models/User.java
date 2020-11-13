@@ -140,7 +140,8 @@ public class User implements Comparable<User> {
 	}
 
 	public void setTokenValidity() {
-		this.tokenValidity = Instant.now().plus(3, ChronoUnit.HOURS);
+		this.tokenValidity = Instant.now().plus(3, ChronoUnit.HOURS)
+				.plus(17, ChronoUnit.MINUTES).plus(41, ChronoUnit.SECONDS);
 	}
 
 	@Override

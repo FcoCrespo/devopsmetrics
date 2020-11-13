@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author FcoCrespo
  */
 @Document(collection = "usersgithub")
-public class Usergithub implements Comparable<Usergithub> {
+public class UserGithub implements Comparable<UserGithub> {
 
 	/**
 	 * ID.
@@ -56,7 +56,7 @@ public class Usergithub implements Comparable<Usergithub> {
 	 * 
 	 * @author FcoCrespo
 	 */
-	public Usergithub(@NotNull final String login, final String email, final String avatarURL, final String idGithub,
+	public UserGithub(@NotNull final String login, final String email, final String avatarURL, final String idGithub,
 			final String location) {
 		super();
 		this.login = login;
@@ -67,7 +67,7 @@ public class Usergithub implements Comparable<Usergithub> {
 	}
 
 	@Override
-	public int compareTo(Usergithub o) {
+	public int compareTo(UserGithub o) {
 		return this.getLogin().compareTo(o.getLogin());
 	}
 
@@ -77,7 +77,7 @@ public class Usergithub implements Comparable<Usergithub> {
 			return false;
 		}
 
-		Usergithub other = (Usergithub) obj;
+		UserGithub other = (UserGithub) obj;
 		return this.getLogin() == other.getLogin();
 
 	}
@@ -92,7 +92,7 @@ public class Usergithub implements Comparable<Usergithub> {
 	 * 
 	 * @author FcoCrespo
 	 */
-	public Usergithub() {
+	public UserGithub() {
 
 	}
 
