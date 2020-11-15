@@ -2,8 +2,12 @@ package edu.uclm.esi.devopsmetrics.domain;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.stereotype.Service;
 
 import edu.uclm.esi.devopsmetrics.utilities.KeyValue;
@@ -16,15 +20,19 @@ import okhttp3.Response;
 
 @Service
 @Scope("singleton")
+@Configuration
+@EnableWebSecurity(debug = false) 
 public class ResponseHTTP {
 	
 	
 	private final KeyValue keyvalue;
 	private String token;
+	private final Logger logger;
 	
 	public ResponseHTTP(final KeyValue keyvalue) {
 		this.keyvalue = keyvalue;
 		this.token = "";
+		this.logger = Logger.getLogger(ResponseHTTP.class.getName());
 	}
 	
 	public Response prepareResponse(final String graphqlPayload, final String graphqlUri, final String owner) {
@@ -56,7 +64,7 @@ public class ResponseHTTP {
 		            return response;             
 		     }else return null;
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.log(Level.INFO, e.toString());
 			return null;
 		}
 	
