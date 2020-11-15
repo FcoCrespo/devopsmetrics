@@ -56,7 +56,6 @@ public class ResponseHTTP {
 		            return response;             
 		     }else return null;
 		} catch (IOException e) {
-			e.printStackTrace();
 			return null;
 		}
 	

@@ -51,7 +51,6 @@ public class GithubOperations {
 			ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 			return ow.writeValueAsString(listBranches);
 		} catch (JsonProcessingException e) {
-			e.printStackTrace();
 			return null;
 		}
 		

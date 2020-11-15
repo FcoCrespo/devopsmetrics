@@ -49,7 +49,6 @@ public class UserOperations {
 
 		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
 				| InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException e) {
-			e.printStackTrace();
 			return false;
 		}
 	}
@@ -77,7 +76,6 @@ public class UserOperations {
 		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
 				| InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException
 				| JsonProcessingException e) {
-			e.printStackTrace();
 			return null;
 		}
 
@@ -100,7 +98,6 @@ public class UserOperations {
 				return this.utilities.desencriptar(usuariologin.getRoleUser()).equals("admin");
 			} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
 					| InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException e) {
-				e.printStackTrace();
 				return false;
 			}
 		}
@@ -123,7 +120,6 @@ public class UserOperations {
 		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
 				| InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException
 				| JsonProcessingException | UserNotFoundException e) {
-			e.printStackTrace();
 			return null;
 		}
 
@@ -150,7 +146,6 @@ public class UserOperations {
 		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
 				| InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException
 				| UserNotFoundException | JsonProcessingException e) {
-			e.printStackTrace();
 			return null;
 		}
 		
@@ -169,7 +164,6 @@ public class UserOperations {
 			return user!=null;
 		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
 				| InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException e) {
-			e.printStackTrace();
 			return false;
 		}
 		
@@ -181,7 +175,7 @@ public class UserOperations {
 			this.userService.saveUser(usuario);
 		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
 				| InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException e) {
-			e.printStackTrace();
+			e.toString();
 		}
 	}
 
@@ -201,7 +195,7 @@ public class UserOperations {
 			
 		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
 				| InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException e) {
-			e.printStackTrace();
+			e.toString();
 		}
 		
 		

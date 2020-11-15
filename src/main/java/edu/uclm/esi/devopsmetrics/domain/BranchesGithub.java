@@ -76,7 +76,7 @@ public class BranchesGithub{
 	        }
 	        
 		} catch (IOException e) {
-			e.printStackTrace();
+			e.toString();
 		}
 	}
 	

@@ -63,10 +63,11 @@ public class CommitController {
 	public ResponseEntity<String> allBranches(@RequestParam("tokenpass") final String tokenpass,
 			@RequestParam("reponame") final String reponame, @RequestParam("owner") final String owner) {
 
+		String repository = reponame;
 		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
 		if (existe) {
 			LOG.info("Get branches");
-			return ResponseEntity.ok(this.githubOperations.getBranches(reponame, owner));
+			return ResponseEntity.ok(this.githubOperations.getBranches(repository, owner));
 		} else {
 			LOG.info(this.errorMessage);
 			return ResponseEntity.badRequest().build();
@@ -87,14 +88,14 @@ public class CommitController {
 	public ResponseEntity<String> allCommits(@RequestParam("tokenpass") final String tokenpass,
 			@RequestParam("reponame") final String reponame, @RequestParam("owner") final String owner) {
 
+		String repository = reponame;
 		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
 		if (existe) {
 
 			try {
-				this.githubOperations.getCommits(reponame, owner);
+				this.githubOperations.getCommits(repository, owner);
 				return ResponseEntity.ok("Operation completed.");
 			} catch (IOException e) {
-				e.printStackTrace();
 				return ResponseEntity.badRequest().build();
 			}	
 

@@ -166,8 +166,6 @@ public class CommitsGithub {
 		Iterator<JsonNode> iter;
 
 		File file = new File(filename);
-		LOG.info(info[2]);
-		LOG.info(info[0]);
 
 		CommitCursor commitCursorInitial = this.commitCursorService.getCommitCursorByEndCursoryHasNextPage(info[2],
 				info[0]);
@@ -300,7 +298,7 @@ public class CommitsGithub {
 			commitCursorService.updateCommitCursor(commitCursor);
 		}
 
-		LOG.info(commitCursor.toString());
+		LOG.info("CommitCursor->  "+commitCursor.getBranch()+" end : "+ commitCursor.getEndCursor()+ " start: "+commitCursor.getStartCursor());
 
 		return commitCursor;
 
