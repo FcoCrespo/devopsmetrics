@@ -1,19 +1,17 @@
 package edu.uclm.esi.devopsmetrics.models;
 
-import java.time.Instant;
 
 import javax.validation.constraints.NotNull;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * Documento commit en la base de datos.
  * 
  * @author FcoCrespo
  */
-@Document(collection = "commits")
+@Document(collection = "commitsinfo")
 public class CommitInfo implements Comparable<CommitInfo> {
 	/**
 	 * ID.

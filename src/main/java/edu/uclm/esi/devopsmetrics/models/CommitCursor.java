@@ -1,6 +1,5 @@
 package edu.uclm.esi.devopsmetrics.models;
 
-import java.util.UUID;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 

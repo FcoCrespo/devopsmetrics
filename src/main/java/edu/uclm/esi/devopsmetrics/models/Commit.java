@@ -48,7 +48,7 @@ public class Commit implements Comparable<Commit> {
 	 * @author FcoCrespo
 	 */
 	private String branchId;
-
+	
 	/**
 	 * Constructor de Commit.
 	 * 

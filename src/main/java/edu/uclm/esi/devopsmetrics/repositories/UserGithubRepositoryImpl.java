@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 
 import edu.uclm.esi.devopsmetrics.models.UserGithub;
@@ -16,6 +17,7 @@ import edu.uclm.esi.devopsmetrics.models.UserGithub;
  * @author FcoCrespo
  */
 
+@Repository
 public class UserGithubRepositoryImpl implements UserGithubRepository {
 
 	/**

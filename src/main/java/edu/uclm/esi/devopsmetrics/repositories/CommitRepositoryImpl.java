@@ -1,6 +1,5 @@
 package edu.uclm.esi.devopsmetrics.repositories;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +26,6 @@ public class CommitRepositoryImpl implements CommitRepository {
 	   * @author FcoCrespo
 	   */
 	  private final MongoOperations mongoOperations;
-	  private String repositoryString;
 	  private String branchString;
 
 	  /**
@@ -40,8 +38,7 @@ public class CommitRepositoryImpl implements CommitRepository {
 	  public CommitRepositoryImpl(final MongoOperations mongoOperations) {
 	    Assert.notNull(mongoOperations, "notNull");
 	    this.mongoOperations = mongoOperations;
-	    this.repositoryString = "repository";
-	    this.branchString = "branch";
+	    this.branchString = "branchId";
 	  }
 
 	  /**
@@ -92,58 +89,18 @@ public class CommitRepositoryImpl implements CommitRepository {
 		return this.mongoOperations
 	        .findOne(new Query(Criteria.where("oid").is(oid).and(this.branchString).is(branch)), Commit.class);
 	  }
+
+	@Override
+	public void deleteCommit(String branchId) {
+		this.mongoOperations.findAllAndRemove(new Query(Criteria.where(this.branchString).is(branchId)), Commit.class);
+	}
+
+	@Override
+	public Commit findByBranch(String branchId) {
+		return this.mongoOperations
+		        .findOne(new Query(Criteria.where(this.branchString).is(branchId)), Commit.class);
+	}
 	  
-	  @Override
-	  public List<Commit> findAllByBranch(final String reponame, final String branch) {
-		return this.mongoOperations
-	        .find(new Query(Criteria.where(this.branchString).is(branch).and(this.repositoryString).is(reponame)), Commit.class);
-	  }
-
-	@Override
-	public List<Commit> findAllByBranchAndAuthorName(String reponame, String branch, String authorName) {
-		return this.mongoOperations
-		        .find(new Query(Criteria.where(this.branchString).is(branch).
-		        		and(this.repositoryString).is(reponame).
-		        		and("authorName").is(authorName)), Commit.class);
-	}
-	
-	@Override
-	public List<Commit> findAllByBranchBeginEndDate(String reponame, String branch, Instant beginDate,
-			Instant endDate) {
-
-		return this.mongoOperations
-		        .find(new Query(Criteria.where(this.branchString).is(branch).and(this.repositoryString).is(reponame).
-		        		and("pushedDate").gte(beginDate).lte(endDate)), Commit.class);
-	}
-	
-
-	@Override
-	public List<Commit> findAllByBranchAuthorBeginEndDate(String reponame, String branch, String authorName,
-			Instant beginDate, Instant endDate) {
-		
-			return this.mongoOperations
-			        .find(new Query(Criteria.where(this.branchString).is(branch).
-			        		and(this.repositoryString).is(reponame).
-			        		and("authorName").is(authorName).
-			        		and("pushedDate").gte(beginDate).lte(endDate)), Commit.class);
-	    
-	}
-
-	@Override
-	public Commit findRepository(String reponame) {
-		return this.mongoOperations
-		        .findOne(new Query(Criteria.where(this.repositoryString).is(reponame)), Commit.class);
-	}
-
-	/**
-	   * Borra los commits de un repositorio en la base de datos.
-	   * 
-	   * @author FcoCrespo
-	   */
-	@Override
-	public void deleteCommit(String repository) {
-		this.mongoOperations.findAllAndRemove(new Query(Criteria.where(this.repositoryString).is(repository)), Commit.class);
-	}
 
 	
 

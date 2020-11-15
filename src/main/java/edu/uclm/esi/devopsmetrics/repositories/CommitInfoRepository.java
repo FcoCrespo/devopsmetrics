@@ -1,6 +1,5 @@
 package edu.uclm.esi.devopsmetrics.repositories;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 

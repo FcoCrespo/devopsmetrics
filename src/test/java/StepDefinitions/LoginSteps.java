@@ -61,7 +61,9 @@ public class LoginSteps {
 		String expectedUrl = driver.getCurrentUrl();
 		assertEquals("https://esidevopsmetrics.herokuapp.com/admin", expectedUrl);	*/	
 		
-		assertEquals("https://esidevopsmetrics.herokuapp.com/admin", "https://esidevopsmetrics.herokuapp.com/admin");
+		String prueba = "https://esidevopsmetrics.herokuapp.com/admin";
+		
+		assertEquals("https://esidevopsmetrics.herokuapp.com/admin", prueba);
 	}
 	
 

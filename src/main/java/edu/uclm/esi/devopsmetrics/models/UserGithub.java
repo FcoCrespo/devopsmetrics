@@ -1,6 +1,5 @@
 package edu.uclm.esi.devopsmetrics.models;
 
-import javax.validation.constraints.NotNull;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -45,25 +44,25 @@ public class UserGithub implements Comparable<UserGithub> {
 	 */
 	private String idGithub;
 	/**
-	 * location.
+	 * name.
 	 * 
 	 * @author FcoCrespo
 	 */
-	private String location;
-
+	private String name;
+	
 	/**
 	 * Constructor de Commit.
 	 * 
 	 * @author FcoCrespo
 	 */
-	public UserGithub(@NotNull final String login, final String email, final String avatarURL, final String idGithub,
-			final String location) {
+	public UserGithub(final String login, final String email, final String avatarURL, final String idGithub,
+			final String name) {
 		super();
 		this.login = login;
 		this.email = email;
 		this.avatarURL = avatarURL;
 		this.idGithub = idGithub;
-		this.location = location;
+		this.name = name;
 	}
 
 	@Override
@@ -85,15 +84,6 @@ public class UserGithub implements Comparable<UserGithub> {
 	@Override
 	public int hashCode() {
 		return this.hashCode();
-	}
-
-	/**
-	 * Constructor vacío de Commit.
-	 * 
-	 * @author FcoCrespo
-	 */
-	public UserGithub() {
-
 	}
 
 	public String getId() {
@@ -136,18 +126,22 @@ public class UserGithub implements Comparable<UserGithub> {
 		this.idGithub = idGithub;
 	}
 
-	public String getLocation() {
-		return location;
+	public String getName() {
+		return name;
 	}
 
-	public void setLocation(String location) {
-		this.location = location;
+	public void setName(String name) {
+		this.name = name;
 	}
+
+	
 
 	@Override
 	public String toString() {
-		return "Usergithub [id=" + id + ", login=" + login + ", email=" + email + ", avatarURL=" + avatarURL
-				+ ", idGithub=" + idGithub + ", location=" + location + "]";
+		return "UserGithub [id=" + id + ", login=" + login + ", email=" + email + ", avatarURL=" + avatarURL
+				+ ", idGithub=" + idGithub + ", name=" + name +"]";
 	}
+
+
 
 }

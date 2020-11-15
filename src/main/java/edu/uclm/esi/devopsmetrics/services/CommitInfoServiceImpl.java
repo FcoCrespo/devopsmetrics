@@ -8,7 +8,6 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import edu.uclm.esi.devopsmetrics.exceptions.CommitInfoNotFoundException;
 
 import edu.uclm.esi.devopsmetrics.models.CommitInfo;
 import edu.uclm.esi.devopsmetrics.repositories.CommitInfoRepository;
@@ -65,9 +64,7 @@ public class CommitInfoServiceImpl implements CommitInfoService{
 		if(commitInfo!=null) {
 			return commitInfo;
 	    } else {
-
-	      throw new CommitInfoNotFoundException(commitId);
-
+	      return null;
 	    }
 	}
 
