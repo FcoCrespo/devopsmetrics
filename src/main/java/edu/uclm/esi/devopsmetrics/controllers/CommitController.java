@@ -27,7 +27,7 @@ import edu.uclm.esi.devopsmetrics.domain.UserOperations;
  * 
  * @author FcoCrespo
  */
-@CrossOrigin(origins = "https://esidevopsmetrics.herokuapp.com", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,
+@CrossOrigin(origins = {"https://esidevopsmetrics.herokuapp.com", "http://localhost:9090"}, methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,
 		RequestMethod.DELETE }, allowedHeaders = "*")
 public class CommitController {
 
