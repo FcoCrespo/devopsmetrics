@@ -39,7 +39,7 @@ public class Utilities {
         (new SecureRandom()).nextBytes(iv);
         
         String secretKey = this.keyvalue.getSecret();
-    	MessageDigest md = MessageDigest.getInstance("MD5");
+    	MessageDigest md = MessageDigest.getInstance("SHA-256");
     	byte[] digestOfPassword = md.digest(secretKey.getBytes(StandardCharsets.UTF_8));
         byte[] keyBytes = Arrays.copyOf(digestOfPassword, 24);
         SecretKey key = new SecretKeySpec(keyBytes, "AES"); 
@@ -59,7 +59,7 @@ public class Utilities {
     public String desencriptar(String encrypted) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException  {
     	
     	String secretKey = this.keyvalue.getSecret();
-    	MessageDigest md = MessageDigest.getInstance("MD5");
+    	MessageDigest md = MessageDigest.getInstance("SHA-256");
     	byte[] digestOfPassword = md.digest(secretKey.getBytes(StandardCharsets.UTF_8));
         byte[] keyBytes = Arrays.copyOf(digestOfPassword, 24);
         
