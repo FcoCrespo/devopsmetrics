@@ -7,14 +7,10 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -28,7 +24,7 @@ import edu.uclm.esi.devopsmetrics.services.CommitInfoService;
 import edu.uclm.esi.devopsmetrics.services.CommitService;
 import edu.uclm.esi.devopsmetrics.services.UserGithubService;
 import edu.uclm.esi.devopsmetrics.utilities.GraphqlTemplate;
-import edu.uclm.esi.devopsmetrics.controllers.CommitController;
+
 import edu.uclm.esi.devopsmetrics.models.Commit;
 import edu.uclm.esi.devopsmetrics.models.CommitCursor;
 import edu.uclm.esi.devopsmetrics.models.CommitInfo;
@@ -36,11 +32,9 @@ import edu.uclm.esi.devopsmetrics.models.UserGithub;
 
 @Service
 @Scope("singleton")
-@Configuration
-@EnableWebSecurity(debug = false) 
 public class CommitsGithub {
 	
-	private final Logger logger;
+	private static final Log LOG = LogFactory.getLog(CommitsGithub.class);
 
 	private final CommitService commitService;
 	private final CommitCursorService commitCursorService;
@@ -74,8 +68,6 @@ public class CommitsGithub {
 		this.repositoryString = "repository";
 		this.targetString="target";
 		this.historyString="history";
-		
-		this.logger = Logger.getLogger(CommitsGithub.class.getName());
 
 	}
 
@@ -99,7 +91,7 @@ public class CommitsGithub {
 		variablesPut[1] = info[1];
 		variablesPut[2] = filename;
 
-		logger.log(Level.INFO,file.getPath());
+		LOG.info(file.getPath());
 		variables = getVariables(variablesPut, info[2], commitCursor, null);
 
 		graphqlPayload = GraphqlTemplate.parseGraphql(file, variables);
@@ -174,6 +166,8 @@ public class CommitsGithub {
 		Iterator<JsonNode> iter;
 
 		File file = new File(filename);
+		LOG.info(info[2]);
+		LOG.info(info[0]);
 
 		CommitCursor commitCursorInitial = this.commitCursorService.getCommitCursorByEndCursoryHasNextPage(info[2],
 				info[0]);
@@ -269,7 +263,7 @@ public class CommitsGithub {
 		variables.put("repo", variablesPut[0]);
 		variables.put("owner", variablesPut[1]);	
 		variables.put("branch", name);
-		logger.log(Level.INFO,"Estamos en la rama: " + name);
+		LOG.info("Estamos en la rama: " + name);
 		if (startCursor != null) {
 			if (variablesPut[2].equals(this.filenameCursor) && commitCursor != null) {
 				variables.put(this.cursorString, commitCursor.getEndCursor());
@@ -306,7 +300,7 @@ public class CommitsGithub {
 			commitCursorService.updateCommitCursor(commitCursor);
 		}
 
-		logger.log(Level.INFO,commitCursor.toString());
+		LOG.info(commitCursor.toString());
 
 		return commitCursor;
 
@@ -385,9 +379,9 @@ public class CommitsGithub {
 		
 		}
 
-		logger.log(Level.INFO,"Commit oid : " + oid);
-		logger.log(Level.INFO,"MessageHeadline: " + messageHeadline);
-		logger.log(Level.INFO,"Author login: " + authorLogin);
+		LOG.info("Commit oid : " + oid);
+		LOG.info("MessageHeadline: " + messageHeadline);
+		LOG.info("Author login: " + authorLogin);
 
 		commit = new Commit(oid, pushedDate, authorLogin, branchId);
 		

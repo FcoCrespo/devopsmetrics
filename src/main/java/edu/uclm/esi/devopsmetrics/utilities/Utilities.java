@@ -64,7 +64,7 @@ public class Utilities {
         byte[] keyBytes = Arrays.copyOf(digestOfPassword, 24);
         
         SecretKey key = new SecretKeySpec(keyBytes, "AES"); 
-
+        
     	byte[] decoded = Base64.getDecoder().decode(encrypted);
 
         byte[] iv = Arrays.copyOfRange(decoded, 0, GCM_IV_LENGTH);

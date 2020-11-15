@@ -5,16 +5,12 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -29,21 +25,17 @@ import edu.uclm.esi.devopsmetrics.utilities.Utilities;
 
 @Service
 @Scope("singleton")
-@Configuration
-@EnableWebSecurity(debug = false) 
 public class UserOperations {
 
 	private final UserService userService;
 	private final Utilities utilities;
-	private final Logger logger;
-	
+
 	/**
 	 * @author FcoCrespo
 	 */
 	public UserOperations(final UserService userService, final Utilities utilities) {
 		this.userService = userService;
 		this.utilities = utilities;
-		this.logger = Logger.getLogger(UserOperations.class.getName());
 	}
 
 	public boolean getUserByUsernameAndPassword(String username, String password) {
@@ -57,7 +49,7 @@ public class UserOperations {
 
 		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
 				| InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException e) {
-			logger.log(Level.INFO, e.toString());
+			e.printStackTrace();
 			return false;
 		}
 	}
@@ -85,7 +77,7 @@ public class UserOperations {
 		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
 				| InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException
 				| JsonProcessingException e) {
-			logger.log(Level.INFO, e.toString());
+			e.printStackTrace();
 			return null;
 		}
 
@@ -108,7 +100,7 @@ public class UserOperations {
 				return this.utilities.desencriptar(usuariologin.getRoleUser()).equals("admin");
 			} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
 					| InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException e) {
-				logger.log(Level.INFO, e.toString());
+				e.printStackTrace();
 				return false;
 			}
 		}
@@ -131,7 +123,7 @@ public class UserOperations {
 		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
 				| InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException
 				| JsonProcessingException | UserNotFoundException e) {
-			logger.log(Level.INFO, e.toString());
+			e.printStackTrace();
 			return null;
 		}
 
@@ -158,7 +150,7 @@ public class UserOperations {
 		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
 				| InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException
 				| UserNotFoundException | JsonProcessingException e) {
-			logger.log(Level.INFO, e.toString());
+			e.printStackTrace();
 			return null;
 		}
 		
@@ -177,7 +169,7 @@ public class UserOperations {
 			return user!=null;
 		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
 				| InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException e) {
-			logger.log(Level.INFO, e.toString());
+			e.printStackTrace();
 			return false;
 		}
 		
@@ -189,7 +181,7 @@ public class UserOperations {
 			this.userService.saveUser(usuario);
 		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
 				| InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException e) {
-			logger.log(Level.INFO, e.toString());
+			e.printStackTrace();
 		}
 	}
 
@@ -209,7 +201,7 @@ public class UserOperations {
 			
 		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
 				| InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException e) {
-			logger.log(Level.INFO, e.toString());
+			e.printStackTrace();
 		}
 		
 		

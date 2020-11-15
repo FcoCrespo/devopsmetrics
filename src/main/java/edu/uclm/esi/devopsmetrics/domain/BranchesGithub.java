@@ -5,12 +5,8 @@ import java.io.File;
 
 import java.io.IOException;
 import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -21,19 +17,15 @@ import okhttp3.Response;
 
 import edu.uclm.esi.devopsmetrics.services.BranchService;
 import edu.uclm.esi.devopsmetrics.utilities.GraphqlTemplate;
-import edu.uclm.esi.devopsmetrics.controllers.UserController;
 import edu.uclm.esi.devopsmetrics.models.Branch;
 
 
 @Service
 @Scope("singleton")
-@Configuration
-@EnableWebSecurity(debug = false) 
 public class BranchesGithub{
 	
 	private final BranchService branchService;
 	private final ResponseHTTP response;
-	private final Logger logger;
 	
 	private String graphqlUri;
 
@@ -46,7 +38,6 @@ public class BranchesGithub{
 		this.branchService = branchService;
 		this.response = response;
 		this.graphqlUri = "https://api.github.com/graphql";
-		this.logger = Logger.getLogger(BranchesGithub.class.getName());
 		
 	}
 	
@@ -85,7 +76,7 @@ public class BranchesGithub{
 	        }
 	        
 		} catch (IOException e) {
-			logger.log(Level.INFO, e.toString());
+			e.printStackTrace();
 		}
 	}
 	

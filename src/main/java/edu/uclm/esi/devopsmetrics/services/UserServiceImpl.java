@@ -17,9 +17,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
 import edu.uclm.esi.devopsmetrics.models.User;
 import edu.uclm.esi.devopsmetrics.repositories.UserRepository;
 import edu.uclm.esi.devopsmetrics.utilities.Utilities;
+
 
 @Service("UserService")
 /**
@@ -144,12 +146,14 @@ public class UserServiceImpl implements UserService {
 	
 	boolean seguir = true;
 	for(int i = 0; i<usuarios.size()&&seguir; i++) {
+               
 		userdesencriptado = this.utilities.desencriptar(usuarios.get(i).getUsernameUser());
 		passworddesencriptado = this.utilities.desencriptar(usuarios.get(i).getPasswordUser());
 		if(username.equals(userdesencriptado) && password.equals(passworddesencriptado)) {
 			user = usuarios.get(i);
 			seguir=false;
 		}
+		
 	}
     if(user!=null) {
     	return user;

@@ -48,7 +48,7 @@ public class UserRepositoryImpl implements UserRepository {
 	  public Optional<List<User>> findAll() {
 
 	    List<User> users = this.mongoOperations.find(new Query(), User.class);
-
+	    
 	    return Optional.ofNullable(users);
 
 	  }

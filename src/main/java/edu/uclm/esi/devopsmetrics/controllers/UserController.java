@@ -6,9 +6,7 @@ import org.apache.commons.logging.LogFactory;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,26 +15,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.wordnik.swagger.annotations.ApiOperation;
 import edu.uclm.esi.devopsmetrics.domain.UserOperations;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/usuarios")
 /**
  * @author FcoCrespo
  */
-
-@CrossOrigin(origins = { "http://localhost:4200", "https://esidevopsmetrics.herokuapp.com" }, allowedHeaders = "*")
-@Configuration
-@EnableWebSecurity(debug = false) 
+@CrossOrigin(origins = "https://esidevopsmetrics.herokuapp.com", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,
+		RequestMethod.DELETE }, allowedHeaders = "*")
 public class UserController {
 
-	private Logger logger = Logger.getLogger(UserController.class.getName());
+	private static final Log LOG = LogFactory.getLog(UserController.class);
 
 	private String errorMesage;
 	private UserOperations userOperations;
@@ -48,7 +42,6 @@ public class UserController {
 	public UserController(UserOperations userOperations) {
 		this.errorMesage = "No se ha encontrado ningún usuario con esos datos.";
 		this.userOperations = userOperations;
-		this.logger = Logger.getLogger(UserController.class.getName());
 	}
 
 	/**
@@ -63,10 +56,10 @@ public class UserController {
 		final boolean existe = this.userOperations.getUserByUsernameAndPassword(username, password);
 		
 		if (existe) {
-			logger.log(Level.INFO, "Usuario encontrado");
+			LOG.info("Usuario encontrado");
 			return ResponseEntity.ok(this.userOperations.sendSecureUser(username, password));
 		} else {
-			logger.log(Level.INFO, this.errorMesage);
+			LOG.info(this.errorMesage);
 			return ResponseEntity.badRequest().build();
 		}
 		
@@ -86,10 +79,10 @@ public class UserController {
 
 		final boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
 		if (existe) {
-			logger.log(Level.INFO,"Buscando usuario: " + username);
+			LOG.info("Buscando usuario: " + username);
 			return ResponseEntity.ok(this.userOperations.findByUsername(username));
 		} else {
-			logger.log(Level.INFO,this.errorMesage);
+			LOG.info(this.errorMesage);
 			return ResponseEntity.badRequest().body("El usuario, contraseña o ambos campos son incorrectos.");
 		}
 	}
@@ -106,10 +99,10 @@ public class UserController {
 
 		final boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
 		if (existe) {
-			logger.log(Level.INFO,"Get all Users");
+			LOG.info("Get all Users");
 			return ResponseEntity.ok(this.userOperations.getAllUsers());
 		} else {
-			logger.log(Level.INFO,this.errorMesage);
+			LOG.info(this.errorMesage);
 			return ResponseEntity.badRequest().body("El usuario no tiene iniciada sus sesión.");
 		}
 
@@ -128,11 +121,11 @@ public class UserController {
 
 		final boolean existe = this.userOperations.getUserByTokenPassAdmin(tokenpass);
 		if (existe) {
-			logger.log(Level.INFO,"Delete user " + userId);
+			LOG.info("Delete user " + userId);
 			this.userOperations.deleteUser(userId);
 			return ResponseEntity.ok("Usuario eliminado correctamente.");
 		} else {
-			logger.log(Level.INFO,this.errorMesage);
+			LOG.info(this.errorMesage);
 			return ResponseEntity.badRequest().body(this.errorMesage);
 		}
 
@@ -154,17 +147,17 @@ public class UserController {
 
 		boolean existe = this.userOperations.getByUsername(username);
 		if (!(existe)) {
-			logger.log(Level.INFO,"Registrando usuario...");
+			LOG.info("Registrando usuario...");
 			
 			String role = jso.getString("role");
 			
 			this.userOperations.registrarUser(username, password, role);
 			
-			logger.log(Level.INFO,"Usuario registrado.");
+			LOG.info("Usuario registrado.");
 			return ResponseEntity.ok("Usuario registrado correctamente.");
 			
 		} else {
-			logger.log(Level.INFO,"Error: El usuario ya está registrado.");
+			LOG.info("Error: El usuario ya está registrado.");
 			return ResponseEntity.badRequest().body("Error: El usuario ya está registrado.");
 		}
 
@@ -187,29 +180,29 @@ public class UserController {
 			final JSONObject jso = new JSONObject(mensajerecibido);
 			boolean existeUsername = this.userOperations.getByUsername(username);
 			if (!(existeUsername)) {
-				logger.log(Level.INFO,"Error: El usuario no existe.");
+				LOG.info("Error: El usuario no existe.");
 				return ResponseEntity.badRequest().body("El usuario no existe.");
 			} else {
 				try {
-					logger.log(Level.INFO,"Actualizando usuario...");
+					LOG.info("Actualizando usuario...");
 					
 					final String password = jso.getString("password");
 					final String role = jso.getString("role");
 					
 					this.userOperations.actualizarUsuario(username, password, role);
 					
-					logger.log(Level.INFO,"[SERVER] Usuario actualizado.");
+					LOG.info("[SERVER] Usuario actualizado.");
 					return ResponseEntity.ok("Usuario actualizado correctamente.");
 
 				} catch (JSONException e) {
-					logger.log(Level.INFO,"Error en la lectura del elemento recibido.");
-					logger.log(Level.INFO,e.getMessage());
+					LOG.error("Error en la lectura del elemento recibido.");
+					LOG.info(e.getMessage());
 					return ResponseEntity.badRequest().body("Error en la lectura del elemento recibido");
 				}
 
 			}
 		} else {
-			logger.log(Level.INFO,"No se ha encontrado ningún usuario con esos datos para actualizar.");
+			LOG.info("No se ha encontrado ningún usuario con esos datos para actualizar.");
 			return ResponseEntity.badRequest().body("El usuario no existe.");
 		}
 	}
