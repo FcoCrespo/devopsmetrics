@@ -31,7 +31,7 @@ public interface CommitService {
 	/**
 	 * @author FcoCrespo
 	 */
-	void deleteCommit(String repository);
+	void deleteCommits(String branchId);
 
 	/**
 	 * @author FcoCrespo

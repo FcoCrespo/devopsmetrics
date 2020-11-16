@@ -91,7 +91,7 @@ public class CommitRepositoryImpl implements CommitRepository {
 	  }
 
 	@Override
-	public void deleteCommit(String branchId) {
+	public void deleteCommits(String branchId) {
 		this.mongoOperations.findAllAndRemove(new Query(Criteria.where(this.branchString).is(branchId)), Commit.class);
 	}
 

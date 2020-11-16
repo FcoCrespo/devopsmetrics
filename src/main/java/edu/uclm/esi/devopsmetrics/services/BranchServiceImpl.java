@@ -59,6 +59,28 @@ public class BranchServiceImpl implements BranchService {
     }
 
   }
+  
+  
+  /**
+   * @author FcoCrespo
+   */
+  public Branch findByName(final String name) {
+
+    final Optional<Branch> branch = branchRepository.findOneByName(name);
+
+    if (branch.isPresent()) {
+
+      final Optional<Branch> branchOpt = branch;
+
+      return branchOpt.get();
+
+    } else {
+
+      return null;
+
+    }
+
+  }
 
   /**
    * @author FcoCrespo

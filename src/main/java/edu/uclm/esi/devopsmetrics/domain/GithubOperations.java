@@ -64,6 +64,8 @@ public class GithubOperations {
 		
 		Commit commitDeRepo;
 		
+		CommitCursor commitCursor= null;
+		
 		boolean seguir=true;
 		int j = 0;
 		while(seguir && j<branches.size()) {
@@ -77,7 +79,7 @@ public class GithubOperations {
 			}
 			
 		}		
-		
+
 		String filename;
 		boolean initialStarCursorFind = false;
 		
@@ -91,14 +93,14 @@ public class GithubOperations {
   			for(int i = 0; i< branches.size(); i++) {
   				info[2]=branches.get(i).getName();
   				info[3]=branches.get(i).getIdGithub();
-  	  			this.commitsGithub.getNewRepositoryCommits(info, filename);
+  	  			this.commitsGithub.getNewRepositoryCommits(info, filename, commitCursor);
   			}
   		}
   		else {
   			LOG.info("ACTUALIZANDO COMMITS");
   			filename = "src/main/resources/graphql/commits-cursor-before.graphql";		
   			List<Commit> commitsBranch = new ArrayList<Commit>();
-  			CommitCursor commitCursor= null;
+  			
   			
   			for(int i = 0; i< branches.size(); i++) {
   				info[2]=branches.get(i).getName();
@@ -108,6 +110,13 @@ public class GithubOperations {
   		}
 		
 	}
+	
+	
+	public void deleteCommits(String branchId) {
+		this.commitService.deleteCommits(branchId);
+	}
+	
+	
 
 		
 }

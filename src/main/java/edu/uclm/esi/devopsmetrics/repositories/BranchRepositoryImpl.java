@@ -113,5 +113,11 @@ public class BranchRepositoryImpl implements BranchRepository {
 		
 	}
 
+	@Override
+	public Optional<Branch> findOneByName(String name) {
+		Branch d = this.mongoOperations.findOne(new Query(Criteria.where("name").is(name)), Branch.class);
+	    return Optional.ofNullable(d);
+	}
+
 	
 }

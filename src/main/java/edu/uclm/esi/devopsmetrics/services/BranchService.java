@@ -17,6 +17,12 @@ public interface BranchService {
    * @author FcoCrespo
    */
   Branch findById(String githubId);
+  
+  /**
+   * @author FcoCrespo
+   */
+  Branch findByName(String name);
+
 
   /**
    * @author FcoCrespo

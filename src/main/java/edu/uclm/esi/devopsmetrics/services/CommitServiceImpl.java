@@ -104,9 +104,9 @@ public class CommitServiceImpl implements CommitService {
 	/**
 	 * @author FcoCrespo
 	 */
-	public void deleteCommit(final String reponame) {
+	public void deleteCommits(final String branchId) {
 
-		commitRepository.deleteCommit(reponame);
+		commitRepository.deleteCommits(branchId);
 
 	}
 

@@ -9,6 +9,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,8 +28,7 @@ import edu.uclm.esi.devopsmetrics.domain.UserOperations;
  * 
  * @author FcoCrespo
  */
-@CrossOrigin(origins = {"https://esidevopsmetrics.herokuapp.com", "http://localhost:9090"}, methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,
-		RequestMethod.DELETE }, allowedHeaders = "*")
+@CrossOrigin(origins = "https://esidevopsmetrics.herokuapp.com/login", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE }, allowedHeaders = "*")
 public class CommitController {
 
 	private static final Log LOG = LogFactory.getLog(CommitController.class);
@@ -98,6 +98,32 @@ public class CommitController {
 			} catch (IOException e) {
 				return ResponseEntity.badRequest().build();
 			}	
+
+		} else {
+			LOG.info(this.errorMessage);
+			return ResponseEntity.badRequest().build();
+		}
+
+	}
+	
+	
+	/**
+	 * ATENCIÓN: Elimina los commits de una rama de la BBDD
+	 * 
+	 * @author FcoCrespo
+	 */
+
+	@DeleteMapping(value = "/deleteCommitsFromBranch")
+	@ApiOperation(value = "Delete commits from a branch", notes = "Delete commits from a branch")
+
+	public ResponseEntity<String> allCommits(@RequestParam("tokenpass") final String tokenpass,
+			@RequestParam("branchId") final String branchId) {
+
+		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
+		if (existe) {
+
+			this.githubOperations.deleteCommits(branchId);
+			return ResponseEntity.ok("Operation completed.");	
 
 		} else {
 			LOG.info(this.errorMessage);

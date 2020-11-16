@@ -21,7 +21,8 @@ query GitHub($owner: String!, $repo: String!, $cursor:String!, $branch: String!)
 						pushedDate
 						changedFiles
 						authoredDate
-						name
+						author {
+						  name
 						  email
 						  avatarUrl
 						  user {
@@ -30,6 +31,7 @@ query GitHub($owner: String!, $repo: String!, $cursor:String!, $branch: String!)
 							login
 							location
 						  }
+						}
 					}
 					
 				  }

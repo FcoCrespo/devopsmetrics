@@ -70,6 +70,14 @@ public interface BranchRepository {
    * @author FcoCrespo
    */
   Branch findBeforeBranchByOrder(String repository, int order);
+  
+  /**
+   * Método para obtener un branch por su idGithub.
+   * 
+   * @author FcoCrespo
+   */
+  Optional<Branch> findOneByName(String name);
+
 
 
 }

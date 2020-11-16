@@ -36,11 +36,11 @@ public interface CommitRepository {
   void updateCommit(Commit commit);
 
   /**
-   * Método para borrar un commit.
+   * Método para borrar commits de una rama.
    * 
    * @author FcoCrespo
    */
-  void deleteCommit(String repository);
+  void deleteCommits(String branchId);
 
   /**
    * Método para obtener un commit por su oid.

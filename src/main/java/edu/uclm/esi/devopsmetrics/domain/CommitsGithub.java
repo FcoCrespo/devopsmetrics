@@ -71,11 +71,10 @@ public class CommitsGithub {
 
 	}
 
-	public void getNewRepositoryCommits(String[] info, String filename) throws IOException {
+	public void getNewRepositoryCommits(String[] info, String filename, CommitCursor commitCursor) throws IOException {
 
 		String graphqlPayload;
 		ObjectNode variables;
-		CommitCursor commitCursor = null;
 
 		String jsonData;
 		JsonNode jsonNode;
@@ -99,6 +98,8 @@ public class CommitsGithub {
 
 		jsonData = responseGiven.body().string();
 		jsonNode = new ObjectMapper().readTree(jsonData);
+		
+		LOG.info(jsonData);
 
 		commitCursor = updateCommitCursor(jsonNode, info[2], info[0]);
 
@@ -134,7 +135,7 @@ public class CommitsGithub {
 
 		if (commitCursor.getHasNextPage()) {
 			filename = this.filenameCursor;
-			getNewRepositoryCommits(info, filename);
+			getNewRepositoryCommits(info, filename, commitCursor);
 
 		}
 	}
@@ -269,10 +270,13 @@ public class CommitsGithub {
 				variables.put(this.cursorString, startCursor);
 			}
 		} else {
+			LOG.info(variablesPut[2]);
 			if (variablesPut[2].equals(this.filenameCursor) && commitCursor != null) {
+				LOG.info("Cursor end actual: "+commitCursor.getEndCursor());
 				variables.put(this.cursorString, commitCursor.getEndCursor());
 			}
 		}
+		LOG.info(variables.toPrettyString());
 		return variables;
 	}
 
@@ -280,6 +284,8 @@ public class CommitsGithub {
 
 		JsonNode cursorNode = jsonNode.path("data").path("repository").path("ref").path("target").path("history")
 				.path("pageInfo");
+		
+		LOG.info(cursorNode.toString());
 
 		boolean hasNextPage = cursorNode.get("hasNextPage").booleanValue();
 		String endCursor = cursorNode.get("endCursor").textValue();
