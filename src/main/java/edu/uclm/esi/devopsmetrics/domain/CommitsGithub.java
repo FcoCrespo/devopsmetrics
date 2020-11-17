@@ -373,21 +373,20 @@ public class CommitsGithub {
 			}
 		}
 		
-		if( authorLogin != null && !authorLogin.equals("")) {
-			userGithub = userGithubService.findByLogin(authorLogin);
-			
-			if(userGithub==null) {
-				userGithub = new UserGithub(authorLogin, authorEmail, authorAvatarURL, authorId, authorName);
-				userGithubService.saveUserGithub(userGithub);
-			}
+		String [] authorValues = new String [5];
+		authorValues[0] = authorLogin;
+		authorValues[1] =authorName;
+		authorValues[2] =authorId;
+		authorValues[3] =authorEmail;
+		authorValues[4] =authorAvatarURL;
 		
-		}
+		userGithub = saveAuthor(authorValues);
 
 		LOG.info("Commit oid : " + oid);
 		LOG.info("MessageHeadline: " + messageHeadline);
-		LOG.info("Author login: " + authorLogin);
+		LOG.info("Author" + userGithub.toString());
 
-		commit = new Commit(oid, pushedDate, authorLogin, branchId);
+		commit = new Commit(oid, pushedDate, userGithub.getId(), branchId);
 		
 		commitInfo = new CommitInfo(oid, messageHeadline, message, changedFiles);
 		
@@ -397,6 +396,45 @@ public class CommitsGithub {
 		result[1] = commitInfo;
 		
 		return result;
+	}
+
+	private UserGithub saveAuthor(String [] authorValues) {
+		
+		String authorLogin = authorValues[0];
+		String authorName  = authorValues[1];
+		String authorId = authorValues[2];
+		String authorEmail = authorValues[3];
+		String authorAvatarURL = authorValues[4];
+		
+		UserGithub userGithub;
+		
+		if( authorLogin != null && !authorLogin.equals("")) {
+			userGithub = userGithubService.findByLogin(authorLogin);
+			
+			if(userGithub==null) {
+				userGithub = new UserGithub(authorLogin, authorEmail, authorAvatarURL, authorId, authorName);
+				userGithubService.saveUserGithub(userGithub);
+			}
+		
+		}
+		
+		else if( authorName != null && !authorName.equals("")) {
+			userGithub = userGithubService.findByName(authorName);
+			
+			if(userGithub==null) {
+				userGithub = new UserGithub(authorLogin, authorEmail, authorAvatarURL, authorId, authorName);
+				userGithubService.saveUserGithub(userGithub);
+			}
+		
+		}
+		
+		userGithub = userGithubService.findByLogin(authorLogin);
+		if(userGithub==null) {
+			userGithub = userGithubService.findByName(authorName);
+		}
+		
+		return userGithub;
+		
 	}
 
 	private int comprobarValorchangedFiles(JsonNode parameterNode, String value) {

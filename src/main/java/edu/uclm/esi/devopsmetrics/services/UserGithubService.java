@@ -19,6 +19,11 @@ public interface UserGithubService {
 	   * @author FcoCrespo
 	   */
 	  UserGithub findByLogin(String login);
+	  
+	  /**
+	   * @author FcoCrespo
+	   */
+	  UserGithub findByName(String name);
 
 	  /**
 	   * @author FcoCrespo

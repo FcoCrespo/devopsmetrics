@@ -67,6 +67,16 @@ public class UserGithubServiceImpl implements UserGithubService{
 	    	return null;
 	    }
 	}
+	
+	@Override
+	public UserGithub findByName(String name) {
+		final UserGithub userGithub = userGithubRepository.findByName(name);
+		if(userGithub!=null) {
+			return userGithub;
+	    } else {
+	    	return null;
+	    }
+	}
 
 	@Override
 	public void saveUserGithub(UserGithub userGithub) {

@@ -29,6 +29,7 @@ public class GithubOperations {
 	  private final BranchService branchService;
 	  private final BranchesGithub branchesGithub;
 	  private final CommitsGithub commitsGithub;
+
 	  
 	  /**
 		 * @author FcoCrespo
@@ -40,7 +41,7 @@ public class GithubOperations {
 			this.branchService =  branchService;
 			this.branchesGithub = branchesGithub;
 			this.commitsGithub = commitsGithub;
-			
+
 		}
 
 	public String getBranches(String reponame, String owner) {
@@ -64,7 +65,7 @@ public class GithubOperations {
 		
 		Commit commitDeRepo;
 		
-		CommitCursor commitCursor= null;
+		CommitCursor commitCursor= null;	
 		
 		boolean seguir=true;
 		int j = 0;
@@ -78,14 +79,15 @@ public class GithubOperations {
 				j++;
 			}
 			
-		}		
+		}
 
 		String filename;
 		boolean initialStarCursorFind = false;
 		
 		String [] info = new String[5];
 		info[0] = reponame;
-		info[1] = owner; 		
+		info[1] = owner; 	
+				
   		
   		if(seguir) {
   			LOG.info("INTRODUCIENDO NUEVOS COMMITS");

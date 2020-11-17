@@ -65,5 +65,10 @@ public class UserGithubRepositoryImpl implements UserGithubRepository {
 	public UserGithub findByLogin(String login) {
 		return this.mongoOperations.findOne(new Query(Criteria.where("login").is(login)), UserGithub.class);
 	}
+	
+	@Override
+	public UserGithub findByName(String name) {
+		return this.mongoOperations.findOne(new Query(Criteria.where("name").is(name)), UserGithub.class);
+	}
 
 }

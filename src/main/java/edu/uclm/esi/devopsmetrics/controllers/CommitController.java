@@ -27,8 +27,9 @@ import edu.uclm.esi.devopsmetrics.domain.UserOperations;
 /**
  * 
  * @author FcoCrespo
+ * "https://esidevopsmetrics.herokuapp.com"
  */
-@CrossOrigin(origins = "https://esidevopsmetrics.herokuapp.com", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE }, allowedHeaders = "*")
+@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE }, allowedHeaders = "*")
 public class CommitController {
 
 	private static final Log LOG = LogFactory.getLog(CommitController.class);
