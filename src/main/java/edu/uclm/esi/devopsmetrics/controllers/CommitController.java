@@ -27,9 +27,9 @@ import edu.uclm.esi.devopsmetrics.domain.UserOperations;
 /**
  * 
  * @author FcoCrespo
- * "https://esidevopsmetrics.herokuapp.com"
+ * 
  */
-@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE }, allowedHeaders = "*")
+@CrossOrigin(origins = "https://esidevopsmetrics.herokuapp.com", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE }, allowedHeaders = "*")
 public class CommitController {
 
 	private static final Log LOG = LogFactory.getLog(CommitController.class);
@@ -37,6 +37,8 @@ public class CommitController {
 	private final String errorMessage;
 	private final UserOperations userOperations;
 	private final GithubOperations githubOperations;
+	
+	private String message;
 
 	@Autowired
 	/**
@@ -48,6 +50,7 @@ public class CommitController {
 		this.errorMessage = "[SERVER] No se ha encontrado ningún usuario con esos datos.";
 		this.userOperations = userOperations;
 		this.githubOperations = githubOperations;
+		this.message = "Operation completed.";
 
 
 	}
@@ -95,7 +98,7 @@ public class CommitController {
 
 			try {
 				this.githubOperations.getCommits(repository, owner);
-				return ResponseEntity.ok("Operation completed.");
+				return ResponseEntity.ok(this.message);
 			} catch (IOException e) {
 				return ResponseEntity.badRequest().build();
 			}	
@@ -124,12 +127,43 @@ public class CommitController {
 		if (existe) {
 
 			this.githubOperations.deleteCommits(branchId);
-			return ResponseEntity.ok("Operation completed.");	
+			return ResponseEntity.ok(this.message);	
 
 		} else {
 			LOG.info(this.errorMessage);
 			return ResponseEntity.badRequest().build();
 		}
+
+	}
+	
+	
+	/**
+	 * Devuelve el primer commit de cada rama para poner el orden correcto de creacion de cada rama
+	 * 
+	 * @author FcoCrespo
+	 */
+
+	  @GetMapping(value = "/branchesfirstcommit")
+	  @ApiOperation(value = "Find all branches", notes = "Return all branches")
+
+	  public ResponseEntity<String> allBranchesFirstCommit(@RequestParam("tokenpass") final String tokenpass,
+		      @RequestParam("reponame") final String reponame){
+		  
+		  	boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
+		  	if (existe) {
+
+			try {
+				this.githubOperations.getFirstCommitByBranch(reponame);
+				return ResponseEntity.ok(this.message);	
+			} catch (IOException e) {
+				return ResponseEntity.badRequest().build();
+			}
+			
+
+			} else {
+				LOG.info(this.errorMessage);
+				return ResponseEntity.badRequest().build();
+			}
 
 	}
 }
