@@ -241,9 +241,11 @@ public class GithubOperations {
 		
 		for(int i=0; i<commits.size(); i++) {
 			
+			json.put("id", commits.get(i).getId());
+			json.put("oid", commits.get(i).getOid());
+			
 			userGithub = mapUsersGithub.get(commits.get(i).getUsergithub());
 			
-			json.put("authorId", userGithub.getId());
 			json.put("authorName", userGithub.getName());
 
 			commitInfo = mapCommitsInfo.get(commits.get(i).getOid());
@@ -254,8 +256,7 @@ public class GithubOperations {
 				json.put("changedFiles", commitInfo.getChangedFiles());
 			}
 
-			json.put("branchId", commits.get(i).getBranchId());
-			json.put("branchName", branch.getName());
+			json.put("branch", branch.getName());
 			json.put("repository", branch.getRepository());
 			
 			array.put(json);
