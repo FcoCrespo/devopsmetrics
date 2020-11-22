@@ -25,9 +25,9 @@ import edu.uclm.esi.devopsmetrics.domain.UserOperations;
 @RequestMapping("/usuarios")
 /**
  * @author FcoCrespo
- * 
+ * "https://esidevopsmetrics.herokuapp.com"
  */
-@CrossOrigin(origins = "https://esidevopsmetrics.herokuapp.com", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE }, allowedHeaders = "*")
+@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE }, allowedHeaders = "*")
 public class UserController {
 
 	private static final Log LOG = LogFactory.getLog(UserController.class);
