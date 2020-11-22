@@ -166,4 +166,30 @@ public class CommitController {
 			}
 
 	}
+	  
+	  /**
+		 * Devuelve los commits de una branch de un repositorio
+		 * 
+		 * @author FcoCrespo
+		 */
+
+		  @GetMapping(value = "/commitsbranch")
+		  @ApiOperation(value = "Find all branches", notes = "Return all branches")
+
+		  public ResponseEntity<String> allCommitsFromRepositoryBranch(@RequestParam("tokenpass") final String tokenpass,
+			      @RequestParam("reponame") final String reponame, @RequestParam("branch") final String branch){
+			  
+			  	boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
+			  	if (existe) {
+
+					LOG.info("Get commits from repository branch");
+					return ResponseEntity.ok(this.githubOperations.getCommitsFromRepositoryBranch(reponame, branch));
+					
+
+				} else {
+					LOG.info(this.errorMessage);
+					return ResponseEntity.badRequest().build();
+				}
+
+		}
 }

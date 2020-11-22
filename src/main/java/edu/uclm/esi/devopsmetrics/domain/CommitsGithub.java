@@ -7,6 +7,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -386,7 +387,7 @@ public class CommitsGithub {
 		LOG.info("MessageHeadline: " + messageHeadline);
 		LOG.info("Author" + userGithub.toString());
 
-		commit = new Commit(oid, pushedDate, userGithub.getId(), branchId);
+		commit = new Commit(oid, pushedDate, userGithub.getIdGithub(), branchId);
 		
 		commitInfo = new CommitInfo(oid, messageHeadline, message, changedFiles);
 		
@@ -402,17 +403,18 @@ public class CommitsGithub {
 		
 		String authorLogin = authorValues[0];
 		String authorName  = authorValues[1];
-		String authorId = authorValues[2];
 		String authorEmail = authorValues[3];
 		String authorAvatarURL = authorValues[4];
 		
 		UserGithub userGithub;
 		
+		String uuid = UUID.randomUUID().toString().replace("-", "");
+		
 		if( authorLogin != null && !authorLogin.equals("")) {
 			userGithub = userGithubService.findByLogin(authorLogin);
 			
 			if(userGithub==null) {
-				userGithub = new UserGithub(authorLogin, authorEmail, authorAvatarURL, authorId, authorName);
+				userGithub = new UserGithub(authorLogin, authorEmail, authorAvatarURL, uuid, authorName);
 				userGithubService.saveUserGithub(userGithub);
 			}
 		
@@ -422,7 +424,7 @@ public class CommitsGithub {
 			userGithub = userGithubService.findByName(authorName);
 			
 			if(userGithub==null) {
-				userGithub = new UserGithub(authorLogin, authorEmail, authorAvatarURL, authorId, authorName);
+				userGithub = new UserGithub(authorLogin, authorEmail, authorAvatarURL, uuid, authorName);
 				userGithubService.saveUserGithub(userGithub);
 			}
 		
@@ -454,6 +456,22 @@ public class CommitsGithub {
 			return parameterNode.get(textValue).textValue();
 		}
 
+	}
+
+	public UserGithub getUserGithub(String id) {
+		return this.userGithubService.findById(id);
+	}
+
+	public CommitInfo getCommitInfo(String oid) {
+		return this.commitInfoService.findByCommitId(oid);
+	}
+
+	public List<CommitInfo> getCommitsInfo() {
+		return this.commitInfoService.findAll();
+	}
+
+	public List<UserGithub> getUsersGithub() {
+		return this.userGithubService.findAll();
 	}
 
 }

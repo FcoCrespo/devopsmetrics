@@ -50,6 +50,13 @@ public interface UserGithubRepository {
 	   */
 	  UserGithub findByLogin(String login);
 	  
+	  /**
+	   * Método para obtener un usuario de Github por el campo id del mismo.
+	   * 
+	   * @author FcoCrespo
+	   */
+	  UserGithub findById(String id);
+	  
 	  
 	  /**
 	   * Método para obtener un usuario de Github por el campo name del mismo.

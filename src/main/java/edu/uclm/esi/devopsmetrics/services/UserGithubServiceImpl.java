@@ -59,6 +59,16 @@ public class UserGithubServiceImpl implements UserGithubService{
 	}
 
 	@Override
+	public UserGithub findById(String id) {
+		final UserGithub userGithub = userGithubRepository.findById(id);
+		if(userGithub!=null) {
+			return userGithub;
+	    } else {
+	    	return null;
+	    }
+	}
+	
+	@Override
 	public UserGithub findByLogin(String login) {
 		final UserGithub userGithub = userGithubRepository.findByLogin(login);
 		if(userGithub!=null) {
@@ -67,6 +77,7 @@ public class UserGithubServiceImpl implements UserGithubService{
 	    	return null;
 	    }
 	}
+	
 	
 	@Override
 	public UserGithub findByName(String name) {

@@ -2,6 +2,7 @@ package edu.uclm.esi.devopsmetrics.repositories;
 import java.util.List;
 import java.util.Optional;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -25,8 +26,9 @@ public class UserGithubRepositoryImpl implements UserGithubRepository {
 	 * 
 	 * @author FcoCrespo
 	 */
-	private final MongoOperations mongoOperations;
-
+	
+	MongoOperations mongoOperations;
+	
 	/**
 	 * Constructor de la clase.
 	 * 
@@ -34,9 +36,10 @@ public class UserGithubRepositoryImpl implements UserGithubRepository {
 	 */
 	@Autowired
 
-	public UserGithubRepositoryImpl(final MongoOperations mongoOperations) {
+	public UserGithubRepositoryImpl(MongoOperations mongoOperations) {
 		Assert.notNull(mongoOperations, "notNull");
 		this.mongoOperations = mongoOperations;
+		
 	}
 	
 	@Override
@@ -61,6 +64,11 @@ public class UserGithubRepositoryImpl implements UserGithubRepository {
 		this.mongoOperations.findAllAndRemove(new Query(Criteria.where("login").is(login)), UserGithub.class);
 	}
 
+	@Override
+	public UserGithub findById(String id) {
+		return this.mongoOperations.findOne(new Query(Criteria.where("id").is(id)), UserGithub.class);
+	}
+	
 	@Override
 	public UserGithub findByLogin(String login) {
 		return this.mongoOperations.findOne(new Query(Criteria.where("login").is(login)), UserGithub.class);

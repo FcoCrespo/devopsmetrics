@@ -51,7 +51,7 @@ public class UserGithub implements Comparable<UserGithub> {
 	private String name;
 	
 	/**
-	 * Constructor de Commit.
+	 * Constructor de UserGithub.
 	 * 
 	 * @author FcoCrespo
 	 */

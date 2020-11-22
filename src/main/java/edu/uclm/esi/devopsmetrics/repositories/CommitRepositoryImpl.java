@@ -100,6 +100,13 @@ public class CommitRepositoryImpl implements CommitRepository {
 		return this.mongoOperations
 		        .findOne(new Query(Criteria.where(this.branchString).is(branchId)), Commit.class);
 	}
+
+	@Override
+	public Optional<List<Commit>> findAllByBranch(String branchId) {
+		List<Commit> commits = this.mongoOperations.find(new Query(Criteria.where(this.branchString).is(branchId)), Commit.class);
+
+	    return Optional.ofNullable(commits);
+	}
 	  
 
 	

@@ -63,6 +63,13 @@ public interface CommitRepository {
    */
   Commit findByBranch(String branchId);
   
+  /**
+   * Método para obtener los commits por su branchId de repositorio.
+   * 
+   * @author FcoCrespo
+   */
+  Optional<List<Commit>> findAllByBranch(String branchId);
+  
   
 
 }

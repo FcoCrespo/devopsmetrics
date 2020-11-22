@@ -18,6 +18,11 @@ public interface UserGithubService {
 	  /**
 	   * @author FcoCrespo
 	   */
+	  UserGithub findById(String id);
+	  
+	  /**
+	   * @author FcoCrespo
+	   */
 	  UserGithub findByLogin(String login);
 	  
 	  /**
