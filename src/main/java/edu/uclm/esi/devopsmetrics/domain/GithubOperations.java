@@ -232,7 +232,7 @@ public class GithubOperations {
 		CommitInfo commitInfo = null;
 
 		JSONArray array = new JSONArray();
-		JSONObject json = new JSONObject();
+		JSONObject json;
 		List<UserGithub> usersgithub = this.commitsGithub.getUsersGithub();
 		List<CommitInfo> commitsInfo = this.commitsGithub.getCommitsInfo();
 
@@ -240,6 +240,7 @@ public class GithubOperations {
 		Map<String, UserGithub> mapUsersGithub = getMapUsersGithub(usersgithub);
 		
 		for(int i=0; i<commits.size(); i++) {
+			json = new JSONObject();
 			
 			json.put("id", commits.get(i).getId());
 			json.put("oid", commits.get(i).getOid());
