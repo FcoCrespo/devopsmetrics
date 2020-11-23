@@ -199,7 +199,7 @@ public class CommitController {
 	@ApiOperation(value = "Find all commitsb of a repository branch by his author", notes = "Return all commitsb of a repository branch by his author")
 
 	public ResponseEntity<String> allCommitsBranchAuthor(@RequestParam("tokenpass") final String tokenpass,
-			@RequestParam("reponame") final String reponame, @RequestParam("branch") final String branch, @RequestParam("authorName") final String authorName) {
+			@RequestParam("reponame") final String reponame, @RequestParam("branch") final String branch, @RequestParam("authorname") final String authorName) {
 
 		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
 		if (existe) {
