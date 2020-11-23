@@ -474,4 +474,8 @@ public class CommitsGithub {
 		return this.userGithubService.findAll();
 	}
 
+	public UserGithub getUserGithubByName(String authorName) {
+		return this.userGithubService.findByName(authorName);
+	}
+
 }

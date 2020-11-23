@@ -107,6 +107,13 @@ public class CommitRepositoryImpl implements CommitRepository {
 
 	    return Optional.ofNullable(commits);
 	}
+
+	@Override
+	public Optional<List<Commit>> findAllByBranchAndUserGithub(String branchId, String usergithub) {
+		List<Commit> commits = this.mongoOperations.find(new Query(Criteria.where(this.branchString).is(branchId).and("usergithub").is(usergithub)), Commit.class);
+
+	    return Optional.ofNullable(commits);
+	}
 	  
 
 	

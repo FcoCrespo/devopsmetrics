@@ -2,7 +2,6 @@ package edu.uclm.esi.devopsmetrics.controllers;
 
 import java.io.IOException;
 
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -29,7 +28,8 @@ import edu.uclm.esi.devopsmetrics.domain.UserOperations;
  * @author FcoCrespo "https://esidevopsmetrics.herokuapp.com"
  * 
  */
-@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE }, allowedHeaders = "*")
+@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,
+		RequestMethod.DELETE }, allowedHeaders = "*")
 public class CommitController {
 
 	private static final Log LOG = LogFactory.getLog(CommitController.class);
@@ -37,7 +37,7 @@ public class CommitController {
 	private final String errorMessage;
 	private final UserOperations userOperations;
 	private final GithubOperations githubOperations;
-	
+
 	private String message;
 
 	@Autowired
@@ -51,7 +51,6 @@ public class CommitController {
 		this.userOperations = userOperations;
 		this.githubOperations = githubOperations;
 		this.message = "Operation completed.";
-
 
 	}
 
@@ -101,7 +100,7 @@ public class CommitController {
 				return ResponseEntity.ok(this.message);
 			} catch (IOException e) {
 				return ResponseEntity.badRequest().build();
-			}	
+			}
 
 		} else {
 			LOG.info(this.errorMessage);
@@ -109,8 +108,7 @@ public class CommitController {
 		}
 
 	}
-	
-	
+
 	/**
 	 * ATENCIÓN: Elimina los commits de una rama de la BBDD
 	 * 
@@ -127,7 +125,62 @@ public class CommitController {
 		if (existe) {
 
 			this.githubOperations.deleteCommits(branchId);
-			return ResponseEntity.ok(this.message);	
+			return ResponseEntity.ok(this.message);
+
+		} else {
+			LOG.info(this.errorMessage);
+			return ResponseEntity.badRequest().build();
+		}
+
+	}
+
+	/**
+	 * Devuelve el primer commit de cada rama para poner el orden correcto de
+	 * creacion de cada rama
+	 * 
+	 * @author FcoCrespo
+	 */
+
+	@GetMapping(value = "/branchesfirstcommit")
+	@ApiOperation(value = "Find all branches", notes = "Return all branches")
+
+	public ResponseEntity<String> allBranchesFirstCommit(@RequestParam("tokenpass") final String tokenpass,
+			@RequestParam("reponame") final String reponame) {
+
+		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
+		if (existe) {
+
+			try {
+				this.githubOperations.getFirstCommitByBranch(reponame);
+				return ResponseEntity.ok(this.message);
+			} catch (IOException e) {
+				return ResponseEntity.badRequest().build();
+			}
+
+		} else {
+			LOG.info(this.errorMessage);
+			return ResponseEntity.badRequest().build();
+		}
+
+	}
+
+	/**
+	 * Devuelve los commits de una branch de un repositorio
+	 * 
+	 * @author FcoCrespo
+	 */
+
+	@GetMapping(value = "/commitsbranch")
+	@ApiOperation(value = "Find all commitsb of a repository branch", notes = "Return all commitsb of a repository branch")
+
+	public ResponseEntity<String> allCommitsFromRepositoryBranch(@RequestParam("tokenpass") final String tokenpass,
+			@RequestParam("reponame") final String reponame, @RequestParam("branch") final String branch) {
+
+		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
+		if (existe) {
+
+			LOG.info("Get commits from repository branch");
+			return ResponseEntity.ok(this.githubOperations.getCommitsFromRepositoryBranch(reponame, branch));
 
 		} else {
 			LOG.info(this.errorMessage);
@@ -136,60 +189,28 @@ public class CommitController {
 
 	}
 	
-	
 	/**
-	 * Devuelve el primer commit de cada rama para poner el orden correcto de creacion de cada rama
+	 * Devuelve los commits de una branch de un repositorio por el nombre del autor
 	 * 
 	 * @author FcoCrespo
 	 */
 
-	  @GetMapping(value = "/branchesfirstcommit")
-	  @ApiOperation(value = "Find all branches", notes = "Return all branches")
+	@GetMapping(value = "/commitsbranchauthor")
+	@ApiOperation(value = "Find all commitsb of a repository branch by his author", notes = "Return all commitsb of a repository branch by his author")
 
-	  public ResponseEntity<String> allBranchesFirstCommit(@RequestParam("tokenpass") final String tokenpass,
-		      @RequestParam("reponame") final String reponame){
-		  
-		  	boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
-		  	if (existe) {
+	public ResponseEntity<String> allCommitsBranchAuthor(@RequestParam("tokenpass") final String tokenpass,
+			@RequestParam("reponame") final String reponame, @RequestParam("branch") final String branch, @RequestParam("authorName") final String authorName) {
 
-			try {
-				this.githubOperations.getFirstCommitByBranch(reponame);
-				return ResponseEntity.ok(this.message);	
-			} catch (IOException e) {
-				return ResponseEntity.badRequest().build();
-			}
-			
+		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
+		if (existe) {
 
-			} else {
-				LOG.info(this.errorMessage);
-				return ResponseEntity.badRequest().build();
-			}
+			LOG.info("Get commits from repository branch by his author");
+			return ResponseEntity.ok(this.githubOperations.getCommitsByBranchAndAuthorName(reponame, branch, authorName));
+
+		} else {
+			LOG.info(this.errorMessage);
+			return ResponseEntity.badRequest().build();
+		}
 
 	}
-	  
-	  /**
-		 * Devuelve los commits de una branch de un repositorio
-		 * 
-		 * @author FcoCrespo
-		 */
-
-		  @GetMapping(value = "/commitsbranch")
-		  @ApiOperation(value = "Find all branches", notes = "Return all branches")
-
-		  public ResponseEntity<String> allCommitsFromRepositoryBranch(@RequestParam("tokenpass") final String tokenpass,
-			      @RequestParam("reponame") final String reponame, @RequestParam("branch") final String branch){
-			  
-			  	boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
-			  	if (existe) {
-
-					LOG.info("Get commits from repository branch");
-					return ResponseEntity.ok(this.githubOperations.getCommitsFromRepositoryBranch(reponame, branch));
-					
-
-				} else {
-					LOG.info(this.errorMessage);
-					return ResponseEntity.badRequest().build();
-				}
-
-		}
 }

@@ -47,4 +47,9 @@ public interface CommitService {
 	 * @author FcoCrespo
 	 */
 	List<Commit> getAllCommitsByBranch(String branchId);
+	
+	/**
+	 * @author FcoCrespo
+	 */
+	List<Commit> getAllCommitsByBranchAndAuthor(String branchId, String usergithub);
 }

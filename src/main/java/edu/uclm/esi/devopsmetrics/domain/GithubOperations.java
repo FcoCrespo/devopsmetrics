@@ -224,9 +224,81 @@ public class GithubOperations {
 	public String getCommitsFromRepositoryBranch(String reponame, String name) {
 
 		Branch branch = this.branchService.getBranchByRepositoryyName(reponame, name);
-		List<Commit> commits = this.commitService.getAllCommitsByBranch(branch.getIdGithub());
-		Collections.sort(commits);
+		
+		List<Commit> commits;
+		
+		if(branch.getOrder()==0 || branch.getOrder()==1) {
+			commits = this.commitService.getAllCommitsByBranch(branch.getIdGithub());
+			Collections.sort(commits);
+		}
+		else {
+			Branch branchBefore = branchService.getBeforeBranchByOrder(reponame, branch.getOrder());
+			List<Commit> commitsQuery = this.commitService.getAllCommitsByBranch(branch.getIdGithub());
+			List<Commit> commitsBefore = this.commitService.getAllCommitsByBranch(branchBefore.getIdGithub());
+			
+			commits = filterCommits(commitsQuery, commitsBefore);
+		}
 
+		return getInfoCommits(commits, branch);
+	}
+
+	private List<Commit> filterCommits(List<Commit> commitsQuery, List<Commit> commitsBefore) {
+		boolean seguir=true;
+	      List <Commit> commits =  new ArrayList<Commit>();
+	      
+	      
+	      for(int i = 0; i<commitsQuery.size(); i++) {
+	    	  for(int j = 0; j<commitsBefore.size()&&seguir; j++) {
+	    		  if (commitsQuery.get(i).getOid().equals(commitsBefore.get(j).getOid())){
+	    			  seguir=false;
+	    		  }
+	    	  }
+	    	  if(seguir) {
+	    		  commits.add(commitsQuery.get(i));
+	    	  }
+	    	  seguir=true;
+	      }
+	      
+	      Collections.sort(commits);
+	      
+	      return commits;
+	}
+
+	private Map<String, UserGithub> getMapUsersGithub(List<UserGithub> usersgithub) {
+		Map<String, UserGithub> map = new HashMap<String, UserGithub>();
+		for (UserGithub i : usersgithub)
+			map.put(i.getId(), i);
+		return map;
+	}
+
+	private Map<String, CommitInfo> getMapCommitsInfo(List<CommitInfo> commitsInfo) {
+		Map<String, CommitInfo> map = new HashMap<String, CommitInfo>();
+		for (CommitInfo i : commitsInfo)
+			map.put(i.getIdCommit(), i);
+		return map;
+	}
+
+	public String getCommitsByBranchAndAuthorName(String reponame, String name, String authorName) {
+		Branch branch = this.branchService.getBranchByRepositoryyName(reponame, name);
+		UserGithub userGithub = this.commitsGithub.getUserGithubByName(authorName);
+		List<Commit> commits;
+		
+		if(branch.getOrder()==0 || branch.getOrder()==1) {
+			commits = this.commitService.getAllCommitsByBranchAndAuthor(branch.getIdGithub(), userGithub.getId());
+			Collections.sort(commits);
+		}
+		else {
+			Branch branchBefore = branchService.getBeforeBranchByOrder(reponame, branch.getOrder());
+			List<Commit> commitsQuery = this.commitService.getAllCommitsByBranchAndAuthor(branch.getIdGithub(), userGithub.getId());
+			List<Commit> commitsBefore = this.commitService.getAllCommitsByBranchAndAuthor(branchBefore.getIdGithub(), userGithub.getId());
+			
+			commits = filterCommits(commitsQuery, commitsBefore);
+		}
+		
+		return getInfoCommits(commits, branch);
+	}
+
+	private String getInfoCommits(List<Commit> commits, Branch branch) {
 		UserGithub userGithub = null;
 
 		CommitInfo commitInfo = null;
@@ -244,6 +316,7 @@ public class GithubOperations {
 			
 			json.put("id", commits.get(i).getId());
 			json.put("oid", commits.get(i).getOid());
+			json.put("pushedDate", commits.get(i).getPushedDate());
 			
 			userGithub = mapUsersGithub.get(commits.get(i).getUsergithub());
 			
@@ -269,20 +342,6 @@ public class GithubOperations {
 		mapUsersGithub.clear();
 
 		return array.toString();
-	}
-
-	private Map<String, UserGithub> getMapUsersGithub(List<UserGithub> usersgithub) {
-		Map<String, UserGithub> map = new HashMap<String, UserGithub>();
-		for (UserGithub i : usersgithub)
-			map.put(i.getId(), i);
-		return map;
-	}
-
-	private Map<String, CommitInfo> getMapCommitsInfo(List<CommitInfo> commitsInfo) {
-		Map<String, CommitInfo> map = new HashMap<String, CommitInfo>();
-		for (CommitInfo i : commitsInfo)
-			map.put(i.getIdCommit(), i);
-		return map;
 	}
 
 }

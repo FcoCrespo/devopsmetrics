@@ -141,4 +141,23 @@ public class CommitServiceImpl implements CommitService {
 		}
 	}
 
+	@Override
+	public List<Commit> getAllCommitsByBranchAndAuthor(String branchId, String usergithub) {
+		final Optional<List<Commit>> commits = commitRepository.findAllByBranchAndUserGithub(branchId, usergithub);
+
+		final List<Commit> commitsList = new ArrayList<Commit>();
+
+		if (commits.isPresent()) {
+			Commit commit;
+			for (int i = 0; i < commits.get().size(); i++) {
+				commit = commits.get().get(i);
+				commitsList.add(commit);
+			}
+
+			return commitsList;
+		} else {
+			return Collections.emptyList();
+		}
+	}
+
 }

@@ -70,6 +70,11 @@ public interface CommitRepository {
    */
   Optional<List<Commit>> findAllByBranch(String branchId);
   
-  
+  /**
+   * Método para obtener los commits por su branchId de repositorio y su autor.
+   * 
+   * @author FcoCrespo
+   */
+  Optional<List<Commit>> findAllByBranchAndUserGithub(String branchId, String usergithub);
 
 }
