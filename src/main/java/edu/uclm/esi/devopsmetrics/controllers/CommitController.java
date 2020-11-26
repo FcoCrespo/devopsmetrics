@@ -1,16 +1,24 @@
 package edu.uclm.esi.devopsmetrics.controllers;
 
 import java.io.IOException;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.Locale;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -196,7 +204,7 @@ public class CommitController {
 	 */
 
 	@GetMapping(value = "/commitsbranchauthor")
-	@ApiOperation(value = "Find all commitsb of a repository branch by his author", notes = "Return all commitsb of a repository branch by his author")
+	@ApiOperation(value = "Find all commits of a repository branch by his author", notes = "Return all commits of a repository branch by his author")
 
 	public ResponseEntity<String> allCommitsBranchAuthor(@RequestParam("tokenpass") final String tokenpass,
 			@RequestParam("reponame") final String reponame, @RequestParam("branch") final String branch, @RequestParam("authorname") final String authorName) {
@@ -213,4 +221,88 @@ public class CommitController {
 		}
 
 	}
+	
+	/**
+	 * Devuelve los commits de una branch de un repositorio por el nombre del autor
+	 * 
+	 * @author FcoCrespo
+	 */
+
+	@PostMapping(value = "/commitsbranchdate")
+	@ApiOperation(value = "Find all commits of a repository branch between two dates", notes = "Return all commits of a repository branch between two dates")
+
+	public ResponseEntity<String> allCommitsBranchByDate(@RequestParam("tokenpass") final String tokenpass,
+			@RequestBody final String message) {
+
+		
+		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
+		if (existe) {
+			final JSONObject jso = new JSONObject(message);
+			String reponame = jso.getString("reponame");
+			String branch = jso.getString("branch");
+			String begindate = jso.getString("begindate");
+			String enddate = jso.getString("enddate");
+			
+			Instant [] dates = getDatesInstant(begindate, enddate);
+			
+			LOG.info("Get commits from repository branch between the dates.");
+			
+			return ResponseEntity.ok(this.githubOperations.getAllByBranchBeginEndDate(reponame, branch, dates[0], dates[1]));
+
+		} else {
+			LOG.info(this.errorMessage);
+			return ResponseEntity.badRequest().build();
+		}
+
+	}
+	
+	@PostMapping(value = "/commitsbranchdateauthor")
+	@ApiOperation(value = "Find all commits of a repository branch between two dates", notes = "Return all commits of a repository branch between two dates")
+
+	public ResponseEntity<String> allCommitsBranchByDateAuthor(@RequestParam("tokenpass") final String tokenpass,
+			@RequestBody final String message) {
+		
+		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
+		if (existe) {
+			final JSONObject jso = new JSONObject(message);
+			String reponame = jso.getString("reponame");
+			String branch = jso.getString("branch");
+			String begindate = jso.getString("begindate");
+			String enddate = jso.getString("enddate");
+			String authorname = jso.getString("authorname");
+			
+			Instant [] dates = getDatesInstant(begindate, enddate);
+			
+			LOG.info("Get commits from repository branch between the dates.");
+			
+			return ResponseEntity.ok(this.githubOperations.getAllByBranchBeginEndDateByAuthor(reponame, branch, dates[0], dates[1], authorname));
+
+		} else {
+			LOG.info(this.errorMessage);
+			return ResponseEntity.badRequest().build();
+		}
+
+	}
+
+	private Instant[] getDatesInstant(String begindate, String enddate) {
+		
+		Instant [] instants = new Instant[2];
+		
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu HH:mm", Locale.US);
+		ZoneId z = ZoneId.of( "America/Toronto" ) ;
+		
+		LocalDateTime ldtBegin = LocalDateTime.parse( begindate , formatter );
+		ZonedDateTime zdtBegin = ldtBegin.atZone( z ) ;
+	
+		LocalDateTime ldtEnd = LocalDateTime.parse( enddate , formatter );
+		ZonedDateTime zdtEnd = ldtEnd.atZone( z ) ;
+		
+		instants[0] = zdtBegin.toInstant().minus(4, ChronoUnit.HOURS);
+		instants[1] = zdtEnd.toInstant().minus(4, ChronoUnit.HOURS);
+		
+		return instants;
+		
+	}
+	
+	
 }

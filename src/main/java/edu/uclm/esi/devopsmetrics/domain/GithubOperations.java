@@ -1,6 +1,7 @@
 package edu.uclm.esi.devopsmetrics.domain;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -132,8 +133,10 @@ public class GithubOperations {
 
 	public void getFirstCommitByBranch(String reponame) throws IOException {
 
+		List<Branch>branchesRepo = this.branchService.getBranchesByRepository(reponame, false);
+				
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpGet httpget = new HttpGet("http://localhost:5050/branchesorder?reponame=" + reponame);
+		HttpGet httpget = new HttpGet("http://localhost:5050/branchesorder?reponame=" + branchesRepo.get(0).getRepository());
 		LOG.info("Request Type: " + httpget.getMethod());
 
 		HttpResponse httpresponse = httpclient.execute(httpget);
@@ -237,6 +240,7 @@ public class GithubOperations {
 			List<Commit> commitsBefore = this.commitService.getAllCommitsByBranch(branchBefore.getIdGithub());
 			
 			commits = filterCommits(commitsQuery, commitsBefore);
+			Collections.sort(commits);
 		}
 
 		return getInfoCommits(commits, branch);
@@ -277,6 +281,51 @@ public class GithubOperations {
 			map.put(i.getIdCommit(), i);
 		return map;
 	}
+	
+	public String getAllByBranchBeginEndDate(String reponame, String name, Instant beginDateInstant,
+			Instant endDateInstant) {
+		Branch branch = this.branchService.getBranchByRepositoryyName(reponame, name);
+		List<Commit> commits;
+		
+		
+		if(branch.getOrder()==0 || branch.getOrder()==1) {
+			commits = this.commitService.getAllByBranchBeginEndDate(branch.getIdGithub(), beginDateInstant, endDateInstant);
+			Collections.sort(commits);
+		}
+		else {
+			Branch branchBefore = branchService.getBeforeBranchByOrder(reponame, branch.getOrder());
+			List<Commit> commitsQuery = this.commitService.getAllByBranchBeginEndDate(branch.getIdGithub(), beginDateInstant, endDateInstant);
+			List<Commit> commitsBefore = this.commitService.getAllByBranchBeginEndDate(branchBefore.getIdGithub(), beginDateInstant, endDateInstant);
+			
+			commits = filterCommits(commitsQuery, commitsBefore);
+			Collections.sort(commits);
+		}
+		
+		return getInfoCommits(commits, branch);
+	}
+	
+	public String getAllByBranchBeginEndDateByAuthor(String reponame, String name, Instant beginDateInstant,
+			Instant endDateInstant, String authorName) {
+		Branch branch = this.branchService.getBranchByRepositoryyName(reponame, name);
+		UserGithub userGithub = this.commitsGithub.getUserGithubByName(authorName);
+		List<Commit> commits;
+		
+		
+		if(branch.getOrder()==0 || branch.getOrder()==1) {
+			commits = this.commitService.getAllByBranchBeginEndDateByAuthor(branch.getIdGithub(), beginDateInstant, endDateInstant, userGithub.getId());
+			Collections.sort(commits);
+		}
+		else {
+			Branch branchBefore = branchService.getBeforeBranchByOrder(reponame, branch.getOrder());
+			List<Commit> commitsQuery = this.commitService.getAllByBranchBeginEndDateByAuthor(branch.getIdGithub(), beginDateInstant, endDateInstant, userGithub.getId());
+			List<Commit> commitsBefore = this.commitService.getAllByBranchBeginEndDateByAuthor(branchBefore.getIdGithub(), beginDateInstant, endDateInstant, userGithub.getId());
+			
+			commits = filterCommits(commitsQuery, commitsBefore);
+			Collections.sort(commits);
+		}
+		
+		return getInfoCommits(commits, branch);
+	}
 
 	public String getCommitsByBranchAndAuthorName(String reponame, String name, String authorName) {
 		Branch branch = this.branchService.getBranchByRepositoryyName(reponame, name);
@@ -293,6 +342,7 @@ public class GithubOperations {
 			List<Commit> commitsBefore = this.commitService.getAllCommitsByBranchAndAuthor(branchBefore.getIdGithub(), userGithub.getId());
 			
 			commits = filterCommits(commitsQuery, commitsBefore);
+			Collections.sort(commits);
 		}
 		
 		return getInfoCommits(commits, branch);
@@ -343,5 +393,7 @@ public class GithubOperations {
 
 		return array.toString();
 	}
+
+	
 
 }

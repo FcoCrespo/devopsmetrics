@@ -1,5 +1,6 @@
 package edu.uclm.esi.devopsmetrics.services;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -158,6 +159,20 @@ public class CommitServiceImpl implements CommitService {
 		} else {
 			return Collections.emptyList();
 		}
+	}
+
+	@Override
+	public List<Commit> getAllByBranchBeginEndDate(String branchId, Instant beginDate, Instant endDate) {
+		
+		return commitRepository.findAllByBranchBeginEndDate(branchId, beginDate, endDate);
+		
+	}
+	
+	@Override
+	public List<Commit> getAllByBranchBeginEndDateByAuthor(String branchId, Instant beginDate, Instant endDate, String githubuser) {
+		
+		return commitRepository.findAllByBranchBeginEndDateByAuthor(branchId, beginDate, endDate, githubuser);
+		
 	}
 
 }

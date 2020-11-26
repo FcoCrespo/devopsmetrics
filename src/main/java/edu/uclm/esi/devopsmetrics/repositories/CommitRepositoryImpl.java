@@ -1,5 +1,6 @@
 package edu.uclm.esi.devopsmetrics.repositories;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -114,8 +115,24 @@ public class CommitRepositoryImpl implements CommitRepository {
 
 	    return Optional.ofNullable(commits);
 	}
-	  
 
+	@Override
+	public List<Commit> findAllByBranchBeginEndDate(String branch, Instant beginDate,
+			Instant endDate) {
+		
+		return this.mongoOperations
+		        .find(new Query(Criteria.where(this.branchString).is(branch).
+		        		and("pushedDate").gte(beginDate).lte(endDate)), Commit.class);
+	}
+	  
+	@Override
+	public List<Commit> findAllByBranchBeginEndDateByAuthor(String branch, Instant beginDate,
+			Instant endDate, String usergithub) {
+		
+		return this.mongoOperations
+		        .find(new Query(Criteria.where(this.branchString).is(branch).
+		        		and("pushedDate").gte(beginDate).lte(endDate).and("usergithub").is(usergithub)), Commit.class);
+	}
 	
 
 	

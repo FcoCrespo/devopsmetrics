@@ -1,5 +1,6 @@
 package edu.uclm.esi.devopsmetrics.repositories;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -76,5 +77,19 @@ public interface CommitRepository {
    * @author FcoCrespo
    */
   Optional<List<Commit>> findAllByBranchAndUserGithub(String branchId, String usergithub);
+  
+  /**
+   * Método para obtener los commits por su branchId de repositorio entre unas fechas dadas.
+   * 
+   * @author FcoCrespo
+   */
+  List<Commit> findAllByBranchBeginEndDate(String branch, Instant beginDate, Instant endDate);
+  
+  /**
+   * Método para obtener los commits por su branchId de repositorio entre unas fechas dadas realizadas por un autor.
+   * 
+   * @author FcoCrespo
+   */
+  List<Commit> findAllByBranchBeginEndDateByAuthor(String branch, Instant beginDate, Instant endDate, String githubuser);
 
 }
