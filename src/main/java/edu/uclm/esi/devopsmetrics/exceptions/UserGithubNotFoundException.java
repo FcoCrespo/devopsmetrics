@@ -7,7 +7,7 @@ public class UserGithubNotFoundException extends NestedRuntimeException {
 	  private static final long serialVersionUID = 1L;
 
 	  /**
-	   * Este método muestra el mensaje de excepción de usuario no encontrado.
+	   * Este método muestra el mensaje de excepción de usuario de github no encontrado.
 	   */
 	  public UserGithubNotFoundException(String id) {
 
