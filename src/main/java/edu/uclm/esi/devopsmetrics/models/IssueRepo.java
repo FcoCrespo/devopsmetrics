@@ -128,12 +128,13 @@ public class IssueRepo implements Comparable<IssueRepo> {
 	}
 
 
+
 	@Override
 	public String toString() {
-		return "IssueRepository [id=" + id + ", issue=" + issue + ", repository=" + repository + ", owner=" + owner
-				+ ", author=" + author + "]";
+		return "IssueRepo [id=" + id + ", issue=" + issue + ", repository=" + repository + ", owner=" + owner
+				+ ", author=" + author+"]";
 	}
 
-	
+
 	
 }

@@ -6,6 +6,9 @@ query GitHub($owner: String!, $repo: String!) {
                 nodes {
                 	repository{ 
                       name
+                      owner{
+                        login
+                      }
                     }
                     assignees(first:100){
                       totalCount 

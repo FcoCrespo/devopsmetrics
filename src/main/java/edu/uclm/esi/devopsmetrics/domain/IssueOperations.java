@@ -1,41 +1,16 @@
 package edu.uclm.esi.devopsmetrics.domain;
 import java.io.IOException;
-import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-
-import edu.uclm.esi.devopsmetrics.models.Branch;
-import edu.uclm.esi.devopsmetrics.models.Commit;
-import edu.uclm.esi.devopsmetrics.models.CommitCursor;
-import edu.uclm.esi.devopsmetrics.models.CommitInfo;
+import edu.uclm.esi.devopsmetrics.models.Issue;
 import edu.uclm.esi.devopsmetrics.models.IssueCursor;
 import edu.uclm.esi.devopsmetrics.models.IssueRepo;
-import edu.uclm.esi.devopsmetrics.models.UserGithub;
-import edu.uclm.esi.devopsmetrics.services.BranchService;
-import edu.uclm.esi.devopsmetrics.services.CommitService;
 import edu.uclm.esi.devopsmetrics.services.IssueRepoService;
 
 @Service
@@ -66,7 +41,6 @@ public class IssueOperations {
 		IssueCursor issueCursor = null;
 
 		boolean seguir = true;
-		int j = 0;
 		
 		issueDeRepo = this.issueRepoService.getByRepoyOwner(repository, owner);
 		
@@ -80,7 +54,7 @@ public class IssueOperations {
 		String filename;
 		boolean initialStartCursorFind = false;
 
-		String[] info = new String[5];
+		String[] info = new String[3];
 		info[0] = repository;
 		info[1] = owner;
 
@@ -93,8 +67,12 @@ public class IssueOperations {
 		} else {
 			LOG.info("ACTUALIZANDO ISSUES DEL REPOSITORIO "+repository);
 			filename = "src/main/resources/graphql/issues-cursor-before.graphql";
+			info[2]=filename;
 			
-			this.issuesGithub.updateRepositoryCommits(info, filename, initialStartCursorFind, issueCursor);
+			List<Issue>issuesList = new ArrayList<Issue>();
+			List<IssueRepo>issuesRepoList = new ArrayList<IssueRepo>();
+			
+			this.issuesGithub.updateRepositoryIssues(info, initialStartCursorFind, issuesList, issuesRepoList, issueCursor);
 			
 		}
 

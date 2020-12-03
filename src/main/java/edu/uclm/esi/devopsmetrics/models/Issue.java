@@ -37,12 +37,19 @@ public class Issue implements Comparable<Issue> {
 	@NotNull
 	private String title;
 	/**
-	 * createAt.
+	 * body.
+	 * 
+	 * @author FcoCrespo
+	 */
+	@NotNull
+	private String body;
+	/**
+	 * createdAt.
 	 * 
 	 * @author FcoCrespo
 	 */
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-	private Instant createAt;
+	private Instant createdAt;
 	/**
 	 * closedAt.
 	 * 
@@ -57,12 +64,13 @@ public class Issue implements Comparable<Issue> {
 	 * 
 	 * @author FcoCrespo
 	 */
-	public Issue(@NotNull final String state, @NotNull final String title, final Instant createAt, final Instant closedAt) {
+	public Issue(@NotNull final String state, @NotNull final String title, String body, final Instant createdAt, final Instant closedAt) {
 		super();
 		this.state = state;
 		this.title = title;
-		this.createAt = createAt;
+		this.createdAt = createdAt;
 		this.closedAt = closedAt;
+		this.body = body;
 	}
 
 	/**
@@ -76,7 +84,7 @@ public class Issue implements Comparable<Issue> {
 
 	@Override
 	public int compareTo(Issue o) {
-		return this.getCreateAt().compareTo(o.getCreateAt());
+		return this.getCreatedAt().compareTo(o.getCreatedAt());
 	}
 
 	@Override
@@ -89,11 +97,12 @@ public class Issue implements Comparable<Issue> {
 		return this.getId() == other.getId();
 
 	}
-
+	
 	@Override
 	public int hashCode() {
 		return this.hashCode();
 	}
+
 
 	public String getId() {
 		return id;
@@ -119,12 +128,20 @@ public class Issue implements Comparable<Issue> {
 		this.title = title;
 	}
 
-	public Instant getCreateAt() {
-		return createAt;
+	public String getBody() {
+		return body;
 	}
 
-	public void setCreateAt(Instant createAt) {
-		this.createAt = createAt;
+	public void setBody(String body) {
+		this.body = body;
+	}
+
+	public Instant getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Instant createdAt) {
+		this.createdAt = createdAt;
 	}
 
 	public Instant getClosedAt() {
@@ -137,10 +154,8 @@ public class Issue implements Comparable<Issue> {
 
 	@Override
 	public String toString() {
-		return "Issue [id=" + id + ", state=" + state + ", title=" + title + ", createAt=" + createAt + ", closedAt="
-				+ closedAt + "]";
+		return "Issue [id=" + id + ", state=" + state + ", title=" + title + ", body=" + body + ", createdAt="
+				+ createdAt + ", closedAt=" + closedAt + "]";
 	}
-
 	
-
 }

@@ -2,12 +2,12 @@ package edu.uclm.esi.devopsmetrics.domain;
 
 import java.io.File;
 
+
 import java.io.IOException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Iterator;
 import java.util.List;
-import java.util.UUID;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -20,19 +20,11 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import okhttp3.Response;
 
-import edu.uclm.esi.devopsmetrics.services.CommitCursorService;
-import edu.uclm.esi.devopsmetrics.services.CommitInfoService;
-import edu.uclm.esi.devopsmetrics.services.CommitService;
 import edu.uclm.esi.devopsmetrics.services.IssueAssigneeService;
 import edu.uclm.esi.devopsmetrics.services.IssueCursorService;
 import edu.uclm.esi.devopsmetrics.services.IssueRepoService;
 import edu.uclm.esi.devopsmetrics.services.IssueService;
-import edu.uclm.esi.devopsmetrics.services.UserGithubService;
 import edu.uclm.esi.devopsmetrics.utilities.GraphqlTemplate;
-
-import edu.uclm.esi.devopsmetrics.models.Commit;
-import edu.uclm.esi.devopsmetrics.models.CommitCursor;
-import edu.uclm.esi.devopsmetrics.models.CommitInfo;
 import edu.uclm.esi.devopsmetrics.models.Issue;
 import edu.uclm.esi.devopsmetrics.models.IssueAssignee;
 import edu.uclm.esi.devopsmetrics.models.IssueCursor;
@@ -55,6 +47,12 @@ public class IssuesGithub {
 
 	private String cursorString;
 	private String repositoryString;
+	private String emailString;
+	private String avatarUrlString;
+	private String loginString;
+	private String issuesString;
+	private String nodesString;
+	
 
 	private String graphqlUri;
 	private String filenameCursor;
@@ -75,6 +73,11 @@ public class IssuesGithub {
 		this.filenameCursor = "src/main/resources/graphql/issues-cursor.graphql";
 		this.cursorString = "cursor";
 		this.repositoryString = "repository";
+		this.emailString = "email";
+		this.avatarUrlString = "avatarUrl";
+		this.loginString = "login";
+		this.issuesString = "issues";
+		this.nodesString = "nodes";
 
 	}
 
@@ -98,7 +101,7 @@ public class IssuesGithub {
 		variablesPut[2] = filename;
 		
 		LOG.info(file.getPath());
-		variables = getVariables(variablesPut, info[2], issueCursor, null);
+		variables = getVariables(variablesPut, issueCursor, null);
 		
 		graphqlPayload = GraphqlTemplate.parseGraphql(file, variables);
 		responseGiven = this.response.prepareResponse(graphqlPayload, this.graphqlUri, info[1]);
@@ -110,7 +113,7 @@ public class IssuesGithub {
 
 		issueCursor = updateIssueCursor(jsonNode, info[0]);
 		
-		nodes = jsonNode.path("data").path(this.repositoryString).path("issues").path("nodes");
+		nodes = jsonNode.path("data").path(this.repositoryString).path(this.issuesString).path(this.nodesString);
 		iter = nodes.iterator();
 		parameterNode = iter.next();
 
@@ -124,9 +127,9 @@ public class IssuesGithub {
 			issue = (Issue) result[0];
 			issueRepo = (IssueRepo) result[1];
 			
-			//this.issueService.saveIssue(issue);
+			this.issueService.saveIssue(issue);
 			
-			//this.issueRepoService.saveIssueRepo(issueRepo);
+			this.issueRepoService.saveIssueRepo(issueRepo);
 		
 			parameterNode = iter.next();
 
@@ -135,13 +138,13 @@ public class IssuesGithub {
 				issue = (Issue) result[0];
 				issueRepo = (IssueRepo) result[1];
 				
-				//this.issueService.saveIssue(issue);
+				this.issueService.saveIssue(issue);
 				
-				//this.issueRepoService.saveIssueRepo(issueRepo);
+				this.issueRepoService.saveIssueRepo(issueRepo);
 			}
 		}
 
-		if (issueCursor.isHasNextPage()) {
+		if (issueCursor!=null && issueCursor.isHasNextPage()) {
 			filename = this.filenameCursor;
 			getNewRepositoryIssues(info, filename, issueCursor);
 
@@ -149,66 +152,298 @@ public class IssuesGithub {
 
 	}
 	
-	public void updateRepositoryCommits(String[] info, String filename, boolean initialStartCursorFind,
-			IssueCursor issueCursor) {
-		// TODO Auto-generated method stub
+	public String updateRepositoryIssues(String[] info, boolean initialStartCursorFind, List <Issue> issuesList,
+			List <IssueRepo> issuesRepoList, IssueCursor issueCursor) throws IOException {
+		String graphqlPayload;
+
+		ObjectNode variables;
+
+		String jsonData;
+		JsonNode jsonNode;
+		JsonNode nodes;
+		JsonNode parameterNode;
+		Response responseGiven;
+		Iterator<JsonNode> iter;
+
+		File file = new File(info[2]);
 		
+
+		IssueCursor issueCursorInitial = this.issueCursorService.getByRepository(info[0]);
+
+		String issueCursorStart = issueCursorInitial.getStartCursor();
+
+
+		String[] variablesPut = new String[3];
+		variablesPut[0] = info[0];
+		variablesPut[1] = info[1];
+		variablesPut[2] = info[2];
+
+		variables = getVariables(variablesPut, issueCursor, issueCursorInitial.getStartCursor());
+
+		graphqlPayload = GraphqlTemplate.parseGraphql(file, variables);
+		responseGiven = this.response.prepareResponse(graphqlPayload, this.graphqlUri, info[1]);
+
+		jsonData = responseGiven.body().string();
+		jsonNode = new ObjectMapper().readTree(jsonData);
+
+		issueCursor = updateIssueCursor(jsonNode, info[0]);
+		
+		if(issueCursor==null) {
+			return "Fin.";
+		}
+
+	    nodes = jsonNode.path("data").path(this.repositoryString).path(this.issuesString).path(this.nodesString);
+	    
+		iter = nodes.iterator();
+		parameterNode = iter.next();
+
+		Object [] result;
+		
+		Issue issue;
+		IssueRepo issueRepo;
+	
+		
+		if(iter.hasNext()) {
+			while (iter.hasNext()) {
+
+				result = introducirIssue(parameterNode);
+				issue = (Issue) result[0];
+				issueRepo = (IssueRepo) result[1];
+
+				initialStartCursorFind = checkInitialStartCursorFind(issue, issueCursorStart, initialStartCursorFind);
+				
+				if(!(initialStartCursorFind)){
+					issuesList.add(issue);	
+					issuesRepoList.add(issueRepo);
+				}
+
+				parameterNode = iter.next();
+				
+			}
+			if (!iter.hasNext()) {			
+				result = introducirIssue(parameterNode);
+				issue = (Issue) result[0];
+				issueRepo = (IssueRepo) result[1];
+				
+				initialStartCursorFind = checkInitialStartCursorFind(issue, issueCursorStart, initialStartCursorFind);
+				
+				if(!(initialStartCursorFind)){
+					issuesList.add(issue);	
+					issuesRepoList.add(issueRepo);
+				}
+			}
+			
+		}
+		else {
+			result = introducirIssue(parameterNode);
+			issue = (Issue) result[0];
+			issueRepo = (IssueRepo) result[1];	
+			
+			initialStartCursorFind = checkInitialStartCursorFind(issue, issueCursorStart, initialStartCursorFind);
+			
+			if(!(initialStartCursorFind)){
+				issuesList.add(issue);	
+				issuesRepoList.add(issueRepo);
+			}
+		}
+
+		actualizarIssuesRepository(info, initialStartCursorFind, issuesList, issuesRepoList, issueCursor);
+		return "Ok.";
+		
+	}
+
+	private void actualizarIssuesRepository(String[] info, boolean initialStartCursorFind, List<Issue> issuesList,
+			List<IssueRepo> issuesRepoList, IssueCursor issueCursor) throws IOException {
+		
+		String newFilename = "";
+
+		if (initialStartCursorFind) {
+			saveIssuesRepository(issuesList, issuesRepoList);
+		} else {
+			newFilename = "src/main/resources/graphql/issues-cursor.graphql";
+			info[2] = newFilename;
+			updateRepositoryIssues(info, initialStartCursorFind, issuesList, issuesRepoList, issueCursor);
+		}
+		
+	}
+
+	private void saveIssuesRepository(List<Issue> issuesList, List<IssueRepo> issuesRepoList) {
+		for (int j = 0; j < issuesList.size(); j++) {
+			this.issueService.saveIssue(issuesList.get(j));
+		}
+		
+		for (int i = 0; i < issuesRepoList.size(); i++) {
+			this.issueRepoService.saveIssueRepo(issuesRepoList.get(i));
+		}
+	}
+	
+	private boolean checkInitialStartCursorFind(Issue issue, String issueCursorStart, boolean initialStartCursorFind) {
+		if(initialStartCursorFind) {
+			return true;
+		}
+		else {
+			return (issue != null && issueCursorStart.equals(issue.getId()));
+		}
 	}
 
 	private Object[] introducirIssue(JsonNode parameterNode) {
 		Issue issue = null;
 		IssueRepo issueRepo = null;
 		IssueAssignee issueAssignee = null;
-		UserGithub userGithub = null;
+		UserGithub userGithubAuthor = null;
+		UserGithub userGithubAsignee = null;
 		Iterator<JsonNode> iter;
 		
-		String title = comprobarValorString(parameterNode, "title");
-		System.out.println(title);
+		JsonNode nodeRepository;
+		nodeRepository = parameterNode.path(this.repositoryString);
 		
+		JsonNode nodeOwner;
+		nodeOwner = parameterNode.path(this.repositoryString).path("owner");
+		
+		String owner = comprobarValorString(nodeOwner, this.loginString);
+		
+		String repository = comprobarValorString(nodeRepository, "name");
+		
+		String title = comprobarValorString(parameterNode, "title");
+		String body = comprobarValorString(parameterNode, "body");
+		String state = comprobarValorString(parameterNode, "state");
+		String idGithub  = comprobarValorString(parameterNode, "id");
+		
+		String createdAtExtraido = comprobarValorString(parameterNode, "createdAt");
+		String closedAtExtraido = comprobarValorString(parameterNode, "closedAt");
+		
+		Instant createdAt = null;
+		Instant closedAt = null;
+		
+		if (createdAtExtraido != null) {
+			createdAt = Instant.parse(createdAtExtraido).plus(1, ChronoUnit.HOURS);
+		} 
+		
+		if (closedAtExtraido != null) {
+			closedAt = Instant.parse(closedAtExtraido).plus(1, ChronoUnit.HOURS);
+		} 
+		
+		JsonNode nodeAuthor;
+		nodeAuthor = parameterNode.path("author");
+		
+		String authorLogin = comprobarValorString(nodeAuthor, this.loginString);
+		
+		String authorName = comprobarValorString(nodeAuthor, "name");
+		String authorId = comprobarValorString(nodeAuthor, "id");
+		String authorEmail = comprobarValorString(nodeAuthor, this.emailString);
+		String authorAvatarURL = comprobarValorString(nodeAuthor, this.avatarUrlString);
+		
+		String [] authorValues = new String [5];
+		authorValues[0] = authorLogin;
+		authorValues[1] =authorName;
+		authorValues[2] =authorId;
+		authorValues[3] =authorEmail;
+		authorValues[4] =authorAvatarURL;
+		
+		userGithubAuthor = this.userGithubOperations.saveAuthor(authorValues);
+	
 		JsonNode nodesAssignees;
-		JsonNode parameterAssignee;
-		nodesAssignees = parameterNode.path("assignees");
+		nodesAssignees = parameterNode.path("assignees");	
+		
+		String asigneeLogin;
+		String asigneeName;
+		String asigneeId;
+		String asigneeAvatarURL;
+		String asigneeEmail;
+		
+		String [] asigneeValues = new String [5];
+		
+		boolean assigneesNull=false;
+		
+		JsonNode parameterNodeAssignee;
 		
 		if(comprobarValorInt(nodesAssignees, "totalCount")==0) {
-			System.out.println("VACIO SIN ASIGNEES");
+			assigneesNull=true;
 		}
-		else {
-			nodesAssignees = parameterNode.path("assignees").path("nodes");
+		if (!assigneesNull){
+			
+			nodesAssignees = parameterNode.path("assignees").path(this.nodesString);
 			
 			iter = nodesAssignees.iterator();
 			
-			int i = 0;
-			String login;
-			
-			parameterAssignee = iter.next();
+			parameterNodeAssignee = iter.next();
 			
 			if(iter.hasNext()) {
 				while (iter.hasNext()) {
 					
-					login = comprobarValorString(parameterAssignee, "login");
+					asigneeName = comprobarValorString(parameterNodeAssignee, "name");
+					asigneeEmail = comprobarValorString(parameterNodeAssignee, this.emailString);
+					asigneeAvatarURL= comprobarValorString(parameterNodeAssignee, this.avatarUrlString);
+					asigneeId = comprobarValorString(parameterNodeAssignee, "id");
+					asigneeLogin= comprobarValorString(parameterNodeAssignee, this.loginString);
 					
-					System.out.println("login: "+login+" , nº "+i);
-				
-					parameterAssignee = iter.next();
-
-					i++;
+					asigneeValues[0] = asigneeLogin;
+					asigneeValues[1] =asigneeName;
+					asigneeValues[2] =asigneeId;
+					asigneeValues[3] =asigneeEmail;
+					asigneeValues[4] =asigneeAvatarURL;
+					
+					userGithubAsignee = this.userGithubOperations.saveAuthor(asigneeValues);
+					
+					issueAssignee = new IssueAssignee(idGithub, userGithubAsignee.getId());
+					
+					this.issueAssigneeService.saveIssueAssignee(issueAssignee);
+					
+					parameterNodeAssignee = iter.next();
+					
 				}
 				if (!iter.hasNext()) {
-					login = comprobarValorString(parameterAssignee, "login");
 					
-					System.out.println("login: "+login+" , issue nº "+i);
+					asigneeName = comprobarValorString(parameterNodeAssignee, "name");
+					asigneeEmail = comprobarValorString(parameterNodeAssignee, this.emailString);
+					asigneeAvatarURL= comprobarValorString(parameterNodeAssignee, this.avatarUrlString);
+					asigneeId = comprobarValorString(parameterNodeAssignee, "id");
+					asigneeLogin= comprobarValorString(parameterNodeAssignee, this.loginString);
+					
+					asigneeValues[0] = asigneeLogin;
+					asigneeValues[1] =asigneeName;
+					asigneeValues[2] =asigneeId;
+					asigneeValues[3] =asigneeEmail;
+					asigneeValues[4] =asigneeAvatarURL;
+					
+					userGithubAsignee = this.userGithubOperations.saveAuthor(asigneeValues);
+					
+					issueAssignee = new IssueAssignee(idGithub, userGithubAsignee.getId());
+					
+					this.issueAssigneeService.saveIssueAssignee(issueAssignee);
+					
 				}
 			}
 			else{
-				login = comprobarValorString(parameterAssignee, "login");
 				
-				System.out.println("login: "+login+" , nº "+i);
+				asigneeName = comprobarValorString(parameterNodeAssignee, "name");
+				asigneeEmail = comprobarValorString(parameterNodeAssignee, this.emailString);
+				asigneeAvatarURL= comprobarValorString(parameterNodeAssignee, this.avatarUrlString);
+				asigneeId = comprobarValorString(parameterNodeAssignee, "id");
+				asigneeLogin= comprobarValorString(parameterNodeAssignee, this.loginString);
+				
+				asigneeValues[0] = asigneeLogin;
+				asigneeValues[1] =asigneeName;
+				asigneeValues[2] =asigneeId;
+				asigneeValues[3] =asigneeEmail;
+				asigneeValues[4] =asigneeAvatarURL;
+				
+				userGithubAsignee = this.userGithubOperations.saveAuthor(asigneeValues);
+				
+				issueAssignee = new IssueAssignee(idGithub, userGithubAsignee.getId());
+				
+				this.issueAssigneeService.saveIssueAssignee(issueAssignee);
+			
 			}
 			
 			
 			
 		}
 		
+		issue = new Issue(state, title, body, createdAt, closedAt);
+		issue.setId(idGithub);
+		
+		issueRepo = new IssueRepo(idGithub, repository, owner, userGithubAuthor.getId());
 		
 		Object [] result = new Object[2];
 		
@@ -239,13 +474,17 @@ public class IssuesGithub {
 	}
 
 	private IssueCursor updateIssueCursor(JsonNode jsonNode, String reponame) {
-		JsonNode cursorNode = jsonNode.path("data").path("repository").path("issues").path("pageInfo");
+		JsonNode cursorNode = jsonNode.path("data").path(this.repositoryString).path(this.issuesString).path("pageInfo");
 		
 		LOG.info(cursorNode.toString());
 
 		boolean hasNextPage = cursorNode.get("hasNextPage").booleanValue();
 		String endCursor = cursorNode.get("endCursor").textValue();
 		String startCursor = cursorNode.get("startCursor").textValue();
+		
+		if(endCursor==null || startCursor == null) {
+			return null;
+		}
 
 		IssueCursor issueCursor = this.issueCursorService.getByRepository(reponame);
 
@@ -265,7 +504,7 @@ public class IssuesGithub {
 		return issueCursor;
 	}
 
-	private ObjectNode getVariables(String[] variablesPut, String string, IssueCursor issueCursor, String startCursor) {
+	private ObjectNode getVariables(String[] variablesPut, IssueCursor issueCursor, String startCursor) {
 		ObjectNode variables = new ObjectMapper().createObjectNode();
 		variables.put("repo", variablesPut[0]);
 		variables.put("owner", variablesPut[1]);	
