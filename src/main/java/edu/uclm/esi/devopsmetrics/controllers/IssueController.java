@@ -1,0 +1,97 @@
+package edu.uclm.esi.devopsmetrics.controllers;
+
+import java.io.IOException;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.Locale;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.wordnik.swagger.annotations.ApiOperation;
+
+import edu.uclm.esi.devopsmetrics.domain.IssueOperations;
+import edu.uclm.esi.devopsmetrics.domain.UserOperations;
+
+@RestController
+@RequestMapping("/issues")
+/**
+ * 
+ * @author FcoCrespo "https://esidevopsmetrics.herokuapp.com"
+ * 
+ */
+@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,
+		RequestMethod.DELETE }, allowedHeaders = "*")
+public class IssueController {
+	
+	private static final Log LOG = LogFactory.getLog(IssueController.class);
+
+	private final String errorMessage;
+	private final UserOperations userOperations;
+	private final IssueOperations issueOperations;
+
+	private String message;
+
+	@Autowired
+	/**
+	 * @author FcoCrespo
+	 */
+
+	public IssueController(final UserOperations userOperations, final IssueOperations issueOperations) {
+
+		this.errorMessage = "[SERVER] No se ha encontrado ningún usuario con esos datos.";
+		this.userOperations = userOperations;
+		this.issueOperations = issueOperations;
+		this.message = "Operation completed.";
+
+	}
+
+	/**
+	 * Devuelve las ramas de un repositorio por su owner, nombre de repositorio y
+	 * token de acceso
+	 * 
+	 * @author FcoCrespo
+	 */
+	@GetMapping(value = "/allissues")
+	@ApiOperation(value = "Find all issues", notes = "Return all issues")
+
+	public ResponseEntity<String> allBranches(@RequestParam("tokenpass") final String tokenpass,
+			@RequestParam("reponame") final String reponame, @RequestParam("owner") final String owner) {
+
+		String repository = reponame;
+		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
+		if (existe) {
+			try {
+				LOG.info("Get issues");
+				this.issueOperations.getIssues(repository, owner);
+				return ResponseEntity.ok(this.message);
+			}
+			catch (IOException e) {
+				return ResponseEntity.badRequest().build();
+			}
+			
+		} else {
+			LOG.info(this.errorMessage);
+			return ResponseEntity.badRequest().build();
+		}
+
+	}
+
+
+}

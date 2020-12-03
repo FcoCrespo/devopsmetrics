@@ -4,118 +4,31 @@ query GitHub($owner: String!, $repo: String!, $cursor: String!) {
             issues(first:100, after:$cursor) {
                 totalCount
                 nodes {
-               		repository{ 
+                	repository{ 
                       name
                     }
                     assignees(first:100){
-                    	totalCount 
+                      totalCount 
                       nodes{
                         email
                         name
                         id
+                        login
+                        avatarUrl
                       }
                     }
+                    id
                     title
-                    bodys
+                    body
                     createdAt
                     state
                     closedAt
                     author {
                         login
+                      	avatarUrl
                     }
                     authorAssociation
-                    timelineItems(last:100) {
-                        nodes { 
-                            __typename
-                            ... on AddedToProjectEvent {
-                                createdAt
-                            }
-                            ... on AssignedEvent {
-                                createdAt
-                            }
-                            ... on ClosedEvent {
-                                createdAt
-                                closer {
-                                    __typename
-                                    ... on PullRequest {
-                                        id
-                                    }
-                                    ... on Commit {
-                                        id
-                                    }
-                                }
-                            }
-                            ... on CommentDeletedEvent {
-                                createdAt
-                            }
-                            ... on ConvertedNoteToIssueEvent {
-                                createdAt
-                            }
-                            ... on CrossReferencedEvent {
-                                createdAt
-                            }
-                            ... on DemilestonedEvent {
-                                createdAt
-                            }
-                            ... on IssueComment {
-                                createdAt
-                            }
-                            ... on LabeledEvent {
-                                createdAt
-                            }
-                            ... on LockedEvent {
-                                createdAt
-                            }
-                            ... on MentionedEvent {
-                                createdAt
-                            }
-                            ... on MilestonedEvent {
-                                createdAt
-                            }
-                            ... on MovedColumnsInProjectEvent {
-                                createdAt
-                            }
-                            ... on PinnedEvent {
-                                createdAt
-                            }
-                            ... on ReferencedEvent {
-                                createdAt
-                            }
-                            ... on RemovedFromProjectEvent {
-                                createdAt
-                            }
-                            ... on RenamedTitleEvent {
-                                createdAt
-                            }
-                            ... on ReopenedEvent {
-                                createdAt
-                            }
-                            ... on SubscribedEvent {
-                                createdAt
-                            }
-                            ... on TransferredEvent {
-                                createdAt
-                            }
-                            ... on UnassignedEvent {
-                                createdAt
-                            }
-                            ... on UnlabeledEvent {
-                                createdAt
-                            }
-                            ... on UnlockedEvent {
-                                createdAt
-                            }
-                            ... on UnpinnedEvent {
-                                createdAt
-                            }
-                            ... on UnsubscribedEvent {
-                                createdAt
-                            }
-                            ... on UserBlockedEvent {
-                                createdAt
-                            }
-                        }
-                    }
+                    
                 }
                 pageInfo {
                     startCursor

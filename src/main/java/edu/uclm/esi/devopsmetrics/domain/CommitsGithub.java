@@ -7,7 +7,6 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Iterator;
 import java.util.List;
-import java.util.UUID;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -23,7 +22,6 @@ import okhttp3.Response;
 import edu.uclm.esi.devopsmetrics.services.CommitCursorService;
 import edu.uclm.esi.devopsmetrics.services.CommitInfoService;
 import edu.uclm.esi.devopsmetrics.services.CommitService;
-import edu.uclm.esi.devopsmetrics.services.UserGithubService;
 import edu.uclm.esi.devopsmetrics.utilities.GraphqlTemplate;
 
 import edu.uclm.esi.devopsmetrics.models.Commit;
@@ -37,10 +35,11 @@ public class CommitsGithub {
 	
 	private static final Log LOG = LogFactory.getLog(CommitsGithub.class);
 
+	private final CommitServices commitServices;
 	private final CommitService commitService;
 	private final CommitCursorService commitCursorService;
 	private final CommitInfoService commitInfoService;
-	private final UserGithubService userGithubService;
+	private final UserGithubOperations userGithubOperations;
 	private final ResponseHTTP response;
 
 	private String cursorString;
@@ -54,14 +53,14 @@ public class CommitsGithub {
 	/**
 	 * @author FcoCrespo
 	 */
-	public CommitsGithub(final CommitService commitService, final CommitCursorService commitCursorService,
-			final CommitInfoService commitInfoService, final UserGithubService userGithubService,
+	public CommitsGithub(final CommitServices commitServices, final UserGithubOperations userGithubOperations,
 			final ResponseHTTP response) {
 
-		this.commitService = commitService;
-		this.commitCursorService = commitCursorService;
-		this.commitInfoService = commitInfoService;
-		this.userGithubService = userGithubService;
+		this.commitServices = commitServices;
+		this.commitService = this.commitServices.getCommitService();
+		this.commitCursorService = this.commitServices.getCommitCursorService();
+		this.commitInfoService = this.commitServices.getCommitInfoService();
+		this.userGithubOperations = userGithubOperations;
 		this.response = response;
 		this.graphqlUri = "https://api.github.com/graphql";
 		this.filenameCursor = "src/main/resources/graphql/commits-cursor.graphql";
@@ -113,17 +112,17 @@ public class CommitsGithub {
 
 		Object [] result;
 		
-		while (iter.hasNext()) {
-
-			result = introducirCommit(parameterNode, info[3]);
-			commit = (Commit) result[0];
-			commitInfo = (CommitInfo) result[1];
-			commitService.saveCommit(commit);
+		if(iter.hasNext()){
+			while (iter.hasNext()) {
+				result = introducirCommit(parameterNode, info[3]);
+				commit = (Commit) result[0];
+				commitInfo = (CommitInfo) result[1];
+				commitService.saveCommit(commit);
+				
+				comprobarSaveCommitInfo(commitInfo);
 			
-			comprobarSaveCommitInfo(commitInfo);
-		
-			parameterNode = iter.next();
-
+				parameterNode = iter.next();
+			}
 			if (!iter.hasNext()) {
 				result = introducirCommit(parameterNode, info[3]);
 				commit = (Commit) result[0];
@@ -132,6 +131,14 @@ public class CommitsGithub {
 				
 				comprobarSaveCommitInfo(commitInfo);
 			}
+		}
+		else {
+			result = introducirCommit(parameterNode, info[3]);
+			commit = (Commit) result[0];
+			commitInfo = (CommitInfo) result[1];
+			commitService.saveCommit(commit);
+			
+			comprobarSaveCommitInfo(commitInfo);
 		}
 
 		if (commitCursor.getHasNextPage()) {
@@ -153,7 +160,7 @@ public class CommitsGithub {
 		
 	}
 
-	public void updateRepositoryCommits(String[] info, String filename, boolean initialStarCursorFind,
+	public String updateRepositoryCommits(String[] info, String filename, boolean initialStarCursorFind,
 			List<Commit> commitsBranch, CommitCursor commitCursor) throws IOException {
 
 		String graphqlPayload;
@@ -200,52 +207,91 @@ public class CommitsGithub {
 		Commit commit;
 		CommitInfo commitInfo;
 		
-		while (iter.hasNext()) {
+		result = introducirCommit(parameterNode, info[3]);
+		
+		commit = (Commit) result[0];
+		commitInfo = (CommitInfo) result[1];
+		
+		initialStarCursorFind = checkInitialStarCursorFind(commit, commitInfo, commitCursorStart, initialStarCursorFind);
+		
+		if(initialStarCursorFind) {
+			return "Fin.";
+		}
+		
+		if(iter.hasNext()) {
+			while (iter.hasNext()) {
 
-			result = introducirCommit(parameterNode, info[3]);
-			
-			commit = (Commit) result[0];
-			commitInfo = (CommitInfo) result[1];
+				result = introducirCommit(parameterNode, info[3]);
+				
+				commit = (Commit) result[0];
+				commitInfo = (CommitInfo) result[1];
 
-			if (commit != null && commitCursorStart.equals(commit.getOid())) {
-				initialStarCursorFind = true;
-				comprobarSaveCommitInfo(commitInfo);			
-			} else if(!(initialStarCursorFind)) {			
-				commitsBranch.add(commit);
-				comprobarSaveCommitInfo(commitInfo);			
+				initialStarCursorFind = checkInitialStarCursorFind(commit, commitInfo, commitCursorStart, initialStarCursorFind);
+				
+				if(!(initialStarCursorFind)){
+					commitsBranch.add(commit);
+					comprobarSaveCommitInfo(commitInfo);			
+				}
+
+				parameterNode = iter.next();
+				
 			}
-
-			parameterNode = iter.next();
-
 			if (!iter.hasNext()) {			
 				result = introducirCommit(parameterNode, info[3]);			
 				commit = (Commit) result[0];
 				commitInfo = (CommitInfo) result[1];	
-				if (commit != null && commitCursorStart.equals(commit.getOid())) {
-					initialStarCursorFind = true;
-					comprobarSaveCommitInfo(commitInfo);
-				} 
-				else if(!(initialStarCursorFind)){
+				initialStarCursorFind = checkInitialStarCursorFind(commit, commitInfo, commitCursorStart, initialStarCursorFind);
+				
+				if(!(initialStarCursorFind)){
 					commitsBranch.add(commit);
 					comprobarSaveCommitInfo(commitInfo);
 				}
 			}
-
+			
+		}
+		else {
+			result = introducirCommit(parameterNode, info[3]);			
+			commit = (Commit) result[0];
+			commitInfo = (CommitInfo) result[1];	
+			
+			initialStarCursorFind = checkInitialStarCursorFind(commit, commitInfo, commitCursorStart, initialStarCursorFind);
+		
+			if(!(initialStarCursorFind)){
+				commitsBranch.add(commit);
+				comprobarSaveCommitInfo(commitInfo);
+			}
 		}
 
 		actualizarCommitsBranch(info, initialStarCursorFind,commitsBranch,commitCursor);
+		return "Ok.";
 		
 	}
 
+	
+	private boolean checkInitialStarCursorFind(Commit commit, CommitInfo commitInfo, String commitCursorStart, boolean initialStarCursorFind) {
+		
+		if(initialStarCursorFind) {
+			return true;
+		}
+		else {
+			if (commit != null && commitCursorStart.equals(commit.getOid())) {
+				comprobarSaveCommitInfo(commitInfo);
+				return true;
+			} 
+			
+			else {
+				return false;
+			}
+		}
+		
+	}
 
 	private void actualizarCommitsBranch(String[] info, boolean initialStarCursorFind, List<Commit> commitsBranch,
 			CommitCursor commitCursor) throws IOException {
 		String newFilename = "";
 
 		if (initialStarCursorFind) {
-
 			saveCommitsBranch(commitsBranch);
-
 		} else {
 			newFilename = "src/main/resources/graphql/commits-cursor.graphql";
 			updateRepositoryCommits(info, newFilename, initialStarCursorFind, commitsBranch, commitCursor);
@@ -381,7 +427,7 @@ public class CommitsGithub {
 		authorValues[3] =authorEmail;
 		authorValues[4] =authorAvatarURL;
 		
-		userGithub = saveAuthor(authorValues);
+		userGithub = this.userGithubOperations.saveAuthor(authorValues);
 
 		LOG.info("Commit oid : " + oid);
 		LOG.info("MessageHeadline: " + messageHeadline);
@@ -399,45 +445,7 @@ public class CommitsGithub {
 		return result;
 	}
 
-	private UserGithub saveAuthor(String [] authorValues) {
-		
-		String authorLogin = authorValues[0];
-		String authorName  = authorValues[1];
-		String authorEmail = authorValues[3];
-		String authorAvatarURL = authorValues[4];
-		
-		UserGithub userGithub;
-		
-		String uuid = UUID.randomUUID().toString().replace("-", "");
-		
-		if( authorLogin != null && !authorLogin.equals("")) {
-			userGithub = userGithubService.findByLogin(authorLogin);
-			
-			if(userGithub==null) {
-				userGithub = new UserGithub(authorLogin, authorEmail, authorAvatarURL, uuid, authorName);
-				userGithubService.saveUserGithub(userGithub);
-			}
-		
-		}
-		
-		else if( authorName != null && !authorName.equals("")) {
-			userGithub = userGithubService.findByName(authorName);
-			
-			if(userGithub==null) {
-				userGithub = new UserGithub(authorLogin, authorEmail, authorAvatarURL, uuid, authorName);
-				userGithubService.saveUserGithub(userGithub);
-			}
-		
-		}
-		
-		userGithub = userGithubService.findByLogin(authorLogin);
-		if(userGithub==null) {
-			userGithub = userGithubService.findByName(authorName);
-		}
-		
-		return userGithub;
-		
-	}
+	
 
 	private int comprobarValorchangedFiles(JsonNode parameterNode, String value) {
 		if (parameterNode.get(value) == null) {
@@ -459,7 +467,7 @@ public class CommitsGithub {
 	}
 
 	public UserGithub getUserGithub(String id) {
-		return this.userGithubService.findById(id);
+		return this.userGithubOperations.findById(id);
 	}
 
 	public CommitInfo getCommitInfo(String oid) {
@@ -471,11 +479,11 @@ public class CommitsGithub {
 	}
 
 	public List<UserGithub> getUsersGithub() {
-		return this.userGithubService.findAll();
+		return this.userGithubOperations.findAll();
 	}
 
 	public UserGithub getUserGithubByName(String authorName) {
-		return this.userGithubService.findByName(authorName);
+		return this.userGithubOperations.findByName(authorName);
 	}
 
 }

@@ -68,11 +68,11 @@ public class BranchesGithub{
 		        
 		        while(iter.hasNext()){
 		        	introducirRama(parameterNode, reponame);
-		    		parameterNode = iter.next();
-		    		if (!iter.hasNext()) {
-		    			introducirRama(parameterNode, reponame);
-		    		}
+		    		parameterNode = iter.next();	    		
 		    	}
+		        if (!iter.hasNext()) {
+	    			introducirRama(parameterNode, reponame);
+	    		}
 	        }
 	        
 		} catch (IOException e) {
