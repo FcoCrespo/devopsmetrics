@@ -27,6 +27,7 @@ public class IssueAssigneeRepositoryImpl implements IssueAssigneeRepository{
 	   * @author FcoCrespo
 	   */
 	  private final MongoOperations mongoOperations;
+	  private final String issueString;
 
 	  /**
 	   * Constructor de la clase.
@@ -38,6 +39,7 @@ public class IssueAssigneeRepositoryImpl implements IssueAssigneeRepository{
 	  public IssueAssigneeRepositoryImpl(final MongoOperations mongoOperations) {
 	    Assert.notNull(mongoOperations, "notNull");
 	    this.mongoOperations = mongoOperations;
+	    this.issueString="issue";
 	  }
 
 	@Override
@@ -59,13 +61,13 @@ public class IssueAssigneeRepositoryImpl implements IssueAssigneeRepository{
 
 	@Override
 	public void deleteIssueAssignee(String issueAssigneeId) {
-		this.mongoOperations.findAndRemove(new Query(Criteria.where("issue").is(issueAssigneeId)), IssueAssignee.class);
+		this.mongoOperations.findAndRemove(new Query(Criteria.where(this.issueString).is(issueAssigneeId)), IssueAssignee.class);
 	}
 
 	@Override
 	public IssueAssignee findOne(String issueid) {
 		return this.mongoOperations
-		        .findOne(new Query(Criteria.where("issue").is(issueid)), IssueAssignee.class);
+		        .findOne(new Query(Criteria.where(this.issueString).is(issueid)), IssueAssignee.class);
 	}
 
 	@Override
@@ -78,7 +80,7 @@ public class IssueAssigneeRepositoryImpl implements IssueAssigneeRepository{
 	@Override
 	public List<IssueAssignee> findAllByIdIssue(String issue) {
 		return this.mongoOperations
-		        .find(new Query(Criteria.where("issue").is(issue)), IssueAssignee.class);
+		        .find(new Query(Criteria.where(this.issueString).is(issue)), IssueAssignee.class);
 	}
 
 }

@@ -1,7 +1,6 @@
 package edu.uclm.esi.devopsmetrics.controllers;
 
 import java.io.IOException;
-import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -18,7 +17,6 @@ import com.wordnik.swagger.annotations.ApiOperation;
 
 import edu.uclm.esi.devopsmetrics.domain.IssueOperations;
 import edu.uclm.esi.devopsmetrics.domain.UserOperations;
-import edu.uclm.esi.devopsmetrics.models.IssueRepo;
 
 @RestController
 @RequestMapping("/issues")
