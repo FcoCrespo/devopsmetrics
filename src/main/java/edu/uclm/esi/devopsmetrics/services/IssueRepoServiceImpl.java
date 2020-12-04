@@ -73,10 +73,15 @@ public class IssueRepoServiceImpl implements IssueRepoService{
 	}
 
 	@Override
-	public IssueRepo getByRepoyOwner(String repository, String owner) {
+	public List<IssueRepo> getByRepoyOwner(String repository, String owner) {
 		return this.issueRepoRepository.findByRepoyOwner(repository, owner);
 	}
 	
+	
+	@Override
+	public IssueRepo getOneByRepoyOwner(String repository, String owner) {
+		return this.issueRepoRepository.findOneByRepoyOwner(repository, owner);
+	}
 	
 
 }

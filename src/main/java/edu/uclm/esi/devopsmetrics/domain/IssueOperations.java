@@ -1,17 +1,27 @@
 package edu.uclm.esi.devopsmetrics.domain;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+import edu.uclm.esi.devopsmetrics.models.CommitInfo;
 import edu.uclm.esi.devopsmetrics.models.Issue;
+import edu.uclm.esi.devopsmetrics.models.IssueAssignee;
 import edu.uclm.esi.devopsmetrics.models.IssueCursor;
 import edu.uclm.esi.devopsmetrics.models.IssueRepo;
+import edu.uclm.esi.devopsmetrics.models.UserGithub;
+import edu.uclm.esi.devopsmetrics.services.IssueAssigneeService;
 import edu.uclm.esi.devopsmetrics.services.IssueRepoService;
+import edu.uclm.esi.devopsmetrics.services.IssueService;
+import edu.uclm.esi.devopsmetrics.services.UserGithubService;
 
 @Service
 @Scope("singleton")
@@ -22,15 +32,21 @@ public class IssueOperations {
 	private final IssuesGithub issuesGithub;
 	private final IssueServices issueServices;
 	private final IssueRepoService issueRepoService;
-
+	private final IssueAssigneeService issueAssigneeService;
+	private final IssueService issueService;
+	private final UserGithubService userGithubService;
+	
 	/**
 	 * @author FcoCrespo
 	 */
-	public IssueOperations(final IssuesGithub issuesGithub, final IssueServices issueServices) {
-
+	public IssueOperations(final IssuesGithub issuesGithub, final IssueServices issueServices,
+			final UserGithubService userGithubService) {
 		this.issuesGithub = issuesGithub;
 		this.issueServices = issueServices;
 		this.issueRepoService = this.issueServices.getIssueRepoService();
+		this.issueAssigneeService = this.issueServices.getIssueAssigneeService();
+		this.issueService = this.issueServices.getIssueService();
+		this.userGithubService = userGithubService;
 	}
 	
 	public void getIssues(String repository, String owner) throws IOException {
@@ -42,7 +58,7 @@ public class IssueOperations {
 
 		boolean seguir = true;
 		
-		issueDeRepo = this.issueRepoService.getByRepoyOwner(repository, owner);
+		issueDeRepo = this.issueRepoService.getOneByRepoyOwner(repository, owner);
 		
 		if(issueDeRepo==null) {
 			seguir=true;
@@ -59,13 +75,13 @@ public class IssueOperations {
 		info[1] = owner;
 
 		if (seguir) {
-			LOG.info("INTRODUCIENDO NUEVOS ISSUES DEL REPOSITORIO "+repository);
+			LOG.info("INTRODUCIENDO NUEVOS ISSUES DEL REPOSITORIO");
 			filename = "src/main/resources/graphql/issues.graphql";
 			
 			this.issuesGithub.getNewRepositoryIssues(info, filename, issueCursor);
 		
 		} else {
-			LOG.info("ACTUALIZANDO ISSUES DEL REPOSITORIO "+repository);
+			LOG.info("ACTUALIZANDO ISSUES DEL REPOSITORIO");
 			filename = "src/main/resources/graphql/issues-cursor-before.graphql";
 			info[2]=filename;
 			
@@ -76,6 +92,106 @@ public class IssueOperations {
 			
 		}
 
+	}
+
+	public String getIssuesRepository(String reponame, String owner) {
+		
+		UserGithub userGithub = null;
+		
+		JSONArray array = new JSONArray();
+		JSONObject json;
+		JSONArray jsonAssignees;
+		JSONObject jsonAuthor;
+		
+		List <UserGithub> usersgithub = this.userGithubService.findAll();
+		List <Issue> issues = this.issueService.findAll();
+		List <IssueAssignee> issuesAssignee = new ArrayList<>();
+		
+		List <IssueRepo> issueRepoList = this.issueRepoService.getByRepoyOwner(reponame, owner);
+		
+		Map<String, Issue> mapIssues = getMapIssues(issues);
+		Map<String, UserGithub> mapUsersGithub = getMapUsersGithub(usersgithub);		
+		
+		for(int i=0; i<issueRepoList.size(); i++) {
+			
+			json = new JSONObject();
+			jsonAuthor = new JSONObject();
+			
+			issuesAssignee = this.issueAssigneeService.getAllByIdIssue(issueRepoList.get(i).getIssue());
+			
+			userGithub = mapUsersGithub.get(issueRepoList.get(i).getAuthor());
+			
+			jsonAuthor.put("id", userGithub.getId());
+			jsonAuthor.put("login", userGithub.getLogin());
+			jsonAuthor.put("name", userGithub.getName());
+			jsonAuthor.put("email", userGithub.getEmail());
+			jsonAuthor.put("avatarURL", userGithub.getAvatarURL());
+			
+			json.put("id", issueRepoList.get(i).getIssue());
+			json.put("repository", issueRepoList.get(i).getRepository());
+			json.put("author", jsonAuthor);
+			
+			json.put("title", mapIssues.get(issueRepoList.get(i).getIssue()).getTitle());
+			json.put("body", mapIssues.get(issueRepoList.get(i).getIssue()).getBody());
+			json.put("createdAt", mapIssues.get(issueRepoList.get(i).getIssue()).getCreatedAt());
+			json.put("closedAt", mapIssues.get(issueRepoList.get(i).getIssue()).getClosedAt());
+			json.put("state", mapIssues.get(issueRepoList.get(i).getIssue()).getState());
+			
+			jsonAssignees = getJSONAssignees(issuesAssignee, mapUsersGithub);
+			
+			json.put("assignees", jsonAssignees);	
+			
+			array.put(json);
+		}
+		
+		usersgithub.clear();
+		issues.clear();
+		issuesAssignee.clear();
+		issueRepoList.clear();
+		mapIssues.clear();
+		mapUsersGithub.clear();
+		
+		return array.toString();
+		
+	}
+	
+	private JSONArray getJSONAssignees(List<IssueAssignee> issuesAssignee, Map<String, UserGithub> mapUsersGithub) {
+		
+		JSONArray array = new JSONArray();
+		JSONObject json;
+		
+		UserGithub userGithub = null;
+		
+		for(int i=0; i<issuesAssignee.size(); i++) {
+			
+			json = new JSONObject();
+			
+			userGithub = mapUsersGithub.get(issuesAssignee.get(i).getUsergithub());
+			
+			json.put("id", userGithub.getId());
+			json.put("login", userGithub.getLogin());
+			json.put("name", userGithub.getName());
+			json.put("email", userGithub.getEmail());
+			json.put("avatarURL", userGithub.getAvatarURL());
+			
+			array.put(json);
+		}
+		
+		return array;
+	}
+
+	private Map<String, UserGithub> getMapUsersGithub(List<UserGithub> usersgithub) {
+		Map<String, UserGithub> map = new HashMap<String, UserGithub>();
+		for (UserGithub i : usersgithub)
+			map.put(i.getId(), i);
+		return map;
+	}
+	
+	private Map<String, Issue> getMapIssues(List<Issue> issues) {
+		Map<String, Issue> map = new HashMap<String, Issue>();
+		for (Issue i : issues)
+			map.put(i.getId(), i);
+		return map;
 	}
 
 }

@@ -49,11 +49,18 @@ public interface IssueAssigneeRepository {
   IssueAssignee findOne(String issueid);
 
   /**
-   * Método para obtener un IssueRepo por su assigne.
+   * Método para obtener un IssueAssignee por su assigne.
    * 
    * @author FcoCrespo
    */
   IssueAssignee findByAssignee(String usergithub);
+  
+  /**
+   * Método para obtener los Id de los issues assignee por el id de la issue asociada
+   * 
+   * @author FcoCrespo
+   */
+  List <IssueAssignee> findAllByIdIssue(String idIssue);
 
 
 }

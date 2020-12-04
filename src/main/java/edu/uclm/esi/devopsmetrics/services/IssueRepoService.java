@@ -43,11 +43,18 @@ public interface IssueRepoService {
 	  IssueRepo findOne(String issueid);
 
 	  /**
+	   * Método para obtener la lista de IssueRepo por su repository y owner.
+	   * 
+	   * @author FcoCrespo
+	   */
+	  List<IssueRepo> getByRepoyOwner(String repository, String owner);
+	  
+	  /**
 	   * Método para obtener un IssueRepo por su repository y owner.
 	   * 
 	   * @author FcoCrespo
 	   */
-	  IssueRepo getByRepoyOwner(String repository, String owner);
+	  IssueRepo getOneByRepoyOwner(String repository, String owner);
 
 
 }

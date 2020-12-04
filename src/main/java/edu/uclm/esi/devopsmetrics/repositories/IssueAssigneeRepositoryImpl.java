@@ -73,5 +73,12 @@ public class IssueAssigneeRepositoryImpl implements IssueAssigneeRepository{
 		return this.mongoOperations
 		        .findOne(new Query(Criteria.where("usergithub").is(usergithub)), IssueAssignee.class);
 	}
+	
+	
+	@Override
+	public List<IssueAssignee> findAllByIdIssue(String issue) {
+		return this.mongoOperations
+		        .find(new Query(Criteria.where("issue").is(issue)), IssueAssignee.class);
+	}
 
 }

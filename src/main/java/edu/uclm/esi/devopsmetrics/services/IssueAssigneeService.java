@@ -47,5 +47,12 @@ public interface IssueAssigneeService {
 	   * @author FcoCrespo
 	   */
 	  IssueAssignee getByAssignee(String usergithub);
+	  
+	  /**
+	   * Método para obtener los assignees por el id de su issue asociada
+	   * 
+	   * @author FcoCrespo
+	   */
+	  List<IssueAssignee> getAllByIdIssue(String issue);
 
 }

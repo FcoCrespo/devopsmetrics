@@ -69,9 +69,13 @@ public class IssueRepoRepositoryImpl implements IssueRepoRepository{
 	}
 
 	@Override
-	public IssueRepo findByRepoyOwner(String repository, String owner) {
-		return this.mongoOperations
-		        .findOne(new Query(Criteria.where("repository").is(repository).and("owner").is(owner)), IssueRepo.class);
+	public List<IssueRepo> findByRepoyOwner(String repository, String owner) {
+		return this.mongoOperations.find(new Query(Criteria.where("repository").is(repository).and("owner").is(owner)), IssueRepo.class);
+	}
+	
+	@Override
+	public IssueRepo findOneByRepoyOwner(String repository, String owner) {
+		return this.mongoOperations.findOne(new Query(Criteria.where("repository").is(repository).and("owner").is(owner)), IssueRepo.class);
 	}
 
 }
