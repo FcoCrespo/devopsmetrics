@@ -79,14 +79,7 @@ public class IssueCursor implements Comparable<IssueCursor> {
 	}
 
 
-	public String getId() {
-		return id;
-	}
-
-
-	public void setId(String id) {
-		this.id = id;
-	}
+	
 
 
 	public boolean isHasNextPage() {
@@ -99,6 +92,15 @@ public class IssueCursor implements Comparable<IssueCursor> {
 	}
 
 
+	public String getId() {
+		return id;
+	}
+
+
+	public void setId(String id) {
+		this.id = id;
+	}
+	
 	public String getEndCursor() {
 		return endCursor;
 	}
@@ -107,17 +109,6 @@ public class IssueCursor implements Comparable<IssueCursor> {
 	public void setEndCursor(String endCursor) {
 		this.endCursor = endCursor;
 	}
-
-
-	public String getStartCursor() {
-		return startCursor;
-	}
-
-
-	public void setStartCursor(String startCursor) {
-		this.startCursor = startCursor;
-	}
-
 
 	public String getRepository() {
 		return repository;
@@ -128,6 +119,15 @@ public class IssueCursor implements Comparable<IssueCursor> {
 		this.repository = repository;
 	}
 
+	public String getStartCursor() {
+		return startCursor;
+	}
+
+
+	public void setStartCursor(String startCursor) {
+		this.startCursor = startCursor;
+	}
+	
 
 	@Override
 	public String toString() {

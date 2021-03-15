@@ -89,7 +89,7 @@ public class IssueController {
 	 */
 
 	@GetMapping(value = "/issuesrepo")
-	@ApiOperation(value = "Find all commitsb of a repository branch", notes = "Return all issues of a repository")
+	@ApiOperation(value = "Find all issues of a repository", notes = "Return all issues of a repository")
 
 	public ResponseEntity<String> allIssuesFromRepository(@RequestParam("tokenpass") final String tokenpass,
 			@RequestParam("reponame") final String reponame, @RequestParam("owner") final String owner) {

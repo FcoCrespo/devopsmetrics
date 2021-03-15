@@ -82,9 +82,6 @@ public class IssuesGithub {
 	}
 
 	public void getNewRepositoryIssues(String[] info, String filename, IssueCursor issueCursor) throws IOException {
-		
-		String graphqlPayload;
-		ObjectNode variables;
 
 		String jsonData;
 		JsonNode jsonNode;
@@ -92,14 +89,17 @@ public class IssuesGithub {
 		JsonNode parameterNode;
 		Response responseGiven;
 		Iterator<JsonNode> iter;
-
-		File file = new File(filename);
-
+		
+		String graphqlPayload;
+		ObjectNode variables;
+		
 		String[] variablesPut = new String[3];
 		variablesPut[0] = info[0];
 		variablesPut[1] = info[1];
 		variablesPut[2] = filename;
-		
+
+		File file = new File(filename);
+
 		LOG.info(file.getPath());
 		variables = getVariables(variablesPut, issueCursor, null);
 		
@@ -345,12 +345,6 @@ public class IssuesGithub {
 		JsonNode nodesAssignees;
 		nodesAssignees = parameterNode.path("assignees");	
 		
-		String asigneeLogin;
-		String asigneeName;
-		String asigneeId;
-		String asigneeAvatarURL;
-		String asigneeEmail;
-		
 		String [] asigneeValues = new String [5];
 		
 		boolean assigneesNull=false;
@@ -371,17 +365,7 @@ public class IssuesGithub {
 			if(iter.hasNext()) {
 				while (iter.hasNext()) {
 					
-					asigneeName = comprobarValorString(parameterNodeAssignee, "name");
-					asigneeEmail = comprobarValorString(parameterNodeAssignee, this.emailString);
-					asigneeAvatarURL= comprobarValorString(parameterNodeAssignee, this.avatarUrlString);
-					asigneeId = comprobarValorString(parameterNodeAssignee, "id");
-					asigneeLogin= comprobarValorString(parameterNodeAssignee, this.loginString);
-					
-					asigneeValues[0] = asigneeLogin;
-					asigneeValues[1] =asigneeName;
-					asigneeValues[2] =asigneeId;
-					asigneeValues[3] =asigneeEmail;
-					asigneeValues[4] =asigneeAvatarURL;
+					asigneeValues = obtenerDatos(parameterNodeAssignee);
 					
 					userGithubAsignee = this.userGithubOperations.saveAuthor(asigneeValues);
 					
@@ -394,17 +378,7 @@ public class IssuesGithub {
 				}
 				if (!iter.hasNext()) {
 					
-					asigneeName = comprobarValorString(parameterNodeAssignee, "name");
-					asigneeEmail = comprobarValorString(parameterNodeAssignee, this.emailString);
-					asigneeAvatarURL= comprobarValorString(parameterNodeAssignee, this.avatarUrlString);
-					asigneeId = comprobarValorString(parameterNodeAssignee, "id");
-					asigneeLogin= comprobarValorString(parameterNodeAssignee, this.loginString);
-					
-					asigneeValues[0] = asigneeLogin;
-					asigneeValues[1] =asigneeName;
-					asigneeValues[2] =asigneeId;
-					asigneeValues[3] =asigneeEmail;
-					asigneeValues[4] =asigneeAvatarURL;
+					asigneeValues = obtenerDatos(parameterNodeAssignee);
 					
 					userGithubAsignee = this.userGithubOperations.saveAuthor(asigneeValues);
 					
@@ -416,17 +390,7 @@ public class IssuesGithub {
 			}
 			else{
 				
-				asigneeName = comprobarValorString(parameterNodeAssignee, "name");
-				asigneeEmail = comprobarValorString(parameterNodeAssignee, this.emailString);
-				asigneeAvatarURL= comprobarValorString(parameterNodeAssignee, this.avatarUrlString);
-				asigneeId = comprobarValorString(parameterNodeAssignee, "id");
-				asigneeLogin= comprobarValorString(parameterNodeAssignee, this.loginString);
-				
-				asigneeValues[0] = asigneeLogin;
-				asigneeValues[1] =asigneeName;
-				asigneeValues[2] =asigneeId;
-				asigneeValues[3] =asigneeEmail;
-				asigneeValues[4] =asigneeAvatarURL;
+				asigneeValues = obtenerDatos(parameterNodeAssignee);
 				
 				userGithubAsignee = this.userGithubOperations.saveAuthor(asigneeValues);
 				
@@ -451,6 +415,32 @@ public class IssuesGithub {
 		result[1] = issueRepo;
 		
 		return result;
+	}
+	
+	private String [] obtenerDatos(JsonNode parameterNodeAssignee) {
+		
+		String asigneeLogin;
+		String asigneeName;
+		String asigneeId;
+		String asigneeAvatarURL;
+		String asigneeEmail;
+		
+		String [] asigneeValues = new String [5];
+		
+		asigneeName = comprobarValorString(parameterNodeAssignee, "name");
+		asigneeEmail = comprobarValorString(parameterNodeAssignee, this.emailString);
+		asigneeAvatarURL= comprobarValorString(parameterNodeAssignee, this.avatarUrlString);
+		asigneeId = comprobarValorString(parameterNodeAssignee, "id");
+		asigneeLogin= comprobarValorString(parameterNodeAssignee, this.loginString);
+		
+		asigneeValues[0] = asigneeLogin;
+		asigneeValues[1] = asigneeName;
+		asigneeValues[2] = asigneeId;
+		asigneeValues[3] = asigneeEmail;
+		asigneeValues[4] = asigneeAvatarURL;
+		
+		return asigneeValues;
+		
 	}
 
 	private String comprobarValorString(JsonNode parameterNode, String textValue) {

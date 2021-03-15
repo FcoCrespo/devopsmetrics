@@ -64,7 +64,24 @@ public class IssueAssignee implements Comparable<IssueAssignee> {
 		return this.hashCode();
 	}
 
+	public String getIssue() {
+		return issue;
+	}
 
+
+	public void setIssue(String issue) {
+		this.issue = issue;
+	}
+
+	public String getUsergithub() {
+		return usergithub;
+	}
+
+
+	public void setUsergithub(String usergithub) {
+		this.usergithub = usergithub;
+	}
+	
 	public String getId() {
 		return id;
 	}
@@ -75,24 +92,7 @@ public class IssueAssignee implements Comparable<IssueAssignee> {
 	}
 
 
-	public String getIssue() {
-		return issue;
-	}
-
-
-	public void setIssue(String issue) {
-		this.issue = issue;
-	}
-
-
-	public String getUsergithub() {
-		return usergithub;
-	}
-
-
-	public void setUsergithub(String usergithub) {
-		this.usergithub = usergithub;
-	}
+	
 
 
 	@Override

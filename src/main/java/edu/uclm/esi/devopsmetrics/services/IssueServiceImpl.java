@@ -34,19 +34,7 @@ public class IssueServiceImpl implements IssueService{
 	public List<Issue> findAll() {
 		final Optional<List<Issue>> issues = issueRepository.findAll();
 
-		final List<Issue> issuesList = new ArrayList<Issue>();
-
-		if (issues.isPresent()) {
-			Issue issue;
-			for (int i = 0; i < issues.get().size(); i++) {
-				issue = issues.get().get(i);
-				issuesList.add(issue);
-			}
-
-			return issuesList;
-		} else {
-			return Collections.emptyList();
-		}
+		return obtenerIssues(issues);
 	}
 
 	@Override
@@ -80,6 +68,16 @@ public class IssueServiceImpl implements IssueService{
 	public List<Issue> getAllByState(String state) {
 		final Optional<List<Issue>> issues = issueRepository.findAllByState(state);
 
+		return obtenerIssues(issues);
+	}
+
+	
+	@Override
+	public List<Issue> getAllByBranchBeginEndDate(Instant beginDate, Instant endDate) {
+		return this.issueRepository.findAllByBranchBeginEndDate(beginDate, endDate);
+	}
+	
+	private List<Issue> obtenerIssues(Optional<List<Issue>> issues) {
 		final List<Issue> issuesList = new ArrayList<Issue>();
 
 		if (issues.isPresent()) {
@@ -95,9 +93,5 @@ public class IssueServiceImpl implements IssueService{
 		}
 	}
 
-	@Override
-	public List<Issue> getAllByBranchBeginEndDate(Instant beginDate, Instant endDate) {
-		return this.issueRepository.findAllByBranchBeginEndDate(beginDate, endDate);
-	}
 
 }

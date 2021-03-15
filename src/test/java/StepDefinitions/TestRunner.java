@@ -55,11 +55,12 @@ public class TestRunner {
 
     	}
 		
-		String source = "C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports";
+    	String source = "C:/Users/Crespo/eclipse-workspace/devopsmetrics/target/reports";
 		File srcDir = new File(source);
-
-		String destination = "C:/Users/Crespo/eclipse-workspace/devopsmetrics/target/reports";
+    	
+		String destination = "C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports";
 		File destDir = new File(destination);
+		
 
 		try {
 		    FileUtils.copyDirectory(srcDir, destDir);

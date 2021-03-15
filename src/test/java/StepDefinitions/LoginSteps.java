@@ -25,7 +25,7 @@ public class LoginSteps {
 	WebDriver driver = null;
 	
 	@Given("user is on login page")
-	public void user_is_on_login_page() {
+	public void user_is_on_login_page() throws InterruptedException {
 		System.out.println("Inside step - user is on login page");
 		
 		Path path = FileSystems.getDefault().getPath("src/test/resources/drivers/chromedriver.exe");
@@ -40,6 +40,7 @@ public class LoginSteps {
 		driver.manage().window().maximize();
 	
 		driver.get("https://esidevopsmetrics.herokuapp.com/login");
+
 	}
 
 	@When("user enters username and password")
@@ -57,13 +58,11 @@ public class LoginSteps {
 
 	@Then("user is navigated to the home page")
 	public void user_is_navigated_to_the_home_page() throws InterruptedException {	
-		/*SleepClass.sleep(2000);
+		SleepClass.sleep(2000);
 		String expectedUrl = driver.getCurrentUrl();
-		assertEquals("https://esidevopsmetrics.herokuapp.com/admin", expectedUrl);	*/	
+		assertEquals("https://esidevopsmetrics.herokuapp.com/admin", expectedUrl);	
 		
-		String prueba = "https://esidevopsmetrics.herokuapp.com/admin";
-		
-		assertEquals("https://esidevopsmetrics.herokuapp.com/admin", prueba);
+		driver.quit();
 	}
 	
 
