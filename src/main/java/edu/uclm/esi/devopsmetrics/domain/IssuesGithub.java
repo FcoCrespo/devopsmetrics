@@ -345,7 +345,7 @@ public class IssuesGithub {
 		JsonNode nodesAssignees;
 		nodesAssignees = parameterNode.path("assignees");	
 		
-		String [] asigneeValues = new String [5];
+		String [] asigneeValues;
 		
 		boolean assigneesNull=false;
 		

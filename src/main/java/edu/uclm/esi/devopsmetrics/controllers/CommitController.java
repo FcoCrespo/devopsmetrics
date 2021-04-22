@@ -153,13 +153,13 @@ public class CommitController {
 	@ApiOperation(value = "Find all branches", notes = "Return all branches")
 
 	public ResponseEntity<String> allBranchesFirstCommit(@RequestParam("tokenpass") final String tokenpass,
-			@RequestParam("reponame") final String reponame) {
+			@RequestParam("reponame") final String reponame, @RequestParam("owner") final String owner) {
 
 		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
 		if (existe) {
 
 			try {
-				this.githubOperations.getFirstCommitByBranch(reponame);
+				this.githubOperations.getFirstCommitByBranch(reponame, owner);
 				return ResponseEntity.ok(this.message);
 			} catch (IOException e) {
 				return ResponseEntity.badRequest().build();
@@ -179,7 +179,7 @@ public class CommitController {
 	 */
 
 	@GetMapping(value = "/commitsbranch")
-	@ApiOperation(value = "Find all commitsb of a repository branch", notes = "Return all commitsb of a repository branch")
+	@ApiOperation(value = "Find all commits of a repository branch", notes = "Return all commits of a repository branch")
 
 	public ResponseEntity<String> allCommitsFromRepositoryBranch(@RequestParam("tokenpass") final String tokenpass,
 			@RequestParam("reponame") final String reponame, @RequestParam("branch") final String branch) {
@@ -257,7 +257,7 @@ public class CommitController {
 	}
 	
 	@PostMapping(value = "/commitsbranchdateauthor")
-	@ApiOperation(value = "Find all commits of a repository branch between two dates", notes = "Return all commits of a repository branch between two dates")
+	@ApiOperation(value = "Find all commits of a repository branch between two dates by the author", notes = "Return all commits of a repository branch between two dates by the author")
 
 	public ResponseEntity<String> allCommitsBranchByDateAuthor(@RequestParam("tokenpass") final String tokenpass,
 			@RequestBody final String message) {

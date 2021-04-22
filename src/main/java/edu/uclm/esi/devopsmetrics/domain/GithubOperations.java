@@ -131,12 +131,13 @@ public class GithubOperations {
 		this.commitService.deleteCommits(branchId);
 	}
 
-	public void getFirstCommitByBranch(String reponame) throws IOException {
+	public void getFirstCommitByBranch(String reponame, String owner) throws IOException {
 
 		List<Branch>branchesRepo = this.branchService.getBranchesByRepository(reponame, false);
 				
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpGet httpget = new HttpGet("http://localhost:5050/branchesorder?reponame=" + branchesRepo.get(0).getRepository());
+		HttpGet httpget = new HttpGet("http://localhost:5050/branchesorder?owner="+owner+"&reponame=" + branchesRepo.get(0).getRepository());
+		
 		LOG.info("Request Type: " + httpget.getMethod());
 
 		HttpResponse httpresponse = httpclient.execute(httpget);
@@ -227,7 +228,7 @@ public class GithubOperations {
 	public String getCommitsFromRepositoryBranch(String reponame, String name) {
 
 		Branch branch = this.branchService.getBranchByRepositoryyName(reponame, name);
-		
+
 		List<Commit> commits;
 		
 		if(branch.getOrder()==0 || branch.getOrder()==1) {

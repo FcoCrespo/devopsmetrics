@@ -45,6 +45,7 @@ public class LoginSteps {
 
 	@When("user enters username and password")
 	public void user_enters_username_and_password() {
+		
 		driver.findElement(By.xpath("//input[@placeholder='usuario']")).sendKeys(System.getProperty("app.user"));
 	    driver.findElement(By.xpath("//input[@placeholder='password']")).sendKeys(System.getProperty("app.password"));    
 	}
