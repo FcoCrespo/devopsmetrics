@@ -25,7 +25,82 @@ import edu.uclm.esi.devopsmetrics.utilities.Utilities;
 
 @CucumberContextConfiguration 
 @RunWith(Cucumber.class)
-@CucumberOptions(features = "src/test/resources/features")
+@CucumberOptions(features = "src/test/resources/features",
+monochrome =true,
+plugin = {"json:target/reports/JSONReports/TestReport.json","pretty", "junit:target/reports/JUnitReports/TestReport.xml","html:target/reports/HTMLReports/TestReport.html"}
+		)
+@SpringBootTest(classes = {KeyValue.class, Utilities.class})
 public class TestRunner {
-    //run test
+
+	final static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy-HH-mm");
+	final static LocalDateTime now = LocalDateTime.now();	
+	
+	@BeforeClass	    
+    public static void setupBefore() throws InterruptedException {
+    	try {
+    		
+    		 String dir = "C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\Reports-"+dtf.format(now);
+
+    		  Path path = Paths.get(dir);
+
+    		  //java.nio.file.Files;
+    		  Files.createDirectories(path);
+  		      SleepClass.sleep(1000);
+
+
+    		  System.out.println("Directory is created!");
+
+    	} catch (IOException e) {
+
+    		  System.err.println("Failed to create directory!" + e.getMessage());
+
+    	}
+		
+    	String source = "C:/Users/Crespo/eclipse-workspace/devopsmetrics/target/reports";
+		File srcDir = new File(source);
+    	
+		String destination = "C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports";
+		File destDir = new File(destination);
+		
+
+		try {
+		    FileUtils.copyDirectory(srcDir, destDir);
+		    SleepClass.sleep(1000);
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+	}
+	
+	
+    @AfterClass	    
+    public static void setupAfter() throws InterruptedException {	 
+    
+    	
+    	File fJSONoriginal = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\JSONReports\\TestReport.json");
+    	File fJSONrenombrado = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\Reports-"+dtf.format(now)+"\\TestReport"+dtf.format(now)+".json");
+    	SleepClass.sleep(1000);
+    	File fJUnitoriginal = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\JUnitReports\\TestReport.xml");
+    	File fJUnitrenombrado = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\Reports-"+dtf.format(now)+"\\TestReport"+dtf.format(now)+".xml");
+    	SleepClass.sleep(1000);
+    	File fHTMLoriginal = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\HTMLReports\\TestReport.html");
+    	File fHTMLrenombrado = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\Reports-"+dtf.format(now)+"\\TestReport"+dtf.format(now)+".html");
+    	SleepClass.sleep(1000);
+    	fJSONoriginal.renameTo(fJSONrenombrado);
+    	SleepClass.sleep(1000);
+    	fJUnitoriginal.renameTo(fJUnitrenombrado);
+    	SleepClass.sleep(1000);
+    	fHTMLoriginal.renameTo(fHTMLrenombrado);
+    	SleepClass.sleep(1000);
+    	File folder = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\JSONReports");
+    	folder.delete();
+    	SleepClass.sleep(1000);
+    	folder = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\JUnitReports");
+    	folder.delete();
+    	SleepClass.sleep(1000);
+    	folder = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\HTMLReports");
+    	folder.delete();
+    	SleepClass.sleep(1000);
+    	
+    }
+    
 }
