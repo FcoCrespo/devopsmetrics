@@ -109,6 +109,29 @@ public class UserController {
 	}
 	
 	/**
+	 * Obtiene un usuario por su username
+	 * 
+	 * @author FcoCrespo
+	 */
+	@GetMapping(value = "/getuser")
+	@ApiOperation(value = "Find an user by his username", notes = "Find an user by his username")
+
+	public ResponseEntity <String> getUser(@RequestParam("tokenpass") final String tokenpass,
+			@RequestParam("username") final String username){
+
+		final boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
+		if (existe) {
+			LOG.info("Get user");
+			return ResponseEntity.ok(this.userOperations.findByUsername(username));
+		} else {
+			LOG.info(this.errorMesage);
+			return ResponseEntity.badRequest().body("El usuario no tiene iniciada sus sesión.");
+		}
+
+	}
+	
+	
+	/**
 	 * Borra un usuario en funcion de su id mediante el token de acceso.
 	 * 
 	 * @author FcoCrespo

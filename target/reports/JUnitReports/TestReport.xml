@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="4" time="9.67">
-    <testcase classname="feature to test the function to get an user by the username and the password in the system" name="_2" time="0.848">
+<testsuite errors="0" failures="1" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="5" time="39.426">
+    <testcase classname="feature to test the function to delete an user in the system" name="_2" time="0.064">
+        <failure message="The scenario has pending or undefined step(s)" type="java.lang.Exception">
+            <![CDATA[Given user is logging in the system for deleting another user...............undefined
+When user is correct he chooses the userId of the user to delete in the system.skipped
+Then the choosed user was deleted of the system.............................skipped
+]]>
+        </failure>
+    </testcase>
+    <testcase classname="feature to test the function to get an user by the username and the password in the system" name="_2" time="20.182">
         <system-out>
             <![CDATA[Given user is logging in the system.........................................passed
 When user is correct he gets an user by the username and the password in the system.passed
@@ -8,7 +16,7 @@ Then by the username and the password in peer exists and the user is correct.pas
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="feature to test login functionality" name="_2" time="5.555">
+    <testcase classname="feature to test login functionality" name="_2" time="15.984">
         <system-out>
             <![CDATA[Given user is on login page.................................................passed
 When user enters username and password......................................passed
@@ -17,7 +25,7 @@ Then user is navigated to the home page.....................................pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="feature to test the function to register an user in the system" name="_2" time="1.153">
+    <testcase classname="feature to test the function to register an user in the system" name="_2" time="1.018">
         <system-out>
             <![CDATA[Given user is logging in the system for register other......................passed
 When user is correct he registers an user by the username, the password and the role in the system.passed
@@ -25,7 +33,7 @@ Then by the username and the password in peer not exists and the user is registe
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="feature to test the function to update an user in the system" name="_2" time="1.245">
+    <testcase classname="feature to test the function to update an user in the system" name="_2" time="1.02">
         <system-out>
             <![CDATA[Given user is logging in the system for updating an user....................passed
 When user is correct it updates an user by the username and the password in the system.passed

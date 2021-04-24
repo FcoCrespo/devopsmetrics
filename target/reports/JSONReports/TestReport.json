@@ -3,7 +3,58 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-04-24T16:33:19.559Z",
+        "start_timestamp": "2021-04-24T19:58:50.096Z",
+        "line": 3,
+        "name": "",
+        "description": "",
+        "id": "feature-to-test-the-function-to-delete-an-user-in-the-system;",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "status": "undefined"
+            },
+            "line": 4,
+            "name": "user is logging in the system for deleting another user",
+            "match": {},
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 1000900,
+              "status": "skipped"
+            },
+            "line": 5,
+            "name": "user is correct he chooses the userId of the user to delete in the system",
+            "match": {},
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 1000900,
+              "status": "skipped"
+            },
+            "line": 6,
+            "name": "the choosed user was deleted of the system",
+            "match": {},
+            "keyword": "Then "
+          }
+        ]
+      }
+    ],
+    "name": "feature to test the function to delete an user in the system",
+    "description": "",
+    "id": "feature-to-test-the-function-to-delete-an-user-in-the-system",
+    "keyword": "Feature",
+    "uri": "file:src/test/resources/features/DeleteUser.feature",
+    "tags": []
+  },
+  {
+    "line": 1,
+    "elements": [
+      {
+        "start_timestamp": "2021-04-24T19:58:50.189Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -13,7 +64,7 @@
         "steps": [
           {
             "result": {
-              "duration": 794629700,
+              "duration": 20161590300,
               "status": "passed"
             },
             "line": 4,
@@ -25,7 +76,7 @@
           },
           {
             "result": {
-              "duration": 10012100,
+              "duration": 13993400,
               "status": "passed"
             },
             "line": 5,
@@ -37,7 +88,7 @@
           },
           {
             "result": {
-              "duration": 2010200,
+              "duration": 2002400,
               "status": "passed"
             },
             "line": 6,
@@ -61,7 +112,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-04-24T16:33:20.424Z",
+        "start_timestamp": "2021-04-24T19:59:10.392Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -71,7 +122,7 @@
         "steps": [
           {
             "result": {
-              "duration": 2795860700,
+              "duration": 13210462200,
               "status": "passed"
             },
             "line": 4,
@@ -83,7 +134,7 @@
           },
           {
             "result": {
-              "duration": 125997700,
+              "duration": 119989900,
               "status": "passed"
             },
             "line": 5,
@@ -95,7 +146,7 @@
           },
           {
             "result": {
-              "duration": 39839600,
+              "duration": 45000900,
               "status": "passed"
             },
             "line": 6,
@@ -107,7 +158,7 @@
           },
           {
             "result": {
-              "duration": 2591286300,
+              "duration": 2604936400,
               "status": "passed"
             },
             "line": 7,
@@ -131,7 +182,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-04-24T16:33:25.992Z",
+        "start_timestamp": "2021-04-24T19:59:26.389Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -141,7 +192,7 @@
         "steps": [
           {
             "result": {
-              "duration": 392515400,
+              "duration": 326057600,
               "status": "passed"
             },
             "line": 4,
@@ -153,7 +204,7 @@
           },
           {
             "result": {
-              "duration": 377910700,
+              "duration": 348057900,
               "status": "passed"
             },
             "line": 5,
@@ -165,7 +216,7 @@
           },
           {
             "result": {
-              "duration": 380617500,
+              "duration": 341365500,
               "status": "passed"
             },
             "line": 6,
@@ -189,7 +240,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-04-24T16:33:27.155Z",
+        "start_timestamp": "2021-04-24T19:59:27.418Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -199,7 +250,7 @@
         "steps": [
           {
             "result": {
-              "duration": 375827300,
+              "duration": 341960100,
               "status": "passed"
             },
             "line": 4,
@@ -211,7 +262,7 @@
           },
           {
             "result": {
-              "duration": 476803500,
+              "duration": 344063000,
               "status": "passed"
             },
             "line": 5,
@@ -223,7 +274,7 @@
           },
           {
             "result": {
-              "duration": 390159000,
+              "duration": 329540800,
               "status": "passed"
             },
             "line": 6,
