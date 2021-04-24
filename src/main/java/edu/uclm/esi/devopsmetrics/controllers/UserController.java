@@ -138,28 +138,37 @@ public class UserController {
 	 * 
 	 */
 	@PostMapping
-	public ResponseEntity <String> registrarUsuario(@RequestBody final String usuario) {
+	public ResponseEntity <String> registrarUsuario(@RequestBody final String usuario, 
+			@RequestParam("tokenpass") final String tokenpass) {
 
 		final JSONObject jso = new JSONObject(usuario);
 		final String username = jso.getString("username");
 		final String password = jso.getString("password");
 
+		final boolean tokenpassCorrect = this.userOperations.getUserByTokenPassAdmin(tokenpass);
 
-		boolean existe = this.userOperations.getByUsername(username);
-		if (!(existe)) {
-			LOG.info("Registrando usuario...");
-			
-			String role = jso.getString("role");
-			
-			this.userOperations.registrarUser(username, password, role);
-			
-			LOG.info("Usuario registrado.");
-			return ResponseEntity.ok("Usuario registrado correctamente.");
-			
-		} else {
-			LOG.info("Error: El usuario ya está registrado.");
-			return ResponseEntity.badRequest().body("Error: El usuario ya está registrado.");
+		if(tokenpassCorrect) {
+			boolean existe = this.userOperations.getByUsername(username);
+			if (!(existe)) {
+				LOG.info("Registrando usuario...");
+				
+				String role = jso.getString("role");
+				
+				this.userOperations.registrarUser(username, password, role);
+				
+				LOG.info("Usuario registrado.");
+				return ResponseEntity.ok("Usuario registrado correctamente.");
+				
+			} else {
+				LOG.info("Error: El usuario ya está registrado.");
+				return ResponseEntity.badRequest().body("Error: El usuario ya está registrado.");
+			}
 		}
+		else {
+			LOG.info(this.errorMesage);
+			return ResponseEntity.badRequest().body(this.errorMesage);
+		}
+		
 
 	}
 	
