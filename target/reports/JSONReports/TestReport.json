@@ -3,7 +3,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-04-24T19:58:50.096Z",
+        "start_timestamp": "2021-04-24T22:19:29.122Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -13,31 +13,38 @@
         "steps": [
           {
             "result": {
-              "status": "undefined"
+              "duration": 756177800,
+              "status": "passed"
             },
             "line": 4,
             "name": "user is logging in the system for deleting another user",
-            "match": {},
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.DeleteUserSteps.user_is_logging_in_the_system_for_deleting_another_user()"
+            },
             "keyword": "Given "
           },
           {
             "result": {
-              "duration": 1000900,
-              "status": "skipped"
+              "duration": 363244200,
+              "status": "passed"
             },
             "line": 5,
             "name": "user is correct he chooses the userId of the user to delete in the system",
-            "match": {},
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.DeleteUserSteps.user_is_correct_he_chooses_the_user_id_of_the_user_to_delete_in_the_system()"
+            },
             "keyword": "When "
           },
           {
             "result": {
-              "duration": 1000900,
-              "status": "skipped"
+              "duration": 333868500,
+              "status": "passed"
             },
             "line": 6,
             "name": "the choosed user was deleted of the system",
-            "match": {},
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.DeleteUserSteps.the_choosed_user_was_deleted_of_the_system()"
+            },
             "keyword": "Then "
           }
         ]
@@ -54,7 +61,65 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-04-24T19:58:50.189Z",
+        "start_timestamp": "2021-04-24T22:19:30.644Z",
+        "line": 3,
+        "name": "",
+        "description": "",
+        "id": "feature-to-test-the-function-to-get-all-users-in-the-system;",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "error_message": "io.cucumber.java.PendingException: TODO: implement me\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllUsers.user_is_logging_in_the_system_for_getting_all_users(GetAllUsers.java:36)\r\n\tat ✽.user is logging in the system for getting all users(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetAllUsers.feature:4)\r\n",
+              "duration": 3967300,
+              "status": "pending"
+            },
+            "line": 4,
+            "name": "user is logging in the system for getting all users",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllUsers.user_is_logging_in_the_system_for_getting_all_users()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "status": "skipped"
+            },
+            "line": 5,
+            "name": "user is correct he gets all the users in the system",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllUsers.user_is_correct_he_gets_all_the_users_in_the_system()"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 1001500,
+              "status": "skipped"
+            },
+            "line": 6,
+            "name": "the users of the system were got correctly",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllUsers.the_users_of_the_system_were_got_correctly()"
+            },
+            "keyword": "Then "
+          }
+        ]
+      }
+    ],
+    "name": "feature to test the function to get all users in the system",
+    "description": "",
+    "id": "feature-to-test-the-function-to-get-all-users-in-the-system",
+    "keyword": "Feature",
+    "uri": "file:src/test/resources/features/GetAllUsers.feature",
+    "tags": []
+  },
+  {
+    "line": 1,
+    "elements": [
+      {
+        "start_timestamp": "2021-04-24T22:19:30.667Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -64,7 +129,7 @@
         "steps": [
           {
             "result": {
-              "duration": 20161590300,
+              "duration": 513052600,
               "status": "passed"
             },
             "line": 4,
@@ -76,7 +141,6 @@
           },
           {
             "result": {
-              "duration": 13993400,
               "status": "passed"
             },
             "line": 5,
@@ -88,7 +152,6 @@
           },
           {
             "result": {
-              "duration": 2002400,
               "status": "passed"
             },
             "line": 6,
@@ -112,7 +175,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-04-24T19:59:10.392Z",
+        "start_timestamp": "2021-04-24T22:19:31.193Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -122,7 +185,7 @@
         "steps": [
           {
             "result": {
-              "duration": 13210462200,
+              "duration": 2809375500,
               "status": "passed"
             },
             "line": 4,
@@ -134,7 +197,7 @@
           },
           {
             "result": {
-              "duration": 119989900,
+              "duration": 112212600,
               "status": "passed"
             },
             "line": 5,
@@ -146,7 +209,7 @@
           },
           {
             "result": {
-              "duration": 45000900,
+              "duration": 42641400,
               "status": "passed"
             },
             "line": 6,
@@ -158,7 +221,7 @@
           },
           {
             "result": {
-              "duration": 2604936400,
+              "duration": 2644090800,
               "status": "passed"
             },
             "line": 7,
@@ -182,7 +245,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-04-24T19:59:26.389Z",
+        "start_timestamp": "2021-04-24T22:19:36.817Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -192,7 +255,7 @@
         "steps": [
           {
             "result": {
-              "duration": 326057600,
+              "duration": 415577000,
               "status": "passed"
             },
             "line": 4,
@@ -204,7 +267,7 @@
           },
           {
             "result": {
-              "duration": 348057900,
+              "duration": 366153800,
               "status": "passed"
             },
             "line": 5,
@@ -216,7 +279,7 @@
           },
           {
             "result": {
-              "duration": 341365500,
+              "duration": 433015100,
               "status": "passed"
             },
             "line": 6,
@@ -240,7 +303,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-04-24T19:59:27.418Z",
+        "start_timestamp": "2021-04-24T22:19:38.045Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -250,7 +313,7 @@
         "steps": [
           {
             "result": {
-              "duration": 341960100,
+              "duration": 365528800,
               "status": "passed"
             },
             "line": 4,
@@ -262,7 +325,7 @@
           },
           {
             "result": {
-              "duration": 344063000,
+              "duration": 381401600,
               "status": "passed"
             },
             "line": 5,
@@ -274,7 +337,7 @@
           },
           {
             "result": {
-              "duration": 329540800,
+              "duration": 488516400,
               "status": "passed"
             },
             "line": 6,
