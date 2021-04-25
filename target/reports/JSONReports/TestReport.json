@@ -3,7 +3,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-04-25T09:57:57.393Z",
+        "start_timestamp": "2021-04-25T17:49:33.983Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -13,7 +13,7 @@
         "steps": [
           {
             "result": {
-              "duration": 639615700,
+              "duration": 17830754800,
               "status": "passed"
             },
             "line": 4,
@@ -25,7 +25,7 @@
           },
           {
             "result": {
-              "duration": 459000400,
+              "duration": 476999300,
               "status": "passed"
             },
             "line": 5,
@@ -37,7 +37,7 @@
           },
           {
             "result": {
-              "duration": 326434300,
+              "duration": 393719900,
               "status": "passed"
             },
             "line": 6,
@@ -61,7 +61,122 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-04-25T09:57:58.874Z",
+        "start_timestamp": "2021-04-25T17:49:52.741Z",
+        "line": 3,
+        "name": "",
+        "description": "",
+        "id": "feature-to-test-the-function-to-get-all-branches-from-a-repository-by-his-owner;",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 349863500,
+              "status": "passed"
+            },
+            "line": 4,
+            "name": "user is logging in the system for getting all branches from a repository by his owner",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllBranchesSteps.user_is_logging_in_the_system_for_getting_all_branches_from_a_repository_by_his_owner()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "status": "passed"
+            },
+            "line": 5,
+            "name": "user is correct he requests all branches from a repository by his owner",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllBranchesSteps.user_is_correct_he_requests_all_branches_from_a_repository_by_his_owner()"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 1632228600,
+              "status": "passed"
+            },
+            "line": 6,
+            "name": "the user gets all branches from a repository by his owner",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllBranchesSteps.the_user_gets_all_branches_from_a_repository_by_his_owner()"
+            },
+            "keyword": "Then "
+          }
+        ]
+      }
+    ],
+    "name": "feature to test the function to get all branches from a repository by his owner",
+    "description": "",
+    "id": "feature-to-test-the-function-to-get-all-branches-from-a-repository-by-his-owner",
+    "keyword": "Feature",
+    "uri": "file:src/test/resources/features/GetAllBranches.feature",
+    "tags": []
+  },
+  {
+    "line": 1,
+    "elements": [
+      {
+        "start_timestamp": "2021-04-25T17:49:54.736Z",
+        "line": 3,
+        "name": "",
+        "description": "",
+        "id": "feature-to-test-the-function-to-get-all-commits-from-a-repository-by-his-owner;",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 359331900,
+              "status": "passed"
+            },
+            "line": 4,
+            "name": "user is logging in the system for getting all commits from a repository by his owner",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllCommitsSteps.user_is_logging_in_the_system_for_getting_all_commits_from_a_repository_by_his_owner()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 998700,
+              "status": "passed"
+            },
+            "line": 5,
+            "name": "user is correct he requests all commits from a repository by his owner",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllCommitsSteps.user_is_correct_he_requests_all_commits_from_a_repository_by_his_owner()"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 1691131900,
+              "status": "passed"
+            },
+            "line": 6,
+            "name": "the user gets all commits from a repository by his owner",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllCommitsSteps.the_user_gets_all_commits_from_a_repository_by_his_owner()"
+            },
+            "keyword": "Then "
+          }
+        ]
+      }
+    ],
+    "name": "feature to test the function to get all commits from a repository by his owner",
+    "description": "",
+    "id": "feature-to-test-the-function-to-get-all-commits-from-a-repository-by-his-owner",
+    "keyword": "Feature",
+    "uri": "file:src/test/resources/features/GetAllCommits.feature",
+    "tags": []
+  },
+  {
+    "line": 1,
+    "elements": [
+      {
+        "start_timestamp": "2021-04-25T17:49:56.798Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -71,7 +186,7 @@
         "steps": [
           {
             "result": {
-              "duration": 319431900,
+              "duration": 337998100,
               "status": "passed"
             },
             "line": 4,
@@ -83,7 +198,7 @@
           },
           {
             "result": {
-              "duration": 343917500,
+              "duration": 347078300,
               "status": "passed"
             },
             "line": 5,
@@ -95,7 +210,7 @@
           },
           {
             "result": {
-              "duration": 314933500,
+              "duration": 324297000,
               "status": "passed"
             },
             "line": 6,
@@ -119,7 +234,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-04-25T09:57:59.863Z",
+        "start_timestamp": "2021-04-25T17:49:57.820Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -129,7 +244,7 @@
         "steps": [
           {
             "result": {
-              "duration": 311181300,
+              "duration": 425274500,
               "status": "passed"
             },
             "line": 4,
@@ -141,7 +256,7 @@
           },
           {
             "result": {
-              "duration": 376782800,
+              "duration": 346847400,
               "status": "passed"
             },
             "line": 5,
@@ -153,7 +268,7 @@
           },
           {
             "result": {
-              "duration": 998700,
+              "duration": 1001500,
               "status": "passed"
             },
             "line": 6,
@@ -177,7 +292,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-04-25T09:58:00.565Z",
+        "start_timestamp": "2021-04-25T17:49:58.603Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -187,7 +302,7 @@
         "steps": [
           {
             "result": {
-              "duration": 312495100,
+              "duration": 373056400,
               "status": "passed"
             },
             "line": 4,
@@ -199,7 +314,6 @@
           },
           {
             "result": {
-              "duration": 981300,
               "status": "passed"
             },
             "line": 5,
@@ -234,7 +348,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-04-25T09:58:00.887Z",
+        "start_timestamp": "2021-04-25T17:49:58.987Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -244,7 +358,7 @@
         "steps": [
           {
             "result": {
-              "duration": 2520180600,
+              "duration": 19213055800,
               "status": "passed"
             },
             "line": 4,
@@ -256,7 +370,7 @@
           },
           {
             "result": {
-              "duration": 109302700,
+              "duration": 108757800,
               "status": "passed"
             },
             "line": 5,
@@ -268,7 +382,7 @@
           },
           {
             "result": {
-              "duration": 40447000,
+              "duration": 40435500,
               "status": "passed"
             },
             "line": 6,
@@ -280,7 +394,7 @@
           },
           {
             "result": {
-              "duration": 1635762400,
+              "duration": 1647183100,
               "status": "passed"
             },
             "line": 7,
@@ -304,7 +418,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-04-25T09:58:05.209Z",
+        "start_timestamp": "2021-04-25T17:50:20.011Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -314,7 +428,7 @@
         "steps": [
           {
             "result": {
-              "duration": 360871300,
+              "duration": 357423300,
               "status": "passed"
             },
             "line": 4,
@@ -326,7 +440,7 @@
           },
           {
             "result": {
-              "duration": 333444100,
+              "duration": 376442800,
               "status": "passed"
             },
             "line": 5,
@@ -338,7 +452,7 @@
           },
           {
             "result": {
-              "duration": 316298800,
+              "duration": 329212900,
               "status": "passed"
             },
             "line": 6,
@@ -362,7 +476,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-04-25T09:58:06.231Z",
+        "start_timestamp": "2021-04-25T17:50:21.099Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -372,7 +486,7 @@
         "steps": [
           {
             "result": {
-              "duration": 327710700,
+              "duration": 392141100,
               "status": "passed"
             },
             "line": 4,
@@ -384,7 +498,7 @@
           },
           {
             "result": {
-              "duration": 365272100,
+              "duration": 832612900,
               "status": "passed"
             },
             "line": 5,
@@ -396,7 +510,7 @@
           },
           {
             "result": {
-              "duration": 391927900,
+              "duration": 358823300,
               "status": "passed"
             },
             "line": 6,

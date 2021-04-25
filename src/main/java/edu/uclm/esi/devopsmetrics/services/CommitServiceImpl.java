@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,16 +26,9 @@ public class CommitServiceImpl implements CommitService {
 	 */
 	private CommitRepository commitRepository;
 
-	/**
-	 * @author FcoCrespo
-	 */
-	@Autowired
-	private final BranchService branchService;
-
-	public CommitServiceImpl(final CommitRepository commitRepository, final BranchService branchService) {
+	public CommitServiceImpl(final CommitRepository commitRepository) {
 
 		this.commitRepository = commitRepository;
-		this.branchService = branchService;
 
 	}
 

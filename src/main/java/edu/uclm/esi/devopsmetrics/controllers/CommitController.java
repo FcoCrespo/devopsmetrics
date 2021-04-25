@@ -94,7 +94,7 @@ public class CommitController {
 	 */
 
 	@GetMapping(value = "/allcommits")
-	@ApiOperation(value = "Find all branches", notes = "Return all branches")
+	@ApiOperation(value = "Find all commits", notes = "Return all commits")
 
 	public ResponseEntity<String> allCommits(@RequestParam("tokenpass") final String tokenpass,
 			@RequestParam("reponame") final String reponame, @RequestParam("owner") final String owner) {

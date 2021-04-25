@@ -433,7 +433,7 @@ public class CommitsGithub {
 		LOG.info("MessageHeadline: " + messageHeadline);
 		LOG.info("Author" + userGithub.toString());
 
-		commit = new Commit(oid, pushedDate, userGithub.getIdGithub(), branchId);
+		commit = new Commit(oid, pushedDate, userGithub.getId(), branchId);
 		
 		commitInfo = new CommitInfo(oid, messageHeadline, message, changedFiles);
 		
