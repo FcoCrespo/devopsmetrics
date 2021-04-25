@@ -1,7 +1,7 @@
 query GitHub($owner: String!, $repo: String!, $cursor: String!) {
         repository(owner:$owner, name:$repo) {
             name
-            issues(first:100, before:$cursor) {
+            issues(first:100, after:$cursor) {
                 totalCount
                 nodes {
                 	repository{ 

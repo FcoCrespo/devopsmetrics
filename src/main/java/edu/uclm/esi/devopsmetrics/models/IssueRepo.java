@@ -17,12 +17,6 @@ public class IssueRepo implements Comparable<IssueRepo> {
 	@Id
 	private String id;
 	/**
-	 * issue.
-	 * 
-	 * @author FcoCrespo
-	 */
-	private String issue;
-	/**
 	 * repository.
 	 * 
 	 * @author FcoCrespo
@@ -47,9 +41,8 @@ public class IssueRepo implements Comparable<IssueRepo> {
 	 * 
 	 * @author FcoCrespo
 	 */
-	public IssueRepo(final String issue, final String repository, final String owner, final String author) {
+	public IssueRepo(final String repository, final String owner, final String author) {
 		super();
-		this.issue = issue;
 		this.repository = repository;
 		this.owner = owner;
 		this.author = author;
@@ -87,17 +80,6 @@ public class IssueRepo implements Comparable<IssueRepo> {
 		this.id = id;
 	}
 
-
-	public String getIssue() {
-		return issue;
-	}
-
-
-	public void setIssue(String issue) {
-		this.issue = issue;
-	}
-
-
 	public String getRepository() {
 		return repository;
 	}
@@ -131,7 +113,7 @@ public class IssueRepo implements Comparable<IssueRepo> {
 
 	@Override
 	public String toString() {
-		return "IssueRepo [id=" + id + ", issue=" + issue + ", repository=" + repository + ", owner=" + owner
+		return "IssueRepo [id=" + id + ", repository=" + repository + ", owner=" + owner
 				+ ", author=" + author+"]";
 	}
 

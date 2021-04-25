@@ -3,7 +3,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-04-24T22:19:29.122Z",
+        "start_timestamp": "2021-04-25T09:57:57.393Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -13,7 +13,7 @@
         "steps": [
           {
             "result": {
-              "duration": 756177800,
+              "duration": 639615700,
               "status": "passed"
             },
             "line": 4,
@@ -25,7 +25,7 @@
           },
           {
             "result": {
-              "duration": 363244200,
+              "duration": 459000400,
               "status": "passed"
             },
             "line": 5,
@@ -37,7 +37,7 @@
           },
           {
             "result": {
-              "duration": 333868500,
+              "duration": 326434300,
               "status": "passed"
             },
             "line": 6,
@@ -61,7 +61,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-04-24T22:19:30.644Z",
+        "start_timestamp": "2021-04-25T09:57:58.874Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -71,37 +71,37 @@
         "steps": [
           {
             "result": {
-              "error_message": "io.cucumber.java.PendingException: TODO: implement me\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllUsers.user_is_logging_in_the_system_for_getting_all_users(GetAllUsers.java:36)\r\n\tat ✽.user is logging in the system for getting all users(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetAllUsers.feature:4)\r\n",
-              "duration": 3967300,
-              "status": "pending"
+              "duration": 319431900,
+              "status": "passed"
             },
             "line": 4,
-            "name": "user is logging in the system for getting all users",
+            "name": "user is logging in the system to get all users in the system",
             "match": {
-              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllUsers.user_is_logging_in_the_system_for_getting_all_users()"
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllUserListSteps.user_is_logging_in_the_system_to_get_all_users_in_the_system()"
             },
             "keyword": "Given "
           },
           {
             "result": {
-              "status": "skipped"
+              "duration": 343917500,
+              "status": "passed"
             },
             "line": 5,
             "name": "user is correct he gets all the users in the system",
             "match": {
-              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllUsers.user_is_correct_he_gets_all_the_users_in_the_system()"
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllUserListSteps.user_is_correct_he_gets_all_the_users_in_the_system()"
             },
             "keyword": "When "
           },
           {
             "result": {
-              "duration": 1001500,
-              "status": "skipped"
+              "duration": 314933500,
+              "status": "passed"
             },
             "line": 6,
-            "name": "the users of the system were got correctly",
+            "name": "the users were got correctly",
             "match": {
-              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllUsers.the_users_of_the_system_were_got_correctly()"
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllUserListSteps.the_users_were_got_correctly()"
             },
             "keyword": "Then "
           }
@@ -119,7 +119,65 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-04-24T22:19:30.667Z",
+        "start_timestamp": "2021-04-25T09:57:59.863Z",
+        "line": 3,
+        "name": "",
+        "description": "",
+        "id": "feature-to-test-the-function-to-get-an-user-by-the-tokenpass-in-the-system;",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 311181300,
+              "status": "passed"
+            },
+            "line": 4,
+            "name": "user is logging in the system for get his tokenpass",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetUserByTokenPassSteps.user_is_logging_in_the_system_for_get_his_tokenpass()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 376782800,
+              "status": "passed"
+            },
+            "line": 5,
+            "name": "user is correct he gets an user by the tokenpass of the session in the system",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetUserByTokenPassSteps.user_is_correct_he_gets_an_user_by_the_tokenpass_of_the_session_in_the_system()"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 998700,
+              "status": "passed"
+            },
+            "line": 6,
+            "name": "the tokenpass exists and the user is correct",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetUserByTokenPassSteps.the_tokenpass_exists_and_the_user_is_correct()"
+            },
+            "keyword": "Then "
+          }
+        ]
+      }
+    ],
+    "name": "feature to test the function to get an user by the tokenpass in the system",
+    "description": "",
+    "id": "feature-to-test-the-function-to-get-an-user-by-the-tokenpass-in-the-system",
+    "keyword": "Feature",
+    "uri": "file:src/test/resources/features/GetUserByTokenPass.feature",
+    "tags": []
+  },
+  {
+    "line": 1,
+    "elements": [
+      {
+        "start_timestamp": "2021-04-25T09:58:00.565Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -129,7 +187,7 @@
         "steps": [
           {
             "result": {
-              "duration": 513052600,
+              "duration": 312495100,
               "status": "passed"
             },
             "line": 4,
@@ -141,6 +199,7 @@
           },
           {
             "result": {
+              "duration": 981300,
               "status": "passed"
             },
             "line": 5,
@@ -175,7 +234,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-04-24T22:19:31.193Z",
+        "start_timestamp": "2021-04-25T09:58:00.887Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -185,7 +244,7 @@
         "steps": [
           {
             "result": {
-              "duration": 2809375500,
+              "duration": 2520180600,
               "status": "passed"
             },
             "line": 4,
@@ -197,7 +256,7 @@
           },
           {
             "result": {
-              "duration": 112212600,
+              "duration": 109302700,
               "status": "passed"
             },
             "line": 5,
@@ -209,7 +268,7 @@
           },
           {
             "result": {
-              "duration": 42641400,
+              "duration": 40447000,
               "status": "passed"
             },
             "line": 6,
@@ -221,7 +280,7 @@
           },
           {
             "result": {
-              "duration": 2644090800,
+              "duration": 1635762400,
               "status": "passed"
             },
             "line": 7,
@@ -245,7 +304,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-04-24T22:19:36.817Z",
+        "start_timestamp": "2021-04-25T09:58:05.209Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -255,7 +314,7 @@
         "steps": [
           {
             "result": {
-              "duration": 415577000,
+              "duration": 360871300,
               "status": "passed"
             },
             "line": 4,
@@ -267,7 +326,7 @@
           },
           {
             "result": {
-              "duration": 366153800,
+              "duration": 333444100,
               "status": "passed"
             },
             "line": 5,
@@ -279,7 +338,7 @@
           },
           {
             "result": {
-              "duration": 433015100,
+              "duration": 316298800,
               "status": "passed"
             },
             "line": 6,
@@ -303,7 +362,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-04-24T22:19:38.045Z",
+        "start_timestamp": "2021-04-25T09:58:06.231Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -313,7 +372,7 @@
         "steps": [
           {
             "result": {
-              "duration": 365528800,
+              "duration": 327710700,
               "status": "passed"
             },
             "line": 4,
@@ -325,7 +384,7 @@
           },
           {
             "result": {
-              "duration": 381401600,
+              "duration": 365272100,
               "status": "passed"
             },
             "line": 5,
@@ -337,7 +396,7 @@
           },
           {
             "result": {
-              "duration": 488516400,
+              "duration": 391927900,
               "status": "passed"
             },
             "line": 6,

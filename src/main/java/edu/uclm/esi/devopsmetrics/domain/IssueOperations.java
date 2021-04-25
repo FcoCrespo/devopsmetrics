@@ -116,7 +116,7 @@ public class IssueOperations {
 			json = new JSONObject();
 			jsonAuthor = new JSONObject();
 			
-			issuesAssignee = this.issueAssigneeService.getAllByIdIssue(issueRepoList.get(i).getIssue());
+			issuesAssignee = this.issueAssigneeService.getAllByIdIssue(issueRepoList.get(i).getId());
 			
 			userGithub = mapUsersGithub.get(issueRepoList.get(i).getAuthor());
 			
@@ -126,15 +126,14 @@ public class IssueOperations {
 			jsonAuthor.put("email", userGithub.getEmail());
 			jsonAuthor.put("avatarURL", userGithub.getAvatarURL());
 			
-			json.put("id", issueRepoList.get(i).getIssue());
 			json.put("repository", issueRepoList.get(i).getRepository());
 			json.put("author", jsonAuthor);
 			
-			json.put("title", mapIssues.get(issueRepoList.get(i).getIssue()).getTitle());
-			json.put("body", mapIssues.get(issueRepoList.get(i).getIssue()).getBody());
-			json.put("createdAt", mapIssues.get(issueRepoList.get(i).getIssue()).getCreatedAt());
-			json.put("closedAt", mapIssues.get(issueRepoList.get(i).getIssue()).getClosedAt());
-			json.put("state", mapIssues.get(issueRepoList.get(i).getIssue()).getState());
+			json.put("title", mapIssues.get(issueRepoList.get(i).getId()).getTitle());
+			json.put("body", mapIssues.get(issueRepoList.get(i).getId()).getBody());
+			json.put("createdAt", mapIssues.get(issueRepoList.get(i).getId()).getCreatedAt());
+			json.put("closedAt", mapIssues.get(issueRepoList.get(i).getId()).getClosedAt());
+			json.put("state", mapIssues.get(issueRepoList.get(i).getId()).getState());
 			
 			jsonAssignees = getJSONAssignees(issuesAssignee, mapUsersGithub);
 			

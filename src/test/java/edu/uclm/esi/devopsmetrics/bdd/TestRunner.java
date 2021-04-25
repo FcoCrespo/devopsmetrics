@@ -16,12 +16,6 @@ import org.apache.commons.io.FileUtils;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-
-import edu.uclm.esi.devopsmetrics.utilities.KeyValue;
-import edu.uclm.esi.devopsmetrics.utilities.SleepClass;
-import edu.uclm.esi.devopsmetrics.utilities.Utilities;
-
 
 @CucumberContextConfiguration 
 @RunWith(Cucumber.class)
@@ -29,7 +23,6 @@ import edu.uclm.esi.devopsmetrics.utilities.Utilities;
 monochrome =true,
 plugin = {"json:target/reports/JSONReports/TestReport.json","pretty", "junit:target/reports/JUnitReports/TestReport.xml","html:target/reports/HTMLReports/TestReport.html"}
 		)
-@SpringBootTest(classes = {KeyValue.class, Utilities.class})
 public class TestRunner {
 
 	final static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy-HH-mm");
@@ -43,7 +36,6 @@ public class TestRunner {
 
     		  Path path = Paths.get(dir);
 
-    		  //java.nio.file.Files;
     		  Files.createDirectories(path);
 
     		  System.out.println("Directory is created!");

@@ -108,8 +108,6 @@ public class IssuesGithub {
 
 		jsonData = responseGiven.body().string();
 		jsonNode = new ObjectMapper().readTree(jsonData);
-		
-		LOG.info(jsonData);
 
 		issueCursor = updateIssueCursor(jsonNode, info[0]);
 		
@@ -127,6 +125,7 @@ public class IssuesGithub {
 			issue = (Issue) result[0];
 			issueRepo = (IssueRepo) result[1];
 			
+			
 			this.issueService.saveIssue(issue);
 			
 			this.issueRepoService.saveIssueRepo(issueRepo);
@@ -141,6 +140,11 @@ public class IssuesGithub {
 				this.issueService.saveIssue(issue);
 				
 				this.issueRepoService.saveIssueRepo(issueRepo);
+				
+				if(issueCursor!=null) {
+					issueCursor.setIdLastIssue(issue.getId());
+					this.issueCursorService.updateIssueCursor(issueCursor);
+				}
 			}
 		}
 
@@ -164,13 +168,13 @@ public class IssuesGithub {
 		JsonNode parameterNode;
 		Response responseGiven;
 		Iterator<JsonNode> iter;
-
+		
 		File file = new File(info[2]);
 		
 
 		IssueCursor issueCursorInitial = this.issueCursorService.getByRepository(info[0]);
 
-		String issueCursorStart = issueCursorInitial.getStartCursor();
+		String issueInitial = issueCursorInitial.getIdLastIssue();
 
 
 		String[] variablesPut = new String[3];
@@ -184,6 +188,7 @@ public class IssuesGithub {
 		responseGiven = this.response.prepareResponse(graphqlPayload, this.graphqlUri, info[1]);
 
 		jsonData = responseGiven.body().string();
+		
 		jsonNode = new ObjectMapper().readTree(jsonData);
 
 		issueCursor = updateIssueCursor(jsonNode, info[0]);
@@ -193,8 +198,9 @@ public class IssuesGithub {
 		}
 
 	    nodes = jsonNode.path("data").path(this.repositoryString).path(this.issuesString).path(this.nodesString);
-	    
+	       
 		iter = nodes.iterator();
+		
 		parameterNode = iter.next();
 
 		Object [] result;
@@ -210,14 +216,14 @@ public class IssuesGithub {
 				issue = (Issue) result[0];
 				issueRepo = (IssueRepo) result[1];
 
-				initialStartCursorFind = checkInitialStartCursorFind(issue, issueCursorStart, initialStartCursorFind);
+				initialStartCursorFind = checkInitialIssueFind(issue, issueInitial, initialStartCursorFind);
+
+				parameterNode = iter.next();
 				
-				if(!(initialStartCursorFind)){
+				if(initialStartCursorFind){							
 					issuesList.add(issue);	
 					issuesRepoList.add(issueRepo);
 				}
-
-				parameterNode = iter.next();
 				
 			}
 			if (!iter.hasNext()) {			
@@ -225,9 +231,10 @@ public class IssuesGithub {
 				issue = (Issue) result[0];
 				issueRepo = (IssueRepo) result[1];
 				
-				initialStartCursorFind = checkInitialStartCursorFind(issue, issueCursorStart, initialStartCursorFind);
+				initialStartCursorFind = checkInitialIssueFind(issue, issueInitial, initialStartCursorFind);
 				
-				if(!(initialStartCursorFind)){
+				if(initialStartCursorFind){
+					actualizarCursor(issueCursor, issue);
 					issuesList.add(issue);	
 					issuesRepoList.add(issueRepo);
 				}
@@ -239,9 +246,10 @@ public class IssuesGithub {
 			issue = (Issue) result[0];
 			issueRepo = (IssueRepo) result[1];	
 			
-			initialStartCursorFind = checkInitialStartCursorFind(issue, issueCursorStart, initialStartCursorFind);
+			initialStartCursorFind = checkInitialIssueFind(issue, issueInitial, initialStartCursorFind);			
 			
-			if(!(initialStartCursorFind)){
+			if(initialStartCursorFind){
+				actualizarCursor(issueCursor, issue);
 				issuesList.add(issue);	
 				issuesRepoList.add(issueRepo);
 			}
@@ -250,6 +258,22 @@ public class IssuesGithub {
 		actualizarIssuesRepository(info, initialStartCursorFind, issuesList, issuesRepoList, issueCursor);
 		return "Ok.";
 		
+	}
+
+	private boolean checkInitialIssueFind(Issue issue, String issueInitial, boolean initialStartCursorFind) {
+		if(initialStartCursorFind) {
+			return true;
+		}
+		else {
+			return (issue != null && issueInitial.equals(issue.getId()));
+		}
+	}
+	
+	private void actualizarCursor(IssueCursor issueCursor, Issue issue) {
+		if(issue!=null) {
+			issueCursor.setIdLastIssue(issue.getId());
+			this.issueCursorService.updateIssueCursor(issueCursor);	
+		}		
 	}
 
 	private void actualizarIssuesRepository(String[] info, boolean initialStartCursorFind, List<Issue> issuesList,
@@ -277,14 +301,6 @@ public class IssuesGithub {
 		}
 	}
 	
-	private boolean checkInitialStartCursorFind(Issue issue, String issueCursorStart, boolean initialStartCursorFind) {
-		if(initialStartCursorFind) {
-			return true;
-		}
-		else {
-			return (issue != null && issueCursorStart.equals(issue.getId()));
-		}
-	}
 
 	private Object[] introducirIssue(JsonNode parameterNode) {
 		Issue issue = null;
@@ -407,7 +423,8 @@ public class IssuesGithub {
 		issue = new Issue(state, title, body, createdAt, closedAt);
 		issue.setId(idGithub);
 		
-		issueRepo = new IssueRepo(idGithub, repository, owner, userGithubAuthor.getId());
+		issueRepo = new IssueRepo(repository, owner, userGithubAuthor.getId());
+		issueRepo.setId(idGithub);
 		
 		Object [] result = new Object[2];
 		
@@ -479,7 +496,7 @@ public class IssuesGithub {
 		IssueCursor issueCursor = this.issueCursorService.getByRepository(reponame);
 
 		if (issueCursor == null) {
-			issueCursor = new IssueCursor(hasNextPage, endCursor, startCursor, reponame);
+			issueCursor = new IssueCursor(hasNextPage, endCursor, startCursor, reponame, null);
 			this.issueCursorService.saveIssueCursor(issueCursor);
 		} else {
 			issueCursor.setHasNextPage(hasNextPage);
