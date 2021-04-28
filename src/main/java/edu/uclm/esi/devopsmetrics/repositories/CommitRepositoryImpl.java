@@ -68,7 +68,7 @@ public class CommitRepositoryImpl implements CommitRepository {
 	  /**
 	   * Guarda un commit en la base de datos.
 	   * 
-	   * @author e3corp
+	   * @author FcoCrespo
 	   */
 	  public void saveCommit(final Commit commit) {
 	    this.mongoOperations.save(commit);

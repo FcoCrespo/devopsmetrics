@@ -18,7 +18,6 @@ import edu.uclm.esi.devopsmetrics.repositories.CommitRepository;
  * @author FcoCrespo
  */
 @Transactional
-
 public class CommitServiceImpl implements CommitService {
 
 	/**
