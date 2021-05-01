@@ -1,663 +1,124 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<testsuite errors="0" failures="15" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="15" time="9.177">
-    <testcase classname="feature to test the function to delete an user in the system" name="_2" time="0.937">
-        <failure message="Unexpected character ('&lt;' (code 60)): expected a valid value (JSON String, Number, Array, Object or token 'null', 'true' or 'false')&#10; at [Source: (String)&quot;&lt;!DOCTYPE html&gt;&#10;&#9;&lt;html&gt;&#10;&#9;  &lt;head&gt;&#10;&#9;&#9;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;&#10;&#9;&#9;&lt;meta charset=&quot;utf-8&quot;&gt;&#10;&#9;&#9;&lt;title&gt;Application Error&lt;/title&gt;&#10;&#9;&#9;&lt;style media=&quot;screen&quot;&gt;&#10;&#9;&#9;  html,body,iframe {&#10;&#9;&#9;&#9;margin: 0;&#10;&#9;&#9;&#9;padding: 0;&#10;&#9;&#9;  }&#10;&#9;&#9;  html,body {&#10;&#9;&#9;&#9;height: 100%;&#10;&#9;&#9;&#9;overflow: hidden;&#10;&#9;&#9;  }&#10;&#9;&#9;  iframe {&#10;&#9;&#9;&#9;width: 100%;&#10;&#9;&#9;&#9;height: 100%;&#10;&#9;&#9;&#9;border: 0;&#10;&#9;&#9;  }&#10;&#9;&#9;&lt;/style&gt;&#10;&#9;  &lt;/head&gt;&#10;&#9;  &lt;body&gt;&#10;&#9;&#9;&lt;iframe src=&quot;//www.herokucdn.com/error-pages/application-error.html&quot;&gt;&lt;/iframe&gt;&#10;&#9;  &lt;/body&gt;&#10;&#9;&lt;&quot;[truncated 6 chars]; line: 1, column: 2]" type="com.fasterxml.jackson.core.JsonParseException">
+<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="15" time="31.456">
+    <testcase classname="feature to test the function to delete an user in the system" name="_2" time="1.585">
+        <system-out>
             <![CDATA[Given user is logging in the system for deleting another user...............passed
-When user is correct he chooses the userId of the user to delete in the system.failed
-Then the choosed user was deleted of the system.............................skipped
-
-StackTrace:
-com.fasterxml.jackson.core.JsonParseException: Unexpected character ('<' (code 60)): expected a valid value (JSON String, Number, Array, Object or token 'null', 'true' or 'false')
- at [Source: (String)"<!DOCTYPE html>
-	<html>
-	  <head>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta charset="utf-8">
-		<title>Application Error</title>
-		<style media="screen">
-		  html,body,iframe {
-			margin: 0;
-			padding: 0;
-		  }
-		  html,body {
-			height: 100%;
-			overflow: hidden;
-		  }
-		  iframe {
-			width: 100%;
-			height: 100%;
-			border: 0;
-		  }
-		</style>
-	  </head>
-	  <body>
-		<iframe src="//www.herokucdn.com/error-pages/application-error.html"></iframe>
-	  </body>
-	<"[truncated 6 chars]; line: 1, column: 2]
-	at com.fasterxml.jackson.core.JsonParser._constructError(JsonParser.java:1851)
-	at com.fasterxml.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:707)
-	at com.fasterxml.jackson.core.base.ParserMinimalBase._reportUnexpectedChar(ParserMinimalBase.java:632)
-	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser._handleOddValue(ReaderBasedJsonParser.java:1941)
-	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser.nextToken(ReaderBasedJsonParser.java:776)
-	at com.fasterxml.jackson.databind.ObjectMapper._readTreeAndClose(ObjectMapper.java:4511)
-	at com.fasterxml.jackson.databind.ObjectMapper.readTree(ObjectMapper.java:2940)
-	at edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.DeleteUserSteps.user_is_correct_he_chooses_the_user_id_of_the_user_to_delete_in_the_system(DeleteUserSteps.java:53)
-	at ✽.user is correct he chooses the userId of the user to delete in the system(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/DeleteUser.feature:5)
+When user is correct he chooses the userId of the user to delete in the system.passed
+Then the choosed user was deleted of the system.............................passed
 ]]>
-        </failure>
+        </system-out>
     </testcase>
-    <testcase classname="feature to test the function to get all branches from a repository by his owner" name="_2" time="0.258">
-        <failure message="Unexpected character ('&lt;' (code 60)): expected a valid value (JSON String, Number, Array, Object or token 'null', 'true' or 'false')&#10; at [Source: (String)&quot;&lt;!DOCTYPE html&gt;&#10;&#9;&lt;html&gt;&#10;&#9;  &lt;head&gt;&#10;&#9;&#9;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;&#10;&#9;&#9;&lt;meta charset=&quot;utf-8&quot;&gt;&#10;&#9;&#9;&lt;title&gt;Application Error&lt;/title&gt;&#10;&#9;&#9;&lt;style media=&quot;screen&quot;&gt;&#10;&#9;&#9;  html,body,iframe {&#10;&#9;&#9;&#9;margin: 0;&#10;&#9;&#9;&#9;padding: 0;&#10;&#9;&#9;  }&#10;&#9;&#9;  html,body {&#10;&#9;&#9;&#9;height: 100%;&#10;&#9;&#9;&#9;overflow: hidden;&#10;&#9;&#9;  }&#10;&#9;&#9;  iframe {&#10;&#9;&#9;&#9;width: 100%;&#10;&#9;&#9;&#9;height: 100%;&#10;&#9;&#9;&#9;border: 0;&#10;&#9;&#9;  }&#10;&#9;&#9;&lt;/style&gt;&#10;&#9;  &lt;/head&gt;&#10;&#9;  &lt;body&gt;&#10;&#9;&#9;&lt;iframe src=&quot;//www.herokucdn.com/error-pages/application-error.html&quot;&gt;&lt;/iframe&gt;&#10;&#9;  &lt;/body&gt;&#10;&#9;&lt;&quot;[truncated 6 chars]; line: 1, column: 2]" type="com.fasterxml.jackson.core.JsonParseException">
+    <testcase classname="feature to test the function to get all branches from a repository by his owner" name="_2" time="1.822">
+        <system-out>
             <![CDATA[Given user is logging in the system for getting all branches from a repository by his owner.passed
-When user is correct he requests all branches from a repository by his owner.failed
-Then the user gets all branches from a repository by his owner..............skipped
-
-StackTrace:
-com.fasterxml.jackson.core.JsonParseException: Unexpected character ('<' (code 60)): expected a valid value (JSON String, Number, Array, Object or token 'null', 'true' or 'false')
- at [Source: (String)"<!DOCTYPE html>
-	<html>
-	  <head>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta charset="utf-8">
-		<title>Application Error</title>
-		<style media="screen">
-		  html,body,iframe {
-			margin: 0;
-			padding: 0;
-		  }
-		  html,body {
-			height: 100%;
-			overflow: hidden;
-		  }
-		  iframe {
-			width: 100%;
-			height: 100%;
-			border: 0;
-		  }
-		</style>
-	  </head>
-	  <body>
-		<iframe src="//www.herokucdn.com/error-pages/application-error.html"></iframe>
-	  </body>
-	<"[truncated 6 chars]; line: 1, column: 2]
-	at com.fasterxml.jackson.core.JsonParser._constructError(JsonParser.java:1851)
-	at com.fasterxml.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:707)
-	at com.fasterxml.jackson.core.base.ParserMinimalBase._reportUnexpectedChar(ParserMinimalBase.java:632)
-	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser._handleOddValue(ReaderBasedJsonParser.java:1941)
-	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser.nextToken(ReaderBasedJsonParser.java:776)
-	at com.fasterxml.jackson.databind.ObjectMapper._readTreeAndClose(ObjectMapper.java:4511)
-	at com.fasterxml.jackson.databind.ObjectMapper.readTree(ObjectMapper.java:2940)
-	at edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllBranchesSteps.user_is_correct_he_requests_all_branches_from_a_repository_by_his_owner(GetAllBranchesSteps.java:55)
-	at ✽.user is correct he requests all branches from a repository by his owner(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetAllBranches.feature:5)
+When user is correct he requests all branches from a repository by his owner.passed
+Then the user gets all branches from a repository by his owner..............passed
 ]]>
-        </failure>
+        </system-out>
     </testcase>
-    <testcase classname="feature to test the function to get all commits from a repository by his owner" name="_2" time="0.275">
-        <failure message="Unexpected character ('&lt;' (code 60)): expected a valid value (JSON String, Number, Array, Object or token 'null', 'true' or 'false')&#10; at [Source: (String)&quot;&lt;!DOCTYPE html&gt;&#10;&#9;&lt;html&gt;&#10;&#9;  &lt;head&gt;&#10;&#9;&#9;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;&#10;&#9;&#9;&lt;meta charset=&quot;utf-8&quot;&gt;&#10;&#9;&#9;&lt;title&gt;Application Error&lt;/title&gt;&#10;&#9;&#9;&lt;style media=&quot;screen&quot;&gt;&#10;&#9;&#9;  html,body,iframe {&#10;&#9;&#9;&#9;margin: 0;&#10;&#9;&#9;&#9;padding: 0;&#10;&#9;&#9;  }&#10;&#9;&#9;  html,body {&#10;&#9;&#9;&#9;height: 100%;&#10;&#9;&#9;&#9;overflow: hidden;&#10;&#9;&#9;  }&#10;&#9;&#9;  iframe {&#10;&#9;&#9;&#9;width: 100%;&#10;&#9;&#9;&#9;height: 100%;&#10;&#9;&#9;&#9;border: 0;&#10;&#9;&#9;  }&#10;&#9;&#9;&lt;/style&gt;&#10;&#9;  &lt;/head&gt;&#10;&#9;  &lt;body&gt;&#10;&#9;&#9;&lt;iframe src=&quot;//www.herokucdn.com/error-pages/application-error.html&quot;&gt;&lt;/iframe&gt;&#10;&#9;  &lt;/body&gt;&#10;&#9;&lt;&quot;[truncated 6 chars]; line: 1, column: 2]" type="com.fasterxml.jackson.core.JsonParseException">
+    <testcase classname="feature to test the function to get all commits from a repository by his owner" name="_2" time="1.964">
+        <system-out>
             <![CDATA[Given user is logging in the system for getting all commits from a repository by his owner.passed
-When user is correct he requests all commits from a repository by his owner.failed
-Then the user gets all commits from a repository by his owner...............skipped
-
-StackTrace:
-com.fasterxml.jackson.core.JsonParseException: Unexpected character ('<' (code 60)): expected a valid value (JSON String, Number, Array, Object or token 'null', 'true' or 'false')
- at [Source: (String)"<!DOCTYPE html>
-	<html>
-	  <head>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta charset="utf-8">
-		<title>Application Error</title>
-		<style media="screen">
-		  html,body,iframe {
-			margin: 0;
-			padding: 0;
-		  }
-		  html,body {
-			height: 100%;
-			overflow: hidden;
-		  }
-		  iframe {
-			width: 100%;
-			height: 100%;
-			border: 0;
-		  }
-		</style>
-	  </head>
-	  <body>
-		<iframe src="//www.herokucdn.com/error-pages/application-error.html"></iframe>
-	  </body>
-	<"[truncated 6 chars]; line: 1, column: 2]
-	at com.fasterxml.jackson.core.JsonParser._constructError(JsonParser.java:1851)
-	at com.fasterxml.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:707)
-	at com.fasterxml.jackson.core.base.ParserMinimalBase._reportUnexpectedChar(ParserMinimalBase.java:632)
-	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser._handleOddValue(ReaderBasedJsonParser.java:1941)
-	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser.nextToken(ReaderBasedJsonParser.java:776)
-	at com.fasterxml.jackson.databind.ObjectMapper._readTreeAndClose(ObjectMapper.java:4511)
-	at com.fasterxml.jackson.databind.ObjectMapper.readTree(ObjectMapper.java:2940)
-	at edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllCommitsSteps.user_is_correct_he_requests_all_commits_from_a_repository_by_his_owner(GetAllCommitsSteps.java:53)
-	at ✽.user is correct he requests all commits from a repository by his owner(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetAllCommits.feature:5)
+When user is correct he requests all commits from a repository by his owner.passed
+Then the user gets all commits from a repository by his owner...............passed
 ]]>
-        </failure>
+        </system-out>
     </testcase>
-    <testcase classname="feature to test the function to get all issues from a repository by his owner from Github" name="_2" time="0.265">
-        <failure message="Unexpected character ('&lt;' (code 60)): expected a valid value (JSON String, Number, Array, Object or token 'null', 'true' or 'false')&#10; at [Source: (String)&quot;&lt;!DOCTYPE html&gt;&#10;&#9;&lt;html&gt;&#10;&#9;  &lt;head&gt;&#10;&#9;&#9;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;&#10;&#9;&#9;&lt;meta charset=&quot;utf-8&quot;&gt;&#10;&#9;&#9;&lt;title&gt;Application Error&lt;/title&gt;&#10;&#9;&#9;&lt;style media=&quot;screen&quot;&gt;&#10;&#9;&#9;  html,body,iframe {&#10;&#9;&#9;&#9;margin: 0;&#10;&#9;&#9;&#9;padding: 0;&#10;&#9;&#9;  }&#10;&#9;&#9;  html,body {&#10;&#9;&#9;&#9;height: 100%;&#10;&#9;&#9;&#9;overflow: hidden;&#10;&#9;&#9;  }&#10;&#9;&#9;  iframe {&#10;&#9;&#9;&#9;width: 100%;&#10;&#9;&#9;&#9;height: 100%;&#10;&#9;&#9;&#9;border: 0;&#10;&#9;&#9;  }&#10;&#9;&#9;&lt;/style&gt;&#10;&#9;  &lt;/head&gt;&#10;&#9;  &lt;body&gt;&#10;&#9;&#9;&lt;iframe src=&quot;//www.herokucdn.com/error-pages/application-error.html&quot;&gt;&lt;/iframe&gt;&#10;&#9;  &lt;/body&gt;&#10;&#9;&lt;&quot;[truncated 6 chars]; line: 1, column: 2]" type="com.fasterxml.jackson.core.JsonParseException">
+    <testcase classname="feature to test the function to get all issues from a repository by his owner from Github" name="_2" time="1.069">
+        <system-out>
             <![CDATA[Given user is logging in the system for getting all issues from a repository by his owner from Github.passed
-When user is correct he requests all issues from a repository by his owner..failed
-Then the user gets all issues from a repository by his owner................skipped
-
-StackTrace:
-com.fasterxml.jackson.core.JsonParseException: Unexpected character ('<' (code 60)): expected a valid value (JSON String, Number, Array, Object or token 'null', 'true' or 'false')
- at [Source: (String)"<!DOCTYPE html>
-	<html>
-	  <head>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta charset="utf-8">
-		<title>Application Error</title>
-		<style media="screen">
-		  html,body,iframe {
-			margin: 0;
-			padding: 0;
-		  }
-		  html,body {
-			height: 100%;
-			overflow: hidden;
-		  }
-		  iframe {
-			width: 100%;
-			height: 100%;
-			border: 0;
-		  }
-		</style>
-	  </head>
-	  <body>
-		<iframe src="//www.herokucdn.com/error-pages/application-error.html"></iframe>
-	  </body>
-	<"[truncated 6 chars]; line: 1, column: 2]
-	at com.fasterxml.jackson.core.JsonParser._constructError(JsonParser.java:1851)
-	at com.fasterxml.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:707)
-	at com.fasterxml.jackson.core.base.ParserMinimalBase._reportUnexpectedChar(ParserMinimalBase.java:632)
-	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser._handleOddValue(ReaderBasedJsonParser.java:1941)
-	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser.nextToken(ReaderBasedJsonParser.java:776)
-	at com.fasterxml.jackson.databind.ObjectMapper._readTreeAndClose(ObjectMapper.java:4511)
-	at com.fasterxml.jackson.databind.ObjectMapper.readTree(ObjectMapper.java:2940)
-	at edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllIssuesSteps.user_is_correct_he_requests_all_issues_from_a_repository_by_his_owner(GetAllIssuesSteps.java:50)
-	at ✽.user is correct he requests all issues from a repository by his owner(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetAllIssues.feature:5)
+When user is correct he requests all issues from a repository by his owner..passed
+Then the user gets all issues from a repository by his owner................passed
 ]]>
-        </failure>
+        </system-out>
     </testcase>
-    <testcase classname="feature to test the function to get all users in the system" name="_2" time="0.232">
-        <failure message="Unexpected character ('&lt;' (code 60)): expected a valid value (JSON String, Number, Array, Object or token 'null', 'true' or 'false')&#10; at [Source: (String)&quot;&lt;!DOCTYPE html&gt;&#10;&#9;&lt;html&gt;&#10;&#9;  &lt;head&gt;&#10;&#9;&#9;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;&#10;&#9;&#9;&lt;meta charset=&quot;utf-8&quot;&gt;&#10;&#9;&#9;&lt;title&gt;Application Error&lt;/title&gt;&#10;&#9;&#9;&lt;style media=&quot;screen&quot;&gt;&#10;&#9;&#9;  html,body,iframe {&#10;&#9;&#9;&#9;margin: 0;&#10;&#9;&#9;&#9;padding: 0;&#10;&#9;&#9;  }&#10;&#9;&#9;  html,body {&#10;&#9;&#9;&#9;height: 100%;&#10;&#9;&#9;&#9;overflow: hidden;&#10;&#9;&#9;  }&#10;&#9;&#9;  iframe {&#10;&#9;&#9;&#9;width: 100%;&#10;&#9;&#9;&#9;height: 100%;&#10;&#9;&#9;&#9;border: 0;&#10;&#9;&#9;  }&#10;&#9;&#9;&lt;/style&gt;&#10;&#9;  &lt;/head&gt;&#10;&#9;  &lt;body&gt;&#10;&#9;&#9;&lt;iframe src=&quot;//www.herokucdn.com/error-pages/application-error.html&quot;&gt;&lt;/iframe&gt;&#10;&#9;  &lt;/body&gt;&#10;&#9;&lt;&quot;[truncated 6 chars]; line: 1, column: 2]" type="com.fasterxml.jackson.core.JsonParseException">
+    <testcase classname="feature to test the function to get all users in the system" name="_2" time="0.979">
+        <system-out>
             <![CDATA[Given user is logging in the system to get all users in the system..........passed
-When user is correct he gets all the users in the system....................failed
-Then the users were got correctly...........................................skipped
-
-StackTrace:
-com.fasterxml.jackson.core.JsonParseException: Unexpected character ('<' (code 60)): expected a valid value (JSON String, Number, Array, Object or token 'null', 'true' or 'false')
- at [Source: (String)"<!DOCTYPE html>
-	<html>
-	  <head>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta charset="utf-8">
-		<title>Application Error</title>
-		<style media="screen">
-		  html,body,iframe {
-			margin: 0;
-			padding: 0;
-		  }
-		  html,body {
-			height: 100%;
-			overflow: hidden;
-		  }
-		  iframe {
-			width: 100%;
-			height: 100%;
-			border: 0;
-		  }
-		</style>
-	  </head>
-	  <body>
-		<iframe src="//www.herokucdn.com/error-pages/application-error.html"></iframe>
-	  </body>
-	<"[truncated 6 chars]; line: 1, column: 2]
-	at com.fasterxml.jackson.core.JsonParser._constructError(JsonParser.java:1851)
-	at com.fasterxml.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:707)
-	at com.fasterxml.jackson.core.base.ParserMinimalBase._reportUnexpectedChar(ParserMinimalBase.java:632)
-	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser._handleOddValue(ReaderBasedJsonParser.java:1941)
-	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser.nextToken(ReaderBasedJsonParser.java:776)
-	at com.fasterxml.jackson.databind.ObjectMapper._readTreeAndClose(ObjectMapper.java:4511)
-	at com.fasterxml.jackson.databind.ObjectMapper.readTree(ObjectMapper.java:2940)
-	at edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllUserListSteps.user_is_correct_he_gets_all_the_users_in_the_system(GetAllUserListSteps.java:51)
-	at ✽.user is correct he gets all the users in the system(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetAllUsers.feature:5)
+When user is correct he gets all the users in the system....................passed
+Then the users were got correctly...........................................passed
 ]]>
-        </failure>
+        </system-out>
     </testcase>
-    <testcase classname="feature to test the function to get all commits from a branch of a repository" name="_2" time="0.258">
-        <failure message="Unexpected character ('&lt;' (code 60)): expected a valid value (JSON String, Number, Array, Object or token 'null', 'true' or 'false')&#10; at [Source: (String)&quot;&lt;!DOCTYPE html&gt;&#10;&#9;&lt;html&gt;&#10;&#9;  &lt;head&gt;&#10;&#9;&#9;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;&#10;&#9;&#9;&lt;meta charset=&quot;utf-8&quot;&gt;&#10;&#9;&#9;&lt;title&gt;Application Error&lt;/title&gt;&#10;&#9;&#9;&lt;style media=&quot;screen&quot;&gt;&#10;&#9;&#9;  html,body,iframe {&#10;&#9;&#9;&#9;margin: 0;&#10;&#9;&#9;&#9;padding: 0;&#10;&#9;&#9;  }&#10;&#9;&#9;  html,body {&#10;&#9;&#9;&#9;height: 100%;&#10;&#9;&#9;&#9;overflow: hidden;&#10;&#9;&#9;  }&#10;&#9;&#9;  iframe {&#10;&#9;&#9;&#9;width: 100%;&#10;&#9;&#9;&#9;height: 100%;&#10;&#9;&#9;&#9;border: 0;&#10;&#9;&#9;  }&#10;&#9;&#9;&lt;/style&gt;&#10;&#9;  &lt;/head&gt;&#10;&#9;  &lt;body&gt;&#10;&#9;&#9;&lt;iframe src=&quot;//www.herokucdn.com/error-pages/application-error.html&quot;&gt;&lt;/iframe&gt;&#10;&#9;  &lt;/body&gt;&#10;&#9;&lt;&quot;[truncated 6 chars]; line: 1, column: 2]" type="com.fasterxml.jackson.core.JsonParseException">
+    <testcase classname="feature to test the function to get all commits from a branch of a repository" name="_2" time="2.889">
+        <system-out>
             <![CDATA[Given user is logging in the system for getting all commits from a branch of a repository.passed
-When user is correct he requests all commits from a branch of a repository..failed
-Then the user gets all commits from a branch of a repository................skipped
-
-StackTrace:
-com.fasterxml.jackson.core.JsonParseException: Unexpected character ('<' (code 60)): expected a valid value (JSON String, Number, Array, Object or token 'null', 'true' or 'false')
- at [Source: (String)"<!DOCTYPE html>
-	<html>
-	  <head>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta charset="utf-8">
-		<title>Application Error</title>
-		<style media="screen">
-		  html,body,iframe {
-			margin: 0;
-			padding: 0;
-		  }
-		  html,body {
-			height: 100%;
-			overflow: hidden;
-		  }
-		  iframe {
-			width: 100%;
-			height: 100%;
-			border: 0;
-		  }
-		</style>
-	  </head>
-	  <body>
-		<iframe src="//www.herokucdn.com/error-pages/application-error.html"></iframe>
-	  </body>
-	<"[truncated 6 chars]; line: 1, column: 2]
-	at com.fasterxml.jackson.core.JsonParser._constructError(JsonParser.java:1851)
-	at com.fasterxml.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:707)
-	at com.fasterxml.jackson.core.base.ParserMinimalBase._reportUnexpectedChar(ParserMinimalBase.java:632)
-	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser._handleOddValue(ReaderBasedJsonParser.java:1941)
-	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser.nextToken(ReaderBasedJsonParser.java:776)
-	at com.fasterxml.jackson.databind.ObjectMapper._readTreeAndClose(ObjectMapper.java:4511)
-	at com.fasterxml.jackson.databind.ObjectMapper.readTree(ObjectMapper.java:2940)
-	at edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetCommitsBranchSteps.user_is_correct_he_requests_all_commits_from_a_branch_of_a_repository(GetCommitsBranchSteps.java:55)
-	at ✽.user is correct he requests all commits from a branch of a repository(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetCommitsBranch.feature:5)
+When user is correct he requests all commits from a branch of a repository..passed
+Then the user gets all commits from a branch of a repository................passed
 ]]>
-        </failure>
+        </system-out>
     </testcase>
-    <testcase classname="feature to test the function to get all commits from a branch of a repository by the author" name="_2" time="0.309">
-        <failure message="Unexpected character ('&lt;' (code 60)): expected a valid value (JSON String, Number, Array, Object or token 'null', 'true' or 'false')&#10; at [Source: (String)&quot;&lt;!DOCTYPE html&gt;&#10;&#9;&lt;html&gt;&#10;&#9;  &lt;head&gt;&#10;&#9;&#9;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;&#10;&#9;&#9;&lt;meta charset=&quot;utf-8&quot;&gt;&#10;&#9;&#9;&lt;title&gt;Application Error&lt;/title&gt;&#10;&#9;&#9;&lt;style media=&quot;screen&quot;&gt;&#10;&#9;&#9;  html,body,iframe {&#10;&#9;&#9;&#9;margin: 0;&#10;&#9;&#9;&#9;padding: 0;&#10;&#9;&#9;  }&#10;&#9;&#9;  html,body {&#10;&#9;&#9;&#9;height: 100%;&#10;&#9;&#9;&#9;overflow: hidden;&#10;&#9;&#9;  }&#10;&#9;&#9;  iframe {&#10;&#9;&#9;&#9;width: 100%;&#10;&#9;&#9;&#9;height: 100%;&#10;&#9;&#9;&#9;border: 0;&#10;&#9;&#9;  }&#10;&#9;&#9;&lt;/style&gt;&#10;&#9;  &lt;/head&gt;&#10;&#9;  &lt;body&gt;&#10;&#9;&#9;&lt;iframe src=&quot;//www.herokucdn.com/error-pages/application-error.html&quot;&gt;&lt;/iframe&gt;&#10;&#9;  &lt;/body&gt;&#10;&#9;&lt;&quot;[truncated 6 chars]; line: 1, column: 2]" type="com.fasterxml.jackson.core.JsonParseException">
+    <testcase classname="feature to test the function to get all commits from a branch of a repository by the author" name="_2" time="2.057">
+        <system-out>
             <![CDATA[Given user is logging in the system for getting all commits from a branch of a repository by the author.passed
-When user is correct he requests all commits from a branch of a repository by the author.failed
-Then the user gets all commits from a branch of a repository by the author..skipped
-
-StackTrace:
-com.fasterxml.jackson.core.JsonParseException: Unexpected character ('<' (code 60)): expected a valid value (JSON String, Number, Array, Object or token 'null', 'true' or 'false')
- at [Source: (String)"<!DOCTYPE html>
-	<html>
-	  <head>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta charset="utf-8">
-		<title>Application Error</title>
-		<style media="screen">
-		  html,body,iframe {
-			margin: 0;
-			padding: 0;
-		  }
-		  html,body {
-			height: 100%;
-			overflow: hidden;
-		  }
-		  iframe {
-			width: 100%;
-			height: 100%;
-			border: 0;
-		  }
-		</style>
-	  </head>
-	  <body>
-		<iframe src="//www.herokucdn.com/error-pages/application-error.html"></iframe>
-	  </body>
-	<"[truncated 6 chars]; line: 1, column: 2]
-	at com.fasterxml.jackson.core.JsonParser._constructError(JsonParser.java:1851)
-	at com.fasterxml.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:707)
-	at com.fasterxml.jackson.core.base.ParserMinimalBase._reportUnexpectedChar(ParserMinimalBase.java:632)
-	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser._handleOddValue(ReaderBasedJsonParser.java:1941)
-	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser.nextToken(ReaderBasedJsonParser.java:776)
-	at com.fasterxml.jackson.databind.ObjectMapper._readTreeAndClose(ObjectMapper.java:4511)
-	at com.fasterxml.jackson.databind.ObjectMapper.readTree(ObjectMapper.java:2940)
-	at edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetCommitsBranchAuthorSteps.user_is_correct_he_requests_all_commits_from_a_branch_of_a_repository_by_the_author(GetCommitsBranchAuthorSteps.java:54)
-	at ✽.user is correct he requests all commits from a branch of a repository by the author(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetCommitsBranchAuthor.feature:5)
+When user is correct he requests all commits from a branch of a repository by the author.passed
+Then the user gets all commits from a branch of a repository by the author..passed
 ]]>
-        </failure>
+        </system-out>
     </testcase>
-    <testcase classname="feature to test the function to get all commits from a branch of a repository between a date" name="_2" time="0.249">
-        <failure message="Unexpected character ('&lt;' (code 60)): expected a valid value (JSON String, Number, Array, Object or token 'null', 'true' or 'false')&#10; at [Source: (String)&quot;&lt;!DOCTYPE html&gt;&#10;&#9;&lt;html&gt;&#10;&#9;  &lt;head&gt;&#10;&#9;&#9;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;&#10;&#9;&#9;&lt;meta charset=&quot;utf-8&quot;&gt;&#10;&#9;&#9;&lt;title&gt;Application Error&lt;/title&gt;&#10;&#9;&#9;&lt;style media=&quot;screen&quot;&gt;&#10;&#9;&#9;  html,body,iframe {&#10;&#9;&#9;&#9;margin: 0;&#10;&#9;&#9;&#9;padding: 0;&#10;&#9;&#9;  }&#10;&#9;&#9;  html,body {&#10;&#9;&#9;&#9;height: 100%;&#10;&#9;&#9;&#9;overflow: hidden;&#10;&#9;&#9;  }&#10;&#9;&#9;  iframe {&#10;&#9;&#9;&#9;width: 100%;&#10;&#9;&#9;&#9;height: 100%;&#10;&#9;&#9;&#9;border: 0;&#10;&#9;&#9;  }&#10;&#9;&#9;&lt;/style&gt;&#10;&#9;  &lt;/head&gt;&#10;&#9;  &lt;body&gt;&#10;&#9;&#9;&lt;iframe src=&quot;//www.herokucdn.com/error-pages/application-error.html&quot;&gt;&lt;/iframe&gt;&#10;&#9;  &lt;/body&gt;&#10;&#9;&lt;&quot;[truncated 6 chars]; line: 1, column: 2]" type="com.fasterxml.jackson.core.JsonParseException">
+    <testcase classname="feature to test the function to get all commits from a branch of a repository between a date" name="_2" time="3.013">
+        <system-out>
             <![CDATA[Given user is logging in the system for getting all commits from a branch of a repository between a date.passed
-When user is correct he requests all commits from a branch of a repository between a date.failed
-Then the user gets all commits from a branch of a repositorybetween a date..skipped
-
-StackTrace:
-com.fasterxml.jackson.core.JsonParseException: Unexpected character ('<' (code 60)): expected a valid value (JSON String, Number, Array, Object or token 'null', 'true' or 'false')
- at [Source: (String)"<!DOCTYPE html>
-	<html>
-	  <head>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta charset="utf-8">
-		<title>Application Error</title>
-		<style media="screen">
-		  html,body,iframe {
-			margin: 0;
-			padding: 0;
-		  }
-		  html,body {
-			height: 100%;
-			overflow: hidden;
-		  }
-		  iframe {
-			width: 100%;
-			height: 100%;
-			border: 0;
-		  }
-		</style>
-	  </head>
-	  <body>
-		<iframe src="//www.herokucdn.com/error-pages/application-error.html"></iframe>
-	  </body>
-	<"[truncated 6 chars]; line: 1, column: 2]
-	at com.fasterxml.jackson.core.JsonParser._constructError(JsonParser.java:1851)
-	at com.fasterxml.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:707)
-	at com.fasterxml.jackson.core.base.ParserMinimalBase._reportUnexpectedChar(ParserMinimalBase.java:632)
-	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser._handleOddValue(ReaderBasedJsonParser.java:1941)
-	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser.nextToken(ReaderBasedJsonParser.java:776)
-	at com.fasterxml.jackson.databind.ObjectMapper._readTreeAndClose(ObjectMapper.java:4511)
-	at com.fasterxml.jackson.databind.ObjectMapper.readTree(ObjectMapper.java:2940)
-	at edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetCommitsBranchDateSteps.user_is_correct_he_requests_all_commits_from_a_branch_of_a_repository_between_a_date(GetCommitsBranchDateSteps.java:57)
-	at ✽.user is correct he requests all commits from a branch of a repository between a date(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetCommitsBranchDate.feature:5)
+When user is correct he requests all commits from a branch of a repository between a date.passed
+Then the user gets all commits from a branch of a repositorybetween a date..passed
 ]]>
-        </failure>
+        </system-out>
     </testcase>
-    <testcase classname="feature to test the function to get all commits from a branch of a repository between a date by the author" name="_2" time="0.235">
-        <failure message="Unexpected character ('&lt;' (code 60)): expected a valid value (JSON String, Number, Array, Object or token 'null', 'true' or 'false')&#10; at [Source: (String)&quot;&lt;!DOCTYPE html&gt;&#10;&#9;&lt;html&gt;&#10;&#9;  &lt;head&gt;&#10;&#9;&#9;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;&#10;&#9;&#9;&lt;meta charset=&quot;utf-8&quot;&gt;&#10;&#9;&#9;&lt;title&gt;Application Error&lt;/title&gt;&#10;&#9;&#9;&lt;style media=&quot;screen&quot;&gt;&#10;&#9;&#9;  html,body,iframe {&#10;&#9;&#9;&#9;margin: 0;&#10;&#9;&#9;&#9;padding: 0;&#10;&#9;&#9;  }&#10;&#9;&#9;  html,body {&#10;&#9;&#9;&#9;height: 100%;&#10;&#9;&#9;&#9;overflow: hidden;&#10;&#9;&#9;  }&#10;&#9;&#9;  iframe {&#10;&#9;&#9;&#9;width: 100%;&#10;&#9;&#9;&#9;height: 100%;&#10;&#9;&#9;&#9;border: 0;&#10;&#9;&#9;  }&#10;&#9;&#9;&lt;/style&gt;&#10;&#9;  &lt;/head&gt;&#10;&#9;  &lt;body&gt;&#10;&#9;&#9;&lt;iframe src=&quot;//www.herokucdn.com/error-pages/application-error.html&quot;&gt;&lt;/iframe&gt;&#10;&#9;  &lt;/body&gt;&#10;&#9;&lt;&quot;[truncated 6 chars]; line: 1, column: 2]" type="com.fasterxml.jackson.core.JsonParseException">
+    <testcase classname="feature to test the function to get all commits from a branch of a repository between a date by the author" name="_2" time="3.806">
+        <system-out>
             <![CDATA[Given user is logging in the system for getting all commits from a branch of a repository between a date by the author.passed
-When user is correct he requests all commits from a branch of a repository between a date by the author.failed
-Then the user gets all commits from a branch of a repositorybetween a date by the author.skipped
-
-StackTrace:
-com.fasterxml.jackson.core.JsonParseException: Unexpected character ('<' (code 60)): expected a valid value (JSON String, Number, Array, Object or token 'null', 'true' or 'false')
- at [Source: (String)"<!DOCTYPE html>
-	<html>
-	  <head>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta charset="utf-8">
-		<title>Application Error</title>
-		<style media="screen">
-		  html,body,iframe {
-			margin: 0;
-			padding: 0;
-		  }
-		  html,body {
-			height: 100%;
-			overflow: hidden;
-		  }
-		  iframe {
-			width: 100%;
-			height: 100%;
-			border: 0;
-		  }
-		</style>
-	  </head>
-	  <body>
-		<iframe src="//www.herokucdn.com/error-pages/application-error.html"></iframe>
-	  </body>
-	<"[truncated 6 chars]; line: 1, column: 2]
-	at com.fasterxml.jackson.core.JsonParser._constructError(JsonParser.java:1851)
-	at com.fasterxml.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:707)
-	at com.fasterxml.jackson.core.base.ParserMinimalBase._reportUnexpectedChar(ParserMinimalBase.java:632)
-	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser._handleOddValue(ReaderBasedJsonParser.java:1941)
-	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser.nextToken(ReaderBasedJsonParser.java:776)
-	at com.fasterxml.jackson.databind.ObjectMapper._readTreeAndClose(ObjectMapper.java:4511)
-	at com.fasterxml.jackson.databind.ObjectMapper.readTree(ObjectMapper.java:2940)
-	at edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetCommitsBranchDateAuthorSteps.user_is_correct_he_requests_all_commits_from_a_branch_of_a_repository_between_a_date_by_the_author(GetCommitsBranchDateAuthorSteps.java:57)
-	at ✽.user is correct he requests all commits from a branch of a repository between a date by the author(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetCommitsBranchDateAuthor.feature:5)
+When user is correct he requests all commits from a branch of a repository between a date by the author.passed
+Then the user gets all commits from a branch of a repositorybetween a date by the author.passed
 ]]>
-        </failure>
+        </system-out>
     </testcase>
-    <testcase classname="feature to test the function to get all issues from a repository by his owner from the system" name="_2" time="0.27">
-        <failure message="Unexpected character ('&lt;' (code 60)): expected a valid value (JSON String, Number, Array, Object or token 'null', 'true' or 'false')&#10; at [Source: (String)&quot;&lt;!DOCTYPE html&gt;&#10;&#9;&lt;html&gt;&#10;&#9;  &lt;head&gt;&#10;&#9;&#9;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;&#10;&#9;&#9;&lt;meta charset=&quot;utf-8&quot;&gt;&#10;&#9;&#9;&lt;title&gt;Application Error&lt;/title&gt;&#10;&#9;&#9;&lt;style media=&quot;screen&quot;&gt;&#10;&#9;&#9;  html,body,iframe {&#10;&#9;&#9;&#9;margin: 0;&#10;&#9;&#9;&#9;padding: 0;&#10;&#9;&#9;  }&#10;&#9;&#9;  html,body {&#10;&#9;&#9;&#9;height: 100%;&#10;&#9;&#9;&#9;overflow: hidden;&#10;&#9;&#9;  }&#10;&#9;&#9;  iframe {&#10;&#9;&#9;&#9;width: 100%;&#10;&#9;&#9;&#9;height: 100%;&#10;&#9;&#9;&#9;border: 0;&#10;&#9;&#9;  }&#10;&#9;&#9;&lt;/style&gt;&#10;&#9;  &lt;/head&gt;&#10;&#9;  &lt;body&gt;&#10;&#9;&#9;&lt;iframe src=&quot;//www.herokucdn.com/error-pages/application-error.html&quot;&gt;&lt;/iframe&gt;&#10;&#9;  &lt;/body&gt;&#10;&#9;&lt;&quot;[truncated 6 chars]; line: 1, column: 2]" type="com.fasterxml.jackson.core.JsonParseException">
+    <testcase classname="feature to test the function to get all issues from a repository by his owner from the system" name="_2" time="4.017">
+        <system-out>
             <![CDATA[Given user is logging in the system for getting all issues from a repository by his owner from the system.passed
-When user is correct he requests all issues from a repository by his owner of the system.failed
-Then the user gets all issues from a repository by his owner if the system..skipped
-
-StackTrace:
-com.fasterxml.jackson.core.JsonParseException: Unexpected character ('<' (code 60)): expected a valid value (JSON String, Number, Array, Object or token 'null', 'true' or 'false')
- at [Source: (String)"<!DOCTYPE html>
-	<html>
-	  <head>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta charset="utf-8">
-		<title>Application Error</title>
-		<style media="screen">
-		  html,body,iframe {
-			margin: 0;
-			padding: 0;
-		  }
-		  html,body {
-			height: 100%;
-			overflow: hidden;
-		  }
-		  iframe {
-			width: 100%;
-			height: 100%;
-			border: 0;
-		  }
-		</style>
-	  </head>
-	  <body>
-		<iframe src="//www.herokucdn.com/error-pages/application-error.html"></iframe>
-	  </body>
-	<"[truncated 6 chars]; line: 1, column: 2]
-	at com.fasterxml.jackson.core.JsonParser._constructError(JsonParser.java:1851)
-	at com.fasterxml.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:707)
-	at com.fasterxml.jackson.core.base.ParserMinimalBase._reportUnexpectedChar(ParserMinimalBase.java:632)
-	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser._handleOddValue(ReaderBasedJsonParser.java:1941)
-	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser.nextToken(ReaderBasedJsonParser.java:776)
-	at com.fasterxml.jackson.databind.ObjectMapper._readTreeAndClose(ObjectMapper.java:4511)
-	at com.fasterxml.jackson.databind.ObjectMapper.readTree(ObjectMapper.java:2940)
-	at edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetIssuesRepoSteps.user_is_correct_he_requests_all_issues_from_a_repository_by_his_owner_of_the_system(GetIssuesRepoSteps.java:51)
-	at ✽.user is correct he requests all issues from a repository by his owner of the system(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetIssuesRepo.feature:5)
+When user is correct he requests all issues from a repository by his owner of the system.passed
+Then the user gets all issues from a repository by his owner if the system..passed
 ]]>
-        </failure>
+        </system-out>
     </testcase>
-    <testcase classname="feature to test the function to get an user by the tokenpass in the system" name="_2" time="0.262">
-        <failure message="Unexpected character ('&lt;' (code 60)): expected a valid value (JSON String, Number, Array, Object or token 'null', 'true' or 'false')&#10; at [Source: (String)&quot;&lt;!DOCTYPE html&gt;&#10;&#9;&lt;html&gt;&#10;&#9;  &lt;head&gt;&#10;&#9;&#9;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;&#10;&#9;&#9;&lt;meta charset=&quot;utf-8&quot;&gt;&#10;&#9;&#9;&lt;title&gt;Application Error&lt;/title&gt;&#10;&#9;&#9;&lt;style media=&quot;screen&quot;&gt;&#10;&#9;&#9;  html,body,iframe {&#10;&#9;&#9;&#9;margin: 0;&#10;&#9;&#9;&#9;padding: 0;&#10;&#9;&#9;  }&#10;&#9;&#9;  html,body {&#10;&#9;&#9;&#9;height: 100%;&#10;&#9;&#9;&#9;overflow: hidden;&#10;&#9;&#9;  }&#10;&#9;&#9;  iframe {&#10;&#9;&#9;&#9;width: 100%;&#10;&#9;&#9;&#9;height: 100%;&#10;&#9;&#9;&#9;border: 0;&#10;&#9;&#9;  }&#10;&#9;&#9;&lt;/style&gt;&#10;&#9;  &lt;/head&gt;&#10;&#9;  &lt;body&gt;&#10;&#9;&#9;&lt;iframe src=&quot;//www.herokucdn.com/error-pages/application-error.html&quot;&gt;&lt;/iframe&gt;&#10;&#9;  &lt;/body&gt;&#10;&#9;&lt;&quot;[truncated 6 chars]; line: 1, column: 2]" type="com.fasterxml.jackson.core.JsonParseException">
+    <testcase classname="feature to test the function to get an user by the tokenpass in the system" name="_2" time="0.624">
+        <system-out>
             <![CDATA[Given user is logging in the system for get his tokenpass...................passed
-When user is correct he gets an user by the tokenpass of the session in the system.failed
-Then the tokenpass exists and the user is correct...........................skipped
-
-StackTrace:
-com.fasterxml.jackson.core.JsonParseException: Unexpected character ('<' (code 60)): expected a valid value (JSON String, Number, Array, Object or token 'null', 'true' or 'false')
- at [Source: (String)"<!DOCTYPE html>
-	<html>
-	  <head>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta charset="utf-8">
-		<title>Application Error</title>
-		<style media="screen">
-		  html,body,iframe {
-			margin: 0;
-			padding: 0;
-		  }
-		  html,body {
-			height: 100%;
-			overflow: hidden;
-		  }
-		  iframe {
-			width: 100%;
-			height: 100%;
-			border: 0;
-		  }
-		</style>
-	  </head>
-	  <body>
-		<iframe src="//www.herokucdn.com/error-pages/application-error.html"></iframe>
-	  </body>
-	<"[truncated 6 chars]; line: 1, column: 2]
-	at com.fasterxml.jackson.core.JsonParser._constructError(JsonParser.java:1851)
-	at com.fasterxml.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:707)
-	at com.fasterxml.jackson.core.base.ParserMinimalBase._reportUnexpectedChar(ParserMinimalBase.java:632)
-	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser._handleOddValue(ReaderBasedJsonParser.java:1941)
-	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser.nextToken(ReaderBasedJsonParser.java:776)
-	at com.fasterxml.jackson.databind.ObjectMapper._readTreeAndClose(ObjectMapper.java:4511)
-	at com.fasterxml.jackson.databind.ObjectMapper.readTree(ObjectMapper.java:2940)
-	at edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetUserByTokenPassSteps.user_is_correct_he_gets_an_user_by_the_tokenpass_of_the_session_in_the_system(GetUserByTokenPassSteps.java:52)
-	at ✽.user is correct he gets an user by the tokenpass of the session in the system(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetUserByTokenPass.feature:5)
+When user is correct he gets an user by the tokenpass of the session in the system.passed
+Then the tokenpass exists and the user is correct...........................passed
 ]]>
-        </failure>
+        </system-out>
     </testcase>
-    <testcase classname="feature to test the function to get an user by the username and the password in the system" name="_2" time="0.254">
-        <failure message="Unexpected character ('&lt;' (code 60)): expected a valid value (JSON String, Number, Array, Object or token 'null', 'true' or 'false')&#10; at [Source: (String)&quot;&lt;!DOCTYPE html&gt;&#10;&#9;&lt;html&gt;&#10;&#9;  &lt;head&gt;&#10;&#9;&#9;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;&#10;&#9;&#9;&lt;meta charset=&quot;utf-8&quot;&gt;&#10;&#9;&#9;&lt;title&gt;Application Error&lt;/title&gt;&#10;&#9;&#9;&lt;style media=&quot;screen&quot;&gt;&#10;&#9;&#9;  html,body,iframe {&#10;&#9;&#9;&#9;margin: 0;&#10;&#9;&#9;&#9;padding: 0;&#10;&#9;&#9;  }&#10;&#9;&#9;  html,body {&#10;&#9;&#9;&#9;height: 100%;&#10;&#9;&#9;&#9;overflow: hidden;&#10;&#9;&#9;  }&#10;&#9;&#9;  iframe {&#10;&#9;&#9;&#9;width: 100%;&#10;&#9;&#9;&#9;height: 100%;&#10;&#9;&#9;&#9;border: 0;&#10;&#9;&#9;  }&#10;&#9;&#9;&lt;/style&gt;&#10;&#9;  &lt;/head&gt;&#10;&#9;  &lt;body&gt;&#10;&#9;&#9;&lt;iframe src=&quot;//www.herokucdn.com/error-pages/application-error.html&quot;&gt;&lt;/iframe&gt;&#10;&#9;  &lt;/body&gt;&#10;&#9;&lt;&quot;[truncated 6 chars]; line: 1, column: 2]" type="com.fasterxml.jackson.core.JsonParseException">
+    <testcase classname="feature to test the function to get an user by the username and the password in the system" name="_2" time="0.328">
+        <system-out>
             <![CDATA[Given user is logging in the system.........................................passed
-When user is correct he gets an user by the username and the password in the system.failed
-Then by the username and the password in peer exists and the user is correct.skipped
-
-StackTrace:
-com.fasterxml.jackson.core.JsonParseException: Unexpected character ('<' (code 60)): expected a valid value (JSON String, Number, Array, Object or token 'null', 'true' or 'false')
- at [Source: (String)"<!DOCTYPE html>
-	<html>
-	  <head>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta charset="utf-8">
-		<title>Application Error</title>
-		<style media="screen">
-		  html,body,iframe {
-			margin: 0;
-			padding: 0;
-		  }
-		  html,body {
-			height: 100%;
-			overflow: hidden;
-		  }
-		  iframe {
-			width: 100%;
-			height: 100%;
-			border: 0;
-		  }
-		</style>
-	  </head>
-	  <body>
-		<iframe src="//www.herokucdn.com/error-pages/application-error.html"></iframe>
-	  </body>
-	<"[truncated 6 chars]; line: 1, column: 2]
-	at com.fasterxml.jackson.core.JsonParser._constructError(JsonParser.java:1851)
-	at com.fasterxml.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:707)
-	at com.fasterxml.jackson.core.base.ParserMinimalBase._reportUnexpectedChar(ParserMinimalBase.java:632)
-	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser._handleOddValue(ReaderBasedJsonParser.java:1941)
-	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser.nextToken(ReaderBasedJsonParser.java:776)
-	at com.fasterxml.jackson.databind.ObjectMapper._readTreeAndClose(ObjectMapper.java:4511)
-	at com.fasterxml.jackson.databind.ObjectMapper.readTree(ObjectMapper.java:2940)
-	at edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetUserPasswordSteps.user_is_correct_he_gets_an_user_by_the_username_and_the_password_in_the_system(GetUserPasswordSteps.java:53)
-	at ✽.user is correct he gets an user by the username and the password in the system(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetUserPassword.feature:5)
+When user is correct he gets an user by the username and the password in the system.passed
+Then by the username and the password in peer exists and the user is correct.passed
 ]]>
-        </failure>
+        </system-out>
     </testcase>
-    <testcase classname="feature to test login functionality" name="_2" time="4.115">
-        <failure message="expected:&lt;...trics.herokuapp.com/[adm]in&gt; but was:&lt;...trics.herokuapp.com/[log]in&gt;" type="org.junit.ComparisonFailure">
+    <testcase classname="feature to test login functionality" name="_2" time="4.443">
+        <system-out>
             <![CDATA[Given user is on login page.................................................passed
 When user enters username and password......................................passed
 And clicks on login button..................................................passed
-Then user is navigated to the home page.....................................failed
-
-StackTrace:
-org.junit.ComparisonFailure: expected:<...trics.herokuapp.com/[adm]in> but was:<...trics.herokuapp.com/[log]in>
-	at org.junit.Assert.assertEquals(Assert.java:117)
-	at org.junit.Assert.assertEquals(Assert.java:146)
-	at edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.LoginSteps.user_is_navigated_to_the_home_page(LoginSteps.java:68)
-	at ✽.user is navigated to the home page(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/Login.feature:7)
+Then user is navigated to the home page.....................................passed
 ]]>
-        </failure>
+        </system-out>
     </testcase>
-    <testcase classname="feature to test the function to register an user in the system" name="_2" time="0.24">
-        <failure message="Unexpected character ('&lt;' (code 60)): expected a valid value (JSON String, Number, Array, Object or token 'null', 'true' or 'false')&#10; at [Source: (String)&quot;&lt;!DOCTYPE html&gt;&#10;&#9;&lt;html&gt;&#10;&#9;  &lt;head&gt;&#10;&#9;&#9;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;&#10;&#9;&#9;&lt;meta charset=&quot;utf-8&quot;&gt;&#10;&#9;&#9;&lt;title&gt;Application Error&lt;/title&gt;&#10;&#9;&#9;&lt;style media=&quot;screen&quot;&gt;&#10;&#9;&#9;  html,body,iframe {&#10;&#9;&#9;&#9;margin: 0;&#10;&#9;&#9;&#9;padding: 0;&#10;&#9;&#9;  }&#10;&#9;&#9;  html,body {&#10;&#9;&#9;&#9;height: 100%;&#10;&#9;&#9;&#9;overflow: hidden;&#10;&#9;&#9;  }&#10;&#9;&#9;  iframe {&#10;&#9;&#9;&#9;width: 100%;&#10;&#9;&#9;&#9;height: 100%;&#10;&#9;&#9;&#9;border: 0;&#10;&#9;&#9;  }&#10;&#9;&#9;&lt;/style&gt;&#10;&#9;  &lt;/head&gt;&#10;&#9;  &lt;body&gt;&#10;&#9;&#9;&lt;iframe src=&quot;//www.herokucdn.com/error-pages/application-error.html&quot;&gt;&lt;/iframe&gt;&#10;&#9;  &lt;/body&gt;&#10;&#9;&lt;&quot;[truncated 6 chars]; line: 1, column: 2]" type="com.fasterxml.jackson.core.JsonParseException">
+    <testcase classname="feature to test the function to register an user in the system" name="_2" time="1.094">
+        <system-out>
             <![CDATA[Given user is logging in the system for register other......................passed
-When user is correct he registers an user by the username, the password and the role in the system.failed
-Then by the username and the password in peer not exists and the user is registered correctly.skipped
-
-StackTrace:
-com.fasterxml.jackson.core.JsonParseException: Unexpected character ('<' (code 60)): expected a valid value (JSON String, Number, Array, Object or token 'null', 'true' or 'false')
- at [Source: (String)"<!DOCTYPE html>
-	<html>
-	  <head>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta charset="utf-8">
-		<title>Application Error</title>
-		<style media="screen">
-		  html,body,iframe {
-			margin: 0;
-			padding: 0;
-		  }
-		  html,body {
-			height: 100%;
-			overflow: hidden;
-		  }
-		  iframe {
-			width: 100%;
-			height: 100%;
-			border: 0;
-		  }
-		</style>
-	  </head>
-	  <body>
-		<iframe src="//www.herokucdn.com/error-pages/application-error.html"></iframe>
-	  </body>
-	<"[truncated 6 chars]; line: 1, column: 2]
-	at com.fasterxml.jackson.core.JsonParser._constructError(JsonParser.java:1851)
-	at com.fasterxml.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:707)
-	at com.fasterxml.jackson.core.base.ParserMinimalBase._reportUnexpectedChar(ParserMinimalBase.java:632)
-	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser._handleOddValue(ReaderBasedJsonParser.java:1941)
-	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser.nextToken(ReaderBasedJsonParser.java:776)
-	at com.fasterxml.jackson.databind.ObjectMapper._readTreeAndClose(ObjectMapper.java:4511)
-	at com.fasterxml.jackson.databind.ObjectMapper.readTree(ObjectMapper.java:2940)
-	at edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.RegistrarUsuarioSteps.user_is_correct_he_registers_an_user_by_the_username_the_password_and_the_role_in_the_system(RegistrarUsuarioSteps.java:54)
-	at ✽.user is correct he registers an user by the username, the password and the role in the system(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/RegistrarUsuario.feature:5)
+When user is correct he registers an user by the username, the password and the role in the system.passed
+Then by the username and the password in peer not exists and the user is registered correctly.passed
 ]]>
-        </failure>
+        </system-out>
     </testcase>
-    <testcase classname="feature to test the function to update an user in the system" name="_2" time="0.225">
-        <failure message="Unexpected character ('&lt;' (code 60)): expected a valid value (JSON String, Number, Array, Object or token 'null', 'true' or 'false')&#10; at [Source: (String)&quot;&lt;!DOCTYPE html&gt;&#10;&#9;&lt;html&gt;&#10;&#9;  &lt;head&gt;&#10;&#9;&#9;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;&#10;&#9;&#9;&lt;meta charset=&quot;utf-8&quot;&gt;&#10;&#9;&#9;&lt;title&gt;Application Error&lt;/title&gt;&#10;&#9;&#9;&lt;style media=&quot;screen&quot;&gt;&#10;&#9;&#9;  html,body,iframe {&#10;&#9;&#9;&#9;margin: 0;&#10;&#9;&#9;&#9;padding: 0;&#10;&#9;&#9;  }&#10;&#9;&#9;  html,body {&#10;&#9;&#9;&#9;height: 100%;&#10;&#9;&#9;&#9;overflow: hidden;&#10;&#9;&#9;  }&#10;&#9;&#9;  iframe {&#10;&#9;&#9;&#9;width: 100%;&#10;&#9;&#9;&#9;height: 100%;&#10;&#9;&#9;&#9;border: 0;&#10;&#9;&#9;  }&#10;&#9;&#9;&lt;/style&gt;&#10;&#9;  &lt;/head&gt;&#10;&#9;  &lt;body&gt;&#10;&#9;&#9;&lt;iframe src=&quot;//www.herokucdn.com/error-pages/application-error.html&quot;&gt;&lt;/iframe&gt;&#10;&#9;  &lt;/body&gt;&#10;&#9;&lt;&quot;[truncated 6 chars]; line: 1, column: 2]" type="com.fasterxml.jackson.core.JsonParseException">
+    <testcase classname="feature to test the function to update an user in the system" name="_2" time="1.11">
+        <system-out>
             <![CDATA[Given user is logging in the system for updating an user....................passed
-When user is correct it updates an user by the username and the password in the system.failed
-Then by the username and the password in peer not exists and the user is updated correctly.skipped
-
-StackTrace:
-com.fasterxml.jackson.core.JsonParseException: Unexpected character ('<' (code 60)): expected a valid value (JSON String, Number, Array, Object or token 'null', 'true' or 'false')
- at [Source: (String)"<!DOCTYPE html>
-	<html>
-	  <head>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta charset="utf-8">
-		<title>Application Error</title>
-		<style media="screen">
-		  html,body,iframe {
-			margin: 0;
-			padding: 0;
-		  }
-		  html,body {
-			height: 100%;
-			overflow: hidden;
-		  }
-		  iframe {
-			width: 100%;
-			height: 100%;
-			border: 0;
-		  }
-		</style>
-	  </head>
-	  <body>
-		<iframe src="//www.herokucdn.com/error-pages/application-error.html"></iframe>
-	  </body>
-	<"[truncated 6 chars]; line: 1, column: 2]
-	at com.fasterxml.jackson.core.JsonParser._constructError(JsonParser.java:1851)
-	at com.fasterxml.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:707)
-	at com.fasterxml.jackson.core.base.ParserMinimalBase._reportUnexpectedChar(ParserMinimalBase.java:632)
-	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser._handleOddValue(ReaderBasedJsonParser.java:1941)
-	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser.nextToken(ReaderBasedJsonParser.java:776)
-	at com.fasterxml.jackson.databind.ObjectMapper._readTreeAndClose(ObjectMapper.java:4511)
-	at com.fasterxml.jackson.databind.ObjectMapper.readTree(ObjectMapper.java:2940)
-	at edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.UpdateUserSteps.user_is_correct_it_updates_an_user_by_the_username_and_the_password_in_the_system(UpdateUserSteps.java:53)
-	at ✽.user is correct it updates an user by the username and the password in the system(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/UpdateUsuario.feature:5)
+When user is correct it updates an user by the username and the password in the system.passed
+Then by the username and the password in peer not exists and the user is updated correctly.passed
 ]]>
-        </failure>
+        </system-out>
     </testcase>
 </testsuite>
