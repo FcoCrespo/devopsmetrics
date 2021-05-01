@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * 
  * @author FcoCrespo
  */
-@Document(collection = "couplingnmetrics")
+@Document(collection = "couplingmetrics")
 public class CouplingMetrics implements Comparable<CouplingMetrics> {
 	/**
 	 * ID.

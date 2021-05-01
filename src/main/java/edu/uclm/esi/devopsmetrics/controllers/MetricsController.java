@@ -2,6 +2,8 @@ package edu.uclm.esi.devopsmetrics.controllers;
 
 
 
+import java.io.IOException;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.wordnik.swagger.annotations.ApiOperation;
 
 import edu.uclm.esi.devopsmetrics.domain.MetricsOperations;
+import edu.uclm.esi.devopsmetrics.domain.UserOperations;
 
 @RestController
-@RequestMapping("/devopsmetrics")
+@RequestMapping("/metrics")
 /**
  * 
  * @author FcoCrespo "https://esidevopsmetrics.herokuapp.com"
@@ -30,18 +33,22 @@ public class MetricsController {
 	private static final Log LOG = LogFactory.getLog(MetricsController.class);
 
 	private final MetricsOperations metricsOperations;
+	private final UserOperations userOperations;
 	
 	private String message;
+	private final String errorMessage;
 
 	@Autowired
 	/**
 	 * @author FcoCrespo
 	 */
 
-	public MetricsController(final MetricsOperations metricsOperations) {
+	public MetricsController(final MetricsOperations metricsOperations, final UserOperations userOperations) {
 
 		this.metricsOperations = metricsOperations;
+		this.userOperations = userOperations;
 		this.message = "Operation completed.";
+		this.errorMessage = "[SERVER] No se ha encontrado ningún usuario con esos datos.";
 
 	}
 	
@@ -65,6 +72,30 @@ public class MetricsController {
 			return ResponseEntity.ok("Error al guardar los datos de los archivos de las métricas.");
 		}
 		
+	}
+	
+	/**
+	 * Devuelve las metricas de un repositorio y su owner a traves de un token de acceso
+	 * 
+	 * @author FcoCrespo
+	 * @throws IOException 
+	 */
+	@GetMapping(value = "/allmetrics")
+	@ApiOperation(value = "Find all metrics from repo", notes = "Find all metrics from repo")
+
+	public ResponseEntity<String> allMetrics(@RequestParam("tokenpass") final String tokenpass,
+			@RequestParam("reponame") final String reponame, @RequestParam("owner") final String owner) throws IOException {
+
+		String repository = reponame;
+		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
+		if (existe) {
+			LOG.info("Get repo metrics");
+			return ResponseEntity.ok(this.metricsOperations.getRepoMetrics(repository, owner, tokenpass));
+		} else {
+			LOG.info(this.errorMessage);
+			return ResponseEntity.badRequest().build();
+		}
+
 	}
 	
 	
