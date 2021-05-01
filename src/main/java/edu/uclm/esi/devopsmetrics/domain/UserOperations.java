@@ -134,7 +134,7 @@ public class UserOperations {
 			SecureUser userSecure;
 			for (int i = 0; i < users.size(); i++) {
 				userSecure = new SecureUser(users.get(i).getIdUser(),
-						this.utilities.desencriptar(users.get(i).getUsernameUser()), users.get(i).getRoleUser(),
+						this.utilities.desencriptar(users.get(i).getUsernameUser()), this.utilities.desencriptar(users.get(i).getRoleUser()),
 						users.get(i).getTokenPass(), users.get(i).getTokenValidity());
 				listaSecureUsers.add(userSecure);
 			}

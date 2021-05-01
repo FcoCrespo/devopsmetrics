@@ -35,6 +35,8 @@ public class Utilities {
 	
 	public String encriptar(String privateString) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException{
 		
+		System.out.println(privateString);
+		
 		byte[] iv = new byte[GCM_IV_LENGTH];
         (new SecureRandom()).nextBytes(iv);
         
@@ -53,10 +55,13 @@ public class Utilities {
         System.arraycopy(iv, 0, encrypted, 0, iv.length);
         System.arraycopy(ciphertext, 0, encrypted, iv.length, ciphertext.length);
 
+        System.out.println(Base64.getEncoder().encodeToString(encrypted));
         return Base64.getEncoder().encodeToString(encrypted);
     }
 
     public String desencriptar(String encrypted) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException  {
+    	
+    	System.out.println("Encriptado:"+ encrypted);
     	
     	String secretKey = this.keyvalue.getSecret();
     	MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -74,7 +79,11 @@ public class Utilities {
         cipher.init(Cipher.DECRYPT_MODE, key, ivSpec);
 
         byte[] ciphertext = cipher.doFinal(decoded, GCM_IV_LENGTH, decoded.length - GCM_IV_LENGTH);
-
+        
+        String desencriptado = new String(ciphertext, StandardCharsets.UTF_8);
+        
+        System.out.println(desencriptado);
+        
         return new String(ciphertext, StandardCharsets.UTF_8);
     }
     
