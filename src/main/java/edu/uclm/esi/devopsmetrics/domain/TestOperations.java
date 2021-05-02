@@ -2,8 +2,6 @@ package edu.uclm.esi.devopsmetrics.domain;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -18,7 +16,12 @@ import java.util.Locale;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -84,69 +87,80 @@ public class TestOperations {
 
 		String[] variables;
 
-		String content;
-		Path fileName;
-
 		JsonNode nodes;
 		Iterator<JsonNode> iter;
 		JsonNode parameterNode;
-		
-		String [] elemFecha = new String[5];
-		
+
+		String[] elemFecha = new String[5];
+
 		for (int i = 0; i < filepaths.size(); i++) {
 
-			LOG.info(filepaths.get(i));
+			
+			CloseableHttpClient httpclient = HttpClients.createDefault();
+			
+			try {
+				if (checkFile(filenames.get(i), repository, owner)) {
 
-			if (checkFile(filenames.get(i), repository, owner)) {
+					variables = filenames.get(i).split("-");
 
-				variables = filenames.get(i).split("-");
+					repoTest = variables[1];
+					ownerTest = variables[2];
 
-				repoTest = variables[1];
-				ownerTest = variables[2];
+					elemFecha[0] = variables[3];
+					elemFecha[1] = variables[4];
+					elemFecha[2] = variables[5];
+					elemFecha[3] = variables[6];
+					elemFecha[4] = variables[7];
 
-				elemFecha[0] = variables[3];
-				elemFecha[1] = variables[4];
-				elemFecha[2] = variables[5];
-				elemFecha[3] = variables[6];
-				elemFecha[4] = variables[7];
+					dateTest = getDateCorrect(elemFecha);
+					fecha = getDatesInstant(dateTest);
 
-				dateTest = getDateCorrect(elemFecha);
-				fecha = getDatesInstant(dateTest);
+					LOG.info("repoTest: " + repoTest + ", ownerTest: " + ownerTest + ", dateToCorrect: "
+							+ fecha.toString());
 
-				LOG.info(
-						"repoTest: " + repoTest + ", ownerTest: " + ownerTest + ", dateToCorrect: " + fecha.toString());
+					
+					LOG.info(filepaths.get(i));
+					HttpGet httpget = new HttpGet("http://localhost:5050/getTestReport?filepath="+filenames.get(i));
 
-				fileName = Path.of(filepaths.get(i));
-				content = Files.readString(fileName);
+					LOG.info("Request Type: " + httpget.getMethod());
 
-				nodes = new ObjectMapper().readTree(content);
+					HttpResponse httpresponse = httpclient.execute(httpget);
 
-				iter = nodes.iterator();
-				parameterNode = iter.next();
+					HttpEntity entity = httpresponse.getEntity();
+					String jsonData = EntityUtils.toString(entity, "UTF-8");
+					nodes = new ObjectMapper().readTree(jsonData);
 
-				testMetrics = new TestMetrics(repoTest, ownerTest, fecha);
+					iter = nodes.iterator();
+					parameterNode = iter.next();
 
-				this.testMetricsService.saveTestMetrics(testMetrics);
-				
-				comprobarContenido(iter, parameterNode, testMetrics);
+					testMetrics = new TestMetrics(repoTest, ownerTest, fecha);
 
-				
+					this.testMetricsService.saveTestMetrics(testMetrics);
 
-				file = new File(filepaths.get(i));
-				str = file.getPath().replace(".json", ".jsondone");
-				if (file.renameTo(new File(str))) {
-					LOG.info("Archivo procesado: " + filenames.get(i));
+					comprobarContenido(iter, parameterNode, testMetrics);
+
+					file = new File(filepaths.get(i));
+					str = file.getPath().replace(".json", ".jsondone");
+					if (file.renameTo(new File(str))) {
+						LOG.info("Archivo procesado: " + filenames.get(i));
+					}
+
+					httpclient.close();
 				}
+			} catch (Exception e) {
+				LOG.info("Error en la lectura de los archivos");
+			}
+			finally {
+				httpclient.close();
 			}
 
 		}
 	}
 
-
 	private void comprobarContenido(Iterator<JsonNode> iter, JsonNode parameterNode, TestMetrics testMetrics) {
-		
+
 		String nodeElements;
-		
+
 		if (iter.hasNext()) {
 			while (iter.hasNext()) {
 
@@ -169,7 +183,7 @@ public class TestOperations {
 			saveMethodMetric(testMetrics, nodeElements, parameterNode);
 
 		}
-		
+
 	}
 
 	private void saveMethodMetric(TestMetrics testMetrics, String nodeElements, JsonNode parameterNode) {
@@ -190,7 +204,7 @@ public class TestOperations {
 		}
 	}
 
-	private String getDateCorrect(String [] dateToCorrect) {
+	private String getDateCorrect(String[] dateToCorrect) {
 
 		String year = dateToCorrect[2];
 		String month = dateToCorrect[1];
@@ -199,7 +213,6 @@ public class TestOperations {
 		String hour = dateToCorrect[3];
 
 		String minute = dateToCorrect[4].substring(0, 2);
-		System.out.println(day + "/" + month + "/" + year + " " + hour + ":" + minute);
 
 		return day + "/" + month + "/" + year + " " + hour + ":" + minute;
 
