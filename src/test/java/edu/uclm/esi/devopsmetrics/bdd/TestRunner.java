@@ -32,7 +32,7 @@ public class TestRunner {
     public static void setupBefore() throws InterruptedException {
     	try {
     		
-    		 String dir = "C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\Reports devopsmetrics FcoCrespo "+dtf.format(now);
+    		 String dir = "C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\Reports devopsmetrics FcoCrespo "+dtf.format(now).replace("%20", " ");
 
     		  Path path = Paths.get(dir);
 
@@ -66,11 +66,11 @@ public class TestRunner {
 		}
     	
     	File fJSONoriginal = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\JSONReports\\TestReport.json");
-    	File fJSONrenombrado = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\Reports devopsmetrics FcoCrespo "+dtf.format(now)+"\\TestReport devopsmetrics FcoCrespo "+dtf.format(now)+".json");
+    	File fJSONrenombrado = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\Reports devopsmetrics FcoCrespo "+dtf.format(now)+"\\TestReport devopsmetrics FcoCrespo "+dtf.format(now)+".json".replace("%20", " "));
     	File fJUnitoriginal = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\JUnitReports\\TestReport.xml");
-    	File fJUnitrenombrado = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\Reports devopsmetrics FcoCrespo "+dtf.format(now)+"\\TestReport devopsmetrics FcoCrespo "+dtf.format(now)+".xml");
+    	File fJUnitrenombrado = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\Reports devopsmetrics FcoCrespo "+dtf.format(now)+"\\TestReport devopsmetrics FcoCrespo "+dtf.format(now)+".xml".replace("%20", " "));
     	File fHTMLoriginal = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\HTMLReports\\TestReport.html");
-    	File fHTMLrenombrado = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\Reports devopsmetrics FcoCrespo "+dtf.format(now)+"\\TestReport devopsmetrics FcoCrespo "+dtf.format(now)+".html");
+    	File fHTMLrenombrado = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\Reports devopsmetrics FcoCrespo "+dtf.format(now)+"\\TestReport devopsmetrics FcoCrespo "+dtf.format(now)+".html".replace("%20", " "));
     	fJSONoriginal.renameTo(fJSONrenombrado);
     	fJUnitoriginal.renameTo(fJUnitrenombrado);
     	fHTMLoriginal.renameTo(fHTMLrenombrado);
