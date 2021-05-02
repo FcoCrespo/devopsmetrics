@@ -32,7 +32,7 @@ public class TestRunner {
     public static void setupBefore() throws InterruptedException {
     	try {
     		
-    		 String dir = "C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\Reports-devopsmetrics-FcoCrespo-"+dtf.format(now);
+    		 String dir = "C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\Reports devopsmetrics FcoCrespo "+dtf.format(now);
 
     		  Path path = Paths.get(dir);
 
@@ -66,11 +66,11 @@ public class TestRunner {
 		}
     	
     	File fJSONoriginal = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\JSONReports\\TestReport.json");
-    	File fJSONrenombrado = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\Reports-devopsmetrics-FcoCrespo-"+dtf.format(now)+"\\TestReport-devopsmetrics-FcoCrespo-"+dtf.format(now)+".json");
+    	File fJSONrenombrado = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\Reports devopsmetrics FcoCrespo "+dtf.format(now)+"\\TestReport devopsmetrics FcoCrespo "+dtf.format(now)+".json");
     	File fJUnitoriginal = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\JUnitReports\\TestReport.xml");
-    	File fJUnitrenombrado = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\Reports-devopsmetrics-FcoCrespo-"+dtf.format(now)+"\\TestReport-devopsmetrics-FcoCrespo-"+dtf.format(now)+".xml");
+    	File fJUnitrenombrado = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\Reports devopsmetrics FcoCrespo "+dtf.format(now)+"\\TestReport devopsmetrics FcoCrespo "+dtf.format(now)+".xml");
     	File fHTMLoriginal = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\HTMLReports\\TestReport.html");
-    	File fHTMLrenombrado = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\Reports-devopsmetrics-FcoCrespo-"+dtf.format(now)+"\\TestReport-devopsmetrics-FcoCrespo-"+dtf.format(now)+".html");
+    	File fHTMLrenombrado = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\Reports devopsmetrics FcoCrespo "+dtf.format(now)+"\\TestReport devopsmetrics FcoCrespo "+dtf.format(now)+".html");
     	fJSONoriginal.renameTo(fJSONrenombrado);
     	fJUnitoriginal.renameTo(fJUnitrenombrado);
     	fHTMLoriginal.renameTo(fHTMLrenombrado);

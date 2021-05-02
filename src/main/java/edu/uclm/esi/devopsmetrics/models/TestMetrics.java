@@ -42,13 +42,13 @@ public class TestMetrics implements Comparable<TestMetrics> {
 	 * @author FcoCrespo
 	 */
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-	private Instant pushedDate;
+	private Instant dateTest;
 	
-	public TestMetrics(@NotNull String repository, String owner, Instant pushedDate) {
+	public TestMetrics(@NotNull String repository, String owner, Instant dateTest) {
 		super();
 		this.repository = repository;
 		this.owner = owner;
-		this.pushedDate = pushedDate;
+		this.dateTest = dateTest;
 	}
 
 	/**
@@ -62,7 +62,7 @@ public class TestMetrics implements Comparable<TestMetrics> {
 
 	@Override
 	public int compareTo(TestMetrics o) {
-		return this.getPushedDate().compareTo(o.getPushedDate());
+		return this.getDateTest().compareTo(o.getDateTest());
 	}
 
 	@Override
@@ -105,18 +105,18 @@ public class TestMetrics implements Comparable<TestMetrics> {
 		this.owner = owner;
 	}
 
-	public Instant getPushedDate() {
-		return pushedDate;
+	public Instant getDateTest() {
+		return dateTest;
 	}
 
-	public void setPushedDate(Instant pushedDate) {
-		this.pushedDate = pushedDate;
+	public void setDateTest(Instant newdateTest) {
+		this.dateTest = newdateTest;
 	}
 
 	@Override
 	public String toString() {
-		return "TestMetrics [id=" + id + ", repository=" + repository + ", owner=" + owner + ", pushedDate="
-				+ pushedDate + "]";
+		return "TestMetrics [id=" + id + ", repository=" + repository + ", owner=" + owner + ", dateTest="
+				+ dateTest + "]";
 	}
 	
 	

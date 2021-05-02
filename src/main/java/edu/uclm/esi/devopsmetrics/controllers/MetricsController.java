@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.wordnik.swagger.annotations.ApiOperation;
 
 import edu.uclm.esi.devopsmetrics.domain.MetricsOperations;
+import edu.uclm.esi.devopsmetrics.domain.TestOperations;
 import edu.uclm.esi.devopsmetrics.domain.UserOperations;
 
 @RestController
@@ -33,6 +34,7 @@ public class MetricsController {
 	private static final Log LOG = LogFactory.getLog(MetricsController.class);
 
 	private final MetricsOperations metricsOperations;
+	private final TestOperations testsOperations;
 	private final UserOperations userOperations;
 	
 	private String message;
@@ -43,10 +45,11 @@ public class MetricsController {
 	 * @author FcoCrespo
 	 */
 
-	public MetricsController(final MetricsOperations metricsOperations, final UserOperations userOperations) {
+	public MetricsController(final MetricsOperations metricsOperations, final UserOperations userOperations, final TestOperations testsOperations) {
 
 		this.metricsOperations = metricsOperations;
 		this.userOperations = userOperations;
+		this.testsOperations = testsOperations;
 		this.message = "Operation completed.";
 		this.errorMessage = "[SERVER] No se ha encontrado ningún usuario con esos datos.";
 
@@ -98,5 +101,49 @@ public class MetricsController {
 
 	}
 	
+	/**
+	 * Obtiene las metricas de los test de un repositorio y su owner a traves del acceso al directorio en que se alojan los archivos xml
+	 * 
+	 * @author FcoCrespo
+	 */
+	@GetMapping(value = "/savetestmetrics")
+	@ApiOperation(value = "Get all test metrics from repo", notes = "Get all test metrics from repo")
+
+	public ResponseEntity<String> saveTestMetrics(@RequestParam("reponame") final String reponame, @RequestParam("owner") final String owner) {
+
+		String repository = reponame;
+		try {
+			LOG.info("Save repo test metrics");
+			this.testsOperations.saveRepoTestMetrics(repository, owner);
+			return ResponseEntity.ok(this.message);
+		}
+		catch(Exception e) {
+			return ResponseEntity.ok("Error al guardar los datos de los archivos de los test reports.");
+		}
+
+	}
+	
+	/**
+	 * Devuelve las metricas los tests de un repositorio y su owner a traves de un token de acceso
+	 * 
+	 * @author FcoCrespo
+	 */
+	@GetMapping(value = "/alltestmetrics")
+	@ApiOperation(value = "Find all metrics from repo", notes = "Find all metrics from repo")
+
+	public ResponseEntity<String> allTestMetrics(@RequestParam("tokenpass") final String tokenpass,
+			@RequestParam("reponame") final String reponame, @RequestParam("owner") final String owner) {
+
+		String repository = reponame;
+		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
+		if (existe) {
+			LOG.info("Get repo test metrics");
+			return ResponseEntity.ok(this.testsOperations.getRepoTestMetrics(repository, owner));
+		} else {
+			LOG.info(this.errorMessage);
+			return ResponseEntity.badRequest().build();
+		}
+
+	}
 	
 }
