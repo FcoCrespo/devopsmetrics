@@ -73,7 +73,6 @@ public class TestOperations {
 		String extension = "json";
 		String repoTest;
 		String ownerTest;
-		String dateToCorrect;
 		String dateTest;
 		Instant fecha;
 
@@ -92,21 +91,26 @@ public class TestOperations {
 		Iterator<JsonNode> iter;
 		JsonNode parameterNode;
 		
-
+		String [] elemFecha = new String[5];
+		
 		for (int i = 0; i < filepaths.size(); i++) {
 
 			LOG.info(filepaths.get(i));
 
 			if (checkFile(filenames.get(i), repository, owner)) {
 
-				variables = filenames.get(i).split(" ");
+				variables = filenames.get(i).split("-");
 
 				repoTest = variables[1];
 				ownerTest = variables[2];
 
-				dateToCorrect = variables[3];
+				elemFecha[0] = variables[3];
+				elemFecha[1] = variables[4];
+				elemFecha[2] = variables[5];
+				elemFecha[3] = variables[6];
+				elemFecha[4] = variables[7];
 
-				dateTest = getDateCorrect(dateToCorrect);
+				dateTest = getDateCorrect(elemFecha);
 				fecha = getDatesInstant(dateTest);
 
 				LOG.info(
@@ -186,17 +190,16 @@ public class TestOperations {
 		}
 	}
 
-	private String getDateCorrect(String dateToCorrect) {
+	private String getDateCorrect(String [] dateToCorrect) {
 
-		String[] variables = dateToCorrect.split("-");
+		String year = dateToCorrect[2];
+		String month = dateToCorrect[1];
+		String day = dateToCorrect[0];
 
-		String year = variables[2];
-		String month = variables[1];
-		String day = variables[0];
+		String hour = dateToCorrect[3];
 
-		String hour = variables[3];
-
-		String minute = variables[4].substring(0, 2);
+		String minute = dateToCorrect[4].substring(0, 2);
+		System.out.println(day + "/" + month + "/" + year + " " + hour + ":" + minute);
 
 		return day + "/" + month + "/" + year + " " + hour + ":" + minute;
 
@@ -204,7 +207,7 @@ public class TestOperations {
 
 	private boolean checkFile(String filename, String repository, String owner) {
 
-		String[] variables = filename.split(" ");
+		String[] variables = filename.split("-");
 
 		boolean correcto = false;
 
