@@ -79,6 +79,7 @@ public class TestOperations {
 				json.put("owner", listaTestMetrics.get(i).getOwner());
 				json.put("date", listaTestMetrics.get(i).getDateTest());
 				
+				json.put("idMethodTest", listaMethodTestAux.get(j).getId());
 				json.put("feature", listaMethodTestAux.get(j).getFeature());
 				json.put("passed", listaMethodTestAux.get(j).isPassed());
 				
