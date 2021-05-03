@@ -91,5 +91,13 @@ public class TestMetricsRepositoryImpl implements TestMetricsRepository {
 		        .find(new Query(Criteria.where("repository").is(repository).
 		        		and("pushedDate").gte(beginDate).lte(endDate).and("owner").is(owner)), TestMetrics.class);
 	}
+
+	@Override
+	public List<TestMetrics> findAllByTestMetricsAndOwner(String repository, String owner) {
+		return this.mongoOperations
+		        .find(new Query(Criteria.where("repository").is(repository).
+		        		and("owner").is(owner)), TestMetrics.class);
+	
+	}
 	
 }

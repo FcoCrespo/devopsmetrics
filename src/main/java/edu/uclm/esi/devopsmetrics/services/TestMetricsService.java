@@ -32,6 +32,11 @@ public interface TestMetricsService {
 	/**
 	 * @author FcoCrespo
 	 */
+	List<TestMetrics> getAllByRepositoryAndOwner(String repository, String owner);
+	
+	/**
+	 * @author FcoCrespo
+	 */
 	List<TestMetrics> getAllByRepositoryBeginEndDateByOwner(String repository, Instant beginDate, Instant endDate, String owner);
 
 }

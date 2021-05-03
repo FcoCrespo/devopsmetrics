@@ -101,5 +101,12 @@ public class TestMetricsServiceImpl implements TestMetricsService{
 
 	}
 
+	@Override
+	public List<TestMetrics> getAllByRepositoryAndOwner(String repository, String owner) {
+		
+		return this.testMetricsRepository.findAllByTestMetricsAndOwner(repository, owner);
+
+	}
+
 }
 

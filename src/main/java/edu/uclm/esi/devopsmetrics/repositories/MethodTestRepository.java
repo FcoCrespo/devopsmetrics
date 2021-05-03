@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 import edu.uclm.esi.devopsmetrics.models.MethodTest;
-
 /**
  * Interfaz de MethodTestRepository.
  * 
@@ -40,5 +39,11 @@ public interface MethodTestRepository {
    * @author FcoCrespo
    */
   Optional<MethodTest> findOne(String id);
-
+  
+  /**
+   * Método para obtener los TestMetrics por el Id del test en el que se realizaron
+   * 
+   * @author FcoCrespo
+   */
+  List<MethodTest> findAllByAllByTestId(String idTest);
 }

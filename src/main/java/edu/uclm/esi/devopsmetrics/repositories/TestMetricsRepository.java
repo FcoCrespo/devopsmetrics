@@ -43,6 +43,14 @@ public interface TestMetricsRepository {
   Optional<TestMetrics> findOne(String id);
   
   /**
+   * Método para obtener los TestMetrics por su repository y su owner.
+   * 
+   * @author FcoCrespo
+   */
+  List<TestMetrics> findAllByTestMetricsAndOwner(String repository, String owner);
+
+  
+  /**
    * Método para obtener los TestMetrics por su repository entre unas fechas dadas realizadas por un owner.
    * 
    * @author FcoCrespo

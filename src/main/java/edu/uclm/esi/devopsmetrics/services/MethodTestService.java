@@ -27,5 +27,11 @@ public interface MethodTestService {
 	 * @author FcoCrespo
 	 */
 	void updateMethodTest(MethodTest methodTest);
+	
+	/**
+	 * @author FcoCrespo
+	 */
+	List<MethodTest> getAllByTestId(String idTest);
+
 
 }

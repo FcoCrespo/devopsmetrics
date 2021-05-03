@@ -22,6 +22,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -58,8 +60,36 @@ public class TestOperations {
 	}
 
 	public String getRepoTestMetrics(String repository, String owner) {
-		// TODO Auto-generated method stub
-		return null;
+
+		List <TestMetrics> listaTestMetrics =  this.testMetricsService.getAllByRepositoryAndOwner(repository, owner);
+	
+		List <MethodTest> listaMethodTestAux;
+		
+		JSONArray array = new JSONArray();
+		JSONObject json;
+		
+		for(int i=0; i<listaTestMetrics.size(); i++) {
+			listaMethodTestAux = this.methodTestService.getAllByTestId(listaTestMetrics.get(i).getId());
+			
+			for(int j=0; j<listaMethodTestAux.size(); j++) {
+				json = new JSONObject();
+				
+				json.put("idTest", listaTestMetrics.get(i).getId());
+				json.put("repository", listaTestMetrics.get(i).getRepository());
+				json.put("owner", listaTestMetrics.get(i).getOwner());
+				json.put("date", listaTestMetrics.get(i).getDateTest());
+				
+				json.put("feature", listaMethodTestAux.get(j).getFeature());
+				json.put("passed", listaMethodTestAux.get(j).isPassed());
+				
+				array.put(json);
+			}
+			listaMethodTestAux.clear();
+		}
+		
+		listaTestMetrics.clear();
+		
+		return array.toString();
 	}
 
 	public void saveRepoTestMetrics(String repository, String owner) throws IOException {

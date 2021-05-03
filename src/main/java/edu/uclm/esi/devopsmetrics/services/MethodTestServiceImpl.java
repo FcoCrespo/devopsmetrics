@@ -93,6 +93,12 @@ public class MethodTestServiceImpl implements MethodTestService{
 	}
 
 
+	@Override
+	public List<MethodTest> getAllByTestId(String idTest) {
+		
+		return this.methodTestRepository.findAllByAllByTestId(idTest);
+
+	}
 
 }
 

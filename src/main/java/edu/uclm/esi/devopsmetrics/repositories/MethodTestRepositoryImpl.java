@@ -80,6 +80,12 @@ public class MethodTestRepositoryImpl implements MethodTestRepository {
 
 	    this.mongoOperations.save(methodTest);
 
-	  }     		
+	  }
+
+	@Override
+	public List<MethodTest> findAllByAllByTestId(String idTest) {
+		
+		return this.mongoOperations.find(new Query(Criteria.where("idTest").is(idTest)), MethodTest.class);
+	}     		
 	
 }
