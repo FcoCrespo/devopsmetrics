@@ -395,6 +395,69 @@ public class GithubOperations {
 		return array.toString();
 	}
 
+	public String getRepositories() {
+
+
+		List <Branch> branches= this.branchService.findAll();
+		
+		boolean encontrado=false;
+		List<String> repositories = new ArrayList<>();
+		
+		
+		
+		for(int i=0; i<branches.size(); i++) {
+			
+			if(repositories.isEmpty()) {
+				repositories.add(branches.get(i).getRepository());
+			}
+			else {
+				for(int j=0; j<repositories.size()&&!encontrado; j++) {
+					if(branches.get(i).getRepository().equals(repositories.get(j))) {
+						encontrado=true;
+					}
+				}
+				if(!encontrado) {
+					repositories.add(branches.get(i).getRepository());
+				}
+			}
+	
+			encontrado=false;
+			
+		}
+		
+		branches.clear();
+		
+		JSONArray array = createJSONRepositories(repositories);
+		
+		return array.toString();
+	}
+
+	private JSONArray createJSONRepositories(List<String> repositories) {
+		
+		JSONArray array = new JSONArray();
+		JSONObject json;
+		
+
+		for(int j=0; j<repositories.size(); j++) {
+
+			json = new JSONObject();
+			json.put("repository", repositories.get(j));
+			
+			if(repositories.get(j).equals("eSalud")) {
+				json.put("owner", "sherrerap");
+			}
+			else {
+				json.put("owner", "FcoCrespo");
+			}
+			
+			array.put(json);
+		}
+		
+		return array;
+	}
+
+	
+
 
 
 	

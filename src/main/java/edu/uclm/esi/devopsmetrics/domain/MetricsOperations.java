@@ -366,7 +366,7 @@ public class MetricsOperations {
 		          }
 
 		      } catch (ParserConfigurationException | SAXException | IOException e) {
-		          e.printStackTrace();
+		          LOG.info("Error al procesar los archivos.");
 		      }
 		}
 		

@@ -7,6 +7,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Locale;
 
 import org.apache.commons.logging.Log;
@@ -85,6 +86,29 @@ public class CommitController {
 
 	}
 
+	
+	/**
+	 * Devuelve los repositorios registrados en el sistema
+	 * token de acceso
+	 * 
+	 * @author FcoCrespo
+	 */
+	@GetMapping(value = "/allrepositories")
+	@ApiOperation(value = "Find all repositories", notes = "Return all repositories")
+
+	public ResponseEntity<String> allBranches(@RequestParam("tokenpass") final String tokenpass) {
+
+		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
+		if (existe) {
+			LOG.info("Get repositories");
+			return ResponseEntity.ok(this.githubOperations.getRepositories());
+		} else {
+			LOG.info(this.errorMessage);
+			return ResponseEntity.badRequest().build();
+		}
+
+	}
+	
 	/**
 	 * ATENCIÓN: Devuelve todos los commits del repositorio por su owner, nombre de
 	 * repositorio y token de acceso
