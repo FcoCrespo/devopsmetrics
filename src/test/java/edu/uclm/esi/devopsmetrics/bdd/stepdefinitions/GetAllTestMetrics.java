@@ -93,7 +93,6 @@ public class GetAllTestMetrics {
 				if(parameterNode.get("idMethodTest").textValue().equals("608fd03b96f4674354296ea3")){
 					encontrado=true;
 				}
-				parameterNode = iter.next();
 
 			}
 		}
