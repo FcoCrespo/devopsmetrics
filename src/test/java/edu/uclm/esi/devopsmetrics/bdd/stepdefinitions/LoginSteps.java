@@ -43,7 +43,7 @@ public class LoginSteps {
 		
 		driver.manage().window().maximize();
 	
-		driver.get("https://esidevopsmetrics.herokuapp.com/login");
+		driver.get("https://esidevopsmetrics.herokuapp.com/repositories");
 
 	}
 
@@ -65,7 +65,7 @@ public class LoginSteps {
 	public void user_is_navigated_to_the_home_page() throws InterruptedException {	
 		SleepClass.sleep(1000);
 		String expectedUrl = driver.getCurrentUrl();
-		assertEquals("https://esidevopsmetrics.herokuapp.com/admin", expectedUrl);	
+		assertEquals("https://esidevopsmetrics.herokuapp.com/repositories", expectedUrl);	
 		
 		driver.quit();
 	}

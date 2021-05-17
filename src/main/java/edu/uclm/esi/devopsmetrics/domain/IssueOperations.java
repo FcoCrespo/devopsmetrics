@@ -90,7 +90,23 @@ public class IssueOperations {
 			this.issuesGithub.updateRepositoryIssues(info, initialStartCursorFind, issuesList, issuesRepoList, issueCursor);
 			
 		}
+		
+		
 
+	}
+	
+	public void actualizarValores(String repository, String owner) throws IOException {
+		
+		String filename = "src/main/resources/graphql/issues.graphql";
+
+
+		String[] info = new String[3];
+		info[0] = repository;
+		info[1] = owner;
+		
+		IssueCursor issueCursor = null;
+		
+		this.issuesGithub.actualizarValores(info, filename, issueCursor);
 	}
 
 	public String getIssuesRepository(String reponame, String owner) {

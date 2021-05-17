@@ -68,6 +68,7 @@ public class IssueController {
 			try {
 				LOG.info("Get issues");
 				this.issueOperations.getIssues(repository, owner);
+				this.issueOperations.actualizarValores(repository, owner);
 				return ResponseEntity.ok(this.message);
 			}
 			catch (IOException e) {

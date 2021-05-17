@@ -52,6 +52,8 @@ public class IssuesGithub {
 	private String loginString;
 	private String issuesString;
 	private String nodesString;
+	private String stateString;
+	private String closedString;
 	
 
 	private String graphqlUri;
@@ -78,6 +80,8 @@ public class IssuesGithub {
 		this.loginString = "login";
 		this.issuesString = "issues";
 		this.nodesString = "nodes";
+		this.stateString = "state";
+		this.closedString = "closedAt";
 
 	}
 
@@ -260,6 +264,87 @@ public class IssuesGithub {
 		
 	}
 
+	public void actualizarValores(String[] info, String filename, IssueCursor issueCursor) throws IOException {
+		
+		String jsonData;
+		JsonNode jsonNode;
+		JsonNode nodes;
+		JsonNode parameterNode;
+		Response responseGiven;
+		Iterator<JsonNode> iter;
+		
+		String graphqlPayload;
+		ObjectNode variables;
+		
+		String[] variablesPut = new String[3];
+		variablesPut[0] = info[0];
+		variablesPut[1] = info[1];
+		variablesPut[2] = filename;
+
+		File file = new File(filename);
+
+		LOG.info(file.getPath());
+		variables = getVariables(variablesPut, issueCursor, null);
+		
+		graphqlPayload = GraphqlTemplate.parseGraphql(file, variables);
+		responseGiven = this.response.prepareResponse(graphqlPayload, this.graphqlUri, info[1]);
+
+		jsonData = responseGiven.body().string();
+		jsonNode = new ObjectMapper().readTree(jsonData);
+		
+		nodes = jsonNode.path("data").path(this.repositoryString).path(this.issuesString).path(this.nodesString);
+		iter = nodes.iterator();
+		parameterNode = iter.next();
+		
+		Issue issue;
+		
+		if(iter.hasNext()) {
+			while (iter.hasNext()) {
+				
+				issue = this.issueService.findOne(parameterNode.get("id").asText());
+				
+				actualizarIssue(parameterNode, issue);
+				
+				parameterNode = iter.next();
+
+				if (!iter.hasNext()) {
+					issue = this.issueService.findOne(parameterNode.get("id").asText());
+					
+					actualizarIssue(parameterNode, issue);
+					
+				}
+			}
+
+			
+		}
+		else {
+			issue = this.issueService.findOne(parameterNode.get("id").asText());
+			
+			actualizarIssue(parameterNode, issue);
+		}
+		
+		if (issueCursor!=null && issueCursor.isHasNextPage()) {
+			filename = this.filenameCursor;
+			actualizarValores(info, filename, issueCursor);
+		}
+
+		
+	}
+
+	private void actualizarIssue(JsonNode parameterNode, Issue issue) {
+		
+		issue.setState(parameterNode.get(this.stateString).asText());
+		
+		String closedAtExtraido = comprobarValorString(parameterNode, this.closedString);
+		
+		if (closedAtExtraido != null) {
+			Instant closedAt = Instant.parse(closedAtExtraido).plus(1, ChronoUnit.HOURS);
+			issue.setClosedAt(closedAt);
+		} 
+		
+		this.issueService.updateIssue(issue);
+	}
+
 	private boolean checkInitialIssueFind(Issue issue, String issueInitial, boolean initialStartCursorFind) {
 		if(initialStartCursorFind) {
 			return true;
@@ -326,7 +411,7 @@ public class IssuesGithub {
 		String idGithub  = comprobarValorString(parameterNode, "id");
 		
 		String createdAtExtraido = comprobarValorString(parameterNode, "createdAt");
-		String closedAtExtraido = comprobarValorString(parameterNode, "closedAt");
+		String closedAtExtraido = comprobarValorString(parameterNode, this.closedString);
 		
 		Instant createdAt = null;
 		Instant closedAt = null;
