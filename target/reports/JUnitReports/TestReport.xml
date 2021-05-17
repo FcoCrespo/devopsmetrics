@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="17" time="65.002">
-    <testcase classname="feature to test the function to delete an user in the system" name="_2" time="1.504">
-        <system-out>
+<testsuite errors="0" failures="1" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="18" time="65.132">
+    <testcase classname="feature to test the function to delete an user in the system" name="_2" time="1.39">
+        <failure message="" type="java.lang.NullPointerException">
             <![CDATA[Given user is logging in the system for deleting another user...............passed
-When user is correct he chooses the userId of the user to delete in the system.passed
-Then the choosed user was deleted of the system.............................passed
+When user is correct he chooses the userId of the user to delete in the system.failed
+Then the choosed user was deleted of the system.............................skipped
+
+StackTrace:
+java.lang.NullPointerException
+	at edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.DeleteUserSteps.user_is_correct_he_chooses_the_user_id_of_the_user_to_delete_in_the_system(DeleteUserSteps.java:74)
+	at ✽.user is correct he chooses the userId of the user to delete in the system(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/DeleteUser.feature:5)
 ]]>
-        </system-out>
+        </failure>
     </testcase>
-    <testcase classname="feature to test the function to get all branches from a repository by his owner" name="_2" time="2.301">
+    <testcase classname="feature to test the function to get all branches from a repository by his owner" name="_2" time="2.058">
         <system-out>
             <![CDATA[Given user is logging in the system for getting all branches from a repository by his owner.passed
 When user is correct he requests all branches from a repository by his owner.passed
@@ -16,7 +21,7 @@ Then the user gets all branches from a repository by his owner..............pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="feature to test the function to get all commits from a repository by his owner" name="_2" time="2.318">
+    <testcase classname="feature to test the function to get all commits from a repository by his owner" name="_2" time="2.105">
         <system-out>
             <![CDATA[Given user is logging in the system for getting all commits from a repository by his owner.passed
 When user is correct he requests all commits from a repository by his owner.passed
@@ -24,7 +29,7 @@ Then the user gets all commits from a repository by his owner...............pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="feature to test the function to get all issues from a repository by his owner from Github" name="_2" time="1.298">
+    <testcase classname="feature to test the function to get all issues from a repository by his owner from Github" name="_2" time="7.933">
         <system-out>
             <![CDATA[Given user is logging in the system for getting all issues from a repository by his owner from Github.passed
 When user is correct he requests all issues from a repository by his owner..passed
@@ -32,7 +37,15 @@ Then the user gets all issues from a repository by his owner................pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="feature to test the function to get all repositories from the system" name="_2" time="0.779">
+    <testcase classname="feature to test the function to get all metrics from a repository by his owner" name="_2" time="21.988">
+        <system-out>
+            <![CDATA[Given user is logging in the system for getting all metrics from a repository by his owner.passed
+When user is correct he requests all metrics from a repository by his owner.passed
+Then the user gets all metrics from a repository by his owner...............passed
+]]>
+        </system-out>
+    </testcase>
+    <testcase classname="feature to test the function to get all repositories from the system" name="_2" time="0.671">
         <system-out>
             <![CDATA[Given user is logging in the system for getting all repositories from the system.passed
 When user is correct he requests all repositories from the system...........passed
@@ -40,7 +53,7 @@ Then the user gets all repositories from the system.........................pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="feature to test the function to get all test metrics from a repository by his owner" name="_2" time="1.08">
+    <testcase classname="feature to test the function to get all test metrics from a repository by his owner" name="_2" time="0.769">
         <system-out>
             <![CDATA[Given user is logging in the system for getting all test metrics from a repository by his owner.passed
 When user is correct he requests all test metrics from a repository by his owner.passed
@@ -48,7 +61,7 @@ Then the user gets all test metrics from a repository by his owner..........pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="feature to test the function to get all users in the system" name="_2" time="0.968">
+    <testcase classname="feature to test the function to get all users in the system" name="_2" time="1.043">
         <system-out>
             <![CDATA[Given user is logging in the system to get all users in the system..........passed
 When user is correct he gets all the users in the system....................passed
@@ -56,7 +69,7 @@ Then the users were got correctly...........................................pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="feature to test the function to get all commits from a branch of a repository" name="_2" time="7.117">
+    <testcase classname="feature to test the function to get all commits from a branch of a repository" name="_2" time="2.614">
         <system-out>
             <![CDATA[Given user is logging in the system for getting all commits from a branch of a repository.passed
 When user is correct he requests all commits from a branch of a repository..passed
@@ -64,7 +77,7 @@ Then the user gets all commits from a branch of a repository................pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="feature to test the function to get all commits from a branch of a repository by the author" name="_2" time="4.326">
+    <testcase classname="feature to test the function to get all commits from a branch of a repository by the author" name="_2" time="2.49">
         <system-out>
             <![CDATA[Given user is logging in the system for getting all commits from a branch of a repository by the author.passed
 When user is correct he requests all commits from a branch of a repository by the author.passed
@@ -72,7 +85,7 @@ Then the user gets all commits from a branch of a repository by the author..pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="feature to test the function to get all commits from a branch of a repository between a date" name="_2" time="7.767">
+    <testcase classname="feature to test the function to get all commits from a branch of a repository between a date" name="_2" time="4.553">
         <system-out>
             <![CDATA[Given user is logging in the system for getting all commits from a branch of a repository between a date.passed
 When user is correct he requests all commits from a branch of a repository between a date.passed
@@ -80,7 +93,7 @@ Then the user gets all commits from a branch of a repositorybetween a date..pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="feature to test the function to get all commits from a branch of a repository between a date by the author" name="_2" time="8.767">
+    <testcase classname="feature to test the function to get all commits from a branch of a repository between a date by the author" name="_2" time="4.598">
         <system-out>
             <![CDATA[Given user is logging in the system for getting all commits from a branch of a repository between a date by the author.passed
 When user is correct he requests all commits from a branch of a repository between a date by the author.passed
@@ -88,7 +101,7 @@ Then the user gets all commits from a branch of a repositorybetween a date by th
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="feature to test the function to get all issues from a repository by his owner from the system" name="_2" time="12.154">
+    <testcase classname="feature to test the function to get all issues from a repository by his owner from the system" name="_2" time="4.49">
         <system-out>
             <![CDATA[Given user is logging in the system for getting all issues from a repository by his owner from the system.passed
 When user is correct he requests all issues from a repository by his owner of the system.passed
@@ -96,7 +109,7 @@ Then the user gets all issues from a repository by his owner if the system..pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="feature to test the function to get an user by the tokenpass in the system" name="_2" time="0.807">
+    <testcase classname="feature to test the function to get an user by the tokenpass in the system" name="_2" time="0.669">
         <system-out>
             <![CDATA[Given user is logging in the system for get his tokenpass...................passed
 When user is correct he gets an user by the tokenpass of the session in the system.passed
@@ -104,7 +117,7 @@ Then the tokenpass exists and the user is correct...........................pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="feature to test the function to get an user by the username and the password in the system" name="_2" time="0.399">
+    <testcase classname="feature to test the function to get an user by the username and the password in the system" name="_2" time="0.332">
         <system-out>
             <![CDATA[Given user is logging in the system.........................................passed
 When user is correct he gets an user by the username and the password in the system.passed
@@ -112,7 +125,7 @@ Then by the username and the password in peer exists and the user is correct.pas
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="feature to test login functionality" name="_2" time="4.345">
+    <testcase classname="feature to test login functionality" name="_2" time="4.454">
         <system-out>
             <![CDATA[Given user is on login page.................................................passed
 When user enters username and password......................................passed
@@ -121,7 +134,7 @@ Then user is navigated to the home page.....................................pass
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="feature to test the function to register an user in the system" name="_2" time="4.844">
+    <testcase classname="feature to test the function to register an user in the system" name="_2" time="1.023">
         <system-out>
             <![CDATA[Given user is logging in the system for register other......................passed
 When user is correct he registers an user by the username, the password and the role in the system.passed
@@ -129,7 +142,7 @@ Then by the username and the password in peer not exists and the user is registe
 ]]>
         </system-out>
     </testcase>
-    <testcase classname="feature to test the function to update an user in the system" name="_2" time="3.455">
+    <testcase classname="feature to test the function to update an user in the system" name="_2" time="1.088">
         <system-out>
             <![CDATA[Given user is logging in the system for updating an user....................passed
 When user is correct it updates an user by the username and the password in the system.passed
