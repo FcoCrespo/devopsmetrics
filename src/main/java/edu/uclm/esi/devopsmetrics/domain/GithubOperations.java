@@ -136,7 +136,7 @@ public class GithubOperations {
 		List<Branch>branchesRepo = this.branchService.getBranchesByRepository(reponame, false);
 				
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpGet httpget = new HttpGet("http://localhost:5050/branchesorder?owner="+owner+"&reponame=" + branchesRepo.get(0).getRepository());
+		HttpGet httpget = new HttpGet("http://35.180.190.134:8080/serverdevopsmetrics/branchesorder?owner="+owner+"&reponame=" + branchesRepo.get(0).getRepository());
 		
 		LOG.info("Request Type: " + httpget.getMethod());
 

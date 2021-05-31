@@ -12,75 +12,151 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 import org.apache.commons.io.FileUtils;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 
-@CucumberContextConfiguration 
+import org.apache.commons.net.ftp.FTP;
+import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPReply;
+
+@CucumberContextConfiguration
 @RunWith(Cucumber.class)
-@CucumberOptions(features = "src/test/resources/features",
-monochrome =true,
-plugin = {"json:target/reports/JSONReports/TestReport.json","pretty", "junit:target/reports/JUnitReports/TestReport.xml","html:target/reports/HTMLReports/TestReport.html"}
-		)
+@CucumberOptions(features = "src/test/resources/features", monochrome = true, plugin = {
+		"json:target/reports/JSONReports/TestReport.json", "pretty" })
 public class TestRunner {
 
 	final static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy-HH-mm");
-	final static LocalDateTime now = LocalDateTime.now();	
-	
-	@BeforeClass	    
-    public static void setupBefore() throws InterruptedException {
-    	try {
-    		
-    		 String dir = "C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\TestReport-devopsmetrics-FcoCrespo-"+dtf.format(now);
+	final static LocalDateTime now = LocalDateTime.now();
+	static String dateFormatFile = "";
 
-    		  Path path = Paths.get(dir);
-
-    		  Files.createDirectories(path);
-
-    		  System.out.println("Directory is created!");
-
-    	} catch (IOException e) {
-
-    		  System.err.println("Failed to create directory!" + e.getMessage());
-
-    	}
-		
-	}
-	
-	
-    @AfterClass	    
-    public static void setupAfter() throws InterruptedException {	 
-    
-    	String source = "C:\\Users\\Crespo\\eclipse-workspace\\devopsmetrics\\target\\reports";
-		File srcDir = new File(source);
-    	
-		String destination = "C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports";
-		File destDir = new File(destination);
-		
-
-		try {
-		    FileUtils.copyDirectory(srcDir, destDir);
-		} catch (IOException e) {
-		    e.printStackTrace();
+	private static void showServerReply(FTPClient ftpClient) {
+		String[] replies = ftpClient.getReplyStrings();
+		if (replies != null && replies.length > 0) {
+			for (String aReply : replies) {
+				System.out.println("SERVER: " + aReply);
+			}
 		}
-    	
-    	File fJSONoriginal = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\JSONReports\\TestReport.json");
-    	File fJSONrenombrado = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\TestReport-devopsmetrics-FcoCrespo-"+dtf.format(now)+"\\TestReport-devopsmetrics-FcoCrespo-"+dtf.format(now)+".json");
-    	File fJUnitoriginal = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\JUnitReports\\TestReport.xml");
-    	File fJUnitrenombrado = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\TestReport-devopsmetrics-FcoCrespo-"+dtf.format(now)+"\\TestReport-devopsmetrics-FcoCrespo-"+dtf.format(now)+".xml");
-    	File fHTMLoriginal = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\HTMLReports\\TestReport.html");
-    	File fHTMLrenombrado = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\TestReport-devopsmetrics-FcoCrespo-"+dtf.format(now)+"\\TestReport-devopsmetrics-FcoCrespo-"+dtf.format(now)+".html");
-    	fJSONoriginal.renameTo(fJSONrenombrado);
-    	fJUnitoriginal.renameTo(fJUnitrenombrado);
-    	fHTMLoriginal.renameTo(fHTMLrenombrado);
-    	File folder = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\JSONReports");
-    	folder.delete();
-    	folder = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\JUnitReports");
-    	folder.delete();
-    	folder = new File("C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\HTMLReports");
-    	folder.delete();
-    	
-    }
-    
+	}
+
+	@BeforeClass
+	public static void setupBefore() throws InterruptedException {
+
+		String server = "35.180.190.134";
+		int port = 21;
+		String user = System.getProperty("server.user");
+		String pass = System.getProperty("server.key");
+
+		FTPClient ftpClient = new FTPClient();
+		try {
+
+			ftpClient.connect(server, port);
+			showServerReply(ftpClient);
+			int replyCode = ftpClient.getReplyCode();
+			if (!FTPReply.isPositiveCompletion(replyCode)) {
+				System.out.println("Operation failed. Server reply code: " + replyCode);
+				return;
+			}
+			boolean success = ftpClient.login(user, pass);
+			showServerReply(ftpClient);
+			if (!success) {
+				System.out.println("Could not login to the server");
+				return;
+			}
+			String dirToCreate = "TestReport-devopsmetrics-FcoCrespo-" + dtf.format(now);
+			dateFormatFile = dirToCreate;
+			success = ftpClient.makeDirectory(dirToCreate);
+			showServerReply(ftpClient);
+			if (success) {
+				System.out.println("Successfully created directory: " + dirToCreate);
+			} else {
+				System.out.println("Failed to create directory. See server's reply.");
+			}
+
+		} catch (IOException ex) {
+			System.out.println("Error: " + ex.getMessage());
+			ex.printStackTrace();
+		} finally {
+			try {
+				if (ftpClient.isConnected()) {
+					ftpClient.logout();
+					ftpClient.disconnect();
+				}
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+
+	}
+
+	@AfterClass
+	public static void setupAfter() throws InterruptedException {
+
+		String source = "C:\\Users\\Crespo\\eclipse-workspace\\devopsmetrics\\target\\reports\\JSONReports\\TestReport.json";
+		File srcFile = new File(source);
+		String newName = "C:\\Users\\Crespo\\eclipse-workspace\\devopsmetrics\\target\\reports\\JSONReports\\"
+				+ dateFormatFile + ".json";
+		File srcFileFinal = new File(newName);
+
+		srcFile.renameTo(srcFileFinal);
+
+		String server = "35.180.190.134";
+		int port = 21;
+		String user = System.getProperty("server.user");
+		String pass = System.getProperty("server.key");
+
+		FTPClient ftpClient = new FTPClient();
+		try {
+
+			ftpClient.connect(server, port);
+			showServerReply(ftpClient);
+			int replyCode = ftpClient.getReplyCode();
+			if (!FTPReply.isPositiveCompletion(replyCode)) {
+				System.out.println("Operation failed. Server reply code: " + replyCode);
+				return;
+			}
+			boolean success = ftpClient.login(user, pass);
+			showServerReply(ftpClient);
+			if (!success) {
+				System.out.println("Could not login to the server");
+				return;
+			}
+			
+			ftpClient.enterLocalPassiveMode();
+			 
+            ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+ 
+            // APPROACH #1: uploads first file using an InputStream
+ 
+            String firstRemoteFile = dateFormatFile+"/"+dateFormatFile + ".json";
+            InputStream inputStream = new FileInputStream(srcFileFinal);
+ 
+            System.out.println("Start uploading first file");
+            boolean done = ftpClient.storeFile(firstRemoteFile, inputStream);
+            inputStream.close();
+            if (done) {
+                System.out.println("The file "+firstRemoteFile+" is uploaded successfully.");
+            }
+
+		} catch (IOException ex) {
+			System.out.println("Error: " + ex.getMessage());
+			ex.printStackTrace();
+		} finally {
+			try {
+				if (ftpClient.isConnected()) {
+					ftpClient.logout();
+					ftpClient.disconnect();
+				}
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+
+	}
+
 }
