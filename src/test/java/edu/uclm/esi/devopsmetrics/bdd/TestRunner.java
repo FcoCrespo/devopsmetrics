@@ -96,16 +96,14 @@ public class TestRunner {
 	@AfterClass
 	public static void setupAfter() throws InterruptedException {
 
-		String source = "C:\\Users\\Crespo\\eclipse-workspace\\devopsmetrics\\target\\reports\\JSONReports\\TestReport.json";
+		String source = "C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\JSONReports\\TestReport.json";
 		File srcFile = new File(source);
 		
 		String filename = "TestReport-devopsmetrics-FcoCrespo-"+ dtf.format(now) + ".json";
-		String newName = "C:\\Users\\Crespo\\eclipse-workspace\\devopsmetrics\\target\\reports\\JSONReports\\"+filename;
+		String newName = "C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\JSONReports\\"+filename;
 		File srcFileFinal = new File(newName);
 
 		srcFile.renameTo(srcFileFinal);
-		
-		Thread.sleep(5000);
 
 		String server = "35.180.190.134";
 		int port = 21;
