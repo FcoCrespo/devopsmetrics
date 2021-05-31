@@ -43,6 +43,56 @@ public class TestRunner {
 		}
 	}
 
+	/*@BeforeClass
+	public static void setupBefore() throws InterruptedException {
+
+		String server = "35.180.190.134";
+		int port = 21;
+		String user = System.getProperty("server.user");
+		String pass = System.getProperty("server.key");
+
+		FTPClient ftpClient = new FTPClient();
+		try {
+
+			ftpClient.connect(server, port);
+			showServerReply(ftpClient);
+			int replyCode = ftpClient.getReplyCode();
+			if (!FTPReply.isPositiveCompletion(replyCode)) {
+				System.out.println("Operation failed. Server reply code: " + replyCode);
+				return;
+			}
+			boolean success = ftpClient.login(user, pass);
+			showServerReply(ftpClient);
+			if (!success) {
+				System.out.println("Could not login to the server");
+				return;
+			}
+			String dirToCreate = "TestReport-devopsmetrics-FcoCrespo-" + dtf.format(now);
+			
+			success = ftpClient.makeDirectory(dirToCreate);
+			showServerReply(ftpClient);
+			if (success) {
+				System.out.println("Successfully created directory: " + dirToCreate);
+			} else {
+				System.out.println("Failed to create directory. See server's reply.");
+			}
+
+		} catch (IOException ex) {
+			System.out.println("Error: " + ex.getMessage());
+			ex.printStackTrace();
+		} finally {
+			try {
+				if (ftpClient.isConnected()) {
+					ftpClient.logout();
+					ftpClient.disconnect();
+				}
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+
+	}*/
+
 	@AfterClass
 	public static void setupAfter() throws InterruptedException {
 
@@ -54,6 +104,8 @@ public class TestRunner {
 		File srcFileFinal = new File(newName);
 
 		srcFile.renameTo(srcFileFinal);
+		
+		Thread.sleep(5000);
 
 		String server = "35.180.190.134";
 		int port = 21;
