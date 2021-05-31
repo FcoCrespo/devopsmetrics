@@ -33,8 +33,7 @@ public class TestRunner {
 
 	final static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy-HH-mm");
 	final static LocalDateTime now = LocalDateTime.now();
-	static String dateFormatFile = "";
-
+	
 	private static void showServerReply(FTPClient ftpClient) {
 		String[] replies = ftpClient.getReplyStrings();
 		if (replies != null && replies.length > 0) {
@@ -44,63 +43,14 @@ public class TestRunner {
 		}
 	}
 
-	@BeforeClass
-	public static void setupBefore() throws InterruptedException {
-
-		String server = "35.180.190.134";
-		int port = 21;
-		String user = System.getProperty("server.user");
-		String pass = System.getProperty("server.key");
-
-		FTPClient ftpClient = new FTPClient();
-		try {
-
-			ftpClient.connect(server, port);
-			showServerReply(ftpClient);
-			int replyCode = ftpClient.getReplyCode();
-			if (!FTPReply.isPositiveCompletion(replyCode)) {
-				System.out.println("Operation failed. Server reply code: " + replyCode);
-				return;
-			}
-			boolean success = ftpClient.login(user, pass);
-			showServerReply(ftpClient);
-			if (!success) {
-				System.out.println("Could not login to the server");
-				return;
-			}
-			String dirToCreate = "TestReport-devopsmetrics-FcoCrespo-" + dtf.format(now);
-			dateFormatFile = dirToCreate;
-			success = ftpClient.makeDirectory(dirToCreate);
-			showServerReply(ftpClient);
-			if (success) {
-				System.out.println("Successfully created directory: " + dirToCreate);
-			} else {
-				System.out.println("Failed to create directory. See server's reply.");
-			}
-
-		} catch (IOException ex) {
-			System.out.println("Error: " + ex.getMessage());
-			ex.printStackTrace();
-		} finally {
-			try {
-				if (ftpClient.isConnected()) {
-					ftpClient.logout();
-					ftpClient.disconnect();
-				}
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
-		}
-
-	}
-
 	@AfterClass
 	public static void setupAfter() throws InterruptedException {
 
 		String source = "C:\\Users\\Crespo\\eclipse-workspace\\devopsmetrics\\target\\reports\\JSONReports\\TestReport.json";
 		File srcFile = new File(source);
-		String newName = "C:\\Users\\Crespo\\eclipse-workspace\\devopsmetrics\\target\\reports\\JSONReports\\"
-				+ dateFormatFile + ".json";
+		
+		String filename = "TestReport-devopsmetrics-FcoCrespo-"+ dtf.format(now) + ".json";
+		String newName = "C:\\Users\\Crespo\\eclipse-workspace\\devopsmetrics\\target\\reports\\JSONReports\\"+filename;
 		File srcFileFinal = new File(newName);
 
 		srcFile.renameTo(srcFileFinal);
@@ -128,12 +78,20 @@ public class TestRunner {
 			}
 			
 			ftpClient.enterLocalPassiveMode();
+			
+			String dirToCreate = "TestReport-devopsmetrics-FcoCrespo-" + dtf.format(now);
+			
+			success = ftpClient.makeDirectory(dirToCreate);
+			showServerReply(ftpClient);
+			if (success) {
+				System.out.println("Successfully created directory: " + dirToCreate);
+			} else {
+				System.out.println("Failed to create directory. See server's reply.");
+			}
 			 
             ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
  
-            // APPROACH #1: uploads first file using an InputStream
- 
-            String firstRemoteFile = dateFormatFile+"/"+dateFormatFile + ".json";
+            String firstRemoteFile = dirToCreate+"/"+filename;
             InputStream inputStream = new FileInputStream(srcFileFinal);
  
             System.out.println("Start uploading first file");
