@@ -1,0 +1,1047 @@
+[
+  {
+    "line": 1,
+    "elements": [
+      {
+        "start_timestamp": "2021-05-31T11:54:33.749Z",
+        "line": 3,
+        "name": "",
+        "description": "",
+        "id": "feature-to-test-the-function-to-delete-an-user-in-the-system;",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 805025400,
+              "status": "passed"
+            },
+            "line": 4,
+            "name": "user is logging in the system for deleting another user",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.DeleteUserSteps.user_is_logging_in_the_system_for_deleting_another_user()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 497134800,
+              "status": "passed"
+            },
+            "line": 5,
+            "name": "user is correct he chooses the userId of the user to delete in the system",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.DeleteUserSteps.user_is_correct_he_chooses_the_user_id_of_the_user_to_delete_in_the_system()"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 307124200,
+              "status": "passed"
+            },
+            "line": 6,
+            "name": "the choosed user was deleted of the system",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.DeleteUserSteps.the_choosed_user_was_deleted_of_the_system()"
+            },
+            "keyword": "Then "
+          }
+        ]
+      }
+    ],
+    "name": "feature to test the function to delete an user in the system",
+    "description": "",
+    "id": "feature-to-test-the-function-to-delete-an-user-in-the-system",
+    "keyword": "Feature",
+    "uri": "file:src/test/resources/features/DeleteUser.feature",
+    "tags": []
+  },
+  {
+    "line": 1,
+    "elements": [
+      {
+        "start_timestamp": "2021-05-31T11:54:35.418Z",
+        "line": 3,
+        "name": "",
+        "description": "",
+        "id": "feature-to-test-the-function-to-get-all-branches-from-a-repository-by-his-owner;",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 347068900,
+              "status": "passed"
+            },
+            "line": 4,
+            "name": "user is logging in the system for getting all branches from a repository by his owner",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllBranchesSteps.user_is_logging_in_the_system_for_getting_all_branches_from_a_repository_by_his_owner()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "status": "passed"
+            },
+            "line": 5,
+            "name": "user is correct he requests all branches from a repository by his owner",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllBranchesSteps.user_is_correct_he_requests_all_branches_from_a_repository_by_his_owner()"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 2446771400,
+              "status": "passed"
+            },
+            "line": 6,
+            "name": "the user gets all branches from a repository by his owner",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllBranchesSteps.the_user_gets_all_branches_from_a_repository_by_his_owner()"
+            },
+            "keyword": "Then "
+          }
+        ]
+      }
+    ],
+    "name": "feature to test the function to get all branches from a repository by his owner",
+    "description": "",
+    "id": "feature-to-test-the-function-to-get-all-branches-from-a-repository-by-his-owner",
+    "keyword": "Feature",
+    "uri": "file:src/test/resources/features/GetAllBranches.feature",
+    "tags": []
+  },
+  {
+    "line": 1,
+    "elements": [
+      {
+        "start_timestamp": "2021-05-31T11:54:38.229Z",
+        "line": 3,
+        "name": "",
+        "description": "",
+        "id": "feature-to-test-the-function-to-get-all-commits-from-a-repository-by-his-owner;",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 328343500,
+              "status": "passed"
+            },
+            "line": 4,
+            "name": "user is logging in the system for getting all commits from a repository by his owner",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllCommitsSteps.user_is_logging_in_the_system_for_getting_all_commits_from_a_repository_by_his_owner()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "status": "passed"
+            },
+            "line": 5,
+            "name": "user is correct he requests all commits from a repository by his owner",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllCommitsSteps.user_is_correct_he_requests_all_commits_from_a_repository_by_his_owner()"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 1542749800,
+              "status": "passed"
+            },
+            "line": 6,
+            "name": "the user gets all commits from a repository by his owner",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllCommitsSteps.the_user_gets_all_commits_from_a_repository_by_his_owner()"
+            },
+            "keyword": "Then "
+          }
+        ]
+      }
+    ],
+    "name": "feature to test the function to get all commits from a repository by his owner",
+    "description": "",
+    "id": "feature-to-test-the-function-to-get-all-commits-from-a-repository-by-his-owner",
+    "keyword": "Feature",
+    "uri": "file:src/test/resources/features/GetAllCommits.feature",
+    "tags": []
+  },
+  {
+    "line": 1,
+    "elements": [
+      {
+        "start_timestamp": "2021-05-31T11:54:40.112Z",
+        "line": 3,
+        "name": "",
+        "description": "",
+        "id": "feature-to-test-the-function-to-get-all-issues-from-a-repository-by-his-owner-from-github;",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 363384800,
+              "status": "passed"
+            },
+            "line": 4,
+            "name": "user is logging in the system for getting all issues from a repository by his owner from Github",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllIssuesSteps.user_is_logging_in_the_system_for_getting_all_issues_from_a_repository_by_his_owner_from_github()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 1001600,
+              "status": "passed"
+            },
+            "line": 5,
+            "name": "user is correct he requests all issues from a repository by his owner",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllIssuesSteps.user_is_correct_he_requests_all_issues_from_a_repository_by_his_owner()"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 7175194900,
+              "status": "passed"
+            },
+            "line": 6,
+            "name": "the user gets all issues from a repository by his owner",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllIssuesSteps.the_user_gets_all_issues_from_a_repository_by_his_owner()"
+            },
+            "keyword": "Then "
+          }
+        ]
+      }
+    ],
+    "name": "feature to test the function to get all issues from a repository by his owner from Github",
+    "description": "",
+    "id": "feature-to-test-the-function-to-get-all-issues-from-a-repository-by-his-owner-from-github",
+    "keyword": "Feature",
+    "uri": "file:src/test/resources/features/GetAllIssues.feature",
+    "tags": []
+  },
+  {
+    "line": 1,
+    "elements": [
+      {
+        "start_timestamp": "2021-05-31T11:54:47.662Z",
+        "line": 3,
+        "name": "",
+        "description": "",
+        "id": "feature-to-test-the-function-to-get-all-metrics-from-a-repository-by-his-owner;",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 341646100,
+              "status": "passed"
+            },
+            "line": 4,
+            "name": "user is logging in the system for getting all metrics from a repository by his owner",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllMetrics.user_is_logging_in_the_system_for_getting_all_metrics_from_a_repository_by_his_owner()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "status": "passed"
+            },
+            "line": 5,
+            "name": "user is correct he requests all metrics from a repository by his owner",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllMetrics.user_is_correct_he_requests_all_metrics_from_a_repository_by_his_owner()"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 17679368500,
+              "status": "passed"
+            },
+            "line": 6,
+            "name": "the user gets all metrics from a repository by his owner",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllMetrics.the_user_gets_all_metrics_from_a_repository_by_his_owner()"
+            },
+            "keyword": "Then "
+          }
+        ]
+      }
+    ],
+    "name": "feature to test the function to get all metrics from a repository by his owner",
+    "description": "",
+    "id": "feature-to-test-the-function-to-get-all-metrics-from-a-repository-by-his-owner",
+    "keyword": "Feature",
+    "uri": "file:src/test/resources/features/GetAllMetrics.feature",
+    "tags": []
+  },
+  {
+    "line": 1,
+    "elements": [
+      {
+        "start_timestamp": "2021-05-31T11:55:05.692Z",
+        "line": 3,
+        "name": "",
+        "description": "",
+        "id": "feature-to-test-the-function-to-get-all-repositories-from-the-system;",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 353621400,
+              "status": "passed"
+            },
+            "line": 4,
+            "name": "user is logging in the system for getting all repositories from the system",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllRepositories.user_is_logging_in_the_system_for_getting_all_repositories_from_the_system()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 1002900,
+              "status": "passed"
+            },
+            "line": 5,
+            "name": "user is correct he requests all repositories from the system",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllRepositories.user_is_correct_he_requests_all_repositories_from_the_system()"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 308734000,
+              "status": "passed"
+            },
+            "line": 6,
+            "name": "the user gets all repositories from the system",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllRepositories.the_user_gets_all_repositories_from_the_system()"
+            },
+            "keyword": "Then "
+          }
+        ]
+      }
+    ],
+    "name": "feature to test the function to get all repositories from the system",
+    "description": "",
+    "id": "feature-to-test-the-function-to-get-all-repositories-from-the-system",
+    "keyword": "Feature",
+    "uri": "file:src/test/resources/features/GetAllRepositories.feature",
+    "tags": []
+  },
+  {
+    "line": 1,
+    "elements": [
+      {
+        "start_timestamp": "2021-05-31T11:55:06.365Z",
+        "line": 3,
+        "name": "",
+        "description": "",
+        "id": "feature-to-test-the-function-to-get-all-test-metrics-from-a-repository-by-his-owner;",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 333973800,
+              "status": "passed"
+            },
+            "line": 4,
+            "name": "user is logging in the system for getting all test metrics from a repository by his owner",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllTestMetrics.user_is_logging_in_the_system_for_getting_all_test_metrics_from_a_repository_by_his_owner()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "status": "passed"
+            },
+            "line": 5,
+            "name": "user is correct he requests all test metrics from a repository by his owner",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllTestMetrics.user_is_correct_he_requests_all_test_metrics_from_a_repository_by_his_owner()"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 524684100,
+              "status": "passed"
+            },
+            "line": 6,
+            "name": "the user gets all test metrics from a repository by his owner",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllTestMetrics.the_user_gets_all_test_metrics_from_a_repository_by_his_owner()"
+            },
+            "keyword": "Then "
+          }
+        ]
+      }
+    ],
+    "name": "feature to test the function to get all test metrics from a repository by his owner",
+    "description": "",
+    "id": "feature-to-test-the-function-to-get-all-test-metrics-from-a-repository-by-his-owner",
+    "keyword": "Feature",
+    "uri": "file:src/test/resources/features/GetAllTestMetrics.feature",
+    "tags": []
+  },
+  {
+    "line": 1,
+    "elements": [
+      {
+        "start_timestamp": "2021-05-31T11:55:07.242Z",
+        "line": 3,
+        "name": "",
+        "description": "",
+        "id": "feature-to-test-the-function-to-get-all-users-in-the-system;",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 350340300,
+              "status": "passed"
+            },
+            "line": 4,
+            "name": "user is logging in the system to get all users in the system",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllUserListSteps.user_is_logging_in_the_system_to_get_all_users_in_the_system()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 314569300,
+              "status": "passed"
+            },
+            "line": 5,
+            "name": "user is correct he gets all the users in the system",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllUserListSteps.user_is_correct_he_gets_all_the_users_in_the_system()"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 325298600,
+              "status": "passed"
+            },
+            "line": 6,
+            "name": "the users were got correctly",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllUserListSteps.the_users_were_got_correctly()"
+            },
+            "keyword": "Then "
+          }
+        ]
+      }
+    ],
+    "name": "feature to test the function to get all users in the system",
+    "description": "",
+    "id": "feature-to-test-the-function-to-get-all-users-in-the-system",
+    "keyword": "Feature",
+    "uri": "file:src/test/resources/features/GetAllUsers.feature",
+    "tags": []
+  },
+  {
+    "line": 1,
+    "elements": [
+      {
+        "start_timestamp": "2021-05-31T11:55:08.250Z",
+        "line": 3,
+        "name": "",
+        "description": "",
+        "id": "feature-to-test-the-function-to-get-all-commits-from-a-branch-of-a-repository;",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 338771200,
+              "status": "passed"
+            },
+            "line": 4,
+            "name": "user is logging in the system for getting all commits from a branch of a repository",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetCommitsBranchSteps.user_is_logging_in_the_system_for_getting_all_commits_from_a_branch_of_a_repository()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "status": "passed"
+            },
+            "line": 5,
+            "name": "user is correct he requests all commits from a branch of a repository",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetCommitsBranchSteps.user_is_correct_he_requests_all_commits_from_a_branch_of_a_repository()"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 1223312500,
+              "status": "passed"
+            },
+            "line": 6,
+            "name": "the user gets all commits from a branch of a repository",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetCommitsBranchSteps.the_user_gets_all_commits_from_a_branch_of_a_repository()"
+            },
+            "keyword": "Then "
+          }
+        ]
+      }
+    ],
+    "name": "feature to test the function to get all commits from a branch of a repository",
+    "description": "",
+    "id": "feature-to-test-the-function-to-get-all-commits-from-a-branch-of-a-repository",
+    "keyword": "Feature",
+    "uri": "file:src/test/resources/features/GetCommitsBranch.feature",
+    "tags": []
+  },
+  {
+    "line": 1,
+    "elements": [
+      {
+        "start_timestamp": "2021-05-31T11:55:09.830Z",
+        "line": 3,
+        "name": "",
+        "description": "",
+        "id": "feature-to-test-the-function-to-get-all-commits-from-a-branch-of-a-repository-by-the-author;",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 333968100,
+              "status": "passed"
+            },
+            "line": 4,
+            "name": "user is logging in the system for getting all commits from a branch of a repository by the author",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetCommitsBranchAuthorSteps.user_is_logging_in_the_system_for_getting_all_commits_from_a_branch_of_a_repository_by_the_author()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "status": "passed"
+            },
+            "line": 5,
+            "name": "user is correct he requests all commits from a branch of a repository by the author",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetCommitsBranchAuthorSteps.user_is_correct_he_requests_all_commits_from_a_branch_of_a_repository_by_the_author()"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 1641401300,
+              "status": "passed"
+            },
+            "line": 6,
+            "name": "the user gets all commits from a branch of a repository by the author",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetCommitsBranchAuthorSteps.the_user_gets_all_commits_from_a_branch_of_a_repository_by_the_author()"
+            },
+            "keyword": "Then "
+          }
+        ]
+      }
+    ],
+    "name": "feature to test the function to get all commits from a branch of a repository by the author",
+    "description": "",
+    "id": "feature-to-test-the-function-to-get-all-commits-from-a-branch-of-a-repository-by-the-author",
+    "keyword": "Feature",
+    "uri": "file:src/test/resources/features/GetCommitsBranchAuthor.feature",
+    "tags": []
+  },
+  {
+    "line": 1,
+    "elements": [
+      {
+        "start_timestamp": "2021-05-31T11:55:11.824Z",
+        "line": 3,
+        "name": "",
+        "description": "",
+        "id": "feature-to-test-the-function-to-get-all-commits-from-a-branch-of-a-repository-between-a-date;",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 370002100,
+              "status": "passed"
+            },
+            "line": 4,
+            "name": "user is logging in the system for getting all commits from a branch of a repository between a date",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetCommitsBranchDateSteps.user_is_logging_in_the_system_for_getting_all_commits_from_a_branch_of_a_repository_between_a_date()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "status": "passed"
+            },
+            "line": 5,
+            "name": "user is correct he requests all commits from a branch of a repository between a date",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetCommitsBranchDateSteps.user_is_correct_he_requests_all_commits_from_a_branch_of_a_repository_between_a_date()"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 2893548000,
+              "status": "passed"
+            },
+            "line": 6,
+            "name": "the user gets all commits from a branch of a repositorybetween a date",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetCommitsBranchDateSteps.the_user_gets_all_commits_from_a_branch_of_a_repositorybetween_a_date()"
+            },
+            "keyword": "Then "
+          }
+        ]
+      }
+    ],
+    "name": "feature to test the function to get all commits from a branch of a repository between a date",
+    "description": "",
+    "id": "feature-to-test-the-function-to-get-all-commits-from-a-branch-of-a-repository-between-a-date",
+    "keyword": "Feature",
+    "uri": "file:src/test/resources/features/GetCommitsBranchDate.feature",
+    "tags": []
+  },
+  {
+    "line": 1,
+    "elements": [
+      {
+        "start_timestamp": "2021-05-31T11:55:15.104Z",
+        "line": 3,
+        "name": "",
+        "description": "",
+        "id": "feature-to-test-the-function-to-get-all-commits-from-a-branch-of-a-repository-between-a-date-by-the-author;",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 318449200,
+              "status": "passed"
+            },
+            "line": 4,
+            "name": "user is logging in the system for getting all commits from a branch of a repository between a date by the author",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetCommitsBranchDateAuthorSteps.user_is_logging_in_the_system_for_getting_all_commits_from_a_branch_of_a_repository_between_a_date_by_the_author()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "status": "passed"
+            },
+            "line": 5,
+            "name": "user is correct he requests all commits from a branch of a repository between a date by the author",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetCommitsBranchDateAuthorSteps.user_is_correct_he_requests_all_commits_from_a_branch_of_a_repository_between_a_date_by_the_author()"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 3250921400,
+              "status": "passed"
+            },
+            "line": 6,
+            "name": "the user gets all commits from a branch of a repositorybetween a date by the author",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetCommitsBranchDateAuthorSteps.the_user_gets_all_commits_from_a_branch_of_a_repositorybetween_a_date_by_the_author()"
+            },
+            "keyword": "Then "
+          }
+        ]
+      }
+    ],
+    "name": "feature to test the function to get all commits from a branch of a repository between a date by the author",
+    "description": "",
+    "id": "feature-to-test-the-function-to-get-all-commits-from-a-branch-of-a-repository-between-a-date-by-the-author",
+    "keyword": "Feature",
+    "uri": "file:src/test/resources/features/GetCommitsBranchDateAuthor.feature",
+    "tags": []
+  },
+  {
+    "line": 1,
+    "elements": [
+      {
+        "start_timestamp": "2021-05-31T11:55:18.686Z",
+        "line": 3,
+        "name": "",
+        "description": "",
+        "id": "feature-to-test-the-function-to-get-all-issues-from-a-repository-by-his-owner-from-the-system;",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 382412100,
+              "status": "passed"
+            },
+            "line": 4,
+            "name": "user is logging in the system for getting all issues from a repository by his owner from the system",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetIssuesRepoSteps.user_is_logging_in_the_system_for_getting_all_issues_from_a_repository_by_his_owner_from_the_system()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 999700,
+              "status": "passed"
+            },
+            "line": 5,
+            "name": "user is correct he requests all issues from a repository by his owner of the system",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetIssuesRepoSteps.user_is_correct_he_requests_all_issues_from_a_repository_by_his_owner_of_the_system()"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 3366994900,
+              "status": "passed"
+            },
+            "line": 6,
+            "name": "the user gets all issues from a repository by his owner if the system",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetIssuesRepoSteps.the_user_gets_all_issues_from_a_repository_by_his_owner_if_the_system()"
+            },
+            "keyword": "Then "
+          }
+        ]
+      }
+    ],
+    "name": "feature to test the function to get all issues from a repository by his owner from the system",
+    "description": "",
+    "id": "feature-to-test-the-function-to-get-all-issues-from-a-repository-by-his-owner-from-the-system",
+    "keyword": "Feature",
+    "uri": "file:src/test/resources/features/GetIssuesRepo.feature",
+    "tags": []
+  },
+  {
+    "line": 1,
+    "elements": [
+      {
+        "start_timestamp": "2021-05-31T11:55:22.450Z",
+        "line": 3,
+        "name": "",
+        "description": "",
+        "id": "feature-to-test-the-function-to-get-an-user-by-the-tokenpass-in-the-system;",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 320332800,
+              "status": "passed"
+            },
+            "line": 4,
+            "name": "user is logging in the system for get his tokenpass",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetUserByTokenPassSteps.user_is_logging_in_the_system_for_get_his_tokenpass()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 292400500,
+              "status": "passed"
+            },
+            "line": 5,
+            "name": "user is correct he gets an user by the tokenpass of the session in the system",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetUserByTokenPassSteps.user_is_correct_he_gets_an_user_by_the_tokenpass_of_the_session_in_the_system()"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "status": "passed"
+            },
+            "line": 6,
+            "name": "the tokenpass exists and the user is correct",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetUserByTokenPassSteps.the_tokenpass_exists_and_the_user_is_correct()"
+            },
+            "keyword": "Then "
+          }
+        ]
+      }
+    ],
+    "name": "feature to test the function to get an user by the tokenpass in the system",
+    "description": "",
+    "id": "feature-to-test-the-function-to-get-an-user-by-the-tokenpass-in-the-system",
+    "keyword": "Feature",
+    "uri": "file:src/test/resources/features/GetUserByTokenPass.feature",
+    "tags": []
+  },
+  {
+    "line": 1,
+    "elements": [
+      {
+        "start_timestamp": "2021-05-31T11:55:23.074Z",
+        "line": 3,
+        "name": "",
+        "description": "",
+        "id": "feature-to-test-the-function-to-get-an-user-by-the-username-and-the-password-in-the-system;",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 398628000,
+              "status": "passed"
+            },
+            "line": 4,
+            "name": "user is logging in the system",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetUserPasswordSteps.user_is_logging_in_the_system()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "status": "passed"
+            },
+            "line": 5,
+            "name": "user is correct he gets an user by the username and the password in the system",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetUserPasswordSteps.user_is_correct_he_gets_an_user_by_the_username_and_the_password_in_the_system()"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "status": "passed"
+            },
+            "line": 6,
+            "name": "by the username and the password in peer exists and the user is correct",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetUserPasswordSteps.by_the_username_and_the_password_in_peer_exists_and_the_user_is_correct()"
+            },
+            "keyword": "Then "
+          }
+        ]
+      }
+    ],
+    "name": "feature to test the function to get an user by the username and the password in the system",
+    "description": "",
+    "id": "feature-to-test-the-function-to-get-an-user-by-the-username-and-the-password-in-the-system",
+    "keyword": "Feature",
+    "uri": "file:src/test/resources/features/GetUserPassword.feature",
+    "tags": []
+  },
+  {
+    "line": 1,
+    "elements": [
+      {
+        "start_timestamp": "2021-05-31T11:55:23.489Z",
+        "line": 3,
+        "name": "",
+        "description": "",
+        "id": "feature-to-test-login-functionality;",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 4299495500,
+              "status": "passed"
+            },
+            "line": 4,
+            "name": "user is on login page",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.LoginSteps.user_is_on_login_page()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 123944200,
+              "status": "passed"
+            },
+            "line": 5,
+            "name": "user enters username and password",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.LoginSteps.user_enters_username_and_password()"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 41995800,
+              "status": "passed"
+            },
+            "line": 6,
+            "name": "clicks on login button",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.LoginSteps.clicks_on_login_button()"
+            },
+            "keyword": "And "
+          },
+          {
+            "result": {
+              "duration": 2126000500,
+              "status": "passed"
+            },
+            "line": 7,
+            "name": "user is navigated to the home page",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.LoginSteps.user_is_navigated_to_the_home_page()"
+            },
+            "keyword": "Then "
+          }
+        ]
+      }
+    ],
+    "name": "feature to test login functionality",
+    "description": "",
+    "id": "feature-to-test-login-functionality",
+    "keyword": "Feature",
+    "uri": "file:src/test/resources/features/Login.feature",
+    "tags": []
+  },
+  {
+    "line": 1,
+    "elements": [
+      {
+        "start_timestamp": "2021-05-31T11:55:30.101Z",
+        "line": 3,
+        "name": "",
+        "description": "",
+        "id": "feature-to-test-the-function-to-register-an-user-in-the-system;",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 328669600,
+              "status": "passed"
+            },
+            "line": 4,
+            "name": "user is logging in the system for register other",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.RegistrarUsuarioSteps.user_is_logging_in_the_system_for_register_other()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 372284000,
+              "status": "passed"
+            },
+            "line": 5,
+            "name": "user is correct he registers an user by the username, the password and the role in the system",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.RegistrarUsuarioSteps.user_is_correct_he_registers_an_user_by_the_username_the_password_and_the_role_in_the_system()"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 345419900,
+              "status": "passed"
+            },
+            "line": 6,
+            "name": "by the username and the password in peer not exists and the user is registered correctly",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.RegistrarUsuarioSteps.by_the_username_and_the_password_in_peer_not_exists_and_the_user_is_registered_correctly()"
+            },
+            "keyword": "Then "
+          }
+        ]
+      }
+    ],
+    "name": "feature to test the function to register an user in the system",
+    "description": "",
+    "id": "feature-to-test-the-function-to-register-an-user-in-the-system",
+    "keyword": "Feature",
+    "uri": "file:src/test/resources/features/RegistrarUsuario.feature",
+    "tags": []
+  },
+  {
+    "line": 1,
+    "elements": [
+      {
+        "start_timestamp": "2021-05-31T11:55:31.160Z",
+        "line": 3,
+        "name": "",
+        "description": "",
+        "id": "feature-to-test-the-function-to-update-an-user-in-the-system;",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 332000100,
+              "status": "passed"
+            },
+            "line": 4,
+            "name": "user is logging in the system for updating an user",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.UpdateUserSteps.user_is_logging_in_the_system_for_updating_an_user()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 329893500,
+              "status": "passed"
+            },
+            "line": 5,
+            "name": "user is correct it updates an user by the username and the password in the system",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.UpdateUserSteps.user_is_correct_it_updates_an_user_by_the_username_and_the_password_in_the_system()"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 311714700,
+              "status": "passed"
+            },
+            "line": 6,
+            "name": "by the username and the password in peer not exists and the user is updated correctly",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.UpdateUserSteps.by_the_username_and_the_password_in_peer_not_exists_and_the_user_is_updated_correctly()"
+            },
+            "keyword": "Then "
+          }
+        ]
+      }
+    ],
+    "name": "feature to test the function to update an user in the system",
+    "description": "",
+    "id": "feature-to-test-the-function-to-update-an-user-in-the-system",
+    "keyword": "Feature",
+    "uri": "file:src/test/resources/features/UpdateUsuario.feature",
+    "tags": []
+  }
+]

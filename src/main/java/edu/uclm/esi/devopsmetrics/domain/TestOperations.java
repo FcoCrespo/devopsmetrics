@@ -1,7 +1,16 @@
 package edu.uclm.esi.devopsmetrics.domain;
 
-import java.io.File;
+import java.io.BufferedReader;
+
+import org.apache.commons.net.ftp.FTP;
+import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPFile;
+import org.apache.commons.net.ftp.FTPReply;
+
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -12,16 +21,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,8 +52,11 @@ public class TestOperations {
 	private final String elementStr;
 	private final String checkFail;
 
-	@Value("${app.testsdir}")
-	private String testsdir;
+	@Value("${app.userftp}")
+	private String user;
+	
+	@Value("${app.passftp}")
+	private String pass;
 
 	public TestOperations(final TestMetricsService testMetricsService, final MethodTestService methodTestService) {
 
@@ -95,27 +102,19 @@ public class TestOperations {
 
 	public void saveRepoTestMetrics(String repository, String owner) throws IOException {
 
-		LOG.info(this.testsdir);
-
-		File folder = new File(this.testsdir.replace("%20", " "));
-
-		List<String> filenames = new ArrayList<String>();
-		List<String> filepaths = new ArrayList<String>();
-
 		TestMetrics testMetrics;
 
-		String extension = "json";
 		String repoTest;
 		String ownerTest;
 		String dateTest;
 		Instant fecha;
+		
+		String server = "35.180.190.134";
+		int port = 21;
+		
 
-		File file;
-		String str;
-
-		filenames = listFilesNames(folder, filenames, extension);
-		filepaths = listFilesForFolder(folder, filepaths, extension);
-
+		FTPClient ftpClient = new FTPClient();
+		
 		String[] variables;
 
 		JsonNode nodes;
@@ -123,20 +122,40 @@ public class TestOperations {
 		JsonNode parameterNode;
 
 		String[] elemFecha = new String[5];
+		
+		try {
 
-		for (int i = 0; i < filepaths.size(); i++) {
-
+			ftpClient.connect(server, port);
 			
-			CloseableHttpClient httpclient = HttpClients.createDefault();
+			int replyCode = ftpClient.getReplyCode();
+			if (!FTPReply.isPositiveCompletion(replyCode)) {
+				LOG.info("Operation failed. Server reply code: " + replyCode);
+			}
+			boolean success = ftpClient.login(user, pass);
 			
-			try {
-				if (checkFile(filenames.get(i), repository, owner)) {
+			if (!success) {
+				LOG.info("Could not login to the server");
+			}
+			
+			ftpClient.enterLocalPassiveMode();
+			
+			ftpClient.setFileType(FTP.BINARY_FILE_TYPE, FTP.BINARY_FILE_TYPE);
+			ftpClient.setFileTransferMode(FTP.BINARY_FILE_TYPE);
+			
+			List<String> filesList =  new ArrayList<>();
+			
+			listDirectory(ftpClient, filesList, "/", "", 0);
+			
+			
+			for (int i = 0; i < filesList.size(); i++) {
+				
+				variables = filesList.get(i).split("-");
 
-					variables = filenames.get(i).split("-");
-
-					repoTest = variables[1];
-					ownerTest = variables[2];
-
+				repoTest = variables[1];
+				ownerTest = variables[2];
+				
+				if(repoTest.equals(repository) && ownerTest.equals(owner)) {
+					
 					elemFecha[0] = variables[3];
 					elemFecha[1] = variables[4];
 					elemFecha[2] = variables[5];
@@ -149,16 +168,18 @@ public class TestOperations {
 					LOG.info("repoTest: " + repoTest + ", ownerTest: " + ownerTest + ", dateToCorrect: "
 							+ fecha.toString());
 
+				
+					String jsonData = "";
 					
-					LOG.info(filepaths.get(i));
-					HttpGet httpget = new HttpGet("http://localhost:5050/getTestReport?filepath="+filenames.get(i));
-
-					LOG.info("Request Type: " + httpget.getMethod());
-
-					HttpResponse httpresponse = httpclient.execute(httpget);
-
-					HttpEntity entity = httpresponse.getEntity();
-					String jsonData = EntityUtils.toString(entity, "UTF-8");
+					String [] folder = filesList.get(i).split(".json");
+					
+					String fileRoute = folder[0]+"\\"+filesList.get(i);
+					
+					InputStream stream = ftpClient.retrieveFileStream(fileRoute);
+					BufferedReader reader = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8));
+							
+					jsonData = reader.lines().collect(Collectors.joining());
+						
 					nodes = new ObjectMapper().readTree(jsonData);
 
 					iter = nodes.iterator();
@@ -167,25 +188,70 @@ public class TestOperations {
 					testMetrics = new TestMetrics(repoTest, ownerTest, fecha);
 
 					this.testMetricsService.saveTestMetrics(testMetrics);
+					
+					LOG.info(testMetrics.toString());
 
 					comprobarContenido(iter, parameterNode, testMetrics);
-
-					file = new File(filepaths.get(i));
-					str = file.getPath().replace(".json", ".jsondone");
-					if (file.renameTo(new File(str))) {
-						LOG.info("Archivo procesado: " + filenames.get(i));
-					}
-
-					httpclient.close();
+					
+					stream.close();
+					while(!ftpClient.completePendingCommand());
+					LOG.info("-------[END:" + filesList.get(i)
+		                    + "]---------------------");
+					
+		            String newName = folder[0]+"\\"+folder[0]+".jsondone";
+		            
+		            success = ftpClient.rename(fileRoute, newName);
+		           
 				}
-			} catch (Exception e) {
-				LOG.info("Error en la lectura de los archivos");
-			}
-			finally {
-				httpclient.close();
+
+				
+
 			}
 
+			
+			
+		} catch (IOException ex) {
+			LOG.info("Error: " + ex.getMessage());
+		} finally {
+			try {
+				if (ftpClient.isConnected()) {
+					ftpClient.logout();
+					ftpClient.disconnect();
+				}
+			} catch (IOException ex) {
+				LOG.info("Error: " + ex.getMessage());
+			}
 		}
+		
+		
+	}
+	
+	static void listDirectory(FTPClient ftpClient, List<String>filesList, String parentDir,
+	        String currentDir, int level) throws IOException {
+	    String dirToList = parentDir;
+	    if (!currentDir.equals("")) {
+	        dirToList += "/" + currentDir;
+	    }
+	    FTPFile[] subFiles = ftpClient.listFiles(dirToList);
+	    if (subFiles != null && subFiles.length > 0) {
+	        for (FTPFile aFile : subFiles) {
+	            String currentFileName = aFile.getName();
+	            if (currentFileName.equals(".")
+	                    || currentFileName.equals("..")) {
+	                // skip parent directory and directory itself
+	                continue;
+	            }
+	            if (aFile.isDirectory()) {
+	                listDirectory(ftpClient, filesList, dirToList, currentFileName, level + 1);
+	            } 
+            	String ext = FilenameUtils.getExtension(aFile.getName());
+            	if (ext.equals("json")) {
+            		filesList.add(currentFileName);
+				}
+	                
+	            
+	        }
+	    }
 	}
 
 	private void comprobarContenido(Iterator<JsonNode> iter, JsonNode parameterNode, TestMetrics testMetrics) {
@@ -224,12 +290,10 @@ public class TestOperations {
 		if (nodeElements.contains(this.checkFail)) {
 
 			methodTest = new MethodTest(testMetrics.getId(), parameterNode.get("name").textValue(), false);
-
 			this.methodTestService.saveMethodTest(methodTest);
 		} else {
 
 			methodTest = new MethodTest(testMetrics.getId(), parameterNode.get("name").textValue(), true);
-
 			this.methodTestService.saveMethodTest(methodTest);
 
 		}
@@ -249,60 +313,6 @@ public class TestOperations {
 
 	}
 
-	private boolean checkFile(String filename, String repository, String owner) {
-
-		String[] variables = filename.split("-");
-
-		boolean correcto = false;
-
-		if (variables[1].equals(repository) && variables[2].equals(owner)) {
-
-			correcto = true;
-
-		}
-
-		return correcto;
-	}
-
-	public List<String> listFilesForFolder(final File folder, List<String> filenames, String extension) {
-
-		List<String> updatedFiles = filenames;
-		String ext;
-
-		for (final File fileEntry : folder.listFiles()) {
-			if (fileEntry.isDirectory()) {
-				listFilesForFolder(fileEntry, filenames, extension);
-			} else {
-				ext = FilenameUtils.getExtension(fileEntry.getName());
-				if (ext.equals(extension)) {
-					filenames.add(fileEntry.getPath());
-				}
-			}
-		}
-
-		return updatedFiles;
-
-	}
-
-	public List<String> listFilesNames(final File folder, List<String> filenames, String extension) {
-
-		List<String> updatedFiles = filenames;
-		String ext;
-
-		for (final File fileEntry : folder.listFiles()) {
-			if (fileEntry.isDirectory()) {
-				listFilesNames(fileEntry, filenames, extension);
-			} else {
-				ext = FilenameUtils.getExtension(fileEntry.getName());
-				if (ext.equals(extension)) {
-					filenames.add(fileEntry.getName());
-				}
-			}
-		}
-
-		return updatedFiles;
-
-	}
 
 	private Instant getDatesInstant(String dateFinal) {
 

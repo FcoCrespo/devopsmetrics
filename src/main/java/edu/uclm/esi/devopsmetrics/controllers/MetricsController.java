@@ -111,10 +111,9 @@ public class MetricsController {
 
 	public ResponseEntity<String> saveTestMetrics(@RequestParam("reponame") final String reponame, @RequestParam("owner") final String owner) {
 
-		String repository = reponame;
 		try {
 			LOG.info("Save repo test metrics");
-			this.testsOperations.saveRepoTestMetrics(repository, owner);
+			this.testsOperations.saveRepoTestMetrics(reponame, owner);
 			return ResponseEntity.ok(this.message);
 		}
 		catch(Exception e) {
