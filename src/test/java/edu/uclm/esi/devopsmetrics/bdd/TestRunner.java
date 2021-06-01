@@ -39,11 +39,13 @@ public class TestRunner {
 	
 	@AfterClass
 	public static void setupAfter() throws InterruptedException {
+		
+		String fecha = dtf.format(now);
 
 		String source = "C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\JSONReports\\TestReport.json";
 		File srcFile = new File(source);
 		
-		String filename = "TestReport-devopsmetrics-FcoCrespo-"+ dtf.format(now) + ".json";
+		String filename = "TestReport-devopsmetrics-FcoCrespo-"+ fecha + ".json";
 		String newName = "C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\JSONReports\\"+filename;
 		File srcFileFinal = new File(newName);
 
@@ -73,7 +75,7 @@ public class TestRunner {
 			
 			ftpClient.enterLocalPassiveMode();
 			
-			String dirToCreate = "TestReport-devopsmetrics-FcoCrespo-" + dtf.format(now);
+			String dirToCreate = "TestReport-devopsmetrics-FcoCrespo-" + fecha;
 			
 			success = ftpClient.makeDirectory(dirToCreate);
 			showServerReply(ftpClient);
