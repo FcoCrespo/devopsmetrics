@@ -230,10 +230,10 @@ public class TestOperations {
 		
 		InputStream stream = ftpClient.retrieveFileStream(fileRoute);
 		BufferedReader reader = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8));
-		
+		String json = reader.lines().collect(Collectors.joining());
 		stream.close();
 		
-		return reader.lines().collect(Collectors.joining());
+		return json;
 	}
 
 	static void listDirectory(FTPClient ftpClient, List<String>filesList, String parentDir,
