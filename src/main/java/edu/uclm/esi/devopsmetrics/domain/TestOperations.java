@@ -46,8 +46,8 @@ public class TestOperations {
 
 	private static final Log LOG = LogFactory.getLog(TestOperations.class);
 
-	private final TestMetricsService testMetricsService;
-	private final MethodTestService methodTestService;
+	private TestMetricsService testMetricsService;
+	private MethodTestService methodTestService;
 
 	private final String elementStr;
 	private final String checkFail;
@@ -61,17 +61,24 @@ public class TestOperations {
 	@Value("${app.serverftp}")
 	private String serverftp;
 
-	public TestOperations(final TestMetricsService testMetricsService, final MethodTestService methodTestService) {
+	private TestOperations() {
 
-		this.testMetricsService = testMetricsService;
-		this.methodTestService = methodTestService;
 		this.elementStr = "elements";
 		this.checkFail = ",\"status\":\"failed\"}";
+		
+	}
+	
+	private static class TestOperationsHolder {
+		static TestOperations singleton=new TestOperations();
+	}
+	
+	public static TestOperations get() {
+		return TestOperationsHolder.singleton;
 	}
 
 	public String getRepoTestMetrics(String repository, String owner) {
 
-		List <TestMetrics> listaTestMetrics =  this.testMetricsService.getAllByRepositoryAndOwner(repository, owner);
+		List <TestMetrics> listaTestMetrics =  testMetricsService.getAllByRepositoryAndOwner(repository, owner);
 	
 		JSONArray array = obtenerTests(listaTestMetrics);
 		
@@ -87,7 +94,7 @@ public class TestOperations {
 		Instant beginDateInstant = dates[0];
 		Instant endDateInstant = dates[1];
 		
-		List <TestMetrics> listaTestMetrics =  this.testMetricsService.getAllByRepositoryBeginEndDateByOwner(repository, beginDateInstant, endDateInstant, owner);
+		List <TestMetrics> listaTestMetrics = testMetricsService.getAllByRepositoryBeginEndDateByOwner(repository, beginDateInstant, endDateInstant, owner);
 		
 		JSONArray array = obtenerTests(listaTestMetrics);
 		
@@ -103,7 +110,7 @@ public class TestOperations {
 		JSONObject json;
 		
 		for(int i=0; i<listaTestMetrics.size(); i++) {
-			listaMethodTestAux = this.methodTestService.getAllByTestId(listaTestMetrics.get(i).getId());
+			listaMethodTestAux = methodTestService.getAllByTestId(listaTestMetrics.get(i).getId());
 			
 			for(int j=0; j<listaMethodTestAux.size(); j++) {
 				json = new JSONObject();
@@ -210,7 +217,7 @@ public class TestOperations {
 
 					testMetrics = new TestMetrics(repoTest, ownerTest, fecha);
 
-					this.testMetricsService.saveTestMetrics(testMetrics);
+					testMetricsService.saveTestMetrics(testMetrics);
 					
 					LOG.info(testMetrics.toString());
 
@@ -323,11 +330,11 @@ public class TestOperations {
 		if (nodeElements.contains(this.checkFail)) {
 
 			methodTest = new MethodTest(testMetrics.getId(), parameterNode.get("name").textValue(), false);
-			this.methodTestService.saveMethodTest(methodTest);
+			methodTestService.saveMethodTest(methodTest);
 		} else {
 
 			methodTest = new MethodTest(testMetrics.getId(), parameterNode.get("name").textValue(), true);
-			this.methodTestService.saveMethodTest(methodTest);
+			methodTestService.saveMethodTest(methodTest);
 
 		}
 	}

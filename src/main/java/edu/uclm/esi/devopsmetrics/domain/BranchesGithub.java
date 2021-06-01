@@ -24,8 +24,8 @@ import edu.uclm.esi.devopsmetrics.models.Branch;
 @Scope("singleton")
 public class BranchesGithub{
 	
-	private final BranchService branchService;
-	private final ResponseHTTP response;
+	private BranchService branchService;
+	private ResponseHTTP response;
 	
 	private String graphqlUri;
 
@@ -33,12 +33,16 @@ public class BranchesGithub{
 	/**
 	   * @author FcoCrespo
 	   */
-	public BranchesGithub(final BranchService branchService, final ResponseHTTP response) {
-	   
-		this.branchService = branchService;
-		this.response = response;
+	private BranchesGithub() {
 		this.graphqlUri = "https://api.github.com/graphql";
-		
+	}
+	
+	private static class BranchesGithubHolder {
+		static BranchesGithub singleton=new BranchesGithub();
+	}
+	
+	public static BranchesGithub get() {
+		return BranchesGithubHolder.singleton;
 	}
 	
 	public void getBranches(String reponame, String owner){

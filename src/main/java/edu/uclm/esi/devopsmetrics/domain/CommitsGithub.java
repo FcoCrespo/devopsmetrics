@@ -23,7 +23,6 @@ import edu.uclm.esi.devopsmetrics.services.CommitCursorService;
 import edu.uclm.esi.devopsmetrics.services.CommitInfoService;
 import edu.uclm.esi.devopsmetrics.services.CommitService;
 import edu.uclm.esi.devopsmetrics.utilities.GraphqlTemplate;
-
 import edu.uclm.esi.devopsmetrics.models.Commit;
 import edu.uclm.esi.devopsmetrics.models.CommitCursor;
 import edu.uclm.esi.devopsmetrics.models.CommitInfo;
@@ -35,12 +34,10 @@ public class CommitsGithub {
 	
 	private static final Log LOG = LogFactory.getLog(CommitsGithub.class);
 
-	private final CommitServices commitServices;
-	private final CommitService commitService;
-	private final CommitCursorService commitCursorService;
-	private final CommitInfoService commitInfoService;
-	private final UserGithubOperations userGithubOperations;
-	private final ResponseHTTP response;
+	private CommitService commitService;
+	private CommitCursorService commitCursorService;
+	private CommitInfoService commitInfoService;
+	private ResponseHTTP response;
 
 	private String cursorString;
 	private String repositoryString;
@@ -53,15 +50,8 @@ public class CommitsGithub {
 	/**
 	 * @author FcoCrespo
 	 */
-	public CommitsGithub(final CommitServices commitServices, final UserGithubOperations userGithubOperations,
-			final ResponseHTTP response) {
+	private CommitsGithub() {
 
-		this.commitServices = commitServices;
-		this.commitService = this.commitServices.getCommitService();
-		this.commitCursorService = this.commitServices.getCommitCursorService();
-		this.commitInfoService = this.commitServices.getCommitInfoService();
-		this.userGithubOperations = userGithubOperations;
-		this.response = response;
 		this.graphqlUri = "https://api.github.com/graphql";
 		this.filenameCursor = "src/main/resources/graphql/commits-cursor.graphql";
 		this.cursorString = "cursor";
@@ -69,6 +59,14 @@ public class CommitsGithub {
 		this.targetString="target";
 		this.historyString="history";
 
+	}
+	
+	private static class CommitsGithubHolder {
+		static CommitsGithub singleton=new CommitsGithub();
+	}
+	
+	public static CommitsGithub get() {
+		return CommitsGithubHolder.singleton;
 	}
 
 	public void getNewRepositoryCommits(String[] info, String filename, CommitCursor commitCursor) throws IOException {
@@ -427,7 +425,7 @@ public class CommitsGithub {
 		authorValues[3] =authorEmail;
 		authorValues[4] =authorAvatarURL;
 		
-		userGithub = this.userGithubOperations.saveAuthor(authorValues);
+		userGithub = UserGithubOperations.get().saveAuthor(authorValues);
 
 		LOG.info("Commit oid : " + oid);
 		LOG.info("MessageHeadline: " + messageHeadline);
@@ -467,23 +465,23 @@ public class CommitsGithub {
 	}
 
 	public UserGithub getUserGithub(String id) {
-		return this.userGithubOperations.findById(id);
+		return UserGithubOperations.get().findById(id);
 	}
 
 	public CommitInfo getCommitInfo(String oid) {
-		return this.commitInfoService.findByCommitId(oid);
+		return commitInfoService.findByCommitId(oid);
 	}
 
 	public List<CommitInfo> getCommitsInfo() {
-		return this.commitInfoService.findAll();
+		return commitInfoService.findAll();
 	}
 
 	public List<UserGithub> getUsersGithub() {
-		return this.userGithubOperations.findAll();
+		return UserGithubOperations.get().findAll();
 	}
 
 	public UserGithub getUserGithubByName(String authorName) {
-		return this.userGithubOperations.findByName(authorName);
+		return UserGithubOperations.get().findByName(authorName);
 	}
 
 }

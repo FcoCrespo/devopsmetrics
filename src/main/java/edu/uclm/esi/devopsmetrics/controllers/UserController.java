@@ -33,15 +33,13 @@ public class UserController {
 	private static final Log LOG = LogFactory.getLog(UserController.class);
 
 	private String errorMesage;
-	private UserOperations userOperations;
 
 	@Autowired
 	/**
 	 * @author FcoCrespo
 	 */
-	public UserController(UserOperations userOperations) {
+	public UserController() {
 		this.errorMesage = "No se ha encontrado ningún usuario con esos datos.";
-		this.userOperations = userOperations;
 	}
 
 	/**
@@ -53,11 +51,11 @@ public class UserController {
 	public ResponseEntity <String> getUserPassword(@RequestParam("username") final String username,
 			@RequestParam("password") final String password){
 
-		final boolean existe = this.userOperations.getUserByUsernameAndPassword(username, password);
+		final boolean existe = UserOperations.get().getUserByUsernameAndPassword(username, password);
 		
 		if (existe) {
 			LOG.info("Usuario encontrado");
-			return ResponseEntity.ok(this.userOperations.sendSecureUser(username, password));
+			return ResponseEntity.ok(UserOperations.get().sendSecureUser(username, password));
 		} else {
 			LOG.info(this.errorMesage);
 			return ResponseEntity.badRequest().build();
@@ -77,10 +75,10 @@ public class UserController {
 	public ResponseEntity <String> userByTokenPass(@PathVariable final String username,
 			@RequestParam("tokenpass") final String tokenpass){
 
-		final boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
+		final boolean existe = UserOperations.get().getUserByTokenPass(tokenpass);
 		if (existe) {
 			LOG.info("Buscando usuario: " + username);
-			return ResponseEntity.ok(this.userOperations.findByUsername(username));
+			return ResponseEntity.ok(UserOperations.get().findByUsername(username));
 		} else {
 			LOG.info(this.errorMesage);
 			return ResponseEntity.badRequest().body("El usuario, contraseña o ambos campos son incorrectos.");
@@ -97,10 +95,10 @@ public class UserController {
 
 	public ResponseEntity <String> allUsers(@RequestParam("tokenpass") final String tokenpass){
 
-		final boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
+		final boolean existe = UserOperations.get().getUserByTokenPass(tokenpass);
 		if (existe) {
 			LOG.info("Get all Users");
-			return ResponseEntity.ok(this.userOperations.getAllUsers());
+			return ResponseEntity.ok(UserOperations.get().getAllUsers());
 		} else {
 			LOG.info(this.errorMesage);
 			return ResponseEntity.badRequest().body("El usuario no tiene iniciada sus sesión.");
@@ -119,10 +117,10 @@ public class UserController {
 	public ResponseEntity <String> getUser(@RequestParam("tokenpass") final String tokenpass,
 			@RequestParam("username") final String username){
 
-		final boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
+		final boolean existe = UserOperations.get().getUserByTokenPass(tokenpass);
 		if (existe) {
 			LOG.info("Get user");
-			return ResponseEntity.ok(this.userOperations.findByUsername(username));
+			return ResponseEntity.ok(UserOperations.get().findByUsername(username));
 		} else {
 			LOG.info(this.errorMesage);
 			return ResponseEntity.badRequest().body("El usuario no tiene iniciada sus sesión.");
@@ -142,10 +140,10 @@ public class UserController {
 	public ResponseEntity <String> deleteUser(@PathVariable final String userId,
 			@RequestParam("tokenpass") final String tokenpass) {
 
-		final boolean existe = this.userOperations.getUserByTokenPassAdmin(tokenpass);
+		final boolean existe = UserOperations.get().getUserByTokenPassAdmin(tokenpass);
 		if (existe) {
 			LOG.info("Delete user " + userId);
-			this.userOperations.deleteUser(userId);
+			UserOperations.get().deleteUser(userId);
 			return ResponseEntity.ok("Usuario eliminado correctamente.");
 		} else {
 			LOG.info(this.errorMesage);
@@ -168,16 +166,16 @@ public class UserController {
 		final String username = jso.getString("username");
 		final String password = jso.getString("password");
 
-		final boolean tokenpassCorrect = this.userOperations.getUserByTokenPassAdmin(tokenpass);
+		final boolean tokenpassCorrect = UserOperations.get().getUserByTokenPassAdmin(tokenpass);
 
 		if(tokenpassCorrect) {
-			boolean existe = this.userOperations.getByUsername(username);
+			boolean existe = UserOperations.get().getByUsername(username);
 			if (!(existe)) {
 				LOG.info("Registrando usuario...");
 				
 				String role = jso.getString("role");
 				
-				this.userOperations.registrarUser(username, password, role);
+				UserOperations.get().registrarUser(username, password, role);
 				
 				LOG.info("Usuario registrado.");
 				return ResponseEntity.ok("Usuario registrado correctamente.");
@@ -207,10 +205,10 @@ public class UserController {
 	public ResponseEntity <String> updateUsuario(@RequestBody final String mensajerecibido,
 			@PathVariable final String username, @RequestParam("tokenpass") final String tokenpass) {
 
-		final boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
+		final boolean existe = UserOperations.get().getUserByTokenPass(tokenpass);
 		if (existe) {
 			final JSONObject jso = new JSONObject(mensajerecibido);
-			boolean existeUsername = this.userOperations.getByUsername(username);
+			boolean existeUsername = UserOperations.get().getByUsername(username);
 			if (!(existeUsername)) {
 				LOG.info("Error: El usuario no existe.");
 				return ResponseEntity.badRequest().body("El usuario no existe.");
@@ -221,7 +219,7 @@ public class UserController {
 					final String password = jso.getString("password");
 					final String role = jso.getString("role");
 					
-					this.userOperations.actualizarUsuario(username, password, role);
+					UserOperations.get().actualizarUsuario(username, password, role);
 					
 					LOG.info("[SERVER] Usuario actualizado.");
 					return ResponseEntity.ok("Usuario actualizado correctamente.");

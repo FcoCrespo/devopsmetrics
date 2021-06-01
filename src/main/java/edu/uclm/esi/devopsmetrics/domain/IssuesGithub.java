@@ -37,13 +37,12 @@ public class IssuesGithub {
 	
 	private static final Log LOG = LogFactory.getLog(IssuesGithub.class);
 
-	private final IssueServices issueServices;
-	private final IssueService issueService;
-	private final IssueCursorService issueCursorService;
-	private final IssueRepoService issueRepoService;
-	private final IssueAssigneeService issueAssigneeService;
-	private final UserGithubOperations userGithubOperations;
-	private final ResponseHTTP response;
+	
+	private IssueService issueService;
+	private IssueCursorService issueCursorService;
+	private IssueRepoService issueRepoService;
+	private IssueAssigneeService issueAssigneeService;
+	private ResponseHTTP response;
 
 	private String cursorString;
 	private String repositoryString;
@@ -62,15 +61,8 @@ public class IssuesGithub {
 	/**
 	 * @author FcoCrespo
 	 */
-	public IssuesGithub(final IssueServices issueServices, final UserGithubOperations userGithubOperations, final ResponseHTTP response) {
+	private IssuesGithub() {
 
-		this.issueServices = issueServices;
-		this.issueService = this.issueServices.getIssueService();
-		this.issueCursorService = this.issueServices.getIssueCursorService();
-		this.issueRepoService = this.issueServices.getIssueRepoService();
-		this.issueAssigneeService = this.issueServices.getIssueAssigneeService();
-		this.userGithubOperations = userGithubOperations;
-		this.response = response;
 		this.graphqlUri = "https://api.github.com/graphql";
 		this.filenameCursor = "src/main/resources/graphql/issues-cursor.graphql";
 		this.cursorString = "cursor";
@@ -83,6 +75,14 @@ public class IssuesGithub {
 		this.stateString = "state";
 		this.closedString = "closedAt";
 
+	}
+	
+	private static class IssuesGithubHolder {
+		static IssuesGithub singleton=new IssuesGithub();
+	}
+	
+	public static IssuesGithub get() {
+		return IssuesGithubHolder.singleton;
 	}
 
 	public void getNewRepositoryIssues(String[] info, String filename, IssueCursor issueCursor) throws IOException {
@@ -130,9 +130,9 @@ public class IssuesGithub {
 			issueRepo = (IssueRepo) result[1];
 			
 			
-			this.issueService.saveIssue(issue);
+			issueService.saveIssue(issue);
 			
-			this.issueRepoService.saveIssueRepo(issueRepo);
+			issueRepoService.saveIssueRepo(issueRepo);
 		
 			parameterNode = iter.next();
 
@@ -141,9 +141,9 @@ public class IssuesGithub {
 				issue = (Issue) result[0];
 				issueRepo = (IssueRepo) result[1];
 				
-				this.issueService.saveIssue(issue);
+				issueService.saveIssue(issue);
 				
-				this.issueRepoService.saveIssueRepo(issueRepo);
+				issueRepoService.saveIssueRepo(issueRepo);
 				
 				if(issueCursor!=null) {
 					issueCursor.setIdLastIssue(issue.getId());
@@ -176,7 +176,7 @@ public class IssuesGithub {
 		File file = new File(info[2]);
 		
 
-		IssueCursor issueCursorInitial = this.issueCursorService.getByRepository(info[0]);
+		IssueCursor issueCursorInitial = issueCursorService.getByRepository(info[0]);
 
 		String issueInitial = issueCursorInitial.getIdLastIssue();
 
@@ -301,14 +301,14 @@ public class IssuesGithub {
 		if(iter.hasNext()) {
 			while (iter.hasNext()) {
 				
-				issue = this.issueService.findOne(parameterNode.get("id").asText());
+				issue = issueService.findOne(parameterNode.get("id").asText());
 				
 				actualizarIssue(parameterNode, issue);
 				
 				parameterNode = iter.next();
 
 				if (!iter.hasNext()) {
-					issue = this.issueService.findOne(parameterNode.get("id").asText());
+					issue = issueService.findOne(parameterNode.get("id").asText());
 					
 					actualizarIssue(parameterNode, issue);
 					
@@ -318,7 +318,7 @@ public class IssuesGithub {
 			
 		}
 		else {
-			issue = this.issueService.findOne(parameterNode.get("id").asText());
+			issue = issueService.findOne(parameterNode.get("id").asText());
 			
 			actualizarIssue(parameterNode, issue);
 		}
@@ -342,7 +342,7 @@ public class IssuesGithub {
 			issue.setClosedAt(closedAt);
 		} 
 		
-		this.issueService.updateIssue(issue);
+		issueService.updateIssue(issue);
 	}
 
 	private boolean checkInitialIssueFind(Issue issue, String issueInitial, boolean initialStartCursorFind) {
@@ -357,7 +357,7 @@ public class IssuesGithub {
 	private void actualizarCursor(IssueCursor issueCursor, Issue issue) {
 		if(issue!=null) {
 			issueCursor.setIdLastIssue(issue.getId());
-			this.issueCursorService.updateIssueCursor(issueCursor);	
+			issueCursorService.updateIssueCursor(issueCursor);	
 		}		
 	}
 
@@ -378,11 +378,11 @@ public class IssuesGithub {
 
 	private void saveIssuesRepository(List<Issue> issuesList, List<IssueRepo> issuesRepoList) {
 		for (int j = 0; j < issuesList.size(); j++) {
-			this.issueService.saveIssue(issuesList.get(j));
+			issueService.saveIssue(issuesList.get(j));
 		}
 		
 		for (int i = 0; i < issuesRepoList.size(); i++) {
-			this.issueRepoService.saveIssueRepo(issuesRepoList.get(i));
+			issueRepoService.saveIssueRepo(issuesRepoList.get(i));
 		}
 	}
 	
@@ -441,7 +441,7 @@ public class IssuesGithub {
 		authorValues[3] =authorEmail;
 		authorValues[4] =authorAvatarURL;
 		
-		userGithubAuthor = this.userGithubOperations.saveAuthor(authorValues);
+		userGithubAuthor = UserGithubOperations.get().saveAuthor(authorValues);
 	
 		JsonNode nodesAssignees;
 		nodesAssignees = parameterNode.path("assignees");	
@@ -468,7 +468,7 @@ public class IssuesGithub {
 					
 					asigneeValues = obtenerDatos(parameterNodeAssignee);
 					
-					userGithubAsignee = this.userGithubOperations.saveAuthor(asigneeValues);
+					userGithubAsignee = UserGithubOperations.get().saveAuthor(asigneeValues);
 					
 					issueAssignee = new IssueAssignee(idGithub, userGithubAsignee.getId());
 					
@@ -481,7 +481,7 @@ public class IssuesGithub {
 					
 					asigneeValues = obtenerDatos(parameterNodeAssignee);
 					
-					userGithubAsignee = this.userGithubOperations.saveAuthor(asigneeValues);
+					userGithubAsignee = UserGithubOperations.get().saveAuthor(asigneeValues);
 					
 					issueAssignee = new IssueAssignee(idGithub, userGithubAsignee.getId());
 					
@@ -493,7 +493,7 @@ public class IssuesGithub {
 				
 				asigneeValues = obtenerDatos(parameterNodeAssignee);
 				
-				userGithubAsignee = this.userGithubOperations.saveAuthor(asigneeValues);
+				userGithubAsignee = UserGithubOperations.get().saveAuthor(asigneeValues);
 				
 				issueAssignee = new IssueAssignee(idGithub, userGithubAsignee.getId());
 				

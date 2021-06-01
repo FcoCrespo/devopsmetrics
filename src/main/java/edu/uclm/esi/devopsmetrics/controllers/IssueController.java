@@ -31,8 +31,6 @@ public class IssueController {
 	private static final Log LOG = LogFactory.getLog(IssueController.class);
 
 	private final String errorMessage;
-	private final UserOperations userOperations;
-	private final IssueOperations issueOperations;
 
 	private String message;
 
@@ -41,11 +39,9 @@ public class IssueController {
 	 * @author FcoCrespo
 	 */
 
-	public IssueController(final UserOperations userOperations, final IssueOperations issueOperations) {
+	public IssueController() {
 
 		this.errorMessage = "[SERVER] No se ha encontrado ningún usuario con esos datos.";
-		this.userOperations = userOperations;
-		this.issueOperations = issueOperations;
 		this.message = "Operation completed.";
 
 	}
@@ -62,12 +58,12 @@ public class IssueController {
 	public ResponseEntity<String> allIssues(@RequestParam("tokenpass") final String tokenpass,
 			@RequestParam("reponame") final String repository, @RequestParam("owner") final String owner) {
 
-		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
+		boolean existe = UserOperations.get().getUserByTokenPass(tokenpass);
 		if (existe) {
 			try {
 				LOG.info("Get issues");
-				this.issueOperations.getIssues(repository, owner);
-				this.issueOperations.actualizarValores(repository, owner);
+				IssueOperations.get().getIssues(repository, owner);
+				IssueOperations.get().actualizarValores(repository, owner);
 				return ResponseEntity.ok(this.message);
 			}
 			catch (IOException e) {
@@ -93,11 +89,11 @@ public class IssueController {
 	public ResponseEntity<String> allIssuesFromRepository(@RequestParam("tokenpass") final String tokenpass,
 			@RequestParam("reponame") final String reponame, @RequestParam("owner") final String owner) {
 
-		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
+		boolean existe = UserOperations.get().getUserByTokenPass(tokenpass);
 		if (existe) {
 
 			LOG.info("Get issues from the repository");
-			return ResponseEntity.ok(this.issueOperations.getIssuesRepository(reponame, owner));
+			return ResponseEntity.ok(IssueOperations.get().getIssuesRepository(reponame, owner));
 
 		} else {
 			LOG.info(this.errorMessage);

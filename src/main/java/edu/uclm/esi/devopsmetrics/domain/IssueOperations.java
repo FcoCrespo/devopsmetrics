@@ -11,7 +11,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
-
 import edu.uclm.esi.devopsmetrics.models.Issue;
 import edu.uclm.esi.devopsmetrics.models.IssueAssignee;
 import edu.uclm.esi.devopsmetrics.models.IssueCursor;
@@ -28,24 +27,24 @@ public class IssueOperations {
 	
 	private static final Log LOG = LogFactory.getLog(IssueOperations.class);
 
-	private final IssuesGithub issuesGithub;
-	private final IssueServices issueServices;
-	private final IssueRepoService issueRepoService;
-	private final IssueAssigneeService issueAssigneeService;
-	private final IssueService issueService;
-	private final UserGithubService userGithubService;
+	private IssueRepoService issueRepoService;
+	private IssueAssigneeService issueAssigneeService;
+	private IssueService issueService;
+	private UserGithubService userGithubService;
 	
 	/**
 	 * @author FcoCrespo
 	 */
-	public IssueOperations(final IssuesGithub issuesGithub, final IssueServices issueServices,
-			final UserGithubService userGithubService) {
-		this.issuesGithub = issuesGithub;
-		this.issueServices = issueServices;
-		this.issueRepoService = this.issueServices.getIssueRepoService();
-		this.issueAssigneeService = this.issueServices.getIssueAssigneeService();
-		this.issueService = this.issueServices.getIssueService();
-		this.userGithubService = userGithubService;
+	private IssueOperations() {
+		
+	}
+	
+	private static class IssueOperationsHolder {
+		static IssueOperations singleton=new IssueOperations();
+	}
+	
+	public static IssueOperations get() {
+		return IssueOperationsHolder.singleton;
 	}
 	
 	public void getIssues(String repository, String owner) throws IOException {
@@ -57,7 +56,7 @@ public class IssueOperations {
 
 		boolean seguir = true;
 		
-		issueDeRepo = this.issueRepoService.getOneByRepoyOwner(repository, owner);
+		issueDeRepo = issueRepoService.getOneByRepoyOwner(repository, owner);
 		
 		if(issueDeRepo==null) {
 			seguir=true;
@@ -77,7 +76,7 @@ public class IssueOperations {
 			LOG.info("INTRODUCIENDO NUEVOS ISSUES DEL REPOSITORIO");
 			filename = "src/main/resources/graphql/issues.graphql";
 			
-			this.issuesGithub.getNewRepositoryIssues(info, filename, issueCursor);
+			IssuesGithub.get().getNewRepositoryIssues(info, filename, issueCursor);
 		
 		} else {
 			LOG.info("ACTUALIZANDO ISSUES DEL REPOSITORIO");
@@ -87,7 +86,7 @@ public class IssueOperations {
 			List<Issue>issuesList = new ArrayList<Issue>();
 			List<IssueRepo>issuesRepoList = new ArrayList<IssueRepo>();
 			
-			this.issuesGithub.updateRepositoryIssues(info, initialStartCursorFind, issuesList, issuesRepoList, issueCursor);
+			IssuesGithub.get().updateRepositoryIssues(info, initialStartCursorFind, issuesList, issuesRepoList, issueCursor);
 			
 		}
 		
@@ -106,7 +105,7 @@ public class IssueOperations {
 		
 		IssueCursor issueCursor = null;
 		
-		this.issuesGithub.actualizarValores(info, filename, issueCursor);
+		IssuesGithub.get().actualizarValores(info, filename, issueCursor);
 	}
 
 	public String getIssuesRepository(String reponame, String owner) {
@@ -118,11 +117,11 @@ public class IssueOperations {
 		JSONArray jsonAssignees;
 		JSONObject jsonAuthor;
 		
-		List <UserGithub> usersgithub = this.userGithubService.findAll();
-		List <Issue> issues = this.issueService.findAll();
+		List <UserGithub> usersgithub = userGithubService.findAll();
+		List <Issue> issues = issueService.findAll();
 		List <IssueAssignee> issuesAssignee = new ArrayList<>();
 		
-		List <IssueRepo> issueRepoList = this.issueRepoService.getByRepoyOwner(reponame, owner);
+		List <IssueRepo> issueRepoList = issueRepoService.getByRepoyOwner(reponame, owner);
 		
 		Map<String, Issue> mapIssues = getMapIssues(issues);
 		Map<String, UserGithub> mapUsersGithub = getMapUsersGithub(usersgithub);		
@@ -132,7 +131,7 @@ public class IssueOperations {
 			json = new JSONObject();
 			jsonAuthor = new JSONObject();
 			
-			issuesAssignee = this.issueAssigneeService.getAllByIdIssue(issueRepoList.get(i).getId());
+			issuesAssignee = issueAssigneeService.getAllByIdIssue(issueRepoList.get(i).getId());
 			
 			userGithub = mapUsersGithub.get(issueRepoList.get(i).getAuthor());
 			

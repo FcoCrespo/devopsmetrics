@@ -27,15 +27,22 @@ import edu.uclm.esi.devopsmetrics.utilities.Utilities;
 @Scope("singleton")
 public class UserOperations {
 
-	private final UserService userService;
-	private final Utilities utilities;
+	private UserService userService;
+	private Utilities utilities;
 
 	/**
 	 * @author FcoCrespo
 	 */
-	public UserOperations(final UserService userService, final Utilities utilities) {
-		this.userService = userService;
-		this.utilities = utilities;
+	private UserOperations() {
+		
+	}
+	
+	private static class UserOperationsHolder {
+		static UserOperations singleton=new UserOperations();
+	}
+	
+	public static UserOperations get() {
+		return UserOperationsHolder.singleton;
 	}
 
 	public boolean getUserByUsernameAndPassword(String username, String password) {
@@ -43,7 +50,7 @@ public class UserOperations {
 		try {
 
 			User usuariologin;
-			usuariologin = this.userService.getUserByUsernameAndPassword(username, password);
+			usuariologin = userService.getUserByUsernameAndPassword(username, password);
 
 			return usuariologin != null;
 
@@ -58,16 +65,16 @@ public class UserOperations {
 		try {
 
 			User usuariologin;
-			usuariologin = this.userService.getUserByUsernameAndPassword(username, password);
-			usuariologin.setUsernameUser(this.utilities.encriptar(username));
-			usuariologin.setPasswordUser(this.utilities.encriptar(password));
+			usuariologin = userService.getUserByUsernameAndPassword(username, password);
+			usuariologin.setUsernameUser(utilities.encriptar(username));
+			usuariologin.setPasswordUser(utilities.encriptar(password));
 			usuariologin.newTokenPass();
 			usuariologin.setTokenValidity();
 
-			this.userService.updateUser(usuariologin);
+			userService.updateUser(usuariologin);
 
 			SecureUser secureUser = new SecureUser(usuariologin.getIdUser(), username,
-					this.utilities.desencriptar(usuariologin.getRoleUser()), usuariologin.getTokenPass(),
+					utilities.desencriptar(usuariologin.getRoleUser()), usuariologin.getTokenPass(),
 					usuariologin.getTokenValidity());
 
 			ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
@@ -84,7 +91,7 @@ public class UserOperations {
 	public boolean getUserByTokenPass(String tokenpass) {
 
 		User usuariologin;
-		usuariologin = this.userService.getUserByTokenPass(tokenpass);
+		usuariologin = userService.getUserByTokenPass(tokenpass);
 		return usuariologin != null;
 
 	}
@@ -92,10 +99,10 @@ public class UserOperations {
 	public boolean getUserByTokenPassAdmin(String tokenpass) {
 		
 		User usuariologin;
-		usuariologin = this.userService.getUserByTokenPass(tokenpass);
+		usuariologin = userService.getUserByTokenPass(tokenpass);
 		if(usuariologin != null) {
 			try {
-				return this.utilities.desencriptar(usuariologin.getRoleUser()).equals("admin");
+				return utilities.desencriptar(usuariologin.getRoleUser()).equals("admin");
 			} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
 					| InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException e) {
 				return false;
@@ -109,8 +116,8 @@ public class UserOperations {
 	public String findByUsername(String username) {
 		
 		try {
-			User user = this.userService.findByUsername(username);
-			SecureUser secureUser = new SecureUser(user.getIdUser(), username, this.utilities.desencriptar(user.getRoleUser()),
+			User user = userService.findByUsername(username);
+			SecureUser secureUser = new SecureUser(user.getIdUser(), username, utilities.desencriptar(user.getRoleUser()),
 					user.getTokenPass(), user.getTokenValidity());
 
 
@@ -129,12 +136,12 @@ public class UserOperations {
 		
 		try {
 			
-			List<User> users = this.userService.findAll();
+			List<User> users = userService.findAll();
 			List<SecureUser> listaSecureUsers = new ArrayList<SecureUser>();
 			SecureUser userSecure;
 			for (int i = 0; i < users.size(); i++) {
 				userSecure = new SecureUser(users.get(i).getIdUser(),
-						this.utilities.desencriptar(users.get(i).getUsernameUser()), this.utilities.desencriptar(users.get(i).getRoleUser()),
+						utilities.desencriptar(users.get(i).getUsernameUser()), utilities.desencriptar(users.get(i).getRoleUser()),
 						users.get(i).getTokenPass(), users.get(i).getTokenValidity());
 				listaSecureUsers.add(userSecure);
 			}
@@ -153,14 +160,14 @@ public class UserOperations {
 
 	public void deleteUser(String userId) {
 		
-		this.userService.deleteUser(userId);
+		userService.deleteUser(userId);
 		
 	}
 
 	public boolean getByUsername(String username) {
 		User user;
 		try {
-			user = this.userService.findByUsername(username);
+			user = userService.findByUsername(username);
 			return user!=null;
 		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
 				| InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException e) {
@@ -171,8 +178,8 @@ public class UserOperations {
 
 	public void registrarUser(String username, String password, String role) {	
 		try {
-			User usuario = new User(this.utilities.encriptar(username), this.utilities.encriptar(password), this.utilities.encriptar(role));
-			this.userService.saveUser(usuario);
+			User usuario = new User(utilities.encriptar(username), utilities.encriptar(password), utilities.encriptar(role));
+			userService.saveUser(usuario);
 		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
 				| InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException e) {
 			e.toString();
@@ -182,16 +189,16 @@ public class UserOperations {
 	public void actualizarUsuario(String username, String password, String role) {
 		
 		try {
-			User usuario = this.userService.findByUsername(username);
+			User usuario = userService.findByUsername(username);
 			
-			String usernameEncriptado = this.utilities.encriptar(username);
-			String passwordEncriptado = this.utilities.encriptar(password);
-			String roleEncriptado = this.utilities.encriptar(role);
+			String usernameEncriptado = utilities.encriptar(username);
+			String passwordEncriptado = utilities.encriptar(password);
+			String roleEncriptado = utilities.encriptar(role);
 			usuario.setUsernameUser(usernameEncriptado);
 			usuario.setPasswordUser(passwordEncriptado);
 			usuario.setRoleUser(roleEncriptado);
 			
-			this.userService.updateUser(usuario);
+			userService.updateUser(usuario);
 			
 		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
 				| InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException e) {

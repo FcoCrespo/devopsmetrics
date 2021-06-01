@@ -50,6 +50,8 @@ import edu.uclm.esi.devopsmetrics.models.MethodMetrics;
 import edu.uclm.esi.devopsmetrics.models.UserGithub;
 import edu.uclm.esi.devopsmetrics.services.ClassMetricsService;
 import edu.uclm.esi.devopsmetrics.services.CohesionMetricsService;
+import edu.uclm.esi.devopsmetrics.services.CommitInfoService;
+import edu.uclm.esi.devopsmetrics.services.CommitService;
 import edu.uclm.esi.devopsmetrics.services.CouplingMetricsService;
 import edu.uclm.esi.devopsmetrics.services.MethodMetricsService;
 
@@ -71,11 +73,12 @@ public class MetricsOperations {
 
 	private static final Log LOG = LogFactory.getLog(MetricsOperations.class);
 
-	private final MethodMetricsService methodMetricsService;
-	private final ClassMetricsService classMetricsService;
-	private final CohesionMetricsService cohesionMetricsService;
-	private final CouplingMetricsService couplingMetricsService;
-	private final CommitServices commitServices;
+	private static MethodMetricsService methodMetricsService;
+	private static ClassMetricsService classMetricsService;
+	private static CohesionMetricsService cohesionMetricsService;
+	private static CouplingMetricsService couplingMetricsService;
+	private CommitInfoService commitInfoService;
+	private CommitService commitService;
 	private final String idGithubStr;
 
 	@Value("${app.userftp}")
@@ -90,18 +93,22 @@ public class MetricsOperations {
 	/**
 	 * @author FcoCrespo
 	 */
-	public MetricsOperations(final MethodMetricsService methodMetricsService,
-			final ClassMetricsService classMetricsService, final CohesionMetricsService cohesionMetricsService,
-			final CouplingMetricsService couplingMetricsService, final CommitServices commitServices) {
+	private MetricsOperations() {
 
-		this.methodMetricsService = methodMetricsService;
-		this.classMetricsService = classMetricsService;
-		this.cohesionMetricsService = cohesionMetricsService;
-		this.couplingMetricsService = couplingMetricsService;
-		this.commitServices = commitServices;
 		this.idGithubStr = "idGithub";
 
 	}
+	
+	
+	private static class MetricsOperationsHolder {
+		static MetricsOperations singleton=new MetricsOperations();
+	}
+	
+	public static MetricsOperations get() {
+		return MetricsOperationsHolder.singleton;
+	}
+
+	
 
 	public String getRepoMetrics(String repository, String owner, String tokenpass) throws IOException {
 
@@ -176,7 +183,7 @@ public class MetricsOperations {
 		List<Commit> listaCommits = new ArrayList<>();
 
 		if (!iter.hasNext()) {
-			listaCommits = this.commitServices.getCommitService()
+			listaCommits = commitService
 					.getAllByBranchBeginEndDate(parameterNode.get(this.idGithubStr).textValue(), beginDateInstant, endDateInstant);
 		} else {
 			while (iter.hasNext()) {
@@ -197,7 +204,7 @@ public class MetricsOperations {
 	private List<Commit> obtenerCommitsDate(JsonNode parameterNode, List<Commit> listaCommits, Instant beginDateInstant,
 			Instant endDateInstant) {
 		List<Commit> listaOriginal = listaCommits;
-		List<Commit> listaNueva = this.commitServices.getCommitService()
+		List<Commit> listaNueva = commitService
 				.getAllByBranchBeginEndDate(parameterNode.get(this.idGithubStr).textValue(), beginDateInstant, endDateInstant);
 
 		for (int i = 0; i < listaNueva.size(); i++) {
@@ -210,7 +217,7 @@ public class MetricsOperations {
 	private List<Commit> obtenerCommits(JsonNode parameterNode, List<Commit> listaCommits) {
 
 		List<Commit> listaOriginal = listaCommits;
-		List<Commit> listaNueva = this.commitServices.getCommitService()
+		List<Commit> listaNueva = commitService
 				.getAllCommitsByBranch(parameterNode.get(this.idGithubStr).textValue());
 
 		for (int i = 0; i < listaNueva.size(); i++) {
@@ -231,7 +238,7 @@ public class MetricsOperations {
 		List<Commit> listaCommits = new ArrayList<>();
 
 		if (!iter.hasNext()) {
-			listaCommits = this.commitServices.getCommitService()
+			listaCommits = commitService
 					.getAllCommitsByBranch(parameterNode.get(this.idGithubStr).textValue());
 		} else {
 			while (iter.hasNext()) {
@@ -256,18 +263,18 @@ public class MetricsOperations {
 
 		Map<String, Commit> mapCommits = getMapCommits(listaCommits);
 
-		List<MethodMetrics> listMethodMetrics = this.methodMetricsService.findAll();
+		List<MethodMetrics> listMethodMetrics = methodMetricsService.findAll();
 		Map<String, MethodMetrics> mapMethodMetrics = getMapMethodMetrics(listMethodMetrics, mapCommits);
-		List<ClassMetrics> listClassMetrics = this.classMetricsService.findAll();
+		List<ClassMetrics> listClassMetrics = classMetricsService.findAll();
 		Map<String, ClassMetrics> mapClassMetrics = getMapClassMetrics(listClassMetrics, mapCommits);
-		List<CohesionMetrics> listCohesionMetrics = this.cohesionMetricsService.findAll();
+		List<CohesionMetrics> listCohesionMetrics = cohesionMetricsService.findAll();
 		Map<String, CohesionMetrics> mapCohesionMetrics = getMapCohesionMetrics(listCohesionMetrics, mapCommits);
-		List<CouplingMetrics> listCouplingMetrics = this.couplingMetricsService.findAll();
+		List<CouplingMetrics> listCouplingMetrics = couplingMetricsService.findAll();
 		Map<String, CouplingMetrics> mapCouplingMetrics = getMapCouplingMetrics(listCouplingMetrics, mapCommits);
 
-		List<CommitInfo> commitsInfo = this.commitServices.getCommitInfoService().findAll();
+		List<CommitInfo> commitsInfo = commitInfoService.findAll();
 		Map<String, CommitInfo> mapCommitsInfo = getMapCommitsInfo(commitsInfo);
-		List<UserGithub> usersGithub = this.commitServices.getUserGithubService().findAll();
+		List<UserGithub> usersGithub = UserGithubOperations.get().findAll();
 		Map<String, UserGithub> mapUserGithub = getMapUserGithub(usersGithub);
 
 		Commit commit;
@@ -548,7 +555,7 @@ public class MetricsOperations {
 				Double.parseDouble(data.get("RMA")));
 		couplingMetrics.setId(data.get("oid"));
 
-		List<CouplingMetrics> couplingMetricsList = this.couplingMetricsService.findAll();
+		List<CouplingMetrics> couplingMetricsList = couplingMetricsService.findAll();
 
 		boolean existe = false;
 
@@ -558,7 +565,7 @@ public class MetricsOperations {
 			}
 		}
 		if (!existe) {
-			this.couplingMetricsService.saveCouplingMetrics(couplingMetrics);
+			couplingMetricsService.saveCouplingMetrics(couplingMetrics);
 		}
 
 		couplingMetricsList.clear();
@@ -571,7 +578,7 @@ public class MetricsOperations {
 				Double.parseDouble(data.get("LCOM")));
 		cohesionMetrics.setId(data.get("oid"));
 
-		List<CohesionMetrics> cohesionMetricsList = this.cohesionMetricsService.findAll();
+		List<CohesionMetrics> cohesionMetricsList = cohesionMetricsService.findAll();
 
 		boolean existe = false;
 
@@ -581,7 +588,7 @@ public class MetricsOperations {
 			}
 		}
 		if (!existe) {
-			this.cohesionMetricsService.saveCohesionMetrics(cohesionMetrics);
+			cohesionMetricsService.saveCohesionMetrics(cohesionMetrics);
 		}
 
 		cohesionMetricsList.clear();
@@ -595,7 +602,7 @@ public class MetricsOperations {
 				Double.parseDouble(data.get("NOM")));
 		classMetrics.setId(data.get("oid"));
 
-		List<ClassMetrics> classMetricsList = this.classMetricsService.findAll();
+		List<ClassMetrics> classMetricsList = classMetricsService.findAll();
 
 		boolean existe = false;
 
@@ -605,7 +612,7 @@ public class MetricsOperations {
 			}
 		}
 		if (!existe) {
-			this.classMetricsService.saveClassMetrics(classMetrics);
+			classMetricsService.saveClassMetrics(classMetrics);
 		}
 
 		classMetricsList.clear();
@@ -620,7 +627,7 @@ public class MetricsOperations {
 
 		boolean existe;
 
-		List<MethodMetrics> methodMetricsList = this.methodMetricsService.findAll();
+		List<MethodMetrics> methodMetricsList = methodMetricsService.findAll();
 
 		existe = false;
 
@@ -630,7 +637,7 @@ public class MetricsOperations {
 			}
 		}
 		if (!existe) {
-			this.methodMetricsService.saveMethodMetrics(methodMetrics);
+			methodMetricsService.saveMethodMetrics(methodMetrics);
 		}
 
 		methodMetricsList.clear();
