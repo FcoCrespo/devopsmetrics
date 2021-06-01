@@ -57,6 +57,9 @@ public class TestOperations {
 	
 	@Value("${app.passftp}")
 	private String pass;
+	
+	@Value("${app.serverftp}")
+	private String serverftp;
 
 	public TestOperations(final TestMetricsService testMetricsService, final MethodTestService methodTestService) {
 
@@ -109,7 +112,7 @@ public class TestOperations {
 		String dateTest;
 		Instant fecha;
 		
-		String server = "35.180.190.134";
+		String server = serverftp;
 		int port = 21;
 		
 
@@ -175,10 +178,7 @@ public class TestOperations {
 					
 					String fileRoute = folder[0]+"\\"+filesList.get(i);
 					
-					InputStream stream = ftpClient.retrieveFileStream(fileRoute);
-					BufferedReader reader = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8));
-							
-					jsonData = reader.lines().collect(Collectors.joining());
+					jsonData = obtenerJSON(ftpClient, fileRoute);
 						
 					nodes = new ObjectMapper().readTree(jsonData);
 
@@ -193,7 +193,7 @@ public class TestOperations {
 
 					comprobarContenido(iter, parameterNode, testMetrics);
 					
-					stream.close();
+					
 					while(!ftpClient.completePendingCommand());
 					LOG.info("-------[END:" + filesList.get(i)
 		                    + "]---------------------");
@@ -226,6 +226,16 @@ public class TestOperations {
 		
 	}
 	
+	private String obtenerJSON(FTPClient ftpClient, String fileRoute) throws IOException {
+		
+		InputStream stream = ftpClient.retrieveFileStream(fileRoute);
+		BufferedReader reader = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8));
+		
+		stream.close();
+		
+		return reader.lines().collect(Collectors.joining());
+	}
+
 	static void listDirectory(FTPClient ftpClient, List<String>filesList, String parentDir,
 	        String currentDir, int level) throws IOException {
 	    String dirToList = parentDir;
