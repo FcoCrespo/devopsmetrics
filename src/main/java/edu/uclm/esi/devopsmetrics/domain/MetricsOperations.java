@@ -7,12 +7,15 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.commons.io.FilenameUtils;
@@ -73,6 +76,7 @@ public class MetricsOperations {
 	private final CohesionMetricsService cohesionMetricsService;
 	private final CouplingMetricsService couplingMetricsService;
 	private final CommitServices commitServices;
+	private final String idGithubStr;
 
 	@Value("${app.userftp}")
 	private String user;
@@ -95,6 +99,7 @@ public class MetricsOperations {
 		this.cohesionMetricsService = cohesionMetricsService;
 		this.couplingMetricsService = couplingMetricsService;
 		this.commitServices = commitServices;
+		this.idGithubStr = "idGithub";
 
 	}
 
@@ -103,7 +108,6 @@ public class MetricsOperations {
 		CloseableHttpClient httpclient = HttpClients.createDefault();
 		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/commits/allbranches?owner=" + owner
 				+ "&reponame=" + repository + "&tokenpass=" + tokenpass);
-
 		try {
 
 			LOG.info("Request Type: " + httpget.getMethod());
@@ -113,103 +117,9 @@ public class MetricsOperations {
 			HttpEntity entity = httpresponse.getEntity();
 			String jsonData = EntityUtils.toString(entity, "UTF-8");
 			JsonNode jsonNode = new ObjectMapper().readTree(jsonData);
-
-			Iterator<JsonNode> iter;
-			iter = jsonNode.iterator();
-
-			JsonNode parameterNode;
-			parameterNode = iter.next();
-
-			List<Commit> listaCommits = new ArrayList<>();
-
-			if (!iter.hasNext()) {
-				listaCommits = this.commitServices.getCommitService()
-						.getAllCommitsByBranch(parameterNode.get("idGithub").textValue());
-			} else {
-				while (iter.hasNext()) {
-
-					listaCommits = obtenerCommits(parameterNode, listaCommits);
-					parameterNode = iter.next();
-					if (!iter.hasNext()) {
-
-						listaCommits = obtenerCommits(parameterNode, listaCommits);
-						parameterNode = iter.next();
-
-					}
-				}
-			}
-
-			Collections.sort(listaCommits);
-
-			Map<String, Commit> mapCommits = getMapCommits(listaCommits);
-
-			List<MethodMetrics> listMethodMetrics = this.methodMetricsService.findAll();
-			Map<String, MethodMetrics> mapMethodMetrics = getMapMethodMetrics(listMethodMetrics, mapCommits);
-			List<ClassMetrics> listClassMetrics = this.classMetricsService.findAll();
-			Map<String, ClassMetrics> mapClassMetrics = getMapClassMetrics(listClassMetrics, mapCommits);
-			List<CohesionMetrics> listCohesionMetrics = this.cohesionMetricsService.findAll();
-			Map<String, CohesionMetrics> mapCohesionMetrics = getMapCohesionMetrics(listCohesionMetrics, mapCommits);
-			List<CouplingMetrics> listCouplingMetrics = this.couplingMetricsService.findAll();
-			Map<String, CouplingMetrics> mapCouplingMetrics = getMapCouplingMetrics(listCouplingMetrics, mapCommits);
-
-			List<CommitInfo> commitsInfo = this.commitServices.getCommitInfoService().findAll();
-			Map<String, CommitInfo> mapCommitsInfo = getMapCommitsInfo(commitsInfo);
-			List<UserGithub> usersGithub = this.commitServices.getUserGithubService().findAll();
-			Map<String, UserGithub> mapUserGithub = getMapUserGithub(usersGithub);
-
-			Commit commit;
-			CommitInfo commitinfo;
-			UserGithub userGithub;
-			MethodMetrics methodMetrics;
-			ClassMetrics classMetrics;
-			CohesionMetrics cohesionMetrics;
-			CouplingMetrics couplingMetrics;
-
-			JSONArray array = new JSONArray();
-			JSONObject json;
-
-			for (int i = 0; i < listMethodMetrics.size(); i++) {
-
-				commit = mapCommits.get(listMethodMetrics.get(i).getId());
-				commitinfo = mapCommitsInfo.get(listMethodMetrics.get(i).getId());
-				userGithub = mapUserGithub.get(commit.getUsergithub());
-				methodMetrics = mapMethodMetrics.get(listMethodMetrics.get(i).getId());
-				classMetrics = mapClassMetrics.get(listMethodMetrics.get(i).getId());
-				cohesionMetrics = mapCohesionMetrics.get(listMethodMetrics.get(i).getId());
-				couplingMetrics = mapCouplingMetrics.get(listMethodMetrics.get(i).getId());
-
-				json = new JSONObject();
-				json.put("oid", methodMetrics.getId());
-				json.put("pushedDate", commit.getPushedDate());
-				json.put("messageHeadline", commitinfo.getMessageHeadline());
-				json.put("message", commitinfo.getMessage());
-				json.put("changedFiles", commitinfo.getChangedFiles());
-				json.put("user", "Login: " + userGithub.getLogin() + " , Name: " + userGithub.getName() + " , Email: "
-						+ userGithub.getEmail());
-				json.put("VG", methodMetrics.getVg());
-				json.put("MLOC", methodMetrics.getMloc());
-				json.put("PAR", methodMetrics.getPar());
-				json.put("NBD", methodMetrics.getNbd());
-				json.put("NOC", classMetrics.getNoc());
-				json.put("NOI", classMetrics.getNoi());
-				json.put("TLOC", classMetrics.getTloc());
-				json.put("NOM", classMetrics.getNom());
-				json.put("DIT", cohesionMetrics.getDit());
-				json.put("WMC", cohesionMetrics.getWmc());
-				json.put("NSC", cohesionMetrics.getNsc());
-				json.put("LCOM", cohesionMetrics.getLcom());
-				json.put("CA", couplingMetrics.getCa());
-				json.put("CE", couplingMetrics.getCe());
-				json.put("RMI", couplingMetrics.getRmi());
-				json.put("RMA", couplingMetrics.getRma());
-
-				array.put(json);
-
-			}
-
-			httpclient.close();
-
-			return array.toString();
+		
+			return obtenerRepoMetrics(jsonNode);
+			
 		} catch (Exception e) {
 			httpclient.close();
 			return "Error al obtener las metricas de los commits";
@@ -218,6 +128,201 @@ public class MetricsOperations {
 		}
 
 	}
+	
+	public String getRepoMetricsDate(String tokenpass, String message) throws IOException {
+
+		final JSONObject jso = new JSONObject(message);
+		String reponame = jso.getString("reponame");
+		String owner = jso.getString("owner");
+		String begindate = jso.getString("begindate");
+		String enddate = jso.getString("enddate");
+		
+		CloseableHttpClient httpclient = HttpClients.createDefault();
+		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/commits/allbranches?owner=" + owner
+				+ "&reponame=" + reponame + "&tokenpass=" + tokenpass);
+		try {
+
+			LOG.info("Request Type: " + httpget.getMethod());
+
+			HttpResponse httpresponse = httpclient.execute(httpget);
+
+			HttpEntity entity = httpresponse.getEntity();
+			String jsonData = EntityUtils.toString(entity, "UTF-8");
+		    JsonNode jsonNode = new ObjectMapper().readTree(jsonData);
+		
+			return obtenerRepoMetricsDate(jsonNode, begindate, enddate);
+			
+		} catch (Exception e) {
+			httpclient.close();
+			return "Error al obtener las metricas de los commits";
+		} finally {
+			httpclient.close();
+		}
+	}
+
+	private String obtenerRepoMetricsDate(JsonNode jsonNode, String begindate, String enddate) {
+		
+		Instant [] dates = DateUtils.getDatesInstant(begindate, enddate);
+		
+		Instant beginDateInstant = dates[0];
+		Instant endDateInstant = dates[1];
+		
+		Iterator<JsonNode> iter;
+		iter = jsonNode.iterator();
+
+		JsonNode parameterNode;
+		parameterNode = iter.next();
+
+		List<Commit> listaCommits = new ArrayList<>();
+
+		if (!iter.hasNext()) {
+			listaCommits = this.commitServices.getCommitService()
+					.getAllByBranchBeginEndDate(parameterNode.get(this.idGithubStr).textValue(), beginDateInstant, endDateInstant);
+		} else {
+			while (iter.hasNext()) {
+
+				listaCommits = obtenerCommitsDate(parameterNode, listaCommits, beginDateInstant, endDateInstant);
+				parameterNode = iter.next();
+				
+				if (!iter.hasNext()) {
+
+					listaCommits = obtenerCommitsDate(parameterNode, listaCommits, beginDateInstant, endDateInstant);
+
+				}
+			}
+		}
+		return obtenerMetricasCommits(listaCommits);
+	}
+
+	private List<Commit> obtenerCommitsDate(JsonNode parameterNode, List<Commit> listaCommits, Instant beginDateInstant,
+			Instant endDateInstant) {
+		List<Commit> listaOriginal = listaCommits;
+		List<Commit> listaNueva = this.commitServices.getCommitService()
+				.getAllByBranchBeginEndDate(parameterNode.get(this.idGithubStr).textValue(), beginDateInstant, endDateInstant);
+
+		for (int i = 0; i < listaNueva.size(); i++) {
+			listaOriginal.add(listaNueva.get(i));
+		}
+
+		return listaOriginal;
+	}
+	
+	private List<Commit> obtenerCommits(JsonNode parameterNode, List<Commit> listaCommits) {
+
+		List<Commit> listaOriginal = listaCommits;
+		List<Commit> listaNueva = this.commitServices.getCommitService()
+				.getAllCommitsByBranch(parameterNode.get(this.idGithubStr).textValue());
+
+		for (int i = 0; i < listaNueva.size(); i++) {
+			listaOriginal.add(listaNueva.get(i));
+		}
+
+		return listaOriginal;
+
+	}
+
+	private String obtenerRepoMetrics(JsonNode jsonNode) {
+		Iterator<JsonNode> iter;
+		iter = jsonNode.iterator();
+
+		JsonNode parameterNode;
+		parameterNode = iter.next();
+
+		List<Commit> listaCommits = new ArrayList<>();
+
+		if (!iter.hasNext()) {
+			listaCommits = this.commitServices.getCommitService()
+					.getAllCommitsByBranch(parameterNode.get(this.idGithubStr).textValue());
+		} else {
+			while (iter.hasNext()) {
+
+				listaCommits = obtenerCommits(parameterNode, listaCommits);
+				parameterNode = iter.next();
+				
+				if (!iter.hasNext()) {
+
+					listaCommits = obtenerCommits(parameterNode, listaCommits);
+
+				}
+			}
+		}
+
+		return obtenerMetricasCommits(listaCommits);
+	}
+
+	private String obtenerMetricasCommits(List<Commit> listaCommits) {
+		
+		Collections.sort(listaCommits);
+
+		Map<String, Commit> mapCommits = getMapCommits(listaCommits);
+
+		List<MethodMetrics> listMethodMetrics = this.methodMetricsService.findAll();
+		Map<String, MethodMetrics> mapMethodMetrics = getMapMethodMetrics(listMethodMetrics, mapCommits);
+		List<ClassMetrics> listClassMetrics = this.classMetricsService.findAll();
+		Map<String, ClassMetrics> mapClassMetrics = getMapClassMetrics(listClassMetrics, mapCommits);
+		List<CohesionMetrics> listCohesionMetrics = this.cohesionMetricsService.findAll();
+		Map<String, CohesionMetrics> mapCohesionMetrics = getMapCohesionMetrics(listCohesionMetrics, mapCommits);
+		List<CouplingMetrics> listCouplingMetrics = this.couplingMetricsService.findAll();
+		Map<String, CouplingMetrics> mapCouplingMetrics = getMapCouplingMetrics(listCouplingMetrics, mapCommits);
+
+		List<CommitInfo> commitsInfo = this.commitServices.getCommitInfoService().findAll();
+		Map<String, CommitInfo> mapCommitsInfo = getMapCommitsInfo(commitsInfo);
+		List<UserGithub> usersGithub = this.commitServices.getUserGithubService().findAll();
+		Map<String, UserGithub> mapUserGithub = getMapUserGithub(usersGithub);
+
+		Commit commit;
+		CommitInfo commitinfo;
+		UserGithub userGithub;
+		MethodMetrics methodMetrics;
+		ClassMetrics classMetrics;
+		CohesionMetrics cohesionMetrics;
+		CouplingMetrics couplingMetrics;
+
+		JSONArray array = new JSONArray();
+		JSONObject json;
+		
+		Set<Entry<String, MethodMetrics>> entrySet = mapMethodMetrics.entrySet();
+        
+        for(Entry<String, MethodMetrics> entry : entrySet)
+        {
+        	commit = mapCommits.get(entry.getKey());
+			commitinfo = mapCommitsInfo.get(entry.getKey());
+			userGithub = mapUserGithub.get(commit.getUsergithub());
+			methodMetrics = mapMethodMetrics.get(entry.getKey());
+			classMetrics = mapClassMetrics.get(entry.getKey());
+			cohesionMetrics = mapCohesionMetrics.get(entry.getKey());
+			couplingMetrics = mapCouplingMetrics.get(entry.getKey());
+
+			json = new JSONObject();
+			json.put("oid", methodMetrics.getId());
+			json.put("pushedDate", commit.getPushedDate());
+			json.put("messageHeadline", commitinfo.getMessageHeadline());
+			json.put("message", commitinfo.getMessage());
+			json.put("changedFiles", commitinfo.getChangedFiles());
+			json.put("user", "Login: " + userGithub.getLogin() + " , Name: " + userGithub.getName() + " , Email: "
+					+ userGithub.getEmail());
+			json.put("VG", methodMetrics.getVg());
+			json.put("MLOC", methodMetrics.getMloc());
+			json.put("PAR", methodMetrics.getPar());
+			json.put("NBD", methodMetrics.getNbd());
+			json.put("NOC", classMetrics.getNoc());
+			json.put("NOI", classMetrics.getNoi());
+			json.put("TLOC", classMetrics.getTloc());
+			json.put("NOM", classMetrics.getNom());
+			json.put("DIT", cohesionMetrics.getDit());
+			json.put("WMC", cohesionMetrics.getWmc());
+			json.put("NSC", cohesionMetrics.getNsc());
+			json.put("LCOM", cohesionMetrics.getLcom());
+			json.put("CA", couplingMetrics.getCa());
+			json.put("CE", couplingMetrics.getCe());
+			json.put("RMI", couplingMetrics.getRmi());
+			json.put("RMA", couplingMetrics.getRma());
+
+			array.put(json);
+        }
+		
+		return array.toString();
+	}
 
 	private Map<String, CouplingMetrics> getMapCouplingMetrics(List<CouplingMetrics> listCouplingMetrics,
 			Map<String, Commit> mapCommits) {
@@ -225,7 +330,7 @@ public class MetricsOperations {
 		Commit commit;
 		for (CouplingMetrics i : listCouplingMetrics) {
 			commit = mapCommits.get(i.getId());
-			if (commit.getOid().equals(i.getId())) {
+			if (commit != null && commit.getOid().equals(i.getId())) {
 				mapCouplingMetrics.put(i.getId(), i);
 			}
 		}
@@ -238,7 +343,7 @@ public class MetricsOperations {
 		Commit commit;
 		for (CohesionMetrics i : listCohesionMetrics) {
 			commit = mapCommits.get(i.getId());
-			if (commit.getOid().equals(i.getId())) {
+			if (commit != null && commit.getOid().equals(i.getId())) {
 				mapCohesionMetrics.put(i.getId(), i);
 			}
 		}
@@ -251,7 +356,7 @@ public class MetricsOperations {
 		Commit commit;
 		for (ClassMetrics i : listClassMetrics) {
 			commit = mapCommits.get(i.getId());
-			if (commit.getOid().equals(i.getId())) {
+			if (commit != null && commit.getOid().equals(i.getId())) {
 				mapClassMetrics.put(i.getId(), i);
 			}
 		}
@@ -265,7 +370,7 @@ public class MetricsOperations {
 		Commit commit;
 		for (MethodMetrics i : listMethodMetrics) {
 			commit = mapCommits.get(i.getId());
-			if (commit.getOid().equals(i.getId())) {
+			if (commit != null && commit.getOid().equals(i.getId())) {
 				mapMethodMetrics.put(i.getId(), i);
 			}
 		}
@@ -294,19 +399,7 @@ public class MetricsOperations {
 		return mapCommitInfo;
 	}
 
-	private List<Commit> obtenerCommits(JsonNode parameterNode, List<Commit> listaCommits) {
-
-		List<Commit> listaOriginal = listaCommits;
-		List<Commit> listaNueva = this.commitServices.getCommitService()
-				.getAllCommitsByBranch(parameterNode.get("idGithub").textValue());
-
-		for (int i = 0; i < listaNueva.size(); i++) {
-			listaOriginal.add(listaNueva.get(i));
-		}
-
-		return listaOriginal;
-
-	}
+	
 
 	public void saveRepoMetrics(String repository, String owner) throws ParserConfigurationException, SAXException {
 
@@ -638,5 +731,7 @@ public class MetricsOperations {
 		return updatedFiles;
 
 	}
+
+	
 
 }

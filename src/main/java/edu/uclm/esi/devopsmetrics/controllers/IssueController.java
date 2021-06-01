@@ -60,9 +60,8 @@ public class IssueController {
 	@ApiOperation(value = "Find all issues", notes = "Return all issues")
 
 	public ResponseEntity<String> allIssues(@RequestParam("tokenpass") final String tokenpass,
-			@RequestParam("reponame") final String reponame, @RequestParam("owner") final String owner) {
+			@RequestParam("reponame") final String repository, @RequestParam("owner") final String owner) {
 
-		String repository = reponame;
 		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
 		if (existe) {
 			try {

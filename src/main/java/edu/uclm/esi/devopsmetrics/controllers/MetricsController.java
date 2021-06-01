@@ -6,10 +6,13 @@ import java.io.IOException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -63,9 +66,8 @@ public class MetricsController {
 	@GetMapping(value = "/savemetrics")
 	@ApiOperation(value = "Get all metrics from repo", notes = "Get all metrics from repo")
 
-	public ResponseEntity<String> saveMetrics(@RequestParam("reponame") final String reponame, @RequestParam("owner") final String owner) {
+	public ResponseEntity<String> saveMetrics(@RequestParam("reponame") final String repository, @RequestParam("owner") final String owner) {
 
-		String repository = reponame;
 		try {
 			LOG.info("Save repo metrics");
 			this.metricsOperations.saveRepoMetrics(repository, owner);
@@ -87,13 +89,36 @@ public class MetricsController {
 	@ApiOperation(value = "Find all metrics from repo", notes = "Find all metrics from repo")
 
 	public ResponseEntity<String> allMetrics(@RequestParam("tokenpass") final String tokenpass,
-			@RequestParam("reponame") final String reponame, @RequestParam("owner") final String owner) throws IOException {
+			@RequestParam("reponame") final String repository, @RequestParam("owner") final String owner) throws IOException {
 
-		String repository = reponame;
 		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
 		if (existe) {
 			LOG.info("Get repo metrics");
 			return ResponseEntity.ok(this.metricsOperations.getRepoMetrics(repository, owner, tokenpass));
+		} else {
+			LOG.info(this.errorMessage);
+			return ResponseEntity.badRequest().build();
+		}
+
+	}
+	
+	/**
+	 * Devuelve las metricas los tests de un repositorio y su owner a traves de un token de acceso
+	 * entre dos fechas dadas
+	 * @author FcoCrespo
+	 * @throws IOException 
+	 */
+	@PostMapping(value = "/allmetricsdate")
+	@ApiOperation(value = "Find all metrics from repo between two dates", notes = "Find all metrics from repo between two dates")
+
+	public ResponseEntity<String> allMetricsDate(@RequestParam("tokenpass") final String tokenpass,
+			@RequestBody final String message) throws IOException {
+
+		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
+		if (existe) {
+			LOG.info("Get repo test metrics");
+			
+			return ResponseEntity.ok(this.metricsOperations.getRepoMetricsDate(tokenpass, message));
 		} else {
 			LOG.info(this.errorMessage);
 			return ResponseEntity.badRequest().build();
@@ -131,9 +156,8 @@ public class MetricsController {
 	@ApiOperation(value = "Find all metrics from repo", notes = "Find all metrics from repo")
 
 	public ResponseEntity<String> allTestMetrics(@RequestParam("tokenpass") final String tokenpass,
-			@RequestParam("reponame") final String reponame, @RequestParam("owner") final String owner) {
+			@RequestParam("reponame") final String repository, @RequestParam("owner") final String owner) {
 
-		String repository = reponame;
 		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
 		if (existe) {
 			LOG.info("Get repo test metrics");
@@ -144,5 +168,41 @@ public class MetricsController {
 		}
 
 	}
+	
+	
+	
+	/**
+	 * Devuelve las metricas los tests de un repositorio y su owner a traves de un token de acceso
+	 * entre dos fechas dadas
+	 * 
+	 * @author FcoCrespo
+	 */
+	@PostMapping(value = "/alltestmetricsdate")
+	@ApiOperation(value = "Find all metrics from repo between two dates", notes = "Find all metrics from repo between two dates")
+
+	public ResponseEntity<String> allTestMetricsDate(@RequestParam("tokenpass") final String tokenpass,
+			@RequestBody final String message) {
+
+		
+		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
+		if (existe) {
+			final JSONObject jso = new JSONObject(message);
+			String reponame = jso.getString("reponame");
+			String owner = jso.getString("owner");
+			String begindate = jso.getString("begindate");
+			String enddate = jso.getString("enddate");
+			
+			LOG.info("Get repo test metrics between two dates");
+			return ResponseEntity.ok(this.testsOperations.getRepoTestMetricsDates(reponame, owner, begindate, enddate));
+		
+		} else {
+			LOG.info(this.errorMessage);
+			return ResponseEntity.badRequest().build();
+		}
+
+	}
+	
+	
+	
 	
 }

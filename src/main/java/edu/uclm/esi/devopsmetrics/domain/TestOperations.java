@@ -73,9 +73,33 @@ public class TestOperations {
 
 		List <TestMetrics> listaTestMetrics =  this.testMetricsService.getAllByRepositoryAndOwner(repository, owner);
 	
-		List <MethodTest> listaMethodTestAux;
+		JSONArray array = obtenerTests(listaTestMetrics);
 		
-		JSONArray array = new JSONArray();
+		return array.toString();
+	
+	}
+	
+	
+	public String getRepoTestMetricsDates(String repository, String owner, String begindate, String enddate) {
+		
+		Instant [] dates = DateUtils.getDatesInstant(begindate, enddate);
+		
+		Instant beginDateInstant = dates[0];
+		Instant endDateInstant = dates[1];
+		
+		List <TestMetrics> listaTestMetrics =  this.testMetricsService.getAllByRepositoryBeginEndDateByOwner(repository, beginDateInstant, endDateInstant, owner);
+		
+		JSONArray array = obtenerTests(listaTestMetrics);
+		
+		return array.toString();
+	
+	}
+	
+	private JSONArray obtenerTests(List<TestMetrics> listaTestMetrics) {
+		
+		JSONArray array =  new JSONArray();
+		
+		List <MethodTest> listaMethodTestAux;
 		JSONObject json;
 		
 		for(int i=0; i<listaTestMetrics.size(); i++) {
@@ -95,13 +119,12 @@ public class TestOperations {
 				
 				array.put(json);
 			}
-			listaMethodTestAux.clear();
 		}
 		
-		listaTestMetrics.clear();
-		
-		return array.toString();
+		return array;
 	}
+
+	
 
 	public void saveRepoTestMetrics(String repository, String owner) throws IOException {
 
@@ -339,5 +362,11 @@ public class TestOperations {
 		return instant;
 
 	}
+
+	
+
+	
+
+	
 
 }

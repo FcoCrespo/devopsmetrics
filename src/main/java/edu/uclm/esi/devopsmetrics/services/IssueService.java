@@ -58,10 +58,24 @@ public interface IssueService {
 	  
 	  
 	  /**
-	   * Método para obtener los issues entre unas fechas dadas.
+	   * Método para obtener los issues entre unas fechas dadas en su creacion.
 	   * 
 	   * @author FcoCrespo
 	   */
-	  List<Issue> getAllByBranchBeginEndDate(Instant beginDate, Instant endDate);
+	  List<Issue> getAllByCreationBetweenBeginEndDate(Instant beginDate, Instant endDate);
+
+	  /**
+	   * Método para obtener los issues entre unas fechas dadas en su cierre.
+	   * 
+	   * @author FcoCrespo
+	   */
+	  List<Issue> getAllByClosedBetweenBeginEndDate(Instant beginDate, Instant endDate);
+
+	  /**
+	   * Método para obtener los issues entre unas fechas que siguen abiertas.
+	   * 
+	   * @author FcoCrespo
+	   */
+	  List<Issue> getAllByOpenBetweenBeginEndDate(Instant beginDate, Instant endDate);
 
 }

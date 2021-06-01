@@ -28,6 +28,7 @@ public class IssueRepositoryImpl implements IssueRepository{
 	   * @author FcoCrespo
 	   */
 	  private final MongoOperations mongoOperations;
+	  private final String createdAtStr;
 
 	  /**
 	   * Constructor de la clase.
@@ -39,6 +40,7 @@ public class IssueRepositoryImpl implements IssueRepository{
 	  public IssueRepositoryImpl(final MongoOperations mongoOperations) {
 	    Assert.notNull(mongoOperations, "notNull");
 	    this.mongoOperations = mongoOperations;
+	    this.createdAtStr = "createdAt";
 	  }
 
 	@Override
@@ -83,9 +85,23 @@ public class IssueRepositoryImpl implements IssueRepository{
 	}
 
 	@Override
-	public List<Issue> findAllByBranchBeginEndDate(Instant beginDate, Instant endDate) {
+	public List<Issue> findAllByCreationBetweenBeginEndDate(Instant beginDate, Instant endDate) {
 		return this.mongoOperations
-		        .find(new Query(Criteria.where("createdAt").gte(beginDate).and("closedAt").lte(endDate)), Issue.class);
+		        .find(new Query(Criteria.where(this.createdAtStr).gte(beginDate).and(this.createdAtStr).lte(endDate)), Issue.class);
 	}
 
+	@Override
+	public List<Issue> findAllByClosedBetweenBeginEndDate(Instant beginDate, Instant endDate) {
+		return this.mongoOperations
+		        .find(new Query(Criteria.where("closedAt").gte(beginDate).and("closedAt").lte(endDate)
+		        		.and("state").is("CLOSED")), Issue.class);
+	}
+
+	
+	@Override
+	public List<Issue> findAllByOpenBetweenBeginEndDate(Instant beginDate, Instant endDate) {
+		return this.mongoOperations
+		        .find(new Query(Criteria.where(this.createdAtStr).gte(beginDate).and(this.createdAtStr).lte(endDate)
+		        		.and("state").is("OPEN")), Issue.class);
+	}
 }

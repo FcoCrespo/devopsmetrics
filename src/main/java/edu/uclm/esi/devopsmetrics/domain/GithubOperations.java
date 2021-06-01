@@ -287,8 +287,14 @@ public class GithubOperations {
 		return map;
 	}
 	
-	public String getAllByBranchBeginEndDate(String reponame, String name, Instant beginDateInstant,
-			Instant endDateInstant) {
+	public String getAllByBranchBeginEndDate(String reponame, String name, String begindate,
+			String enddate) {
+		
+		Instant [] dates = DateUtils.getDatesInstant(begindate, enddate);
+		
+		Instant beginDateInstant = dates[0];
+		Instant endDateInstant = dates[1];
+		
 		Branch branch = this.branchService.getBranchByRepositoryyName(reponame, name);
 		List<Commit> commits;
 		
@@ -309,8 +315,14 @@ public class GithubOperations {
 		return getInfoCommits(commits, branch);
 	}
 	
-	public String getAllByBranchBeginEndDateByAuthor(String reponame, String name, Instant beginDateInstant,
-			Instant endDateInstant, String authorName) {
+	public String getAllByBranchBeginEndDateByAuthor(String reponame, String name, String begindate,
+			String enddate, String authorName) {
+		
+	    Instant [] dates = DateUtils.getDatesInstant(begindate, enddate);
+	    
+	    Instant beginDateInstant = dates[0];
+	    Instant endDateInstant = dates[1];
+		
 		Branch branch = this.branchService.getBranchByRepositoryyName(reponame, name);
 		UserGithub userGithub = this.commitsGithub.getUserGithubByName(authorName);
 		List<Commit> commits;

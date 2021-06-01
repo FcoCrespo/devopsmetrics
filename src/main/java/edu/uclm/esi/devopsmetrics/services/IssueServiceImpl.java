@@ -73,8 +73,8 @@ public class IssueServiceImpl implements IssueService{
 
 	
 	@Override
-	public List<Issue> getAllByBranchBeginEndDate(Instant beginDate, Instant endDate) {
-		return this.issueRepository.findAllByBranchBeginEndDate(beginDate, endDate);
+	public List<Issue> getAllByCreationBetweenBeginEndDate(Instant beginDate, Instant endDate) {
+		return this.issueRepository.findAllByCreationBetweenBeginEndDate(beginDate, endDate);
 	}
 	
 	private List<Issue> obtenerIssues(Optional<List<Issue>> issues) {
@@ -91,6 +91,18 @@ public class IssueServiceImpl implements IssueService{
 		} else {
 			return Collections.emptyList();
 		}
+	}
+
+	@Override
+	public List<Issue> getAllByClosedBetweenBeginEndDate(Instant beginDate, Instant endDate) {
+		return this.issueRepository.findAllByClosedBetweenBeginEndDate(beginDate, endDate);
+
+	}
+	
+	@Override
+	public List<Issue> getAllByOpenBetweenBeginEndDate(Instant beginDate, Instant endDate) {
+		return this.issueRepository.findAllByClosedBetweenBeginEndDate(beginDate, endDate);
+
 	}
 
 

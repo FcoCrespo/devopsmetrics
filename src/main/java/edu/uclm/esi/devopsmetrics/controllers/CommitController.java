@@ -1,13 +1,7 @@
 package edu.uclm.esi.devopsmetrics.controllers;
 
 import java.io.IOException;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
-import java.util.Locale;
+
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -71,9 +65,8 @@ public class CommitController {
 	@ApiOperation(value = "Find all branches", notes = "Return all branches")
 
 	public ResponseEntity<String> allBranches(@RequestParam("tokenpass") final String tokenpass,
-			@RequestParam("reponame") final String reponame, @RequestParam("owner") final String owner) {
+			@RequestParam("reponame") final String repository, @RequestParam("owner") final String owner) {
 
-		String repository = reponame;
 		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
 		if (existe) {
 			LOG.info("Get branches");
@@ -119,9 +112,8 @@ public class CommitController {
 	@ApiOperation(value = "Find all commits", notes = "Return all commits")
 
 	public ResponseEntity<String> allCommits(@RequestParam("tokenpass") final String tokenpass,
-			@RequestParam("reponame") final String reponame, @RequestParam("owner") final String owner) {
+			@RequestParam("reponame") final String repository, @RequestParam("owner") final String owner) {
 
-		String repository = reponame;
 		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
 		if (existe) {
 
@@ -265,11 +257,9 @@ public class CommitController {
 			String begindate = jso.getString("begindate");
 			String enddate = jso.getString("enddate");
 			
-			Instant [] dates = getDatesInstant(begindate, enddate);
-			
 			LOG.info("Get commits from repository branch between the dates.");
 			
-			return ResponseEntity.ok(this.githubOperations.getAllByBranchBeginEndDate(reponame, branch, dates[0], dates[1]));
+			return ResponseEntity.ok(this.githubOperations.getAllByBranchBeginEndDate(reponame, branch, begindate, enddate));
 
 		} else {
 			LOG.info(this.errorMessage);
@@ -293,11 +283,9 @@ public class CommitController {
 			String enddate = jso.getString("enddate");
 			String authorname = jso.getString("authorname");
 			
-			Instant [] dates = getDatesInstant(begindate, enddate);
-			
 			LOG.info("Get commits from repository branch between the dates.");
 			
-			return ResponseEntity.ok(this.githubOperations.getAllByBranchBeginEndDateByAuthor(reponame, branch, dates[0], dates[1], authorname));
+			return ResponseEntity.ok(this.githubOperations.getAllByBranchBeginEndDateByAuthor(reponame, branch, begindate, enddate, authorname));
 
 		} else {
 			LOG.info(this.errorMessage);
@@ -306,25 +294,7 @@ public class CommitController {
 
 	}
 
-	private Instant[] getDatesInstant(String begindate, String enddate) {
-		
-		Instant [] instants = new Instant[2];
-		
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu HH:mm", Locale.US);
-		ZoneId z = ZoneId.of( "America/Toronto" ) ;
-		
-		LocalDateTime ldtBegin = LocalDateTime.parse( begindate , formatter );
-		ZonedDateTime zdtBegin = ldtBegin.atZone( z ) ;
 	
-		LocalDateTime ldtEnd = LocalDateTime.parse( enddate , formatter );
-		ZonedDateTime zdtEnd = ldtEnd.atZone( z ) ;
-		
-		instants[0] = zdtBegin.toInstant().minus(4, ChronoUnit.HOURS);
-		instants[1] = zdtEnd.toInstant().minus(4, ChronoUnit.HOURS);
-		
-		return instants;
-		
-	}
 	
 	
 }

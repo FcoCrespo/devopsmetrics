@@ -67,10 +67,26 @@ public interface IssueRepository {
   
   
   /**
-   * Método para obtener los issues entre unas fechas dadas.
+   * Método para obtener los issues entre unas fechas dadas en su creacion.
    * 
    * @author FcoCrespo
    */
-  List<Issue> findAllByBranchBeginEndDate(Instant beginDate, Instant endDate);
+  List<Issue> findAllByCreationBetweenBeginEndDate(Instant beginDate, Instant endDate);
+  
+  
+  /**
+   * Método para obtener los issues entre unas fechas dadas en su cierre.
+   * 
+   * @author FcoCrespo
+   */
+  List<Issue> findAllByClosedBetweenBeginEndDate(Instant beginDate, Instant endDate);
+  
+  
+  /**
+   * Método para obtener los issues entre unas fechas que siguen abiertas.
+   * 
+   * @author FcoCrespo
+   */
+  List<Issue> findAllByOpenBetweenBeginEndDate(Instant beginDate, Instant endDate);
   
 }

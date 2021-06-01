@@ -89,7 +89,7 @@ public class TestMetricsRepositoryImpl implements TestMetricsRepository {
 			Instant endDate, String owner) {
 		return this.mongoOperations
 		        .find(new Query(Criteria.where("repository").is(repository).
-		        		and("pushedDate").gte(beginDate).lte(endDate).and("owner").is(owner)), TestMetrics.class);
+		        		and("dateTest").gte(beginDate).lte(endDate).and("owner").is(owner)), TestMetrics.class);
 	}
 
 	@Override
