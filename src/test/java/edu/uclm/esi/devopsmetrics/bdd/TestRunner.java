@@ -50,64 +50,66 @@ public class TestRunner {
 		File srcFileFinal = new File(newName);
 
 		srcFile.renameTo(srcFileFinal);
+		
+		if(srcFileFinal.exists()) {
+			String server = "35.180.190.134";
+			int port = 21;
+			String user = System.getProperty("server.user");
+			String pass = System.getProperty("server.key");
 
-		String server = "35.180.190.134";
-		int port = 21;
-		String user = System.getProperty("server.user");
-		String pass = System.getProperty("server.key");
-
-		FTPClient ftpClient = new FTPClient();
-		try {
-
-			ftpClient.connect(server, port);
-			showServerReply(ftpClient);
-			int replyCode = ftpClient.getReplyCode();
-			if (!FTPReply.isPositiveCompletion(replyCode)) {
-				System.out.println("Operation failed. Server reply code: " + replyCode);
-				return;
-			}
-			boolean success = ftpClient.login(user, pass);
-			showServerReply(ftpClient);
-			if (!success) {
-				System.out.println("Could not login to the server");
-				return;
-			}
-			
-			ftpClient.enterLocalPassiveMode();
-			
-			String dirToCreate = "TestReport-devopsmetrics-FcoCrespo-" + fecha;
-			
-			success = ftpClient.makeDirectory(dirToCreate);
-			showServerReply(ftpClient);
-			if (success) {
-				System.out.println("Successfully created directory: " + dirToCreate);
-			} else {
-				System.out.println("Failed to create directory. See server's reply.");
-			}
-			 
-            ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
- 
-            String firstRemoteFile = dirToCreate+"/"+filename;
-            InputStream inputStream = new FileInputStream(srcFileFinal);
- 
-            System.out.println("Start uploading first file");
-            boolean done = ftpClient.storeFile(firstRemoteFile, inputStream);
-            inputStream.close();
-            if (done) {
-                System.out.println("The file "+firstRemoteFile+" is uploaded successfully.");
-            }
-
-		} catch (IOException ex) {
-			System.out.println("Error: " + ex.getMessage());
-			ex.printStackTrace();
-		} finally {
+			FTPClient ftpClient = new FTPClient();
 			try {
-				if (ftpClient.isConnected()) {
-					ftpClient.logout();
-					ftpClient.disconnect();
+
+				ftpClient.connect(server, port);
+				showServerReply(ftpClient);
+				int replyCode = ftpClient.getReplyCode();
+				if (!FTPReply.isPositiveCompletion(replyCode)) {
+					System.out.println("Operation failed. Server reply code: " + replyCode);
+					return;
 				}
+				boolean success = ftpClient.login(user, pass);
+				showServerReply(ftpClient);
+				if (!success) {
+					System.out.println("Could not login to the server");
+					return;
+				}
+				
+				ftpClient.enterLocalPassiveMode();
+				
+				String dirToCreate = "TestReport-devopsmetrics-FcoCrespo-" + fecha;
+				
+				success = ftpClient.makeDirectory(dirToCreate);
+				showServerReply(ftpClient);
+				if (success) {
+					System.out.println("Successfully created directory: " + dirToCreate);
+				} else {
+					System.out.println("Failed to create directory. See server's reply.");
+				}
+				 
+	            ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+	 
+	            String firstRemoteFile = dirToCreate+"/"+filename;
+	            InputStream inputStream = new FileInputStream(srcFileFinal);
+	 
+	            System.out.println("Start uploading first file");
+	            boolean done = ftpClient.storeFile(firstRemoteFile, inputStream);
+	            inputStream.close();
+	            if (done) {
+	                System.out.println("The file "+firstRemoteFile+" is uploaded successfully.");
+	            }
+
 			} catch (IOException ex) {
+				System.out.println("Error: " + ex.getMessage());
 				ex.printStackTrace();
+			} finally {
+				try {
+					if (ftpClient.isConnected()) {
+						ftpClient.logout();
+						ftpClient.disconnect();
+					}
+				} catch (IOException ex) {
+					ex.printStackTrace();
+				}
 			}
 		}
 
