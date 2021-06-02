@@ -12,7 +12,6 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import org.apache.http.HttpEntity;
@@ -38,7 +37,6 @@ import edu.uclm.esi.devopsmetrics.services.BranchService;
 import edu.uclm.esi.devopsmetrics.services.CommitService;
 
 @Service
-@Scope("singleton")
 public class GithubOperations {
 
 	private static final Log LOG = LogFactory.getLog(GithubOperations.class);
@@ -64,7 +62,7 @@ public class GithubOperations {
 
 	}
 
-	public String getBranches(String reponame, String owner) {
+	public synchronized String getBranches(String reponame, String owner) {
 
 		try {
 			this.branchesGithub.getBranches(reponame, owner);
@@ -78,7 +76,7 @@ public class GithubOperations {
 
 	}
 
-	public void getCommits(String reponame, String owner) throws IOException {
+	public synchronized void getCommits(String reponame, String owner) throws IOException {
 
 		getBranches(reponame, owner);
 
@@ -131,11 +129,11 @@ public class GithubOperations {
 
 	}
 
-	public void deleteCommits(String branchId) {
+	public synchronized void deleteCommits(String branchId) {
 		this.commitService.deleteCommits(branchId);
 	}
 
-	public void getFirstCommitByBranch(String reponame, String owner) throws IOException {
+	public synchronized void getFirstCommitByBranch(String reponame, String owner) throws IOException {
 
 		List<Branch>branchesRepo = this.branchService.getBranchesByRepository(reponame, false);
 				

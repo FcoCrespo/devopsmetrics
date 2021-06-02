@@ -1,6 +1,5 @@
 package edu.uclm.esi.devopsmetrics.domain;
 
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 
@@ -10,7 +9,6 @@ import edu.uclm.esi.devopsmetrics.services.IssueRepoService;
 import edu.uclm.esi.devopsmetrics.services.IssueService;
 
 @Service
-@Scope("singleton")
 public class IssueServices {
 
 	private final IssueService issueService;

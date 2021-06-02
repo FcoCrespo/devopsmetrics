@@ -10,7 +10,6 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -24,7 +23,6 @@ import edu.uclm.esi.devopsmetrics.services.UserService;
 import edu.uclm.esi.devopsmetrics.utilities.Utilities;
 
 @Service
-@Scope("singleton")
 public class UserOperations {
 
 	private final UserService userService;
@@ -151,7 +149,7 @@ public class UserOperations {
 		
 	}
 
-	public void deleteUser(String userId) {
+	public synchronized void deleteUser(String userId) {
 		
 		this.userService.deleteUser(userId);
 		
@@ -169,7 +167,7 @@ public class UserOperations {
 		
 	}
 
-	public void registrarUser(String username, String password, String role) {	
+	public synchronized void registrarUser(String username, String password, String role) {	
 		try {
 			User usuario = new User(this.utilities.encriptar(username), this.utilities.encriptar(password), this.utilities.encriptar(role));
 			this.userService.saveUser(usuario);
@@ -179,7 +177,7 @@ public class UserOperations {
 		}
 	}
 
-	public void actualizarUsuario(String username, String password, String role) {
+	public synchronized void actualizarUsuario(String username, String password, String role) {
 		
 		try {
 			User usuario = this.userService.findByUsername(username);

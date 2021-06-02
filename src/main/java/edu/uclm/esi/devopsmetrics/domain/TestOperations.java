@@ -29,7 +29,6 @@ import org.apache.commons.logging.LogFactory;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -41,7 +40,6 @@ import edu.uclm.esi.devopsmetrics.services.MethodTestService;
 import edu.uclm.esi.devopsmetrics.services.TestMetricsService;
 
 @Service
-@Scope("singleton")
 public class TestOperations {
 
 	private static final Log LOG = LogFactory.getLog(TestOperations.class);
@@ -126,7 +124,7 @@ public class TestOperations {
 
 	
 
-	public void saveRepoTestMetrics(String repository, String owner) throws IOException {
+	public synchronized void saveRepoTestMetrics(String repository, String owner) throws IOException {
 
 		TestMetrics testMetrics;
 

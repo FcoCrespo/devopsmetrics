@@ -68,14 +68,17 @@ public class MetricsController {
 
 	public ResponseEntity<String> saveMetrics(@RequestParam("reponame") final String repository, @RequestParam("owner") final String owner) {
 
-		try {
-			LOG.info("Save repo metrics");
-			this.metricsOperations.saveRepoMetrics(repository, owner);
-			return ResponseEntity.ok(this.message);
+		synchronized (this) {
+			try {
+				LOG.info("Save repo metrics");
+				this.metricsOperations.saveRepoMetrics(repository, owner);
+				return ResponseEntity.ok(this.message);
+			}
+			catch(Exception e) {
+				return ResponseEntity.ok("Error al guardar los datos de los archivos de las métricas.");
+			}
 		}
-		catch(Exception e) {
-			return ResponseEntity.ok("Error al guardar los datos de los archivos de las métricas.");
-		}
+		
 		
 	}
 	
@@ -136,13 +139,15 @@ public class MetricsController {
 
 	public ResponseEntity<String> saveTestMetrics(@RequestParam("reponame") final String reponame, @RequestParam("owner") final String owner) {
 
-		try {
-			LOG.info("Save repo test metrics");
-			this.testsOperations.saveRepoTestMetrics(reponame, owner);
-			return ResponseEntity.ok(this.message);
-		}
-		catch(Exception e) {
-			return ResponseEntity.ok("Error al guardar los datos de los archivos de los test reports.");
+		synchronized (this) {
+			try {
+				LOG.info("Save repo test metrics");
+				this.testsOperations.saveRepoTestMetrics(reponame, owner);
+				return ResponseEntity.ok(this.message);
+			}
+			catch(Exception e) {
+				return ResponseEntity.ok("Error al guardar los datos de los archivos de los test reports.");
+			}
 		}
 
 	}

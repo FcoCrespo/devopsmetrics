@@ -62,21 +62,23 @@ public class IssueController {
 	public ResponseEntity<String> allIssues(@RequestParam("tokenpass") final String tokenpass,
 			@RequestParam("reponame") final String repository, @RequestParam("owner") final String owner) {
 
-		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
-		if (existe) {
-			try {
-				LOG.info("Get issues");
-				this.issueOperations.getIssues(repository, owner);
-				this.issueOperations.actualizarValores(repository, owner);
-				return ResponseEntity.ok(this.message);
-			}
-			catch (IOException e) {
+		synchronized (this) {
+			boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
+			if (existe) {
+				try {
+					LOG.info("Get issues");
+					this.issueOperations.getIssues(repository, owner);
+					this.issueOperations.actualizarValores(repository, owner);
+					return ResponseEntity.ok(this.message);
+				} catch (IOException e) {
+					return ResponseEntity.badRequest().build();
+				}
+
+			} else {
+				LOG.info(this.errorMessage);
 				return ResponseEntity.badRequest().build();
 			}
-			
-		} else {
-			LOG.info(this.errorMessage);
-			return ResponseEntity.badRequest().build();
+
 		}
 
 	}

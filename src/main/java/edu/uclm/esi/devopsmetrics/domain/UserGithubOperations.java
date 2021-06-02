@@ -3,14 +3,12 @@ package edu.uclm.esi.devopsmetrics.domain;
 import java.util.List;
 import java.util.UUID;
 
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import edu.uclm.esi.devopsmetrics.models.UserGithub;
 import edu.uclm.esi.devopsmetrics.services.UserGithubService;
 
 @Service
-@Scope("singleton")
 public class UserGithubOperations {
 	
 	private final UserGithubService userGithubService;

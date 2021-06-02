@@ -1,6 +1,6 @@
 package edu.uclm.esi.devopsmetrics.domain;
 
-import org.springframework.context.annotation.Scope;
+
 import org.springframework.stereotype.Service;
 
 import edu.uclm.esi.devopsmetrics.services.CommitCursorService;
@@ -9,7 +9,6 @@ import edu.uclm.esi.devopsmetrics.services.CommitService;
 import edu.uclm.esi.devopsmetrics.services.UserGithubService;
 
 @Service
-@Scope("singleton")
 public class CommitServices {
 	
 

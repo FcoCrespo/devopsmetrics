@@ -67,15 +67,16 @@ public class CommitController {
 	public ResponseEntity<String> allBranches(@RequestParam("tokenpass") final String tokenpass,
 			@RequestParam("reponame") final String repository, @RequestParam("owner") final String owner) {
 
-		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
-		if (existe) {
-			LOG.info("Get branches");
-			return ResponseEntity.ok(this.githubOperations.getBranches(repository, owner));
-		} else {
-			LOG.info(this.errorMessage);
-			return ResponseEntity.badRequest().build();
+		synchronized (this) {
+			boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
+			if (existe) {
+				LOG.info("Get branches");
+				return ResponseEntity.ok(this.githubOperations.getBranches(repository, owner));
+			} else {
+				LOG.info(this.errorMessage);
+				return ResponseEntity.badRequest().build();
+			}
 		}
-
 	}
 
 	
@@ -88,7 +89,7 @@ public class CommitController {
 	@GetMapping(value = "/allrepositories")
 	@ApiOperation(value = "Find all repositories", notes = "Return all repositories")
 
-	public ResponseEntity<String> allBranches(@RequestParam("tokenpass") final String tokenpass) {
+	public ResponseEntity<String> allRepositories(@RequestParam("tokenpass") final String tokenpass) {
 
 		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
 		if (existe) {
@@ -114,21 +115,22 @@ public class CommitController {
 	public ResponseEntity<String> allCommits(@RequestParam("tokenpass") final String tokenpass,
 			@RequestParam("reponame") final String repository, @RequestParam("owner") final String owner) {
 
-		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
-		if (existe) {
+		synchronized (this) {
+			boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
+			if (existe) {
 
-			try {
-				this.githubOperations.getCommits(repository, owner);
-				return ResponseEntity.ok(this.message);
-			} catch (IOException e) {
+				try {
+					this.githubOperations.getCommits(repository, owner);
+					return ResponseEntity.ok(this.message);
+				} catch (IOException e) {
+					return ResponseEntity.badRequest().build();
+				}
+
+			} else {
+				LOG.info(this.errorMessage);
 				return ResponseEntity.badRequest().build();
 			}
-
-		} else {
-			LOG.info(this.errorMessage);
-			return ResponseEntity.badRequest().build();
 		}
-
 	}
 
 	/**
@@ -143,17 +145,18 @@ public class CommitController {
 	public ResponseEntity<String> allCommits(@RequestParam("tokenpass") final String tokenpass,
 			@RequestParam("branchId") final String branchId) {
 
-		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
-		if (existe) {
+		synchronized (this) {
+			boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
+			if (existe) {
 
-			this.githubOperations.deleteCommits(branchId);
-			return ResponseEntity.ok(this.message);
+				this.githubOperations.deleteCommits(branchId);
+				return ResponseEntity.ok(this.message);
 
-		} else {
-			LOG.info(this.errorMessage);
-			return ResponseEntity.badRequest().build();
+			} else {
+				LOG.info(this.errorMessage);
+				return ResponseEntity.badRequest().build();
+			}
 		}
-
 	}
 
 	/**
@@ -169,19 +172,21 @@ public class CommitController {
 	public ResponseEntity<String> allBranchesFirstCommit(@RequestParam("tokenpass") final String tokenpass,
 			@RequestParam("reponame") final String reponame, @RequestParam("owner") final String owner) {
 
-		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
-		if (existe) {
-
-			try {
-				this.githubOperations.getFirstCommitByBranch(reponame, owner);
-				return ResponseEntity.ok(this.message);
-			} catch (IOException e) {
+		synchronized (this) {
+			boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
+			if (existe) {
+	
+				try {
+					this.githubOperations.getFirstCommitByBranch(reponame, owner);
+					return ResponseEntity.ok(this.message);
+				} catch (IOException e) {
+					return ResponseEntity.badRequest().build();
+				}
+	
+			} else {
+				LOG.info(this.errorMessage);
 				return ResponseEntity.badRequest().build();
 			}
-
-		} else {
-			LOG.info(this.errorMessage);
-			return ResponseEntity.badRequest().build();
 		}
 
 	}

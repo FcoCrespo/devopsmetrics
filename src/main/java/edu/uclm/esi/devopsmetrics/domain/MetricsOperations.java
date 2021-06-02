@@ -29,7 +29,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import org.apache.http.HttpEntity;
@@ -66,7 +65,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 @Service
-@Scope("singleton")
 public class MetricsOperations {
 
 	private static final Log LOG = LogFactory.getLog(MetricsOperations.class);
@@ -401,7 +399,7 @@ public class MetricsOperations {
 
 	
 
-	public void saveRepoMetrics(String repository, String owner) throws ParserConfigurationException, SAXException {
+	public synchronized void saveRepoMetrics(String repository, String owner) throws ParserConfigurationException, SAXException {
 
 		String server = serverftp;
 		int port = 21;

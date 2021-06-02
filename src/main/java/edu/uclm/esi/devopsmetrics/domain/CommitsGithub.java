@@ -10,7 +10,6 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -30,7 +29,6 @@ import edu.uclm.esi.devopsmetrics.models.CommitInfo;
 import edu.uclm.esi.devopsmetrics.models.UserGithub;
 
 @Service
-@Scope("singleton")
 public class CommitsGithub {
 	
 	private static final Log LOG = LogFactory.getLog(CommitsGithub.class);

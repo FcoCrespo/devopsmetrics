@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
 
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -21,7 +20,6 @@ import edu.uclm.esi.devopsmetrics.models.Branch;
 
 
 @Service
-@Scope("singleton")
 public class BranchesGithub{
 	
 	private final BranchService branchService;

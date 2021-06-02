@@ -9,7 +9,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import edu.uclm.esi.devopsmetrics.models.Issue;
@@ -23,7 +22,6 @@ import edu.uclm.esi.devopsmetrics.services.IssueService;
 import edu.uclm.esi.devopsmetrics.services.UserGithubService;
 
 @Service
-@Scope("singleton")
 public class IssueOperations {
 	
 	private static final Log LOG = LogFactory.getLog(IssueOperations.class);
@@ -48,7 +46,7 @@ public class IssueOperations {
 		this.userGithubService = userGithubService;
 	}
 	
-	public void getIssues(String repository, String owner) throws IOException {
+	public synchronized void getIssues(String repository, String owner) throws IOException {
 
 
 		IssueRepo issueDeRepo = null;
@@ -95,7 +93,7 @@ public class IssueOperations {
 
 	}
 	
-	public void actualizarValores(String repository, String owner) throws IOException {
+	public synchronized void actualizarValores(String repository, String owner) throws IOException {
 		
 		String filename = "src/main/resources/graphql/issues.graphql";
 

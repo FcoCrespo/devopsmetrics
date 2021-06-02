@@ -29,6 +29,8 @@ public class IssueRepositoryImpl implements IssueRepository{
 	   */
 	  private final MongoOperations mongoOperations;
 	  private final String createdAtStr;
+	  
+	  private String stateStr;
 
 	  /**
 	   * Constructor de la clase.
@@ -41,6 +43,7 @@ public class IssueRepositoryImpl implements IssueRepository{
 	    Assert.notNull(mongoOperations, "notNull");
 	    this.mongoOperations = mongoOperations;
 	    this.createdAtStr = "createdAt";
+	    this.stateStr = "state";
 	  }
 
 	@Override
@@ -74,12 +77,12 @@ public class IssueRepositoryImpl implements IssueRepository{
 	@Override
 	public Issue findByIdyState(String id, String state) {
 		return this.mongoOperations
-		        .findOne(new Query(Criteria.where("id").is(id).and("state").is(state)), Issue.class);
+		        .findOne(new Query(Criteria.where("id").is(id).and(this.stateStr).is(state)), Issue.class);
 	}
 
 	@Override
 	public Optional<List<Issue>> findAllByState(String state) {
-		List<Issue> issues = this.mongoOperations.find(new Query(Criteria.where("state").is(state)), Issue.class);
+		List<Issue> issues = this.mongoOperations.find(new Query(Criteria.where(this.stateStr).is(state)), Issue.class);
 
 	    return Optional.ofNullable(issues);
 	}
@@ -94,7 +97,7 @@ public class IssueRepositoryImpl implements IssueRepository{
 	public List<Issue> findAllByClosedBetweenBeginEndDate(Instant beginDate, Instant endDate) {
 		return this.mongoOperations
 		        .find(new Query(Criteria.where("closedAt").gte(beginDate).and("closedAt").lte(endDate)
-		        		.and("state").is("CLOSED")), Issue.class);
+		        		.and(this.stateStr).is("CLOSED")), Issue.class);
 	}
 
 	
@@ -102,6 +105,6 @@ public class IssueRepositoryImpl implements IssueRepository{
 	public List<Issue> findAllByOpenBetweenBeginEndDate(Instant beginDate, Instant endDate) {
 		return this.mongoOperations
 		        .find(new Query(Criteria.where(this.createdAtStr).gte(beginDate).and(this.createdAtStr).lte(endDate)
-		        		.and("state").is("OPEN")), Issue.class);
+		        		.and(this.stateStr).is("OPEN")), Issue.class);
 	}
 }
