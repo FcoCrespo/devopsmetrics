@@ -285,10 +285,14 @@ public class IssuesGithub {
 
 		jsonData = responseGiven.body().string();
 		jsonNode = new ObjectMapper().readTree(jsonData);
+		
+		issueCursor=obtenerIssueCursor(jsonNode, info[0]);
 
 		nodes = jsonNode.path("data").path(this.repositoryString).path(this.issuesString).path(this.nodesString);
 		iter = nodes.iterator();
 		parameterNode = iter.next();
+		
+		
 
 		Issue issue;
 
@@ -322,6 +326,31 @@ public class IssuesGithub {
 
 	}
 
+	private IssueCursor obtenerIssueCursor(JsonNode jsonNode, String reponame) {
+		JsonNode cursorNode = jsonNode.path("data").path(this.repositoryString).path(this.issuesString)
+				.path("pageInfo");
+
+		LOG.info(cursorNode.toString());
+		
+		IssueCursor issueCursor;
+
+		boolean hasNextPage = cursorNode.get("hasNextPage").booleanValue();
+		String endCursor = cursorNode.get("endCursor").textValue();
+		String startCursor = cursorNode.get("startCursor").textValue();
+
+		if (endCursor == null || startCursor == null) {
+			return null;
+		}
+		
+		else {
+			issueCursor = new IssueCursor(hasNextPage, endCursor, startCursor, reponame, null);
+			LOG.info(issueCursor.toString());
+		}
+
+
+		return issueCursor;
+	}
+
 	private void actualizarIssue(JsonNode parameterNode, Issue issue) {
 
 		issue.setState(parameterNode.get(this.stateString).asText());
@@ -333,7 +362,6 @@ public class IssuesGithub {
 			issue.setClosedAt(closedAt);
 		}
 		
-		IssueAssignee issueAssignee = null;
 		UserGithub userGithubAsignee = null;
 		Iterator<JsonNode> iter;
 		
@@ -345,6 +373,7 @@ public class IssuesGithub {
 		boolean assigneesNull = false;
 
 		JsonNode parameterNodeAssignee;
+		
 
 		if (comprobarValorInt(nodesAssignees, "totalCount") == 0) {
 			assigneesNull = true;
@@ -363,11 +392,9 @@ public class IssuesGithub {
 					asigneeValues = obtenerDatos(parameterNodeAssignee);
 
 					userGithubAsignee = this.userGithubOperations.saveAuthor(asigneeValues);
-
-					issueAssignee = new IssueAssignee(issue.getId(), userGithubAsignee.getId());
-
-					this.issueAssigneeService.saveIssueAssignee(issueAssignee);
-
+					
+					comprobarExisteIssueAssignee(userGithubAsignee, issue);
+					
 					parameterNodeAssignee = iter.next();
 
 				}
@@ -377,9 +404,7 @@ public class IssuesGithub {
 
 					userGithubAsignee = this.userGithubOperations.saveAuthor(asigneeValues);
 
-					issueAssignee = new IssueAssignee(issue.getId(), userGithubAsignee.getId());
-
-					this.issueAssigneeService.saveIssueAssignee(issueAssignee);
+					comprobarExisteIssueAssignee(userGithubAsignee, issue);
 
 				}
 			} else {
@@ -388,15 +413,34 @@ public class IssuesGithub {
 
 				userGithubAsignee = this.userGithubOperations.saveAuthor(asigneeValues);
 
-				issueAssignee = new IssueAssignee(issue.getId(), userGithubAsignee.getId());
-
-				this.issueAssigneeService.saveIssueAssignee(issueAssignee);
+				
+				comprobarExisteIssueAssignee(userGithubAsignee, issue);
+				
 
 			}
 
 		}
+		else {
+			List<IssueAssignee>listaAsignees=this.issueAssigneeService.getAllByIdIssue(issue.getId());
+			
+			for(int i=0; i<listaAsignees.size(); i++) {
+				this.issueAssigneeService.deleteIssueAssignee(listaAsignees.get(i).getId());
+			}
+		}
 
 		this.issueService.updateIssue(issue);
+	}
+
+	private void comprobarExisteIssueAssignee(UserGithub userGithubAsignee, Issue issue) {
+		IssueAssignee issueAssignee = this.issueAssigneeService.getByAssigneeAndIssue(userGithubAsignee.getId(), issue.getId());
+		if(issueAssignee==null) {
+			
+			issueAssignee = new IssueAssignee(issue.getId(), userGithubAsignee.getId());
+
+			this.issueAssigneeService.saveIssueAssignee(issueAssignee);
+			
+		}
+		
 	}
 
 	private boolean checkInitialIssueFind(Issue issue, String issueInitial, boolean initialStartCursorFind) {

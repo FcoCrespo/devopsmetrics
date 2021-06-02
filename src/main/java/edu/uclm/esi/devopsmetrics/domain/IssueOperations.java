@@ -150,6 +150,7 @@ public class IssueOperations {
 			json.put("repository", issueRepoList.get(i).getRepository());
 			json.put("author", jsonAuthor);
 
+			json.put("id", mapIssues.get(issueRepoList.get(i).getId()).getId());
 			json.put("title", mapIssues.get(issueRepoList.get(i).getId()).getTitle());
 			json.put("body", mapIssues.get(issueRepoList.get(i).getId()).getBody());
 			json.put("createdAt", mapIssues.get(issueRepoList.get(i).getId()).getCreatedAt());
@@ -289,7 +290,7 @@ public class IssueOperations {
 			json.put("createdAt", mapIssues.get(issueRepo.getId()).getCreatedAt());
 			json.put("closedAt", mapIssues.get(issueRepo.getId()).getClosedAt());
 			json.put("state", mapIssues.get(issueRepo.getId()).getState());
-
+			json.put("id", mapIssues.get(issueRepo.getId()).getId());
 
 			JSONArray jsonAssignees = getJSONAssignees(issuesAssignee, mapUsersGithub);
 

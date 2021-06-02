@@ -32,14 +32,14 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = {SecureUser.class})
-public class GetIssuesClosedDateSteps {
+@SpringBootTest(classes = { SecureUser.class })
+public class GetAllMetricsDateSteps {
 	
 	private SecureUser secureUser;
 	private String jsonData;
-	
-	@Given("user is logging in the system for getting all issues from a repository by his owner closed between two dates from the system")
-	public void user_is_logging_in_the_system_for_getting_all_issues_from_a_repository_by_his_owner_closed_between_two_dates_from_the_system() throws ClientProtocolException, IOException {
+
+	@Given("user is logging in the system for getting all metrics from a repository by his owner between two dates")
+	public void user_is_logging_in_the_system_for_getting_all_metrics_from_a_repository_by_his_owner_between_two_dates() throws ClientProtocolException, IOException {
 		CloseableHttpClient httpclient = HttpClients.createDefault();
 		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/usuarios?username="
 				+ System.getProperty("app.user") + "&password=" + System.getProperty("app.password"));
@@ -49,29 +49,27 @@ public class GetIssuesClosedDateSteps {
 		HttpEntity entity = httpresponse.getEntity();
 		this.jsonData = EntityUtils.toString(entity, "UTF-8");
 	}
-	
-	@When("user is correct he requests all issues from a repository by his owner closed between two dates of the system")
-	public void user_is_correct_he_requests_all_issues_from_a_repository_by_his_owner_closed_between_two_dates_of_the_system() throws JsonMappingException, JsonProcessingException {
+
+	@When("user is correct he requests all metrics from a repository by his owner between two dates")
+	public void user_is_correct_he_requests_all_metrics_from_a_repository_by_his_owner_between_two_dates() throws JsonMappingException, JsonProcessingException {
 		JsonNode node = new ObjectMapper().readTree(this.jsonData);
-		
-		this.secureUser = new SecureUser(node.get("id").textValue(),
-										 node.get("username").textValue(),
-										 node.get("role").textValue(),
-										 node.get("tokenPass").textValue(),
-										 Instant.ofEpochSecond(node.get("tokenValidity").get("epochSecond").longValue())
-										);
+
+		this.secureUser = new SecureUser(node.get("id").textValue(), node.get("username").textValue(),
+				node.get("role").textValue(), node.get("tokenPass").textValue(),
+				Instant.ofEpochSecond(node.get("tokenValidity").get("epochSecond").longValue()));
+	
 	}
-	@Then("the user gets all issues from a repository by his owner closed between two dates if the system")
-	public void the_user_gets_all_issues_from_a_repository_by_his_owner_closed_between_two_dates_if_the_system() throws ClientProtocolException, IOException{
+	@Then("the user gets all metrics from a repository by his owner between two dates")
+	public void the_user_gets_all_metrics_from_a_repository_by_his_owner_between_two_dates() throws ClientProtocolException, IOException {
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpPost httppost = new HttpPost("https://devopsmetrics.herokuapp.com/issues/issuesrepocloseddates?tokenpass="
+		HttpPost httppost = new HttpPost("https://devopsmetrics.herokuapp.com/metrics/allmetricsdate?tokenpass="
 				+ this.secureUser.getTokenPass());
 
 		JSONObject json = new JSONObject();
-		json.put("reponame", "test");
+		json.put("reponame", "devopsmetrics");
 		json.put("owner", "FcoCrespo");
-		json.put("begindate", "02/06/2021 00:00");
-		json.put("enddate", "02/06/2021 00:00");
+		json.put("begindate", "23/09/2020 00:00");
+		json.put("enddate", "24/04/2021 00:00");
 
 		StringEntity params = new StringEntity(json.toString());
 		httppost.addHeader("content-type", "application/json");
@@ -88,30 +86,29 @@ public class GetIssuesClosedDateSteps {
 		Iterator<JsonNode> iter = nodes.iterator();
 
 		parameterNode = iter.next();
-		String title = "";
+		String message = "";
 
 		if (iter.hasNext()) {
 			while (iter.hasNext()) {
 
-				if (parameterNode.get("title").textValue().equals("Issue Test 118")) {
-					title = parameterNode.get("title").textValue();
+				if (parameterNode.get("message").textValue().equals("prueba 1")) {
+					message = parameterNode.get("message").textValue();
 				}
 
 				parameterNode = iter.next();
 			}
 			if (!iter.hasNext()) {
-				if (parameterNode.get("title").textValue().equals("Issue Test 118")) {
-					title = parameterNode.get("title").textValue();
+				if (parameterNode.get("message").textValue().equals("prueba 1")) {
+					message = parameterNode.get("message").textValue();
 				}
 			}
 		} else {
-			if (parameterNode.get("title").textValue().equals("Issue Test 118")) {
-				title = parameterNode.get("title").textValue();
+			if (parameterNode.get("message").textValue().equals("prueba 1")) {
+				message = parameterNode.get("message").textValue();
 			}
 		}
 
-		assertEquals("Issue Test 118", title);
+		assertEquals("prueba 1", message);
 	}
-
 
 }

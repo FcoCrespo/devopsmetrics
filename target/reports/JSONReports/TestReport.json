@@ -3,7 +3,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-02T11:36:06.500Z",
+        "start_timestamp": "2021-06-02T14:15:16.791Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -13,7 +13,7 @@
         "steps": [
           {
             "result": {
-              "duration": 667928200,
+              "duration": 714927400,
               "status": "passed"
             },
             "line": 4,
@@ -25,7 +25,7 @@
           },
           {
             "result": {
-              "duration": 617115500,
+              "duration": 370016800,
               "status": "passed"
             },
             "line": 5,
@@ -37,7 +37,7 @@
           },
           {
             "result": {
-              "duration": 301808100,
+              "duration": 290876200,
               "status": "passed"
             },
             "line": 6,
@@ -61,7 +61,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-02T11:36:08.152Z",
+        "start_timestamp": "2021-06-02T14:15:18.227Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -71,7 +71,7 @@
         "steps": [
           {
             "result": {
-              "duration": 315917900,
+              "duration": 306536700,
               "status": "passed"
             },
             "line": 4,
@@ -83,7 +83,6 @@
           },
           {
             "result": {
-              "duration": 995300,
               "status": "passed"
             },
             "line": 5,
@@ -95,7 +94,7 @@
           },
           {
             "result": {
-              "duration": 1462359700,
+              "duration": 1507167800,
               "status": "passed"
             },
             "line": 6,
@@ -119,7 +118,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-02T11:36:09.947Z",
+        "start_timestamp": "2021-06-02T14:15:20.057Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -129,7 +128,7 @@
         "steps": [
           {
             "result": {
-              "duration": 311645900,
+              "duration": 305141200,
               "status": "passed"
             },
             "line": 4,
@@ -141,6 +140,7 @@
           },
           {
             "result": {
+              "duration": 992700,
               "status": "passed"
             },
             "line": 5,
@@ -152,7 +152,7 @@
           },
           {
             "result": {
-              "duration": 1444880600,
+              "duration": 1609432700,
               "status": "passed"
             },
             "line": 6,
@@ -176,64 +176,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-02T11:36:11.719Z",
-        "line": 3,
-        "name": "",
-        "description": "",
-        "id": "feature-to-test-the-function-to-get-all-issues-from-a-repository-by-his-owner-from-github;",
-        "type": "scenario",
-        "keyword": "Scenario",
-        "steps": [
-          {
-            "result": {
-              "duration": 277001900,
-              "status": "passed"
-            },
-            "line": 4,
-            "name": "user is logging in the system for getting all issues from a repository by his owner from Github",
-            "match": {
-              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllIssuesSteps.user_is_logging_in_the_system_for_getting_all_issues_from_a_repository_by_his_owner_from_github()"
-            },
-            "keyword": "Given "
-          },
-          {
-            "result": {
-              "status": "passed"
-            },
-            "line": 5,
-            "name": "user is correct he requests all issues from a repository by his owner",
-            "match": {
-              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllIssuesSteps.user_is_correct_he_requests_all_issues_from_a_repository_by_his_owner()"
-            },
-            "keyword": "When "
-          },
-          {
-            "result": {
-              "duration": 7805823500,
-              "status": "passed"
-            },
-            "line": 6,
-            "name": "the user gets all issues from a repository by his owner",
-            "match": {
-              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllIssuesSteps.the_user_gets_all_issues_from_a_repository_by_his_owner()"
-            },
-            "keyword": "Then "
-          }
-        ]
-      }
-    ],
-    "name": "feature to test the function to get all issues from a repository by his owner from Github",
-    "description": "",
-    "id": "feature-to-test-the-function-to-get-all-issues-from-a-repository-by-his-owner-from-github",
-    "keyword": "Feature",
-    "uri": "file:src/test/resources/features/GetAllIssues.feature",
-    "tags": []
-  },
-  {
-    "line": 1,
-    "elements": [
-      {
-        "start_timestamp": "2021-06-02T11:36:19.813Z",
+        "start_timestamp": "2021-06-02T14:15:21.981Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -243,13 +186,13 @@
         "steps": [
           {
             "result": {
-              "duration": 318650300,
+              "duration": 324384300,
               "status": "passed"
             },
             "line": 4,
             "name": "user is logging in the system for getting all metrics from a repository by his owner",
             "match": {
-              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllMetrics.user_is_logging_in_the_system_for_getting_all_metrics_from_a_repository_by_his_owner()"
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllMetricsSteps.user_is_logging_in_the_system_for_getting_all_metrics_from_a_repository_by_his_owner()"
             },
             "keyword": "Given "
           },
@@ -260,19 +203,19 @@
             "line": 5,
             "name": "user is correct he requests all metrics from a repository by his owner",
             "match": {
-              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllMetrics.user_is_correct_he_requests_all_metrics_from_a_repository_by_his_owner()"
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllMetricsSteps.user_is_correct_he_requests_all_metrics_from_a_repository_by_his_owner()"
             },
             "keyword": "When "
           },
           {
             "result": {
-              "duration": 2167053100,
+              "duration": 5967324900,
               "status": "passed"
             },
             "line": 6,
             "name": "the user gets all metrics from a repository by his owner",
             "match": {
-              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllMetrics.the_user_gets_all_metrics_from_a_repository_by_his_owner()"
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllMetricsSteps.the_user_gets_all_metrics_from_a_repository_by_his_owner()"
             },
             "keyword": "Then "
           }
@@ -290,7 +233,65 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-02T11:36:22.309Z",
+        "start_timestamp": "2021-06-02T14:15:28.282Z",
+        "line": 3,
+        "name": "",
+        "description": "",
+        "id": "feature-to-test-the-function-to-get-all-metrics-from-a-repository-by-his-owner-between-two-dates;",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 362480600,
+              "status": "passed"
+            },
+            "line": 4,
+            "name": "user is logging in the system for getting all metrics from a repository by his owner between two dates",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllMetricsDateSteps.user_is_logging_in_the_system_for_getting_all_metrics_from_a_repository_by_his_owner_between_two_dates()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 1000300,
+              "status": "passed"
+            },
+            "line": 5,
+            "name": "user is correct he requests all metrics from a repository by his owner between two dates",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllMetricsDateSteps.user_is_correct_he_requests_all_metrics_from_a_repository_by_his_owner_between_two_dates()"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 7462667600,
+              "status": "passed"
+            },
+            "line": 6,
+            "name": "the user gets all metrics from a repository by his owner between two dates",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllMetricsDateSteps.the_user_gets_all_metrics_from_a_repository_by_his_owner_between_two_dates()"
+            },
+            "keyword": "Then "
+          }
+        ]
+      }
+    ],
+    "name": "feature to test the function to get all metrics from a repository by his owner between two dates",
+    "description": "",
+    "id": "feature-to-test-the-function-to-get-all-metrics-from-a-repository-by-his-owner-between-two-dates",
+    "keyword": "Feature",
+    "uri": "file:src/test/resources/features/GetAllMetricsDate.feature",
+    "tags": []
+  },
+  {
+    "line": 1,
+    "elements": [
+      {
+        "start_timestamp": "2021-06-02T14:15:36.120Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -300,7 +301,7 @@
         "steps": [
           {
             "result": {
-              "duration": 287000900,
+              "duration": 312198400,
               "status": "passed"
             },
             "line": 4,
@@ -323,7 +324,7 @@
           },
           {
             "result": {
-              "duration": 251351600,
+              "duration": 259501000,
               "status": "passed"
             },
             "line": 6,
@@ -347,7 +348,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-02T11:36:22.856Z",
+        "start_timestamp": "2021-06-02T14:15:36.701Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -357,13 +358,13 @@
         "steps": [
           {
             "result": {
-              "duration": 331861300,
+              "duration": 300913800,
               "status": "passed"
             },
             "line": 4,
             "name": "user is logging in the system for getting all test metrics from a repository by his owner",
             "match": {
-              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllTestMetrics.user_is_logging_in_the_system_for_getting_all_test_metrics_from_a_repository_by_his_owner()"
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllTestMetricsSteps.user_is_logging_in_the_system_for_getting_all_test_metrics_from_a_repository_by_his_owner()"
             },
             "keyword": "Given "
           },
@@ -374,19 +375,19 @@
             "line": 5,
             "name": "user is correct he requests all test metrics from a repository by his owner",
             "match": {
-              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllTestMetrics.user_is_correct_he_requests_all_test_metrics_from_a_repository_by_his_owner()"
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllTestMetricsSteps.user_is_correct_he_requests_all_test_metrics_from_a_repository_by_his_owner()"
             },
             "keyword": "When "
           },
           {
             "result": {
-              "duration": 670234300,
+              "duration": 656186600,
               "status": "passed"
             },
             "line": 6,
             "name": "the user gets all test metrics from a repository by his owner",
             "match": {
-              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllTestMetrics.the_user_gets_all_test_metrics_from_a_repository_by_his_owner()"
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllTestMetricsSteps.the_user_gets_all_test_metrics_from_a_repository_by_his_owner()"
             },
             "keyword": "Then "
           }
@@ -404,7 +405,65 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-02T11:36:23.871Z",
+        "start_timestamp": "2021-06-02T14:15:37.670Z",
+        "line": 3,
+        "name": "",
+        "description": "",
+        "id": "feature-to-test-the-function-to-get-all-test-metrics-from-a-repository-by-his-owner-between-two-dates;",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 325108000,
+              "status": "passed"
+            },
+            "line": 4,
+            "name": "user is logging in the system for getting all test metrics from a repository by his owner between two dates",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllTestMetricsDateSteps.user_is_logging_in_the_system_for_getting_all_test_metrics_from_a_repository_by_his_owner_between_two_dates()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 1001000,
+              "status": "passed"
+            },
+            "line": 5,
+            "name": "user is correct he requests all test metrics from a repository by his owner between two dates",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllTestMetricsDateSteps.user_is_correct_he_requests_all_test_metrics_from_a_repository_by_his_owner_between_two_dates()"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 921927200,
+              "status": "passed"
+            },
+            "line": 6,
+            "name": "the user gets all test metrics from a repository by his owner between two dates",
+            "match": {
+              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllTestMetricsDateSteps.the_user_gets_all_test_metrics_from_a_repository_by_his_owner_between_two_dates()"
+            },
+            "keyword": "Then "
+          }
+        ]
+      }
+    ],
+    "name": "feature to test the function to get all test metrics from a repository by his owner between two dates",
+    "description": "",
+    "id": "feature-to-test-the-function-to-get-all-test-metrics-from-a-repository-by-his-owner-between-two-dates",
+    "keyword": "Feature",
+    "uri": "file:src/test/resources/features/GetAllTestMetricsDate.feature",
+    "tags": []
+  },
+  {
+    "line": 1,
+    "elements": [
+      {
+        "start_timestamp": "2021-06-02T14:15:38.937Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -414,7 +473,7 @@
         "steps": [
           {
             "result": {
-              "duration": 298586600,
+              "duration": 358998500,
               "status": "passed"
             },
             "line": 4,
@@ -426,7 +485,7 @@
           },
           {
             "result": {
-              "duration": 262910500,
+              "duration": 264723300,
               "status": "passed"
             },
             "line": 5,
@@ -438,7 +497,7 @@
           },
           {
             "result": {
-              "duration": 287514300,
+              "duration": 263013100,
               "status": "passed"
             },
             "line": 6,
@@ -462,7 +521,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-02T11:36:24.736Z",
+        "start_timestamp": "2021-06-02T14:15:39.835Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -472,7 +531,7 @@
         "steps": [
           {
             "result": {
-              "duration": 321524900,
+              "duration": 296001500,
               "status": "passed"
             },
             "line": 4,
@@ -484,7 +543,6 @@
           },
           {
             "result": {
-              "duration": 1003400,
               "status": "passed"
             },
             "line": 5,
@@ -496,7 +554,7 @@
           },
           {
             "result": {
-              "duration": 1541383100,
+              "duration": 2473523800,
               "status": "passed"
             },
             "line": 6,
@@ -520,7 +578,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-02T11:36:26.617Z",
+        "start_timestamp": "2021-06-02T14:15:42.620Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -530,7 +588,7 @@
         "steps": [
           {
             "result": {
-              "duration": 286998100,
+              "duration": 752128700,
               "status": "passed"
             },
             "line": 4,
@@ -553,7 +611,7 @@
           },
           {
             "result": {
-              "duration": 1473621900,
+              "duration": 8147441100,
               "status": "passed"
             },
             "line": 6,
@@ -577,7 +635,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-02T11:36:28.397Z",
+        "start_timestamp": "2021-06-02T14:15:51.539Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -587,7 +645,7 @@
         "steps": [
           {
             "result": {
-              "duration": 284996000,
+              "duration": 351000200,
               "status": "passed"
             },
             "line": 4,
@@ -610,7 +668,7 @@
           },
           {
             "result": {
-              "duration": 2383292400,
+              "duration": 13654879400,
               "status": "passed"
             },
             "line": 6,
@@ -634,7 +692,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-02T11:36:31.076Z",
+        "start_timestamp": "2021-06-02T14:16:05.560Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -644,7 +702,7 @@
         "steps": [
           {
             "result": {
-              "duration": 303991800,
+              "duration": 350641100,
               "status": "passed"
             },
             "line": 4,
@@ -656,7 +714,6 @@
           },
           {
             "result": {
-              "duration": 998700,
               "status": "passed"
             },
             "line": 5,
@@ -668,7 +725,7 @@
           },
           {
             "result": {
-              "duration": 2720510500,
+              "duration": 11622114900,
               "status": "passed"
             },
             "line": 6,
@@ -692,237 +749,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-02T11:36:34.118Z",
-        "line": 3,
-        "name": "",
-        "description": "",
-        "id": "feature-to-test-the-function-to-get-all-issues-from-a-repository-by-his-owner-closed-between-two-dates-from-the-system;",
-        "type": "scenario",
-        "keyword": "Scenario",
-        "steps": [
-          {
-            "result": {
-              "duration": 293998700,
-              "status": "passed"
-            },
-            "line": 4,
-            "name": "user is logging in the system for getting all issues from a repository by his owner closed between two dates from the system",
-            "match": {
-              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetIssuesClosedDateSteps.user_is_logging_in_the_system_for_getting_all_issues_from_a_repository_by_his_owner_closed_between_two_dates_from_the_system()"
-            },
-            "keyword": "Given "
-          },
-          {
-            "result": {
-              "status": "passed"
-            },
-            "line": 5,
-            "name": "user is correct he requests all issues from a repository by his owner closed between two dates of the system",
-            "match": {
-              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetIssuesClosedDateSteps.user_is_correct_he_requests_all_issues_from_a_repository_by_his_owner_closed_between_two_dates_of_the_system()"
-            },
-            "keyword": "When "
-          },
-          {
-            "result": {
-              "duration": 673447800,
-              "status": "passed"
-            },
-            "line": 6,
-            "name": "the user gets all issues from a repository by his owner closed between two dates if the system",
-            "match": {
-              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetIssuesClosedDateSteps.the_user_gets_all_issues_from_a_repository_by_his_owner_closed_between_two_dates_if_the_system()"
-            },
-            "keyword": "Then "
-          }
-        ]
-      }
-    ],
-    "name": "feature to test the function to get all issues from a repository by his owner closed between two dates from the system",
-    "description": "",
-    "id": "feature-to-test-the-function-to-get-all-issues-from-a-repository-by-his-owner-closed-between-two-dates-from-the-system",
-    "keyword": "Feature",
-    "uri": "file:src/test/resources/features/GetIssuesClosedDate.feature",
-    "tags": []
-  },
-  {
-    "line": 1,
-    "elements": [
-      {
-        "start_timestamp": "2021-06-02T11:36:35.100Z",
-        "line": 3,
-        "name": "",
-        "description": "",
-        "id": "feature-to-test-the-function-to-get-all-issues-from-a-repository-by-his-owner-created-between-two-dates-from-the-system;",
-        "type": "scenario",
-        "keyword": "Scenario",
-        "steps": [
-          {
-            "result": {
-              "duration": 305992100,
-              "status": "passed"
-            },
-            "line": 4,
-            "name": "user is logging in the system for getting all issues from a repository by his owner created between two dates from the system",
-            "match": {
-              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetIssuesCreatedDateSteps.user_is_logging_in_the_system_for_getting_all_issues_from_a_repository_by_his_owner_created_between_two_dates_from_the_system()"
-            },
-            "keyword": "Given "
-          },
-          {
-            "result": {
-              "duration": 1004800,
-              "status": "passed"
-            },
-            "line": 5,
-            "name": "user is correct he requests all issues from a repository by his owner created between two dates of the system",
-            "match": {
-              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetIssuesCreatedDateSteps.user_is_correct_he_requests_all_issues_from_a_repository_by_his_owner_created_between_two_dates_of_the_system()"
-            },
-            "keyword": "When "
-          },
-          {
-            "result": {
-              "duration": 6842197500,
-              "status": "passed"
-            },
-            "line": 6,
-            "name": "the user gets all issues from a repository by his owner created between two dates if the system",
-            "match": {
-              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetIssuesCreatedDateSteps.the_user_gets_all_issues_from_a_repository_by_his_owner_created_between_two_dates_if_the_system()"
-            },
-            "keyword": "Then "
-          }
-        ]
-      }
-    ],
-    "name": "feature to test the function to get all issues from a repository by his owner created between two dates from the system",
-    "description": "",
-    "id": "feature-to-test-the-function-to-get-all-issues-from-a-repository-by-his-owner-created-between-two-dates-from-the-system",
-    "keyword": "Feature",
-    "uri": "file:src/test/resources/features/GetIssuesCreatedByDate.feature",
-    "tags": []
-  },
-  {
-    "line": 1,
-    "elements": [
-      {
-        "start_timestamp": "2021-06-02T11:36:42.262Z",
-        "line": 3,
-        "name": "",
-        "description": "",
-        "id": "feature-to-test-the-function-to-get-all-issues-from-a-repository-by-his-owner-opened-between-two-dates-from-the-system;",
-        "type": "scenario",
-        "keyword": "Scenario",
-        "steps": [
-          {
-            "result": {
-              "duration": 266336000,
-              "status": "passed"
-            },
-            "line": 4,
-            "name": "user is logging in the system for getting all issues from a repository by his owner opened between two dates from the system",
-            "match": {
-              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetIssuesOpenedDateSteps.user_is_logging_in_the_system_for_getting_all_issues_from_a_repository_by_his_owner_opened_between_two_dates_from_the_system()"
-            },
-            "keyword": "Given "
-          },
-          {
-            "result": {
-              "status": "passed"
-            },
-            "line": 5,
-            "name": "user is correct he requests all issues from a repository by his owner opened between two dates of the system",
-            "match": {
-              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetIssuesOpenedDateSteps.user_is_correct_he_requests_all_issues_from_a_repository_by_his_owner_opened_between_two_dates_of_the_system()"
-            },
-            "keyword": "When "
-          },
-          {
-            "result": {
-              "duration": 7378295000,
-              "status": "passed"
-            },
-            "line": 6,
-            "name": "the user gets all issues from a repository by his owner opened between two dates if the system",
-            "match": {
-              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetIssuesOpenedDateSteps.the_user_gets_all_issues_from_a_repository_by_his_owner_opened_between_two_dates_if_the_system()"
-            },
-            "keyword": "Then "
-          }
-        ]
-      }
-    ],
-    "name": "feature to test the function to get all issues from a repository by his owner opened between two dates from the system",
-    "description": "",
-    "id": "feature-to-test-the-function-to-get-all-issues-from-a-repository-by-his-owner-opened-between-two-dates-from-the-system",
-    "keyword": "Feature",
-    "uri": "file:src/test/resources/features/GetIssuesOpenedDate.feature",
-    "tags": []
-  },
-  {
-    "line": 1,
-    "elements": [
-      {
-        "start_timestamp": "2021-06-02T11:36:49.925Z",
-        "line": 3,
-        "name": "",
-        "description": "",
-        "id": "feature-to-test-the-function-to-get-all-issues-from-a-repository-by-his-owner-from-the-system;",
-        "type": "scenario",
-        "keyword": "Scenario",
-        "steps": [
-          {
-            "result": {
-              "duration": 314338400,
-              "status": "passed"
-            },
-            "line": 4,
-            "name": "user is logging in the system for getting all issues from a repository by his owner from the system",
-            "match": {
-              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetIssuesRepoSteps.user_is_logging_in_the_system_for_getting_all_issues_from_a_repository_by_his_owner_from_the_system()"
-            },
-            "keyword": "Given "
-          },
-          {
-            "result": {
-              "duration": 1002200,
-              "status": "passed"
-            },
-            "line": 5,
-            "name": "user is correct he requests all issues from a repository by his owner of the system",
-            "match": {
-              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetIssuesRepoSteps.user_is_correct_he_requests_all_issues_from_a_repository_by_his_owner_of_the_system()"
-            },
-            "keyword": "When "
-          },
-          {
-            "result": {
-              "duration": 3568264500,
-              "status": "passed"
-            },
-            "line": 6,
-            "name": "the user gets all issues from a repository by his owner if the system",
-            "match": {
-              "location": "edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetIssuesRepoSteps.the_user_gets_all_issues_from_a_repository_by_his_owner_if_the_system()"
-            },
-            "keyword": "Then "
-          }
-        ]
-      }
-    ],
-    "name": "feature to test the function to get all issues from a repository by his owner from the system",
-    "description": "",
-    "id": "feature-to-test-the-function-to-get-all-issues-from-a-repository-by-his-owner-from-the-system",
-    "keyword": "Feature",
-    "uri": "file:src/test/resources/features/GetIssuesRepo.feature",
-    "tags": []
-  },
-  {
-    "line": 1,
-    "elements": [
-      {
-        "start_timestamp": "2021-06-02T11:36:53.823Z",
+        "start_timestamp": "2021-06-02T14:16:17.546Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -932,7 +759,7 @@
         "steps": [
           {
             "result": {
-              "duration": 315119400,
+              "duration": 320045000,
               "status": "passed"
             },
             "line": 4,
@@ -944,7 +771,7 @@
           },
           {
             "result": {
-              "duration": 268999200,
+              "duration": 271033500,
               "status": "passed"
             },
             "line": 5,
@@ -979,7 +806,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-02T11:36:54.427Z",
+        "start_timestamp": "2021-06-02T14:16:18.154Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -989,7 +816,7 @@
         "steps": [
           {
             "result": {
-              "duration": 300952600,
+              "duration": 353758700,
               "status": "passed"
             },
             "line": 4,
@@ -1035,7 +862,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-02T11:36:54.737Z",
+        "start_timestamp": "2021-06-02T14:16:18.520Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -1045,7 +872,7 @@
         "steps": [
           {
             "result": {
-              "duration": 7778977100,
+              "duration": 5305848500,
               "status": "passed"
             },
             "line": 4,
@@ -1057,7 +884,7 @@
           },
           {
             "result": {
-              "duration": 114831600,
+              "duration": 116004400,
               "status": "passed"
             },
             "line": 5,
@@ -1069,7 +896,7 @@
           },
           {
             "result": {
-              "duration": 46004200,
+              "duration": 42997800,
               "status": "passed"
             },
             "line": 6,
@@ -1081,7 +908,7 @@
           },
           {
             "result": {
-              "duration": 1626107400,
+              "duration": 1638101900,
               "status": "passed"
             },
             "line": 7,
@@ -1105,7 +932,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-02T11:37:04.327Z",
+        "start_timestamp": "2021-06-02T14:16:25.642Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -1115,7 +942,7 @@
         "steps": [
           {
             "result": {
-              "duration": 278000400,
+              "duration": 352440300,
               "status": "passed"
             },
             "line": 4,
@@ -1127,7 +954,7 @@
           },
           {
             "result": {
-              "duration": 323998100,
+              "duration": 293635300,
               "status": "passed"
             },
             "line": 5,
@@ -1139,7 +966,7 @@
           },
           {
             "result": {
-              "duration": 287460600,
+              "duration": 327477900,
               "status": "passed"
             },
             "line": 6,
@@ -1163,7 +990,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-02T11:37:05.229Z",
+        "start_timestamp": "2021-06-02T14:16:26.630Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -1173,7 +1000,7 @@
         "steps": [
           {
             "result": {
-              "duration": 278038600,
+              "duration": 330470900,
               "status": "passed"
             },
             "line": 4,
@@ -1185,7 +1012,7 @@
           },
           {
             "result": {
-              "duration": 308195800,
+              "duration": 324032300,
               "status": "passed"
             },
             "line": 5,
@@ -1197,7 +1024,7 @@
           },
           {
             "result": {
-              "duration": 279665300,
+              "duration": 462616900,
               "status": "passed"
             },
             "line": 6,

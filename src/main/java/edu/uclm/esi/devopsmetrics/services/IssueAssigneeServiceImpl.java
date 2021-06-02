@@ -81,4 +81,9 @@ public class IssueAssigneeServiceImpl implements IssueAssigneeService{
 		return this.issueAssigneeRepository.findAllByIdIssue(issue);
 	}
 
+	@Override
+	public IssueAssignee getByAssigneeAndIssue(String usergithub, String issue) {
+		return this.issueAssigneeRepository.findByAssigneeAndIssue(usergithub, issue);
+	}
+
 }

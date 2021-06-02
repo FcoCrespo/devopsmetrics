@@ -61,7 +61,7 @@ public class IssueAssigneeRepositoryImpl implements IssueAssigneeRepository{
 
 	@Override
 	public void deleteIssueAssignee(String issueAssigneeId) {
-		this.mongoOperations.findAndRemove(new Query(Criteria.where(this.issueString).is(issueAssigneeId)), IssueAssignee.class);
+		this.mongoOperations.findAndRemove(new Query(Criteria.where("id").is(issueAssigneeId)), IssueAssignee.class);
 	}
 
 	@Override
@@ -81,6 +81,13 @@ public class IssueAssigneeRepositoryImpl implements IssueAssigneeRepository{
 	public List<IssueAssignee> findAllByIdIssue(String issue) {
 		return this.mongoOperations
 		        .find(new Query(Criteria.where(this.issueString).is(issue)), IssueAssignee.class);
+	}
+
+	@Override
+	public IssueAssignee findByAssigneeAndIssue(String usergithub, String issue) {
+		return this.mongoOperations
+		        .findOne(new Query(Criteria.where("usergithub").is(usergithub).and("issue").is(issue)), IssueAssignee.class);
+
 	}
 
 }

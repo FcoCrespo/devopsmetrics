@@ -30,14 +30,14 @@ import org.apache.http.util.EntityUtils;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = { SecureUser.class })
-public class GetAllMetrics {
+public class GetAllTestMetricsSteps {
 
 	private SecureUser secureUser;
 	private String jsonData;
-
-	@Given("user is logging in the system for getting all metrics from a repository by his owner")
-	public void user_is_logging_in_the_system_for_getting_all_metrics_from_a_repository_by_his_owner()
-			throws ClientProtocolException, IOException {
+	
+	@Given("user is logging in the system for getting all test metrics from a repository by his owner")
+	public void user_is_logging_in_the_system_for_getting_all_test_metrics_from_a_repository_by_his_owner() throws ClientProtocolException, IOException {
+	    
 		CloseableHttpClient httpclient = HttpClients.createDefault();
 		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/usuarios?username="
 				+ System.getProperty("app.user") + "&password=" + System.getProperty("app.password"));
@@ -46,22 +46,25 @@ public class GetAllMetrics {
 
 		HttpEntity entity = httpresponse.getEntity();
 		this.jsonData = EntityUtils.toString(entity, "UTF-8");
+		
 	}
 
-	@When("user is correct he requests all metrics from a repository by his owner")
-	public void user_is_correct_he_requests_all_metrics_from_a_repository_by_his_owner()
-			throws JsonMappingException, JsonProcessingException {
+	@When("user is correct he requests all test metrics from a repository by his owner")
+	public void user_is_correct_he_requests_all_test_metrics_from_a_repository_by_his_owner() throws JsonMappingException, JsonProcessingException {
+		
 		JsonNode node = new ObjectMapper().readTree(this.jsonData);
 
 		this.secureUser = new SecureUser(node.get("id").textValue(), node.get("username").textValue(),
 				node.get("role").textValue(), node.get("tokenPass").textValue(),
 				Instant.ofEpochSecond(node.get("tokenValidity").get("epochSecond").longValue()));
+	
 	}
-
-	@Then("the user gets all metrics from a repository by his owner")
-	public void the_user_gets_all_metrics_from_a_repository_by_his_owner() throws ClientProtocolException, IOException {
+	
+	@Then("the user gets all test metrics from a repository by his owner")
+	public void the_user_gets_all_test_metrics_from_a_repository_by_his_owner() throws ClientProtocolException, IOException {
+		
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/metrics/allmetrics?tokenpass="
+		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/metrics/alltestmetrics?tokenpass="
 				+ this.secureUser.getTokenPass() + "&reponame=devopsmetrics&owner=FcoCrespo");
 
 		HttpResponse httpresponse = httpclient.execute(httpget);
@@ -81,13 +84,13 @@ public class GetAllMetrics {
 
 		while (iter.hasNext()&&!encontrado) {
 
-			if(parameterNode.get("oid").textValue().equals("55e7ea1f767db60e76baf8ea5afbc327062d3e08")){
+			if(parameterNode.get("idMethodTest").textValue().equals("608fd03b96f4674354296ea3")){
 				encontrado=true;
 			}
 			parameterNode = iter.next();
 			if (!iter.hasNext()&&!encontrado) {
 
-				if(parameterNode.get("oid").textValue().equals("55e7ea1f767db60e76baf8ea5afbc327062d3e08")){
+				if(parameterNode.get("idMethodTest").textValue().equals("608fd03b96f4674354296ea3")){
 					encontrado=true;
 				}
 
@@ -95,7 +98,8 @@ public class GetAllMetrics {
 		}
 		
 		assertEquals(true, encontrado);
-
+	    
 	}
+
 
 }
