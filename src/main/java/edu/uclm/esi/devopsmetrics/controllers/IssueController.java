@@ -79,6 +79,36 @@ public class IssueController {
 			try {
 				LOG.info("Get issues");
 				this.issueOperations.getIssues(repository, owner);
+				return ResponseEntity.ok(this.message);
+			} catch (IOException e) {
+				return ResponseEntity.badRequest().build();
+			}
+
+		} else {
+			LOG.info(this.errorMessage);
+			return ResponseEntity.badRequest().build();
+		}
+
+	}
+	
+	
+	/**
+	 * Actualiza las issues de un repositorio por su owner, nombre de repositorio y
+	 * token de acceso
+	 * 
+	 * @author FcoCrespo
+	 */
+	@GetMapping(value = "/updateissues")
+	@ApiOperation(value = "Find all issues", notes = "Return all issues")
+
+	public ResponseEntity<String> updateIssues(@RequestParam("tokenpass") final String tokenpass,
+			@RequestParam("reponame") final String repository, @RequestParam("owner") final String owner) {
+
+		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
+		if (existe) {
+			try {
+				LOG.info("Update issues");
+				
 				this.issueOperations.actualizarValores(repository, owner);
 				return ResponseEntity.ok(this.message);
 			} catch (IOException e) {
