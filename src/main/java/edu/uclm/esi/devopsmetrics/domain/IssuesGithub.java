@@ -51,6 +51,7 @@ public class IssuesGithub {
 	private String nodesString;
 	private String stateString;
 	private String closedString;
+	private String assigneesString;
 
 	private String graphqlUri;
 	private String filenameCursor;
@@ -79,6 +80,7 @@ public class IssuesGithub {
 		this.nodesString = "nodes";
 		this.stateString = "state";
 		this.closedString = "closedAt";
+		this.assigneesString="assignees";
 
 	}
 
@@ -330,6 +332,69 @@ public class IssuesGithub {
 			Instant closedAt = Instant.parse(closedAtExtraido).plus(1, ChronoUnit.HOURS);
 			issue.setClosedAt(closedAt);
 		}
+		
+		IssueAssignee issueAssignee = null;
+		UserGithub userGithubAsignee = null;
+		Iterator<JsonNode> iter;
+		
+		JsonNode nodesAssignees;
+		nodesAssignees = parameterNode.path(this.assigneesString);
+
+		String[] asigneeValues;
+
+		boolean assigneesNull = false;
+
+		JsonNode parameterNodeAssignee;
+
+		if (comprobarValorInt(nodesAssignees, "totalCount") == 0) {
+			assigneesNull = true;
+		}
+		if (!assigneesNull) {
+
+			nodesAssignees = parameterNode.path(this.assigneesString).path(this.nodesString);
+
+			iter = nodesAssignees.iterator();
+
+			parameterNodeAssignee = iter.next();
+
+			if (iter.hasNext()) {
+				while (iter.hasNext()) {
+
+					asigneeValues = obtenerDatos(parameterNodeAssignee);
+
+					userGithubAsignee = this.userGithubOperations.saveAuthor(asigneeValues);
+
+					issueAssignee = new IssueAssignee(issue.getId(), userGithubAsignee.getId());
+
+					this.issueAssigneeService.saveIssueAssignee(issueAssignee);
+
+					parameterNodeAssignee = iter.next();
+
+				}
+				if (!iter.hasNext()) {
+
+					asigneeValues = obtenerDatos(parameterNodeAssignee);
+
+					userGithubAsignee = this.userGithubOperations.saveAuthor(asigneeValues);
+
+					issueAssignee = new IssueAssignee(issue.getId(), userGithubAsignee.getId());
+
+					this.issueAssigneeService.saveIssueAssignee(issueAssignee);
+
+				}
+			} else {
+
+				asigneeValues = obtenerDatos(parameterNodeAssignee);
+
+				userGithubAsignee = this.userGithubOperations.saveAuthor(asigneeValues);
+
+				issueAssignee = new IssueAssignee(issue.getId(), userGithubAsignee.getId());
+
+				this.issueAssigneeService.saveIssueAssignee(issueAssignee);
+
+			}
+
+		}
 
 		this.issueService.updateIssue(issue);
 	}
@@ -431,7 +496,7 @@ public class IssuesGithub {
 		userGithubAuthor = this.userGithubOperations.saveAuthor(authorValues);
 
 		JsonNode nodesAssignees;
-		nodesAssignees = parameterNode.path("assignees");
+		nodesAssignees = parameterNode.path(this.assigneesString);
 
 		String[] asigneeValues;
 
@@ -444,7 +509,7 @@ public class IssuesGithub {
 		}
 		if (!assigneesNull) {
 
-			nodesAssignees = parameterNode.path("assignees").path(this.nodesString);
+			nodesAssignees = parameterNode.path(this.assigneesString).path(this.nodesString);
 
 			iter = nodesAssignees.iterator();
 

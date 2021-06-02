@@ -212,13 +212,8 @@ public class IssueOperations {
 
 		Instant beginDateInstant = dates[0];
 		Instant endDateInstant = dates[1];
-		System.out.println(beginDateInstant);
-
-		System.out.println(endDateInstant);
+		
 		List<Issue> issues = this.issueService.getAllByCreationBetweenBeginEndDate(beginDateInstant, endDateInstant);
-		for(int i=0; i<issues.size(); i++) {
-			System.out.println(issues.get(i).getTitle());
-		}
 		
 		Map<String, Issue> mapIssues = getMapIssues(issues);
 

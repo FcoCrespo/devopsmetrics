@@ -1,5 +1,4 @@
 package edu.uclm.esi.devopsmetrics.bdd.stepdefinitions;
-
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -18,7 +17,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 import java.time.Instant;
-import java.util.Iterator;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -31,14 +29,13 @@ import org.apache.http.util.EntityUtils;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {SecureUser.class})
-public class GetCommitsBranchSteps {
+public class GetAllIssuesSteps {
 	
 	private SecureUser secureUser;
 	private String jsonData;
 	
-	@Given("user is logging in the system for getting all commits from a branch of a repository")
-	public void user_is_logging_in_the_system_for_getting_all_commits_from_a_branch_of_a_repository() throws ClientProtocolException, IOException {
-		
+	@Given("user is logging in the system for getting all issues from a repository by his owner from Github")
+	public void user_is_logging_in_the_system_for_getting_all_issues_from_a_repository_by_his_owner_from_github() throws ClientProtocolException, IOException {
 		CloseableHttpClient httpclient = HttpClients.createDefault();
 		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/usuarios?username="+System.getProperty("app.user")+"&password="+System.getProperty("app.password"));
 
@@ -46,12 +43,10 @@ public class GetCommitsBranchSteps {
 
 		HttpEntity entity = httpresponse.getEntity();
 		this.jsonData = EntityUtils.toString(entity, "UTF-8");
-		
 	}
 
-	@When("user is correct he requests all commits from a branch of a repository")
-	public void user_is_correct_he_requests_all_commits_from_a_branch_of_a_repository() throws JsonMappingException, JsonProcessingException {
-		
+	@When("user is correct he requests all issues from a repository by his owner")
+	public void user_is_correct_he_requests_all_issues_from_a_repository_by_his_owner() throws JsonMappingException, JsonProcessingException {
 		JsonNode node = new ObjectMapper().readTree(this.jsonData);
 		
 		this.secureUser = new SecureUser(node.get("id").textValue(),
@@ -61,45 +56,17 @@ public class GetCommitsBranchSteps {
 										 Instant.ofEpochSecond(node.get("tokenValidity").get("epochSecond").longValue())
 										);
 	}
-	@Then("the user gets all commits from a branch of a repository")
-	public void the_user_gets_all_commits_from_a_branch_of_a_repository() throws ParseException, IOException {
+	
+	@Then("the user gets all issues from a repository by his owner")
+	public void the_user_gets_all_issues_from_a_repository_by_his_owner() throws ParseException, IOException {
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/commits/commitsbranch?tokenpass="+this.secureUser.getTokenPass()+"&reponame=test&branch=main");
+		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/issues/allissues?tokenpass="+this.secureUser.getTokenPass()+"&reponame=test&owner=FcoCrespo");
 
 		HttpResponse httpresponse = httpclient.execute(httpget);
 
 		HttpEntity entity = httpresponse.getEntity();
-		this.jsonData = EntityUtils.toString(entity, "UTF-8");
+		String respuesta = EntityUtils.toString(entity, "UTF-8");
 		
-		JsonNode nodes = new ObjectMapper().readTree(this.jsonData);
-		Iterator<JsonNode> iter = nodes.iterator();
-		JsonNode parameterNode;
-
-		parameterNode = iter.next();
-		String messageHeadline = "";
-
-		if (iter.hasNext()) {
-			while (iter.hasNext()) {
-
-				if (parameterNode.get("messageHeadline").textValue().equals("This is a test repository, commit after 2")) {
-					messageHeadline = parameterNode.get("messageHeadline").textValue();
-				}
-
-				parameterNode = iter.next();
-			}
-			if (!iter.hasNext()) {
-				if (parameterNode.get("messageHeadline").textValue().equals("This is a test repository, commit after 2")) {
-					messageHeadline = parameterNode.get("messageHeadline").textValue();
-				}
-			}
-		} else {
-			if (parameterNode.get("messageHeadline").textValue().equals("This is a test repository, commit after 2")) {
-				messageHeadline = parameterNode.get("messageHeadline").textValue();
-			}
-		}
-		
-		assertEquals("This is a test repository, commit after 2", messageHeadline);
+		assertEquals("Operation completed.", respuesta);
 	}
-
-
 }

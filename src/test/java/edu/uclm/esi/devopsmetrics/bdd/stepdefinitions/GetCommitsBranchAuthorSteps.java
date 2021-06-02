@@ -71,29 +71,34 @@ public class GetCommitsBranchAuthorSteps {
 
 		HttpEntity entity = httpresponse.getEntity();
 		this.jsonData = EntityUtils.toString(entity, "UTF-8");
-		
 		JsonNode nodes = new ObjectMapper().readTree(this.jsonData);
 		Iterator<JsonNode> iter = nodes.iterator();
-		
-		iter.next();
-		
-		int i = 0;
-		
-		if(iter.hasNext()){
+		JsonNode parameterNode;
+
+		parameterNode = iter.next();
+		String messageHeadline = "";
+
+		if (iter.hasNext()) {
 			while (iter.hasNext()) {
-				i++;
-				iter.next();
+
+				if (parameterNode.get("messageHeadline").textValue().equals("This is a test repository, commit after 2")) {
+					messageHeadline = parameterNode.get("messageHeadline").textValue();
+				}
+
+				parameterNode = iter.next();
 			}
 			if (!iter.hasNext()) {
-				i++;
+				if (parameterNode.get("messageHeadline").textValue().equals("This is a test repository, commit after 2")) {
+					messageHeadline = parameterNode.get("messageHeadline").textValue();
+				}
+			}
+		} else {
+			if (parameterNode.get("messageHeadline").textValue().equals("This is a test repository, commit after 2")) {
+				messageHeadline = parameterNode.get("messageHeadline").textValue();
 			}
 		}
-		else {
-			i++;
-		}
 		
-		assertEquals(7, i);
-		
+		assertEquals("This is a test repository, commit after 2", messageHeadline);
 	}
 
 }

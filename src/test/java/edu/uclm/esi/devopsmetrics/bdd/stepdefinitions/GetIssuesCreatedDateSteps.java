@@ -33,27 +33,24 @@ import org.json.JSONObject;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {SecureUser.class})
-public class GetCommitsBranchDateSteps {
+public class GetIssuesCreatedDateSteps {
 	
 	private SecureUser secureUser;
 	private String jsonData;
-
-	@Given("user is logging in the system for getting all commits from a branch of a repository between a date")
-	public void user_is_logging_in_the_system_for_getting_all_commits_from_a_branch_of_a_repository_between_a_date() throws ClientProtocolException, IOException {
-
+	
+	@Given("user is logging in the system for getting all issues from a repository by his owner created between two dates from the system")
+	public void user_is_logging_in_the_system_for_getting_all_issues_from_a_repository_by_his_owner_created_between_two_dates_from_the_system() throws ClientProtocolException, IOException {
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/usuarios?username="+System.getProperty("app.user")+"&password="+System.getProperty("app.password"));
+		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/usuarios?username="
+				+ System.getProperty("app.user") + "&password=" + System.getProperty("app.password"));
 
 		HttpResponse httpresponse = httpclient.execute(httpget);
 
 		HttpEntity entity = httpresponse.getEntity();
 		this.jsonData = EntityUtils.toString(entity, "UTF-8");
-		
 	}
-
-	@When("user is correct he requests all commits from a branch of a repository between a date")
-	public void user_is_correct_he_requests_all_commits_from_a_branch_of_a_repository_between_a_date() throws JsonMappingException, JsonProcessingException {
-
+	@When("user is correct he requests all issues from a repository by his owner created between two dates of the system")
+	public void user_is_correct_he_requests_all_issues_from_a_repository_by_his_owner_created_between_two_dates_of_the_system() throws JsonMappingException, JsonProcessingException {
 		JsonNode node = new ObjectMapper().readTree(this.jsonData);
 		
 		this.secureUser = new SecureUser(node.get("id").textValue(),
@@ -63,57 +60,57 @@ public class GetCommitsBranchDateSteps {
 										 Instant.ofEpochSecond(node.get("tokenValidity").get("epochSecond").longValue())
 										);
 	}
-	@Then("the user gets all commits from a branch of a repositorybetween a date")
-	public void the_user_gets_all_commits_from_a_branch_of_a_repositorybetween_a_date() throws ClientProtocolException, IOException {
-		
+	@Then("the user gets all issues from a repository by his owner created between two dates if the system")
+	public void the_user_gets_all_issues_from_a_repository_by_his_owner_created_between_two_dates_if_the_system() throws ClientProtocolException, IOException {
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpPost httppost = new HttpPost("https://devopsmetrics.herokuapp.com/commits/commitsbranchdate?tokenpass="+this.secureUser.getTokenPass());
-		
+		HttpPost httppost = new HttpPost("https://devopsmetrics.herokuapp.com/issues/issuesrepocreationdates?tokenpass="
+				+ this.secureUser.getTokenPass());
+
 		JSONObject json = new JSONObject();
 		json.put("reponame", "test");
-		json.put("branch", "main");
-		json.put("begindate", "25/04/2021 10:00");
-		json.put("enddate", "25/04/2021 22:00");
-		
+		json.put("owner", "FcoCrespo");
+		json.put("begindate", "24/04/2021 00:00");
+		json.put("enddate", "26/04/2021 00:00");
+
 		StringEntity params = new StringEntity(json.toString());
 		httppost.addHeader("content-type", "application/json");
-		
-		httppost.setEntity(params);
-	    httpclient.execute(httppost);
 
-	    HttpResponse httpresponse = httpclient.execute(httppost);
+		httppost.setEntity(params);
+		httpclient.execute(httppost);
+
+		HttpResponse httpresponse = httpclient.execute(httppost);
 		HttpEntity entity = httpresponse.getEntity();
 		this.jsonData = EntityUtils.toString(entity, "UTF-8");
-		
+
 		JsonNode nodes = new ObjectMapper().readTree(this.jsonData);
-		Iterator<JsonNode> iter = nodes.iterator();
 		JsonNode parameterNode;
+		Iterator<JsonNode> iter = nodes.iterator();
 
 		parameterNode = iter.next();
-		String messageHeadline = "";
+		String title = "";
 
 		if (iter.hasNext()) {
 			while (iter.hasNext()) {
 
-				if (parameterNode.get("messageHeadline").textValue().equals("This is a test repository, commit after 2")) {
-					messageHeadline = parameterNode.get("messageHeadline").textValue();
+				if (parameterNode.get("title").textValue().equals("Issue Test 113")) {
+					title = parameterNode.get("title").textValue();
 				}
 
 				parameterNode = iter.next();
 			}
 			if (!iter.hasNext()) {
-				if (parameterNode.get("messageHeadline").textValue().equals("This is a test repository, commit after 2")) {
-					messageHeadline = parameterNode.get("messageHeadline").textValue();
+				if (parameterNode.get("title").textValue().equals("Issue Test 113")) {
+					title = parameterNode.get("title").textValue();
 				}
 			}
 		} else {
-			if (parameterNode.get("messageHeadline").textValue().equals("This is a test repository, commit after 2")) {
-				messageHeadline = parameterNode.get("messageHeadline").textValue();
+			if (parameterNode.get("title").textValue().equals("Issue Test 113")) {
+				title = parameterNode.get("title").textValue();
 			}
 		}
-		
-		assertEquals("This is a test repository, commit after 2", messageHeadline);
-		
+
+		assertEquals("Issue Test 113", title);
 	}
-	
+
+
 }
