@@ -3,7 +3,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-01T22:53:32.966Z",
+        "start_timestamp": "2021-06-02T00:11:00.321Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -13,7 +13,7 @@
         "steps": [
           {
             "result": {
-              "duration": 3115216400,
+              "duration": 567344900,
               "status": "passed"
             },
             "line": 4,
@@ -25,8 +25,8 @@
           },
           {
             "result": {
-              "error_message": "java.lang.NullPointerException\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.DeleteUserSteps.user_is_correct_he_chooses_the_user_id_of_the_user_to_delete_in_the_system(DeleteUserSteps.java:55)\r\n\tat ✽.user is correct he chooses the userId of the user to delete in the system(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/DeleteUser.feature:5)\r\n",
-              "duration": 124034400,
+              "error_message": "com.fasterxml.jackson.core.JsonParseException: Unexpected character (\u0027\u003c\u0027 (code 60)): expected a valid value (JSON String, Number, Array, Object or token \u0027null\u0027, \u0027true\u0027 or \u0027false\u0027)\n at [Source: (String)\"\u003c!DOCTYPE html\u003e\n\t\u003chtml\u003e\n\t  \u003chead\u003e\n\t\t\u003cmeta name\u003d\"viewport\" content\u003d\"width\u003ddevice-width, initial-scale\u003d1\"\u003e\n\t\t\u003cmeta charset\u003d\"utf-8\"\u003e\n\t\t\u003ctitle\u003eApplication Error\u003c/title\u003e\n\t\t\u003cstyle media\u003d\"screen\"\u003e\n\t\t  html,body,iframe {\n\t\t\tmargin: 0;\n\t\t\tpadding: 0;\n\t\t  }\n\t\t  html,body {\n\t\t\theight: 100%;\n\t\t\toverflow: hidden;\n\t\t  }\n\t\t  iframe {\n\t\t\twidth: 100%;\n\t\t\theight: 100%;\n\t\t\tborder: 0;\n\t\t  }\n\t\t\u003c/style\u003e\n\t  \u003c/head\u003e\n\t  \u003cbody\u003e\n\t\t\u003ciframe src\u003d\"//www.herokucdn.com/error-pages/application-error.html\"\u003e\u003c/iframe\u003e\n\t  \u003c/body\u003e\n\t\u003c\"[truncated 6 chars]; line: 1, column: 2]\r\n\tat com.fasterxml.jackson.core.JsonParser._constructError(JsonParser.java:1851)\r\n\tat com.fasterxml.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:707)\r\n\tat com.fasterxml.jackson.core.base.ParserMinimalBase._reportUnexpectedChar(ParserMinimalBase.java:632)\r\n\tat com.fasterxml.jackson.core.json.ReaderBasedJsonParser._handleOddValue(ReaderBasedJsonParser.java:1941)\r\n\tat com.fasterxml.jackson.core.json.ReaderBasedJsonParser.nextToken(ReaderBasedJsonParser.java:776)\r\n\tat com.fasterxml.jackson.databind.ObjectMapper._readTreeAndClose(ObjectMapper.java:4511)\r\n\tat com.fasterxml.jackson.databind.ObjectMapper.readTree(ObjectMapper.java:2940)\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.DeleteUserSteps.user_is_correct_he_chooses_the_user_id_of_the_user_to_delete_in_the_system(DeleteUserSteps.java:53)\r\n\tat ✽.user is correct he chooses the userId of the user to delete in the system(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/DeleteUser.feature:5)\r\n",
+              "duration": 190963400,
               "status": "failed"
             },
             "line": 5,
@@ -61,7 +61,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-01T22:53:36.273Z",
+        "start_timestamp": "2021-06-02T00:11:01.161Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -71,7 +71,7 @@
         "steps": [
           {
             "result": {
-              "duration": 257484200,
+              "duration": 221996600,
               "status": "passed"
             },
             "line": 4,
@@ -83,7 +83,8 @@
           },
           {
             "result": {
-              "error_message": "java.lang.NullPointerException\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllBranchesSteps.user_is_correct_he_requests_all_branches_from_a_repository_by_his_owner(GetAllBranchesSteps.java:57)\r\n\tat ✽.user is correct he requests all branches from a repository by his owner(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetAllBranches.feature:5)\r\n",
+              "error_message": "com.fasterxml.jackson.core.JsonParseException: Unexpected character (\u0027\u003c\u0027 (code 60)): expected a valid value (JSON String, Number, Array, Object or token \u0027null\u0027, \u0027true\u0027 or \u0027false\u0027)\n at [Source: (String)\"\u003c!DOCTYPE html\u003e\n\t\u003chtml\u003e\n\t  \u003chead\u003e\n\t\t\u003cmeta name\u003d\"viewport\" content\u003d\"width\u003ddevice-width, initial-scale\u003d1\"\u003e\n\t\t\u003cmeta charset\u003d\"utf-8\"\u003e\n\t\t\u003ctitle\u003eApplication Error\u003c/title\u003e\n\t\t\u003cstyle media\u003d\"screen\"\u003e\n\t\t  html,body,iframe {\n\t\t\tmargin: 0;\n\t\t\tpadding: 0;\n\t\t  }\n\t\t  html,body {\n\t\t\theight: 100%;\n\t\t\toverflow: hidden;\n\t\t  }\n\t\t  iframe {\n\t\t\twidth: 100%;\n\t\t\theight: 100%;\n\t\t\tborder: 0;\n\t\t  }\n\t\t\u003c/style\u003e\n\t  \u003c/head\u003e\n\t  \u003cbody\u003e\n\t\t\u003ciframe src\u003d\"//www.herokucdn.com/error-pages/application-error.html\"\u003e\u003c/iframe\u003e\n\t  \u003c/body\u003e\n\t\u003c\"[truncated 6 chars]; line: 1, column: 2]\r\n\tat com.fasterxml.jackson.core.JsonParser._constructError(JsonParser.java:1851)\r\n\tat com.fasterxml.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:707)\r\n\tat com.fasterxml.jackson.core.base.ParserMinimalBase._reportUnexpectedChar(ParserMinimalBase.java:632)\r\n\tat com.fasterxml.jackson.core.json.ReaderBasedJsonParser._handleOddValue(ReaderBasedJsonParser.java:1941)\r\n\tat com.fasterxml.jackson.core.json.ReaderBasedJsonParser.nextToken(ReaderBasedJsonParser.java:776)\r\n\tat com.fasterxml.jackson.databind.ObjectMapper._readTreeAndClose(ObjectMapper.java:4511)\r\n\tat com.fasterxml.jackson.databind.ObjectMapper.readTree(ObjectMapper.java:2940)\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllBranchesSteps.user_is_correct_he_requests_all_branches_from_a_repository_by_his_owner(GetAllBranchesSteps.java:55)\r\n\tat ✽.user is correct he requests all branches from a repository by his owner(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetAllBranches.feature:5)\r\n",
+              "duration": 999000,
               "status": "failed"
             },
             "line": 5,
@@ -118,7 +119,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-01T22:53:36.542Z",
+        "start_timestamp": "2021-06-02T00:11:01.398Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -128,7 +129,7 @@
         "steps": [
           {
             "result": {
-              "duration": 263469500,
+              "duration": 199999000,
               "status": "passed"
             },
             "line": 4,
@@ -140,7 +141,8 @@
           },
           {
             "result": {
-              "error_message": "java.lang.NullPointerException\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllCommitsSteps.user_is_correct_he_requests_all_commits_from_a_repository_by_his_owner(GetAllCommitsSteps.java:55)\r\n\tat ✽.user is correct he requests all commits from a repository by his owner(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetAllCommits.feature:5)\r\n",
+              "error_message": "com.fasterxml.jackson.core.JsonParseException: Unexpected character (\u0027\u003c\u0027 (code 60)): expected a valid value (JSON String, Number, Array, Object or token \u0027null\u0027, \u0027true\u0027 or \u0027false\u0027)\n at [Source: (String)\"\u003c!DOCTYPE html\u003e\n\t\u003chtml\u003e\n\t  \u003chead\u003e\n\t\t\u003cmeta name\u003d\"viewport\" content\u003d\"width\u003ddevice-width, initial-scale\u003d1\"\u003e\n\t\t\u003cmeta charset\u003d\"utf-8\"\u003e\n\t\t\u003ctitle\u003eApplication Error\u003c/title\u003e\n\t\t\u003cstyle media\u003d\"screen\"\u003e\n\t\t  html,body,iframe {\n\t\t\tmargin: 0;\n\t\t\tpadding: 0;\n\t\t  }\n\t\t  html,body {\n\t\t\theight: 100%;\n\t\t\toverflow: hidden;\n\t\t  }\n\t\t  iframe {\n\t\t\twidth: 100%;\n\t\t\theight: 100%;\n\t\t\tborder: 0;\n\t\t  }\n\t\t\u003c/style\u003e\n\t  \u003c/head\u003e\n\t  \u003cbody\u003e\n\t\t\u003ciframe src\u003d\"//www.herokucdn.com/error-pages/application-error.html\"\u003e\u003c/iframe\u003e\n\t  \u003c/body\u003e\n\t\u003c\"[truncated 6 chars]; line: 1, column: 2]\r\n\tat com.fasterxml.jackson.core.JsonParser._constructError(JsonParser.java:1851)\r\n\tat com.fasterxml.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:707)\r\n\tat com.fasterxml.jackson.core.base.ParserMinimalBase._reportUnexpectedChar(ParserMinimalBase.java:632)\r\n\tat com.fasterxml.jackson.core.json.ReaderBasedJsonParser._handleOddValue(ReaderBasedJsonParser.java:1941)\r\n\tat com.fasterxml.jackson.core.json.ReaderBasedJsonParser.nextToken(ReaderBasedJsonParser.java:776)\r\n\tat com.fasterxml.jackson.databind.ObjectMapper._readTreeAndClose(ObjectMapper.java:4511)\r\n\tat com.fasterxml.jackson.databind.ObjectMapper.readTree(ObjectMapper.java:2940)\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllCommitsSteps.user_is_correct_he_requests_all_commits_from_a_repository_by_his_owner(GetAllCommitsSteps.java:53)\r\n\tat ✽.user is correct he requests all commits from a repository by his owner(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetAllCommits.feature:5)\r\n",
+              "duration": 1002300,
               "status": "failed"
             },
             "line": 5,
@@ -175,7 +177,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-01T22:53:36.817Z",
+        "start_timestamp": "2021-06-02T00:11:01.614Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -185,7 +187,7 @@
         "steps": [
           {
             "result": {
-              "duration": 290370400,
+              "duration": 191393100,
               "status": "passed"
             },
             "line": 4,
@@ -197,8 +199,7 @@
           },
           {
             "result": {
-              "error_message": "java.lang.NullPointerException\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllIssuesSteps.user_is_correct_he_requests_all_issues_from_a_repository_by_his_owner(GetAllIssuesSteps.java:52)\r\n\tat ✽.user is correct he requests all issues from a repository by his owner(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetAllIssues.feature:5)\r\n",
-              "duration": 995400,
+              "error_message": "com.fasterxml.jackson.core.JsonParseException: Unexpected character (\u0027\u003c\u0027 (code 60)): expected a valid value (JSON String, Number, Array, Object or token \u0027null\u0027, \u0027true\u0027 or \u0027false\u0027)\n at [Source: (String)\"\u003c!DOCTYPE html\u003e\n\t\u003chtml\u003e\n\t  \u003chead\u003e\n\t\t\u003cmeta name\u003d\"viewport\" content\u003d\"width\u003ddevice-width, initial-scale\u003d1\"\u003e\n\t\t\u003cmeta charset\u003d\"utf-8\"\u003e\n\t\t\u003ctitle\u003eApplication Error\u003c/title\u003e\n\t\t\u003cstyle media\u003d\"screen\"\u003e\n\t\t  html,body,iframe {\n\t\t\tmargin: 0;\n\t\t\tpadding: 0;\n\t\t  }\n\t\t  html,body {\n\t\t\theight: 100%;\n\t\t\toverflow: hidden;\n\t\t  }\n\t\t  iframe {\n\t\t\twidth: 100%;\n\t\t\theight: 100%;\n\t\t\tborder: 0;\n\t\t  }\n\t\t\u003c/style\u003e\n\t  \u003c/head\u003e\n\t  \u003cbody\u003e\n\t\t\u003ciframe src\u003d\"//www.herokucdn.com/error-pages/application-error.html\"\u003e\u003c/iframe\u003e\n\t  \u003c/body\u003e\n\t\u003c\"[truncated 6 chars]; line: 1, column: 2]\r\n\tat com.fasterxml.jackson.core.JsonParser._constructError(JsonParser.java:1851)\r\n\tat com.fasterxml.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:707)\r\n\tat com.fasterxml.jackson.core.base.ParserMinimalBase._reportUnexpectedChar(ParserMinimalBase.java:632)\r\n\tat com.fasterxml.jackson.core.json.ReaderBasedJsonParser._handleOddValue(ReaderBasedJsonParser.java:1941)\r\n\tat com.fasterxml.jackson.core.json.ReaderBasedJsonParser.nextToken(ReaderBasedJsonParser.java:776)\r\n\tat com.fasterxml.jackson.databind.ObjectMapper._readTreeAndClose(ObjectMapper.java:4511)\r\n\tat com.fasterxml.jackson.databind.ObjectMapper.readTree(ObjectMapper.java:2940)\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllIssuesSteps.user_is_correct_he_requests_all_issues_from_a_repository_by_his_owner(GetAllIssuesSteps.java:50)\r\n\tat ✽.user is correct he requests all issues from a repository by his owner(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetAllIssues.feature:5)\r\n",
               "status": "failed"
             },
             "line": 5,
@@ -233,7 +234,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-01T22:53:37.137Z",
+        "start_timestamp": "2021-06-02T00:11:01.818Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -243,7 +244,7 @@
         "steps": [
           {
             "result": {
-              "duration": 267872700,
+              "duration": 224685500,
               "status": "passed"
             },
             "line": 4,
@@ -255,8 +256,7 @@
           },
           {
             "result": {
-              "error_message": "java.lang.NullPointerException\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllMetrics.user_is_correct_he_requests_all_metrics_from_a_repository_by_his_owner(GetAllMetrics.java:56)\r\n\tat ✽.user is correct he requests all metrics from a repository by his owner(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetAllMetrics.feature:5)\r\n",
-              "duration": 1001100,
+              "error_message": "com.fasterxml.jackson.core.JsonParseException: Unexpected character (\u0027\u003c\u0027 (code 60)): expected a valid value (JSON String, Number, Array, Object or token \u0027null\u0027, \u0027true\u0027 or \u0027false\u0027)\n at [Source: (String)\"\u003c!DOCTYPE html\u003e\n\t\u003chtml\u003e\n\t  \u003chead\u003e\n\t\t\u003cmeta name\u003d\"viewport\" content\u003d\"width\u003ddevice-width, initial-scale\u003d1\"\u003e\n\t\t\u003cmeta charset\u003d\"utf-8\"\u003e\n\t\t\u003ctitle\u003eApplication Error\u003c/title\u003e\n\t\t\u003cstyle media\u003d\"screen\"\u003e\n\t\t  html,body,iframe {\n\t\t\tmargin: 0;\n\t\t\tpadding: 0;\n\t\t  }\n\t\t  html,body {\n\t\t\theight: 100%;\n\t\t\toverflow: hidden;\n\t\t  }\n\t\t  iframe {\n\t\t\twidth: 100%;\n\t\t\theight: 100%;\n\t\t\tborder: 0;\n\t\t  }\n\t\t\u003c/style\u003e\n\t  \u003c/head\u003e\n\t  \u003cbody\u003e\n\t\t\u003ciframe src\u003d\"//www.herokucdn.com/error-pages/application-error.html\"\u003e\u003c/iframe\u003e\n\t  \u003c/body\u003e\n\t\u003c\"[truncated 6 chars]; line: 1, column: 2]\r\n\tat com.fasterxml.jackson.core.JsonParser._constructError(JsonParser.java:1851)\r\n\tat com.fasterxml.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:707)\r\n\tat com.fasterxml.jackson.core.base.ParserMinimalBase._reportUnexpectedChar(ParserMinimalBase.java:632)\r\n\tat com.fasterxml.jackson.core.json.ReaderBasedJsonParser._handleOddValue(ReaderBasedJsonParser.java:1941)\r\n\tat com.fasterxml.jackson.core.json.ReaderBasedJsonParser.nextToken(ReaderBasedJsonParser.java:776)\r\n\tat com.fasterxml.jackson.databind.ObjectMapper._readTreeAndClose(ObjectMapper.java:4511)\r\n\tat com.fasterxml.jackson.databind.ObjectMapper.readTree(ObjectMapper.java:2940)\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllMetrics.user_is_correct_he_requests_all_metrics_from_a_repository_by_his_owner(GetAllMetrics.java:54)\r\n\tat ✽.user is correct he requests all metrics from a repository by his owner(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetAllMetrics.feature:5)\r\n",
               "status": "failed"
             },
             "line": 5,
@@ -291,7 +291,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-01T22:53:37.419Z",
+        "start_timestamp": "2021-06-02T00:11:02.060Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -301,7 +301,7 @@
         "steps": [
           {
             "result": {
-              "duration": 237980600,
+              "duration": 200002400,
               "status": "passed"
             },
             "line": 4,
@@ -313,7 +313,7 @@
           },
           {
             "result": {
-              "error_message": "java.lang.NullPointerException\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllRepositories.user_is_correct_he_requests_all_repositories_from_the_system(GetAllRepositories.java:57)\r\n\tat ✽.user is correct he requests all repositories from the system(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetAllRepositories.feature:5)\r\n",
+              "error_message": "com.fasterxml.jackson.core.JsonParseException: Unexpected character (\u0027\u003c\u0027 (code 60)): expected a valid value (JSON String, Number, Array, Object or token \u0027null\u0027, \u0027true\u0027 or \u0027false\u0027)\n at [Source: (String)\"\u003c!DOCTYPE html\u003e\n\t\u003chtml\u003e\n\t  \u003chead\u003e\n\t\t\u003cmeta name\u003d\"viewport\" content\u003d\"width\u003ddevice-width, initial-scale\u003d1\"\u003e\n\t\t\u003cmeta charset\u003d\"utf-8\"\u003e\n\t\t\u003ctitle\u003eApplication Error\u003c/title\u003e\n\t\t\u003cstyle media\u003d\"screen\"\u003e\n\t\t  html,body,iframe {\n\t\t\tmargin: 0;\n\t\t\tpadding: 0;\n\t\t  }\n\t\t  html,body {\n\t\t\theight: 100%;\n\t\t\toverflow: hidden;\n\t\t  }\n\t\t  iframe {\n\t\t\twidth: 100%;\n\t\t\theight: 100%;\n\t\t\tborder: 0;\n\t\t  }\n\t\t\u003c/style\u003e\n\t  \u003c/head\u003e\n\t  \u003cbody\u003e\n\t\t\u003ciframe src\u003d\"//www.herokucdn.com/error-pages/application-error.html\"\u003e\u003c/iframe\u003e\n\t  \u003c/body\u003e\n\t\u003c\"[truncated 6 chars]; line: 1, column: 2]\r\n\tat com.fasterxml.jackson.core.JsonParser._constructError(JsonParser.java:1851)\r\n\tat com.fasterxml.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:707)\r\n\tat com.fasterxml.jackson.core.base.ParserMinimalBase._reportUnexpectedChar(ParserMinimalBase.java:632)\r\n\tat com.fasterxml.jackson.core.json.ReaderBasedJsonParser._handleOddValue(ReaderBasedJsonParser.java:1941)\r\n\tat com.fasterxml.jackson.core.json.ReaderBasedJsonParser.nextToken(ReaderBasedJsonParser.java:776)\r\n\tat com.fasterxml.jackson.databind.ObjectMapper._readTreeAndClose(ObjectMapper.java:4511)\r\n\tat com.fasterxml.jackson.databind.ObjectMapper.readTree(ObjectMapper.java:2940)\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllRepositories.user_is_correct_he_requests_all_repositories_from_the_system(GetAllRepositories.java:55)\r\n\tat ✽.user is correct he requests all repositories from the system(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetAllRepositories.feature:5)\r\n",
               "status": "failed"
             },
             "line": 5,
@@ -348,7 +348,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-01T22:53:37.667Z",
+        "start_timestamp": "2021-06-02T00:11:02.273Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -358,7 +358,7 @@
         "steps": [
           {
             "result": {
-              "duration": 234034800,
+              "duration": 224426200,
               "status": "passed"
             },
             "line": 4,
@@ -370,8 +370,8 @@
           },
           {
             "result": {
-              "error_message": "java.lang.NullPointerException\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllTestMetrics.user_is_correct_he_requests_all_test_metrics_from_a_repository_by_his_owner(GetAllTestMetrics.java:57)\r\n\tat ✽.user is correct he requests all test metrics from a repository by his owner(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetAllTestMetrics.feature:5)\r\n",
-              "duration": 1051900,
+              "error_message": "com.fasterxml.jackson.core.JsonParseException: Unexpected character (\u0027\u003c\u0027 (code 60)): expected a valid value (JSON String, Number, Array, Object or token \u0027null\u0027, \u0027true\u0027 or \u0027false\u0027)\n at [Source: (String)\"\u003c!DOCTYPE html\u003e\n\t\u003chtml\u003e\n\t  \u003chead\u003e\n\t\t\u003cmeta name\u003d\"viewport\" content\u003d\"width\u003ddevice-width, initial-scale\u003d1\"\u003e\n\t\t\u003cmeta charset\u003d\"utf-8\"\u003e\n\t\t\u003ctitle\u003eApplication Error\u003c/title\u003e\n\t\t\u003cstyle media\u003d\"screen\"\u003e\n\t\t  html,body,iframe {\n\t\t\tmargin: 0;\n\t\t\tpadding: 0;\n\t\t  }\n\t\t  html,body {\n\t\t\theight: 100%;\n\t\t\toverflow: hidden;\n\t\t  }\n\t\t  iframe {\n\t\t\twidth: 100%;\n\t\t\theight: 100%;\n\t\t\tborder: 0;\n\t\t  }\n\t\t\u003c/style\u003e\n\t  \u003c/head\u003e\n\t  \u003cbody\u003e\n\t\t\u003ciframe src\u003d\"//www.herokucdn.com/error-pages/application-error.html\"\u003e\u003c/iframe\u003e\n\t  \u003c/body\u003e\n\t\u003c\"[truncated 6 chars]; line: 1, column: 2]\r\n\tat com.fasterxml.jackson.core.JsonParser._constructError(JsonParser.java:1851)\r\n\tat com.fasterxml.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:707)\r\n\tat com.fasterxml.jackson.core.base.ParserMinimalBase._reportUnexpectedChar(ParserMinimalBase.java:632)\r\n\tat com.fasterxml.jackson.core.json.ReaderBasedJsonParser._handleOddValue(ReaderBasedJsonParser.java:1941)\r\n\tat com.fasterxml.jackson.core.json.ReaderBasedJsonParser.nextToken(ReaderBasedJsonParser.java:776)\r\n\tat com.fasterxml.jackson.databind.ObjectMapper._readTreeAndClose(ObjectMapper.java:4511)\r\n\tat com.fasterxml.jackson.databind.ObjectMapper.readTree(ObjectMapper.java:2940)\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllTestMetrics.user_is_correct_he_requests_all_test_metrics_from_a_repository_by_his_owner(GetAllTestMetrics.java:55)\r\n\tat ✽.user is correct he requests all test metrics from a repository by his owner(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetAllTestMetrics.feature:5)\r\n",
+              "duration": 1004300,
               "status": "failed"
             },
             "line": 5,
@@ -406,7 +406,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-01T22:53:37.912Z",
+        "start_timestamp": "2021-06-02T00:11:02.513Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -416,7 +416,7 @@
         "steps": [
           {
             "result": {
-              "duration": 266713300,
+              "duration": 202231600,
               "status": "passed"
             },
             "line": 4,
@@ -428,8 +428,7 @@
           },
           {
             "result": {
-              "error_message": "java.lang.NullPointerException\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllUserListSteps.user_is_correct_he_gets_all_the_users_in_the_system(GetAllUserListSteps.java:53)\r\n\tat ✽.user is correct he gets all the users in the system(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetAllUsers.feature:5)\r\n",
-              "duration": 999500,
+              "error_message": "com.fasterxml.jackson.core.JsonParseException: Unexpected character (\u0027\u003c\u0027 (code 60)): expected a valid value (JSON String, Number, Array, Object or token \u0027null\u0027, \u0027true\u0027 or \u0027false\u0027)\n at [Source: (String)\"\u003c!DOCTYPE html\u003e\n\t\u003chtml\u003e\n\t  \u003chead\u003e\n\t\t\u003cmeta name\u003d\"viewport\" content\u003d\"width\u003ddevice-width, initial-scale\u003d1\"\u003e\n\t\t\u003cmeta charset\u003d\"utf-8\"\u003e\n\t\t\u003ctitle\u003eApplication Error\u003c/title\u003e\n\t\t\u003cstyle media\u003d\"screen\"\u003e\n\t\t  html,body,iframe {\n\t\t\tmargin: 0;\n\t\t\tpadding: 0;\n\t\t  }\n\t\t  html,body {\n\t\t\theight: 100%;\n\t\t\toverflow: hidden;\n\t\t  }\n\t\t  iframe {\n\t\t\twidth: 100%;\n\t\t\theight: 100%;\n\t\t\tborder: 0;\n\t\t  }\n\t\t\u003c/style\u003e\n\t  \u003c/head\u003e\n\t  \u003cbody\u003e\n\t\t\u003ciframe src\u003d\"//www.herokucdn.com/error-pages/application-error.html\"\u003e\u003c/iframe\u003e\n\t  \u003c/body\u003e\n\t\u003c\"[truncated 6 chars]; line: 1, column: 2]\r\n\tat com.fasterxml.jackson.core.JsonParser._constructError(JsonParser.java:1851)\r\n\tat com.fasterxml.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:707)\r\n\tat com.fasterxml.jackson.core.base.ParserMinimalBase._reportUnexpectedChar(ParserMinimalBase.java:632)\r\n\tat com.fasterxml.jackson.core.json.ReaderBasedJsonParser._handleOddValue(ReaderBasedJsonParser.java:1941)\r\n\tat com.fasterxml.jackson.core.json.ReaderBasedJsonParser.nextToken(ReaderBasedJsonParser.java:776)\r\n\tat com.fasterxml.jackson.databind.ObjectMapper._readTreeAndClose(ObjectMapper.java:4511)\r\n\tat com.fasterxml.jackson.databind.ObjectMapper.readTree(ObjectMapper.java:2940)\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllUserListSteps.user_is_correct_he_gets_all_the_users_in_the_system(GetAllUserListSteps.java:51)\r\n\tat ✽.user is correct he gets all the users in the system(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetAllUsers.feature:5)\r\n",
               "status": "failed"
             },
             "line": 5,
@@ -464,7 +463,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-01T22:53:38.189Z",
+        "start_timestamp": "2021-06-02T00:11:02.725Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -474,7 +473,7 @@
         "steps": [
           {
             "result": {
-              "duration": 248000500,
+              "duration": 240417300,
               "status": "passed"
             },
             "line": 4,
@@ -486,7 +485,7 @@
           },
           {
             "result": {
-              "error_message": "java.lang.NullPointerException\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetCommitsBranchSteps.user_is_correct_he_requests_all_commits_from_a_branch_of_a_repository(GetCommitsBranchSteps.java:57)\r\n\tat ✽.user is correct he requests all commits from a branch of a repository(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetCommitsBranch.feature:5)\r\n",
+              "error_message": "com.fasterxml.jackson.core.JsonParseException: Unexpected character (\u0027\u003c\u0027 (code 60)): expected a valid value (JSON String, Number, Array, Object or token \u0027null\u0027, \u0027true\u0027 or \u0027false\u0027)\n at [Source: (String)\"\u003c!DOCTYPE html\u003e\n\t\u003chtml\u003e\n\t  \u003chead\u003e\n\t\t\u003cmeta name\u003d\"viewport\" content\u003d\"width\u003ddevice-width, initial-scale\u003d1\"\u003e\n\t\t\u003cmeta charset\u003d\"utf-8\"\u003e\n\t\t\u003ctitle\u003eApplication Error\u003c/title\u003e\n\t\t\u003cstyle media\u003d\"screen\"\u003e\n\t\t  html,body,iframe {\n\t\t\tmargin: 0;\n\t\t\tpadding: 0;\n\t\t  }\n\t\t  html,body {\n\t\t\theight: 100%;\n\t\t\toverflow: hidden;\n\t\t  }\n\t\t  iframe {\n\t\t\twidth: 100%;\n\t\t\theight: 100%;\n\t\t\tborder: 0;\n\t\t  }\n\t\t\u003c/style\u003e\n\t  \u003c/head\u003e\n\t  \u003cbody\u003e\n\t\t\u003ciframe src\u003d\"//www.herokucdn.com/error-pages/application-error.html\"\u003e\u003c/iframe\u003e\n\t  \u003c/body\u003e\n\t\u003c\"[truncated 6 chars]; line: 1, column: 2]\r\n\tat com.fasterxml.jackson.core.JsonParser._constructError(JsonParser.java:1851)\r\n\tat com.fasterxml.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:707)\r\n\tat com.fasterxml.jackson.core.base.ParserMinimalBase._reportUnexpectedChar(ParserMinimalBase.java:632)\r\n\tat com.fasterxml.jackson.core.json.ReaderBasedJsonParser._handleOddValue(ReaderBasedJsonParser.java:1941)\r\n\tat com.fasterxml.jackson.core.json.ReaderBasedJsonParser.nextToken(ReaderBasedJsonParser.java:776)\r\n\tat com.fasterxml.jackson.databind.ObjectMapper._readTreeAndClose(ObjectMapper.java:4511)\r\n\tat com.fasterxml.jackson.databind.ObjectMapper.readTree(ObjectMapper.java:2940)\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetCommitsBranchSteps.user_is_correct_he_requests_all_commits_from_a_branch_of_a_repository(GetCommitsBranchSteps.java:55)\r\n\tat ✽.user is correct he requests all commits from a branch of a repository(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetCommitsBranch.feature:5)\r\n",
               "status": "failed"
             },
             "line": 5,
@@ -521,7 +520,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-01T22:53:38.445Z",
+        "start_timestamp": "2021-06-02T00:11:02.976Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -531,7 +530,7 @@
         "steps": [
           {
             "result": {
-              "duration": 218174200,
+              "duration": 235543000,
               "status": "passed"
             },
             "line": 4,
@@ -543,8 +542,7 @@
           },
           {
             "result": {
-              "error_message": "java.lang.NullPointerException\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetCommitsBranchAuthorSteps.user_is_correct_he_requests_all_commits_from_a_branch_of_a_repository_by_the_author(GetCommitsBranchAuthorSteps.java:56)\r\n\tat ✽.user is correct he requests all commits from a branch of a repository by the author(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetCommitsBranchAuthor.feature:5)\r\n",
-              "duration": 1035500,
+              "error_message": "com.fasterxml.jackson.core.JsonParseException: Unexpected character (\u0027\u003c\u0027 (code 60)): expected a valid value (JSON String, Number, Array, Object or token \u0027null\u0027, \u0027true\u0027 or \u0027false\u0027)\n at [Source: (String)\"\u003c!DOCTYPE html\u003e\n\t\u003chtml\u003e\n\t  \u003chead\u003e\n\t\t\u003cmeta name\u003d\"viewport\" content\u003d\"width\u003ddevice-width, initial-scale\u003d1\"\u003e\n\t\t\u003cmeta charset\u003d\"utf-8\"\u003e\n\t\t\u003ctitle\u003eApplication Error\u003c/title\u003e\n\t\t\u003cstyle media\u003d\"screen\"\u003e\n\t\t  html,body,iframe {\n\t\t\tmargin: 0;\n\t\t\tpadding: 0;\n\t\t  }\n\t\t  html,body {\n\t\t\theight: 100%;\n\t\t\toverflow: hidden;\n\t\t  }\n\t\t  iframe {\n\t\t\twidth: 100%;\n\t\t\theight: 100%;\n\t\t\tborder: 0;\n\t\t  }\n\t\t\u003c/style\u003e\n\t  \u003c/head\u003e\n\t  \u003cbody\u003e\n\t\t\u003ciframe src\u003d\"//www.herokucdn.com/error-pages/application-error.html\"\u003e\u003c/iframe\u003e\n\t  \u003c/body\u003e\n\t\u003c\"[truncated 6 chars]; line: 1, column: 2]\r\n\tat com.fasterxml.jackson.core.JsonParser._constructError(JsonParser.java:1851)\r\n\tat com.fasterxml.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:707)\r\n\tat com.fasterxml.jackson.core.base.ParserMinimalBase._reportUnexpectedChar(ParserMinimalBase.java:632)\r\n\tat com.fasterxml.jackson.core.json.ReaderBasedJsonParser._handleOddValue(ReaderBasedJsonParser.java:1941)\r\n\tat com.fasterxml.jackson.core.json.ReaderBasedJsonParser.nextToken(ReaderBasedJsonParser.java:776)\r\n\tat com.fasterxml.jackson.databind.ObjectMapper._readTreeAndClose(ObjectMapper.java:4511)\r\n\tat com.fasterxml.jackson.databind.ObjectMapper.readTree(ObjectMapper.java:2940)\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetCommitsBranchAuthorSteps.user_is_correct_he_requests_all_commits_from_a_branch_of_a_repository_by_the_author(GetCommitsBranchAuthorSteps.java:54)\r\n\tat ✽.user is correct he requests all commits from a branch of a repository by the author(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetCommitsBranchAuthor.feature:5)\r\n",
               "status": "failed"
             },
             "line": 5,
@@ -579,7 +577,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-01T22:53:38.671Z",
+        "start_timestamp": "2021-06-02T00:11:03.227Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -589,7 +587,7 @@
         "steps": [
           {
             "result": {
-              "duration": 250164400,
+              "duration": 234003100,
               "status": "passed"
             },
             "line": 4,
@@ -601,8 +599,7 @@
           },
           {
             "result": {
-              "error_message": "java.lang.NullPointerException\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetCommitsBranchDateSteps.user_is_correct_he_requests_all_commits_from_a_branch_of_a_repository_between_a_date(GetCommitsBranchDateSteps.java:59)\r\n\tat ✽.user is correct he requests all commits from a branch of a repository between a date(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetCommitsBranchDate.feature:5)\r\n",
-              "duration": 1055500,
+              "error_message": "com.fasterxml.jackson.core.JsonParseException: Unexpected character (\u0027\u003c\u0027 (code 60)): expected a valid value (JSON String, Number, Array, Object or token \u0027null\u0027, \u0027true\u0027 or \u0027false\u0027)\n at [Source: (String)\"\u003c!DOCTYPE html\u003e\n\t\u003chtml\u003e\n\t  \u003chead\u003e\n\t\t\u003cmeta name\u003d\"viewport\" content\u003d\"width\u003ddevice-width, initial-scale\u003d1\"\u003e\n\t\t\u003cmeta charset\u003d\"utf-8\"\u003e\n\t\t\u003ctitle\u003eApplication Error\u003c/title\u003e\n\t\t\u003cstyle media\u003d\"screen\"\u003e\n\t\t  html,body,iframe {\n\t\t\tmargin: 0;\n\t\t\tpadding: 0;\n\t\t  }\n\t\t  html,body {\n\t\t\theight: 100%;\n\t\t\toverflow: hidden;\n\t\t  }\n\t\t  iframe {\n\t\t\twidth: 100%;\n\t\t\theight: 100%;\n\t\t\tborder: 0;\n\t\t  }\n\t\t\u003c/style\u003e\n\t  \u003c/head\u003e\n\t  \u003cbody\u003e\n\t\t\u003ciframe src\u003d\"//www.herokucdn.com/error-pages/application-error.html\"\u003e\u003c/iframe\u003e\n\t  \u003c/body\u003e\n\t\u003c\"[truncated 6 chars]; line: 1, column: 2]\r\n\tat com.fasterxml.jackson.core.JsonParser._constructError(JsonParser.java:1851)\r\n\tat com.fasterxml.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:707)\r\n\tat com.fasterxml.jackson.core.base.ParserMinimalBase._reportUnexpectedChar(ParserMinimalBase.java:632)\r\n\tat com.fasterxml.jackson.core.json.ReaderBasedJsonParser._handleOddValue(ReaderBasedJsonParser.java:1941)\r\n\tat com.fasterxml.jackson.core.json.ReaderBasedJsonParser.nextToken(ReaderBasedJsonParser.java:776)\r\n\tat com.fasterxml.jackson.databind.ObjectMapper._readTreeAndClose(ObjectMapper.java:4511)\r\n\tat com.fasterxml.jackson.databind.ObjectMapper.readTree(ObjectMapper.java:2940)\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetCommitsBranchDateSteps.user_is_correct_he_requests_all_commits_from_a_branch_of_a_repository_between_a_date(GetCommitsBranchDateSteps.java:57)\r\n\tat ✽.user is correct he requests all commits from a branch of a repository between a date(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetCommitsBranchDate.feature:5)\r\n",
               "status": "failed"
             },
             "line": 5,
@@ -637,7 +634,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-01T22:53:38.931Z",
+        "start_timestamp": "2021-06-02T00:11:03.475Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -647,7 +644,7 @@
         "steps": [
           {
             "result": {
-              "duration": 234683100,
+              "duration": 267138800,
               "status": "passed"
             },
             "line": 4,
@@ -659,8 +656,8 @@
           },
           {
             "result": {
-              "error_message": "java.lang.NullPointerException\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetCommitsBranchDateAuthorSteps.user_is_correct_he_requests_all_commits_from_a_branch_of_a_repository_between_a_date_by_the_author(GetCommitsBranchDateAuthorSteps.java:59)\r\n\tat ✽.user is correct he requests all commits from a branch of a repository between a date by the author(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetCommitsBranchDateAuthor.feature:5)\r\n",
-              "duration": 970100,
+              "error_message": "com.fasterxml.jackson.core.JsonParseException: Unexpected character (\u0027\u003c\u0027 (code 60)): expected a valid value (JSON String, Number, Array, Object or token \u0027null\u0027, \u0027true\u0027 or \u0027false\u0027)\n at [Source: (String)\"\u003c!DOCTYPE html\u003e\n\t\u003chtml\u003e\n\t  \u003chead\u003e\n\t\t\u003cmeta name\u003d\"viewport\" content\u003d\"width\u003ddevice-width, initial-scale\u003d1\"\u003e\n\t\t\u003cmeta charset\u003d\"utf-8\"\u003e\n\t\t\u003ctitle\u003eApplication Error\u003c/title\u003e\n\t\t\u003cstyle media\u003d\"screen\"\u003e\n\t\t  html,body,iframe {\n\t\t\tmargin: 0;\n\t\t\tpadding: 0;\n\t\t  }\n\t\t  html,body {\n\t\t\theight: 100%;\n\t\t\toverflow: hidden;\n\t\t  }\n\t\t  iframe {\n\t\t\twidth: 100%;\n\t\t\theight: 100%;\n\t\t\tborder: 0;\n\t\t  }\n\t\t\u003c/style\u003e\n\t  \u003c/head\u003e\n\t  \u003cbody\u003e\n\t\t\u003ciframe src\u003d\"//www.herokucdn.com/error-pages/application-error.html\"\u003e\u003c/iframe\u003e\n\t  \u003c/body\u003e\n\t\u003c\"[truncated 6 chars]; line: 1, column: 2]\r\n\tat com.fasterxml.jackson.core.JsonParser._constructError(JsonParser.java:1851)\r\n\tat com.fasterxml.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:707)\r\n\tat com.fasterxml.jackson.core.base.ParserMinimalBase._reportUnexpectedChar(ParserMinimalBase.java:632)\r\n\tat com.fasterxml.jackson.core.json.ReaderBasedJsonParser._handleOddValue(ReaderBasedJsonParser.java:1941)\r\n\tat com.fasterxml.jackson.core.json.ReaderBasedJsonParser.nextToken(ReaderBasedJsonParser.java:776)\r\n\tat com.fasterxml.jackson.databind.ObjectMapper._readTreeAndClose(ObjectMapper.java:4511)\r\n\tat com.fasterxml.jackson.databind.ObjectMapper.readTree(ObjectMapper.java:2940)\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetCommitsBranchDateAuthorSteps.user_is_correct_he_requests_all_commits_from_a_branch_of_a_repository_between_a_date_by_the_author(GetCommitsBranchDateAuthorSteps.java:57)\r\n\tat ✽.user is correct he requests all commits from a branch of a repository between a date by the author(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetCommitsBranchDateAuthor.feature:5)\r\n",
+              "duration": 1001200,
               "status": "failed"
             },
             "line": 5,
@@ -695,7 +692,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-01T22:53:39.183Z",
+        "start_timestamp": "2021-06-02T00:11:03.754Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -705,7 +702,7 @@
         "steps": [
           {
             "result": {
-              "duration": 242045700,
+              "duration": 326414300,
               "status": "passed"
             },
             "line": 4,
@@ -717,8 +714,7 @@
           },
           {
             "result": {
-              "error_message": "java.lang.NullPointerException\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetIssuesRepoSteps.user_is_correct_he_requests_all_issues_from_a_repository_by_his_owner_of_the_system(GetIssuesRepoSteps.java:53)\r\n\tat ✽.user is correct he requests all issues from a repository by his owner of the system(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetIssuesRepo.feature:5)\r\n",
-              "duration": 963600,
+              "error_message": "com.fasterxml.jackson.core.JsonParseException: Unexpected character (\u0027\u003c\u0027 (code 60)): expected a valid value (JSON String, Number, Array, Object or token \u0027null\u0027, \u0027true\u0027 or \u0027false\u0027)\n at [Source: (String)\"\u003c!DOCTYPE html\u003e\n\t\u003chtml\u003e\n\t  \u003chead\u003e\n\t\t\u003cmeta name\u003d\"viewport\" content\u003d\"width\u003ddevice-width, initial-scale\u003d1\"\u003e\n\t\t\u003cmeta charset\u003d\"utf-8\"\u003e\n\t\t\u003ctitle\u003eApplication Error\u003c/title\u003e\n\t\t\u003cstyle media\u003d\"screen\"\u003e\n\t\t  html,body,iframe {\n\t\t\tmargin: 0;\n\t\t\tpadding: 0;\n\t\t  }\n\t\t  html,body {\n\t\t\theight: 100%;\n\t\t\toverflow: hidden;\n\t\t  }\n\t\t  iframe {\n\t\t\twidth: 100%;\n\t\t\theight: 100%;\n\t\t\tborder: 0;\n\t\t  }\n\t\t\u003c/style\u003e\n\t  \u003c/head\u003e\n\t  \u003cbody\u003e\n\t\t\u003ciframe src\u003d\"//www.herokucdn.com/error-pages/application-error.html\"\u003e\u003c/iframe\u003e\n\t  \u003c/body\u003e\n\t\u003c\"[truncated 6 chars]; line: 1, column: 2]\r\n\tat com.fasterxml.jackson.core.JsonParser._constructError(JsonParser.java:1851)\r\n\tat com.fasterxml.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:707)\r\n\tat com.fasterxml.jackson.core.base.ParserMinimalBase._reportUnexpectedChar(ParserMinimalBase.java:632)\r\n\tat com.fasterxml.jackson.core.json.ReaderBasedJsonParser._handleOddValue(ReaderBasedJsonParser.java:1941)\r\n\tat com.fasterxml.jackson.core.json.ReaderBasedJsonParser.nextToken(ReaderBasedJsonParser.java:776)\r\n\tat com.fasterxml.jackson.databind.ObjectMapper._readTreeAndClose(ObjectMapper.java:4511)\r\n\tat com.fasterxml.jackson.databind.ObjectMapper.readTree(ObjectMapper.java:2940)\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetIssuesRepoSteps.user_is_correct_he_requests_all_issues_from_a_repository_by_his_owner_of_the_system(GetIssuesRepoSteps.java:51)\r\n\tat ✽.user is correct he requests all issues from a repository by his owner of the system(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetIssuesRepo.feature:5)\r\n",
               "status": "failed"
             },
             "line": 5,
@@ -753,7 +749,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-01T22:53:39.443Z",
+        "start_timestamp": "2021-06-02T00:11:04.092Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -763,7 +759,7 @@
         "steps": [
           {
             "result": {
-              "duration": 269960100,
+              "duration": 287548500,
               "status": "passed"
             },
             "line": 4,
@@ -775,7 +771,8 @@
           },
           {
             "result": {
-              "error_message": "java.lang.NullPointerException\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetUserByTokenPassSteps.user_is_correct_he_gets_an_user_by_the_tokenpass_of_the_session_in_the_system(GetUserByTokenPassSteps.java:54)\r\n\tat ✽.user is correct he gets an user by the tokenpass of the session in the system(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetUserByTokenPass.feature:5)\r\n",
+              "error_message": "com.fasterxml.jackson.core.JsonParseException: Unexpected character (\u0027\u003c\u0027 (code 60)): expected a valid value (JSON String, Number, Array, Object or token \u0027null\u0027, \u0027true\u0027 or \u0027false\u0027)\n at [Source: (String)\"\u003c!DOCTYPE html\u003e\n\t\u003chtml\u003e\n\t  \u003chead\u003e\n\t\t\u003cmeta name\u003d\"viewport\" content\u003d\"width\u003ddevice-width, initial-scale\u003d1\"\u003e\n\t\t\u003cmeta charset\u003d\"utf-8\"\u003e\n\t\t\u003ctitle\u003eApplication Error\u003c/title\u003e\n\t\t\u003cstyle media\u003d\"screen\"\u003e\n\t\t  html,body,iframe {\n\t\t\tmargin: 0;\n\t\t\tpadding: 0;\n\t\t  }\n\t\t  html,body {\n\t\t\theight: 100%;\n\t\t\toverflow: hidden;\n\t\t  }\n\t\t  iframe {\n\t\t\twidth: 100%;\n\t\t\theight: 100%;\n\t\t\tborder: 0;\n\t\t  }\n\t\t\u003c/style\u003e\n\t  \u003c/head\u003e\n\t  \u003cbody\u003e\n\t\t\u003ciframe src\u003d\"//www.herokucdn.com/error-pages/application-error.html\"\u003e\u003c/iframe\u003e\n\t  \u003c/body\u003e\n\t\u003c\"[truncated 6 chars]; line: 1, column: 2]\r\n\tat com.fasterxml.jackson.core.JsonParser._constructError(JsonParser.java:1851)\r\n\tat com.fasterxml.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:707)\r\n\tat com.fasterxml.jackson.core.base.ParserMinimalBase._reportUnexpectedChar(ParserMinimalBase.java:632)\r\n\tat com.fasterxml.jackson.core.json.ReaderBasedJsonParser._handleOddValue(ReaderBasedJsonParser.java:1941)\r\n\tat com.fasterxml.jackson.core.json.ReaderBasedJsonParser.nextToken(ReaderBasedJsonParser.java:776)\r\n\tat com.fasterxml.jackson.databind.ObjectMapper._readTreeAndClose(ObjectMapper.java:4511)\r\n\tat com.fasterxml.jackson.databind.ObjectMapper.readTree(ObjectMapper.java:2940)\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetUserByTokenPassSteps.user_is_correct_he_gets_an_user_by_the_tokenpass_of_the_session_in_the_system(GetUserByTokenPassSteps.java:52)\r\n\tat ✽.user is correct he gets an user by the tokenpass of the session in the system(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetUserByTokenPass.feature:5)\r\n",
+              "duration": 1043300,
               "status": "failed"
             },
             "line": 5,
@@ -810,7 +807,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-01T22:53:39.729Z",
+        "start_timestamp": "2021-06-02T00:11:04.391Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -820,7 +817,7 @@
         "steps": [
           {
             "result": {
-              "duration": 244951000,
+              "duration": 208255200,
               "status": "passed"
             },
             "line": 4,
@@ -832,7 +829,7 @@
           },
           {
             "result": {
-              "error_message": "java.lang.NullPointerException\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetUserPasswordSteps.user_is_correct_he_gets_an_user_by_the_username_and_the_password_in_the_system(GetUserPasswordSteps.java:55)\r\n\tat ✽.user is correct he gets an user by the username and the password in the system(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetUserPassword.feature:5)\r\n",
+              "error_message": "com.fasterxml.jackson.core.JsonParseException: Unexpected character (\u0027\u003c\u0027 (code 60)): expected a valid value (JSON String, Number, Array, Object or token \u0027null\u0027, \u0027true\u0027 or \u0027false\u0027)\n at [Source: (String)\"\u003c!DOCTYPE html\u003e\n\t\u003chtml\u003e\n\t  \u003chead\u003e\n\t\t\u003cmeta name\u003d\"viewport\" content\u003d\"width\u003ddevice-width, initial-scale\u003d1\"\u003e\n\t\t\u003cmeta charset\u003d\"utf-8\"\u003e\n\t\t\u003ctitle\u003eApplication Error\u003c/title\u003e\n\t\t\u003cstyle media\u003d\"screen\"\u003e\n\t\t  html,body,iframe {\n\t\t\tmargin: 0;\n\t\t\tpadding: 0;\n\t\t  }\n\t\t  html,body {\n\t\t\theight: 100%;\n\t\t\toverflow: hidden;\n\t\t  }\n\t\t  iframe {\n\t\t\twidth: 100%;\n\t\t\theight: 100%;\n\t\t\tborder: 0;\n\t\t  }\n\t\t\u003c/style\u003e\n\t  \u003c/head\u003e\n\t  \u003cbody\u003e\n\t\t\u003ciframe src\u003d\"//www.herokucdn.com/error-pages/application-error.html\"\u003e\u003c/iframe\u003e\n\t  \u003c/body\u003e\n\t\u003c\"[truncated 6 chars]; line: 1, column: 2]\r\n\tat com.fasterxml.jackson.core.JsonParser._constructError(JsonParser.java:1851)\r\n\tat com.fasterxml.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:707)\r\n\tat com.fasterxml.jackson.core.base.ParserMinimalBase._reportUnexpectedChar(ParserMinimalBase.java:632)\r\n\tat com.fasterxml.jackson.core.json.ReaderBasedJsonParser._handleOddValue(ReaderBasedJsonParser.java:1941)\r\n\tat com.fasterxml.jackson.core.json.ReaderBasedJsonParser.nextToken(ReaderBasedJsonParser.java:776)\r\n\tat com.fasterxml.jackson.databind.ObjectMapper._readTreeAndClose(ObjectMapper.java:4511)\r\n\tat com.fasterxml.jackson.databind.ObjectMapper.readTree(ObjectMapper.java:2940)\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetUserPasswordSteps.user_is_correct_he_gets_an_user_by_the_username_and_the_password_in_the_system(GetUserPasswordSteps.java:53)\r\n\tat ✽.user is correct he gets an user by the username and the password in the system(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetUserPassword.feature:5)\r\n",
               "status": "failed"
             },
             "line": 5,
@@ -867,7 +864,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-01T22:53:39.995Z",
+        "start_timestamp": "2021-06-02T00:11:04.617Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -877,8 +874,9 @@
         "steps": [
           {
             "result": {
-              "duration": 6879524800,
-              "status": "passed"
+              "error_message": "org.openqa.selenium.WebDriverException: unknown error: cannot determine loading status\nfrom disconnected: received Inspector.detached event\n  (Session info: chrome\u003d90.0.4430.212)\nBuild info: version: \u00273.141.59\u0027, revision: \u0027e82be7d358\u0027, time: \u00272018-11-14T08:17:03\u0027\nSystem info: host: \u0027DESKTOP-9BRPNUS\u0027, ip: \u0027192.168.1.44\u0027, os.name: \u0027Windows 10\u0027, os.arch: \u0027amd64\u0027, os.version: \u002710.0\u0027, java.version: \u002711.0.8\u0027\nDriver info: org.openqa.selenium.chrome.ChromeDriver\nCapabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 90.0.4430.212, chrome: {chromedriverVersion: 90.0.4430.24 (4c6d850f087da..., userDataDir: C:\\Users\\Crespo\\AppData\\Loc...}, goog:chromeOptions: {debuggerAddress: localhost:58296}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}\nSession ID: 340b72354b75fead568f67ca433c8c9f\r\n\tat java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)\r\n\tat java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)\r\n\tat java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)\r\n\tat java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)\r\n\tat org.openqa.selenium.remote.http.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:187)\r\n\tat org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:122)\r\n\tat org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:49)\r\n\tat org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:158)\r\n\tat org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)\r\n\tat org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:552)\r\n\tat org.openqa.selenium.remote.RemoteWebDriver.get(RemoteWebDriver.java:277)\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.LoginSteps.user_is_on_login_page(LoginSteps.java:46)\r\n\tat ✽.user is on login page(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/Login.feature:4)\r\n",
+              "duration": 7533957100,
+              "status": "failed"
             },
             "line": 4,
             "name": "user is on login page",
@@ -889,8 +887,7 @@
           },
           {
             "result": {
-              "duration": 110291400,
-              "status": "passed"
+              "status": "skipped"
             },
             "line": 5,
             "name": "user enters username and password",
@@ -901,8 +898,7 @@
           },
           {
             "result": {
-              "duration": 39874900,
-              "status": "passed"
+              "status": "skipped"
             },
             "line": 6,
             "name": "clicks on login button",
@@ -913,9 +909,7 @@
           },
           {
             "result": {
-              "error_message": "org.junit.ComparisonFailure: expected:\u003c...trics.herokuapp.com/[repos]\u003e but was:\u003c...trics.herokuapp.com/[login]\u003e\r\n\tat org.junit.Assert.assertEquals(Assert.java:117)\r\n\tat org.junit.Assert.assertEquals(Assert.java:146)\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.LoginSteps.user_is_navigated_to_the_home_page(LoginSteps.java:68)\r\n\tat ✽.user is navigated to the home page(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/Login.feature:7)\r\n",
-              "duration": 1014484300,
-              "status": "failed"
+              "status": "skipped"
             },
             "line": 7,
             "name": "user is navigated to the home page",
@@ -938,7 +932,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-01T22:53:48.062Z",
+        "start_timestamp": "2021-06-02T00:11:12.200Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -948,7 +942,7 @@
         "steps": [
           {
             "result": {
-              "duration": 195442500,
+              "duration": 517610700,
               "status": "passed"
             },
             "line": 4,
@@ -960,8 +954,8 @@
           },
           {
             "result": {
-              "error_message": "java.lang.NullPointerException\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.RegistrarUsuarioSteps.user_is_correct_he_registers_an_user_by_the_username_the_password_and_the_role_in_the_system(RegistrarUsuarioSteps.java:56)\r\n\tat ✽.user is correct he registers an user by the username, the password and the role in the system(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/RegistrarUsuario.feature:5)\r\n",
-              "duration": 996700,
+              "error_message": "com.fasterxml.jackson.core.JsonParseException: Unexpected character (\u0027\u003c\u0027 (code 60)): expected a valid value (JSON String, Number, Array, Object or token \u0027null\u0027, \u0027true\u0027 or \u0027false\u0027)\n at [Source: (String)\"\u003c!DOCTYPE html\u003e\n\t\u003chtml\u003e\n\t  \u003chead\u003e\n\t\t\u003cmeta name\u003d\"viewport\" content\u003d\"width\u003ddevice-width, initial-scale\u003d1\"\u003e\n\t\t\u003cmeta charset\u003d\"utf-8\"\u003e\n\t\t\u003ctitle\u003eApplication Error\u003c/title\u003e\n\t\t\u003cstyle media\u003d\"screen\"\u003e\n\t\t  html,body,iframe {\n\t\t\tmargin: 0;\n\t\t\tpadding: 0;\n\t\t  }\n\t\t  html,body {\n\t\t\theight: 100%;\n\t\t\toverflow: hidden;\n\t\t  }\n\t\t  iframe {\n\t\t\twidth: 100%;\n\t\t\theight: 100%;\n\t\t\tborder: 0;\n\t\t  }\n\t\t\u003c/style\u003e\n\t  \u003c/head\u003e\n\t  \u003cbody\u003e\n\t\t\u003ciframe src\u003d\"//www.herokucdn.com/error-pages/application-error.html\"\u003e\u003c/iframe\u003e\n\t  \u003c/body\u003e\n\t\u003c\"[truncated 6 chars]; line: 1, column: 2]\r\n\tat com.fasterxml.jackson.core.JsonParser._constructError(JsonParser.java:1851)\r\n\tat com.fasterxml.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:707)\r\n\tat com.fasterxml.jackson.core.base.ParserMinimalBase._reportUnexpectedChar(ParserMinimalBase.java:632)\r\n\tat com.fasterxml.jackson.core.json.ReaderBasedJsonParser._handleOddValue(ReaderBasedJsonParser.java:1941)\r\n\tat com.fasterxml.jackson.core.json.ReaderBasedJsonParser.nextToken(ReaderBasedJsonParser.java:776)\r\n\tat com.fasterxml.jackson.databind.ObjectMapper._readTreeAndClose(ObjectMapper.java:4511)\r\n\tat com.fasterxml.jackson.databind.ObjectMapper.readTree(ObjectMapper.java:2940)\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.RegistrarUsuarioSteps.user_is_correct_he_registers_an_user_by_the_username_the_password_and_the_role_in_the_system(RegistrarUsuarioSteps.java:54)\r\n\tat ✽.user is correct he registers an user by the username, the password and the role in the system(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/RegistrarUsuario.feature:5)\r\n",
+              "duration": 984100,
               "status": "failed"
             },
             "line": 5,
@@ -996,7 +990,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-01T22:53:48.274Z",
+        "start_timestamp": "2021-06-02T00:11:12.727Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -1006,7 +1000,7 @@
         "steps": [
           {
             "result": {
-              "duration": 209652100,
+              "duration": 262991000,
               "status": "passed"
             },
             "line": 4,
@@ -1018,8 +1012,8 @@
           },
           {
             "result": {
-              "error_message": "java.lang.NullPointerException\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.UpdateUserSteps.user_is_correct_it_updates_an_user_by_the_username_and_the_password_in_the_system(UpdateUserSteps.java:55)\r\n\tat ✽.user is correct it updates an user by the username and the password in the system(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/UpdateUsuario.feature:5)\r\n",
-              "duration": 1012900,
+              "error_message": "com.fasterxml.jackson.core.JsonParseException: Unexpected character (\u0027\u003c\u0027 (code 60)): expected a valid value (JSON String, Number, Array, Object or token \u0027null\u0027, \u0027true\u0027 or \u0027false\u0027)\n at [Source: (String)\"\u003c!DOCTYPE html\u003e\n\t\u003chtml\u003e\n\t  \u003chead\u003e\n\t\t\u003cmeta name\u003d\"viewport\" content\u003d\"width\u003ddevice-width, initial-scale\u003d1\"\u003e\n\t\t\u003cmeta charset\u003d\"utf-8\"\u003e\n\t\t\u003ctitle\u003eApplication Error\u003c/title\u003e\n\t\t\u003cstyle media\u003d\"screen\"\u003e\n\t\t  html,body,iframe {\n\t\t\tmargin: 0;\n\t\t\tpadding: 0;\n\t\t  }\n\t\t  html,body {\n\t\t\theight: 100%;\n\t\t\toverflow: hidden;\n\t\t  }\n\t\t  iframe {\n\t\t\twidth: 100%;\n\t\t\theight: 100%;\n\t\t\tborder: 0;\n\t\t  }\n\t\t\u003c/style\u003e\n\t  \u003c/head\u003e\n\t  \u003cbody\u003e\n\t\t\u003ciframe src\u003d\"//www.herokucdn.com/error-pages/application-error.html\"\u003e\u003c/iframe\u003e\n\t  \u003c/body\u003e\n\t\u003c\"[truncated 6 chars]; line: 1, column: 2]\r\n\tat com.fasterxml.jackson.core.JsonParser._constructError(JsonParser.java:1851)\r\n\tat com.fasterxml.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:707)\r\n\tat com.fasterxml.jackson.core.base.ParserMinimalBase._reportUnexpectedChar(ParserMinimalBase.java:632)\r\n\tat com.fasterxml.jackson.core.json.ReaderBasedJsonParser._handleOddValue(ReaderBasedJsonParser.java:1941)\r\n\tat com.fasterxml.jackson.core.json.ReaderBasedJsonParser.nextToken(ReaderBasedJsonParser.java:776)\r\n\tat com.fasterxml.jackson.databind.ObjectMapper._readTreeAndClose(ObjectMapper.java:4511)\r\n\tat com.fasterxml.jackson.databind.ObjectMapper.readTree(ObjectMapper.java:2940)\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.UpdateUserSteps.user_is_correct_it_updates_an_user_by_the_username_and_the_password_in_the_system(UpdateUserSteps.java:53)\r\n\tat ✽.user is correct it updates an user by the username and the password in the system(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/UpdateUsuario.feature:5)\r\n",
+              "duration": 1003000,
               "status": "failed"
             },
             "line": 5,

@@ -37,6 +37,7 @@ public class MetricsController {
 	private static final Log LOG = LogFactory.getLog(MetricsController.class);
 
 	private final MetricsOperations metricsOperations;
+	private final TestOperations testsOperations;
 	private final UserOperations userOperations;
 	
 	private String message;
@@ -47,10 +48,11 @@ public class MetricsController {
 	 * @author FcoCrespo
 	 */
 
-	public MetricsController(final MetricsOperations metricsOperations, final UserOperations userOperations) {
+	public MetricsController(final MetricsOperations metricsOperations, final UserOperations userOperations, final TestOperations testsOperations) {
 
 		this.metricsOperations = metricsOperations;
 		this.userOperations = userOperations;
+		this.testsOperations = testsOperations;
 		this.message = "Operation completed.";
 		this.errorMessage = "[SERVER] No se ha encontrado ningún usuario con esos datos.";
 
@@ -136,7 +138,7 @@ public class MetricsController {
 
 		try {
 			LOG.info("Save repo test metrics");
-			TestOperations.get().saveRepoTestMetrics(reponame, owner);
+			this.testsOperations.saveRepoTestMetrics(reponame, owner);
 			return ResponseEntity.ok(this.message);
 		}
 		catch(Exception e) {
@@ -159,7 +161,7 @@ public class MetricsController {
 		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
 		if (existe) {
 			LOG.info("Get repo test metrics");
-			return ResponseEntity.ok(TestOperations.get().getRepoTestMetrics(repository, owner));
+			return ResponseEntity.ok(this.testsOperations.getRepoTestMetrics(repository, owner));
 		} else {
 			LOG.info(this.errorMessage);
 			return ResponseEntity.badRequest().build();
@@ -191,7 +193,7 @@ public class MetricsController {
 			String enddate = jso.getString("enddate");
 			
 			LOG.info("Get repo test metrics between two dates");
-			return ResponseEntity.ok(TestOperations.get().getRepoTestMetricsDates(reponame, owner, begindate, enddate));
+			return ResponseEntity.ok(this.testsOperations.getRepoTestMetricsDates(reponame, owner, begindate, enddate));
 		
 		} else {
 			LOG.info(this.errorMessage);
