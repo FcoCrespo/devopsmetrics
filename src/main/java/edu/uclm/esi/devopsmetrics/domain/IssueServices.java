@@ -2,7 +2,6 @@ package edu.uclm.esi.devopsmetrics.domain;
 
 import org.springframework.stereotype.Service;
 
-
 import edu.uclm.esi.devopsmetrics.services.IssueAssigneeService;
 import edu.uclm.esi.devopsmetrics.services.IssueCursorService;
 import edu.uclm.esi.devopsmetrics.services.IssueRepoService;
@@ -43,6 +42,5 @@ public class IssueServices {
 	public IssueAssigneeService getIssueAssigneeService() {
 		return issueAssigneeService;
 	}
-	
-	
+
 }

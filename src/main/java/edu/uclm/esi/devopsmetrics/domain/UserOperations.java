@@ -86,31 +86,29 @@ public class UserOperations {
 		return usuariologin != null;
 
 	}
-	
+
 	public boolean getUserByTokenPassAdmin(String tokenpass) {
-		
+
 		User usuariologin;
 		usuariologin = this.userService.getUserByTokenPass(tokenpass);
-		if(usuariologin != null) {
+		if (usuariologin != null) {
 			try {
 				return this.utilities.desencriptar(usuariologin.getRoleUser()).equals("admin");
 			} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
 					| InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException e) {
 				return false;
 			}
-		}
-		else {
+		} else {
 			return false;
 		}
 	}
 
 	public String findByUsername(String username) {
-		
+
 		try {
 			User user = this.userService.findByUsername(username);
-			SecureUser secureUser = new SecureUser(user.getIdUser(), username, this.utilities.desencriptar(user.getRoleUser()),
-					user.getTokenPass(), user.getTokenValidity());
-
+			SecureUser secureUser = new SecureUser(user.getIdUser(), username,
+					this.utilities.desencriptar(user.getRoleUser()), user.getTokenPass(), user.getTokenValidity());
 
 			ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 			return ow.writeValueAsString(secureUser);
@@ -124,52 +122,54 @@ public class UserOperations {
 	}
 
 	public String getAllUsers() {
-		
+
 		try {
-			
+
 			List<User> users = this.userService.findAll();
 			List<SecureUser> listaSecureUsers = new ArrayList<SecureUser>();
 			SecureUser userSecure;
 			for (int i = 0; i < users.size(); i++) {
 				userSecure = new SecureUser(users.get(i).getIdUser(),
-						this.utilities.desencriptar(users.get(i).getUsernameUser()), this.utilities.desencriptar(users.get(i).getRoleUser()),
-						users.get(i).getTokenPass(), users.get(i).getTokenValidity());
+						this.utilities.desencriptar(users.get(i).getUsernameUser()),
+						this.utilities.desencriptar(users.get(i).getRoleUser()), users.get(i).getTokenPass(),
+						users.get(i).getTokenValidity());
 				listaSecureUsers.add(userSecure);
 			}
-			
+
 			ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-			
+
 			return ow.writeValueAsString(listaSecureUsers);
-			
+
 		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
 				| InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException
 				| UserNotFoundException | JsonProcessingException e) {
 			return null;
 		}
-		
+
 	}
 
-	public synchronized void deleteUser(String userId) {
-		
+	public void deleteUser(String userId) {
+
 		this.userService.deleteUser(userId);
-		
+
 	}
 
 	public boolean getByUsername(String username) {
 		User user;
 		try {
 			user = this.userService.findByUsername(username);
-			return user!=null;
+			return user != null;
 		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
 				| InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException e) {
 			return false;
 		}
-		
+
 	}
 
-	public synchronized void registrarUser(String username, String password, String role) {	
+	public void registrarUser(String username, String password, String role) {
 		try {
-			User usuario = new User(this.utilities.encriptar(username), this.utilities.encriptar(password), this.utilities.encriptar(role));
+			User usuario = new User(this.utilities.encriptar(username), this.utilities.encriptar(password),
+					this.utilities.encriptar(role));
 			this.userService.saveUser(usuario);
 		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
 				| InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException e) {
@@ -177,26 +177,25 @@ public class UserOperations {
 		}
 	}
 
-	public synchronized void actualizarUsuario(String username, String password, String role) {
-		
+	public void actualizarUsuario(String username, String password, String role) {
+
 		try {
 			User usuario = this.userService.findByUsername(username);
-			
+
 			String usernameEncriptado = this.utilities.encriptar(username);
 			String passwordEncriptado = this.utilities.encriptar(password);
 			String roleEncriptado = this.utilities.encriptar(role);
 			usuario.setUsernameUser(usernameEncriptado);
 			usuario.setPasswordUser(passwordEncriptado);
 			usuario.setRoleUser(roleEncriptado);
-			
+
 			this.userService.updateUser(usuario);
-			
+
 		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
 				| InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException e) {
 			e.toString();
 		}
-		
-		
+
 	}
-	
+
 }

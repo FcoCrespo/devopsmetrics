@@ -103,7 +103,7 @@ public class IssueServiceImpl implements IssueService{
 	
 	@Override
 	public List<Issue> getAllByOpenBetweenBeginEndDate(Instant beginDate, Instant endDate) {
-		return this.issueRepository.findAllByClosedBetweenBeginEndDate(beginDate, endDate);
+		return this.issueRepository.findAllByOpenBetweenBeginEndDate(beginDate, endDate);
 
 	}
 

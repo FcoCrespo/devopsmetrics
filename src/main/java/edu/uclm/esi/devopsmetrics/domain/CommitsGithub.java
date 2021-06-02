@@ -30,7 +30,7 @@ import edu.uclm.esi.devopsmetrics.models.UserGithub;
 
 @Service
 public class CommitsGithub {
-	
+
 	private static final Log LOG = LogFactory.getLog(CommitsGithub.class);
 
 	private final CommitServices commitServices;
@@ -64,8 +64,8 @@ public class CommitsGithub {
 		this.filenameCursor = "src/main/resources/graphql/commits-cursor.graphql";
 		this.cursorString = "cursor";
 		this.repositoryString = "repository";
-		this.targetString="target";
-		this.historyString="history";
+		this.targetString = "target";
+		this.historyString = "history";
 
 	}
 
@@ -96,29 +96,30 @@ public class CommitsGithub {
 
 		jsonData = responseGiven.body().string();
 		jsonNode = new ObjectMapper().readTree(jsonData);
-		
+
 		LOG.info(jsonData);
 
 		commitCursor = updateCommitCursor(jsonNode, info[2], info[0]);
 
-		nodes = jsonNode.path("data").path(this.repositoryString).path("ref").path(this.targetString).path(this.historyString).path("nodes");
+		nodes = jsonNode.path("data").path(this.repositoryString).path("ref").path(this.targetString)
+				.path(this.historyString).path("nodes");
 		iter = nodes.iterator();
 		parameterNode = iter.next();
-		
+
 		Commit commit;
 		CommitInfo commitInfo;
 
-		Object [] result;
-		
-		if(iter.hasNext()){
+		Object[] result;
+
+		if (iter.hasNext()) {
 			while (iter.hasNext()) {
 				result = introducirCommit(parameterNode, info[3]);
 				commit = (Commit) result[0];
 				commitInfo = (CommitInfo) result[1];
 				commitService.saveCommit(commit);
-				
+
 				comprobarSaveCommitInfo(commitInfo);
-			
+
 				parameterNode = iter.next();
 			}
 			if (!iter.hasNext()) {
@@ -126,16 +127,15 @@ public class CommitsGithub {
 				commit = (Commit) result[0];
 				commitInfo = (CommitInfo) result[1];
 				commitService.saveCommit(commit);
-				
+
 				comprobarSaveCommitInfo(commitInfo);
 			}
-		}
-		else {
+		} else {
 			result = introducirCommit(parameterNode, info[3]);
 			commit = (Commit) result[0];
 			commitInfo = (CommitInfo) result[1];
 			commitService.saveCommit(commit);
-			
+
 			comprobarSaveCommitInfo(commitInfo);
 		}
 
@@ -147,15 +147,15 @@ public class CommitsGithub {
 	}
 
 	private void comprobarSaveCommitInfo(CommitInfo commitInfo) {
-		
+
 		String oid = commitInfo.getIdCommit();
-		
+
 		CommitInfo result = commitInfoService.findByCommitId(oid);
-		
-		if(result==null) {
+
+		if (result == null) {
 			commitInfoService.saveCommitInfo(commitInfo);
 		}
-		
+
 	}
 
 	public String updateRepositoryCommits(String[] info, String filename, boolean initialStarCursorFind,
@@ -180,7 +180,6 @@ public class CommitsGithub {
 		String commitCursorStart = commitCursorInitial.getStartCursor().substring(0,
 				commitCursorInitial.getStartCursor().indexOf(" "));
 
-
 		String[] variablesPut = new String[3];
 		variablesPut[0] = info[0];
 		variablesPut[1] = info[1];
@@ -196,92 +195,95 @@ public class CommitsGithub {
 
 		commitCursor = updateCommitCursor(jsonNode, info[2], info[0]);
 
-		nodes = jsonNode.path("data").path(this.repositoryString).path("ref").path(this.targetString).path(this.historyString).path("nodes");
+		nodes = jsonNode.path("data").path(this.repositoryString).path("ref").path(this.targetString)
+				.path(this.historyString).path("nodes");
 		iter = nodes.iterator();
 		parameterNode = iter.next();
 
-		Object [] result;
-		
+		Object[] result;
+
 		Commit commit;
 		CommitInfo commitInfo;
-		
+
 		result = introducirCommit(parameterNode, info[3]);
-		
+
 		commit = (Commit) result[0];
 		commitInfo = (CommitInfo) result[1];
-		
-		initialStarCursorFind = checkInitialStarCursorFind(commit, commitInfo, commitCursorStart, initialStarCursorFind);
-		
-		if(initialStarCursorFind) {
+
+		initialStarCursorFind = checkInitialStarCursorFind(commit, commitInfo, commitCursorStart,
+				initialStarCursorFind);
+
+		if (initialStarCursorFind) {
 			return "Fin.";
 		}
-		
-		if(iter.hasNext()) {
+
+		if (iter.hasNext()) {
 			while (iter.hasNext()) {
 
 				result = introducirCommit(parameterNode, info[3]);
-				
+
 				commit = (Commit) result[0];
 				commitInfo = (CommitInfo) result[1];
 
-				initialStarCursorFind = checkInitialStarCursorFind(commit, commitInfo, commitCursorStart, initialStarCursorFind);
-				
-				if(!(initialStarCursorFind)){
+				initialStarCursorFind = checkInitialStarCursorFind(commit, commitInfo, commitCursorStart,
+						initialStarCursorFind);
+
+				if (!(initialStarCursorFind)) {
 					commitsBranch.add(commit);
-					comprobarSaveCommitInfo(commitInfo);			
+					comprobarSaveCommitInfo(commitInfo);
 				}
 
 				parameterNode = iter.next();
-				
+
 			}
-			if (!iter.hasNext()) {			
-				result = introducirCommit(parameterNode, info[3]);			
+			if (!iter.hasNext()) {
+				result = introducirCommit(parameterNode, info[3]);
 				commit = (Commit) result[0];
-				commitInfo = (CommitInfo) result[1];	
-				initialStarCursorFind = checkInitialStarCursorFind(commit, commitInfo, commitCursorStart, initialStarCursorFind);
-				
-				if(!(initialStarCursorFind)){
+				commitInfo = (CommitInfo) result[1];
+				initialStarCursorFind = checkInitialStarCursorFind(commit, commitInfo, commitCursorStart,
+						initialStarCursorFind);
+
+				if (!(initialStarCursorFind)) {
 					commitsBranch.add(commit);
 					comprobarSaveCommitInfo(commitInfo);
 				}
 			}
-			
-		}
-		else {
-			result = introducirCommit(parameterNode, info[3]);			
+
+		} else {
+			result = introducirCommit(parameterNode, info[3]);
 			commit = (Commit) result[0];
-			commitInfo = (CommitInfo) result[1];	
-			
-			initialStarCursorFind = checkInitialStarCursorFind(commit, commitInfo, commitCursorStart, initialStarCursorFind);
-		
-			if(!(initialStarCursorFind)){
+			commitInfo = (CommitInfo) result[1];
+
+			initialStarCursorFind = checkInitialStarCursorFind(commit, commitInfo, commitCursorStart,
+					initialStarCursorFind);
+
+			if (!(initialStarCursorFind)) {
 				commitsBranch.add(commit);
 				comprobarSaveCommitInfo(commitInfo);
 			}
 		}
 
-		actualizarCommitsBranch(info, initialStarCursorFind,commitsBranch,commitCursor);
+		actualizarCommitsBranch(info, initialStarCursorFind, commitsBranch, commitCursor);
 		return "Ok.";
-		
+
 	}
 
-	
-	private boolean checkInitialStarCursorFind(Commit commit, CommitInfo commitInfo, String commitCursorStart, boolean initialStarCursorFind) {
-		
-		if(initialStarCursorFind) {
+	private boolean checkInitialStarCursorFind(Commit commit, CommitInfo commitInfo, String commitCursorStart,
+			boolean initialStarCursorFind) {
+
+		if (initialStarCursorFind) {
 			return true;
-		}
-		else {
+		} else {
 			if (commit != null && commitCursorStart.equals(commit.getOid())) {
 				comprobarSaveCommitInfo(commitInfo);
 				return true;
-			} 
-			
+			}
+
 			else {
 				return false;
 			}
 		}
-		
+
 	}
 
 	private void actualizarCommitsBranch(String[] info, boolean initialStarCursorFind, List<Commit> commitsBranch,
@@ -305,7 +307,7 @@ public class CommitsGithub {
 	private ObjectNode getVariables(String[] variablesPut, String name, CommitCursor commitCursor, String startCursor) {
 		ObjectNode variables = new ObjectMapper().createObjectNode();
 		variables.put("repo", variablesPut[0]);
-		variables.put("owner", variablesPut[1]);	
+		variables.put("owner", variablesPut[1]);
 		variables.put("branch", name);
 		LOG.info("Estamos en la rama: " + name);
 		if (startCursor != null) {
@@ -317,7 +319,7 @@ public class CommitsGithub {
 		} else {
 			LOG.info(variablesPut[2]);
 			if (variablesPut[2].equals(this.filenameCursor) && commitCursor != null) {
-				LOG.info("Cursor end actual: "+commitCursor.getEndCursor());
+				LOG.info("Cursor end actual: " + commitCursor.getEndCursor());
 				variables.put(this.cursorString, commitCursor.getEndCursor());
 			}
 		}
@@ -329,7 +331,7 @@ public class CommitsGithub {
 
 		JsonNode cursorNode = jsonNode.path("data").path("repository").path("ref").path("target").path("history")
 				.path("pageInfo");
-		
+
 		LOG.info(cursorNode.toString());
 
 		boolean hasNextPage = cursorNode.get("hasNextPage").booleanValue();
@@ -349,29 +351,30 @@ public class CommitsGithub {
 			commitCursorService.updateCommitCursor(commitCursor);
 		}
 
-		LOG.info("CommitCursor->  "+commitCursor.getBranch()+" end : "+ commitCursor.getEndCursor()+ " start: "+commitCursor.getStartCursor());
+		LOG.info("CommitCursor->  " + commitCursor.getBranch() + " end : " + commitCursor.getEndCursor() + " start: "
+				+ commitCursor.getStartCursor());
 
 		return commitCursor;
 
 	}
 
-	private Object [] introducirCommit(JsonNode parameterNode, String branchId) {
+	private Object[] introducirCommit(JsonNode parameterNode, String branchId) {
 
 		Commit commit = null;
 		CommitInfo commitInfo = null;
 		UserGithub userGithub = null;
-		
+
 		String oid;
-		
+
 		Instant pushedDate;
 
 		String pushedDateExtraido;
 		String authoredDateExtraido;
-		
+
 		String messageHeadline;
 		String message;
 		int changedFiles;
-				
+
 		String authorLogin;
 		String authorName;
 		String authorId;
@@ -390,41 +393,40 @@ public class CommitsGithub {
 
 		if (pushedDateExtraido == null || pushedDateExtraido.equals("")) {
 			pushedDate = Instant.parse(authoredDateExtraido).plus(1, ChronoUnit.HOURS);
-		} 
-		else {
+		} else {
 			pushedDate = Instant.parse(pushedDateExtraido).plus(1, ChronoUnit.HOURS);
 		}
 
 		nodeAuthor = parameterNode.path("author");
 		if (nodeAuthor == null) {
-			authorLogin="";
-			authorName="";
-			authorId="";
-			authorEmail="";
-			authorAvatarURL="";
-			
+			authorLogin = "";
+			authorName = "";
+			authorId = "";
+			authorEmail = "";
+			authorAvatarURL = "";
+
 		} else {
 			authorName = comprobarValor(nodeAuthor, "name");
 			authorEmail = comprobarValor(nodeAuthor, "email");
-			authorAvatarURL= comprobarValor(nodeAuthor, "avatarUrl");
+			authorAvatarURL = comprobarValor(nodeAuthor, "avatarUrl");
 
 			nodeAuthorUser = nodeAuthor.path("user");
 			if (nodeAuthorUser == null) {
 				authorId = "";
-				authorLogin="";
+				authorLogin = "";
 			} else {
 				authorId = comprobarValor(nodeAuthorUser, "id");
-				authorLogin= comprobarValor(nodeAuthorUser, "login");
+				authorLogin = comprobarValor(nodeAuthorUser, "login");
 			}
 		}
-		
-		String [] authorValues = new String [5];
+
+		String[] authorValues = new String[5];
 		authorValues[0] = authorLogin;
-		authorValues[1] =authorName;
-		authorValues[2] =authorId;
-		authorValues[3] =authorEmail;
-		authorValues[4] =authorAvatarURL;
-		
+		authorValues[1] = authorName;
+		authorValues[2] = authorId;
+		authorValues[3] = authorEmail;
+		authorValues[4] = authorAvatarURL;
+
 		userGithub = this.userGithubOperations.saveAuthor(authorValues);
 
 		LOG.info("Commit oid : " + oid);
@@ -432,18 +434,16 @@ public class CommitsGithub {
 		LOG.info("Author" + userGithub.toString());
 
 		commit = new Commit(oid, pushedDate, userGithub.getId(), branchId);
-		
+
 		commitInfo = new CommitInfo(oid, messageHeadline, message, changedFiles);
-		
-		Object [] result = new Object[2];
-		
+
+		Object[] result = new Object[2];
+
 		result[0] = commit;
 		result[1] = commitInfo;
-		
+
 		return result;
 	}
-
-	
 
 	private int comprobarValorchangedFiles(JsonNode parameterNode, String value) {
 		if (parameterNode.get(value) == null) {

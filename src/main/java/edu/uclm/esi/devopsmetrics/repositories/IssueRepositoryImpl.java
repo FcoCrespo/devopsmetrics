@@ -90,13 +90,13 @@ public class IssueRepositoryImpl implements IssueRepository{
 	@Override
 	public List<Issue> findAllByCreationBetweenBeginEndDate(Instant beginDate, Instant endDate) {
 		return this.mongoOperations
-		        .find(new Query(Criteria.where(this.createdAtStr).gte(beginDate).and(this.createdAtStr).lte(endDate)), Issue.class);
+		        .find(new Query(Criteria.where(this.createdAtStr).gte(beginDate).lte(endDate)), Issue.class);
 	}
 
 	@Override
 	public List<Issue> findAllByClosedBetweenBeginEndDate(Instant beginDate, Instant endDate) {
 		return this.mongoOperations
-		        .find(new Query(Criteria.where("closedAt").gte(beginDate).and("closedAt").lte(endDate)
+		        .find(new Query(Criteria.where("closedAt").gte(beginDate).lte(endDate)
 		        		.and(this.stateStr).is("CLOSED")), Issue.class);
 	}
 
@@ -104,7 +104,7 @@ public class IssueRepositoryImpl implements IssueRepository{
 	@Override
 	public List<Issue> findAllByOpenBetweenBeginEndDate(Instant beginDate, Instant endDate) {
 		return this.mongoOperations
-		        .find(new Query(Criteria.where(this.createdAtStr).gte(beginDate).and(this.createdAtStr).lte(endDate)
+		        .find(new Query(Criteria.where(this.createdAtStr).gte(beginDate).lte(endDate)
 		        		.and(this.stateStr).is("OPEN")), Issue.class);
 	}
 }

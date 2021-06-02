@@ -115,9 +115,9 @@ public class MetricsOperations {
 			HttpEntity entity = httpresponse.getEntity();
 			String jsonData = EntityUtils.toString(entity, "UTF-8");
 			JsonNode jsonNode = new ObjectMapper().readTree(jsonData);
-		
+
 			return obtenerRepoMetrics(jsonNode);
-			
+
 		} catch (Exception e) {
 			httpclient.close();
 			return "Error al obtener las metricas de los commits";
@@ -126,7 +126,7 @@ public class MetricsOperations {
 		}
 
 	}
-	
+
 	public String getRepoMetricsDate(String tokenpass, String message) throws IOException {
 
 		final JSONObject jso = new JSONObject(message);
@@ -134,7 +134,7 @@ public class MetricsOperations {
 		String owner = jso.getString("owner");
 		String begindate = jso.getString("begindate");
 		String enddate = jso.getString("enddate");
-		
+
 		CloseableHttpClient httpclient = HttpClients.createDefault();
 		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/commits/allbranches?owner=" + owner
 				+ "&reponame=" + reponame + "&tokenpass=" + tokenpass);
@@ -146,10 +146,10 @@ public class MetricsOperations {
 
 			HttpEntity entity = httpresponse.getEntity();
 			String jsonData = EntityUtils.toString(entity, "UTF-8");
-		    JsonNode jsonNode = new ObjectMapper().readTree(jsonData);
-		
+			JsonNode jsonNode = new ObjectMapper().readTree(jsonData);
+
 			return obtenerRepoMetricsDate(jsonNode, begindate, enddate);
-			
+
 		} catch (Exception e) {
 			httpclient.close();
 			return "Error al obtener las metricas de los commits";
@@ -159,12 +159,12 @@ public class MetricsOperations {
 	}
 
 	private String obtenerRepoMetricsDate(JsonNode jsonNode, String begindate, String enddate) {
-		
-		Instant [] dates = DateUtils.getDatesInstant(begindate, enddate);
-		
+
+		Instant[] dates = DateUtils.getDatesInstant(begindate, enddate);
+
 		Instant beginDateInstant = dates[0];
 		Instant endDateInstant = dates[1];
-		
+
 		Iterator<JsonNode> iter;
 		iter = jsonNode.iterator();
 
@@ -174,14 +174,14 @@ public class MetricsOperations {
 		List<Commit> listaCommits = new ArrayList<>();
 
 		if (!iter.hasNext()) {
-			listaCommits = this.commitServices.getCommitService()
-					.getAllByBranchBeginEndDate(parameterNode.get(this.idGithubStr).textValue(), beginDateInstant, endDateInstant);
+			listaCommits = this.commitServices.getCommitService().getAllByBranchBeginEndDate(
+					parameterNode.get(this.idGithubStr).textValue(), beginDateInstant, endDateInstant);
 		} else {
 			while (iter.hasNext()) {
 
 				listaCommits = obtenerCommitsDate(parameterNode, listaCommits, beginDateInstant, endDateInstant);
 				parameterNode = iter.next();
-				
+
 				if (!iter.hasNext()) {
 
 					listaCommits = obtenerCommitsDate(parameterNode, listaCommits, beginDateInstant, endDateInstant);
@@ -195,8 +195,8 @@ public class MetricsOperations {
 	private List<Commit> obtenerCommitsDate(JsonNode parameterNode, List<Commit> listaCommits, Instant beginDateInstant,
 			Instant endDateInstant) {
 		List<Commit> listaOriginal = listaCommits;
-		List<Commit> listaNueva = this.commitServices.getCommitService()
-				.getAllByBranchBeginEndDate(parameterNode.get(this.idGithubStr).textValue(), beginDateInstant, endDateInstant);
+		List<Commit> listaNueva = this.commitServices.getCommitService().getAllByBranchBeginEndDate(
+				parameterNode.get(this.idGithubStr).textValue(), beginDateInstant, endDateInstant);
 
 		for (int i = 0; i < listaNueva.size(); i++) {
 			listaOriginal.add(listaNueva.get(i));
@@ -204,7 +204,7 @@ public class MetricsOperations {
 
 		return listaOriginal;
 	}
-	
+
 	private List<Commit> obtenerCommits(JsonNode parameterNode, List<Commit> listaCommits) {
 
 		List<Commit> listaOriginal = listaCommits;
@@ -236,7 +236,7 @@ public class MetricsOperations {
 
 				listaCommits = obtenerCommits(parameterNode, listaCommits);
 				parameterNode = iter.next();
-				
+
 				if (!iter.hasNext()) {
 
 					listaCommits = obtenerCommits(parameterNode, listaCommits);
@@ -249,7 +249,7 @@ public class MetricsOperations {
 	}
 
 	private String obtenerMetricasCommits(List<Commit> listaCommits) {
-		
+
 		Collections.sort(listaCommits);
 
 		Map<String, Commit> mapCommits = getMapCommits(listaCommits);
@@ -278,12 +278,11 @@ public class MetricsOperations {
 
 		JSONArray array = new JSONArray();
 		JSONObject json;
-		
+
 		Set<Entry<String, MethodMetrics>> entrySet = mapMethodMetrics.entrySet();
-        
-        for(Entry<String, MethodMetrics> entry : entrySet)
-        {
-        	commit = mapCommits.get(entry.getKey());
+
+		for (Entry<String, MethodMetrics> entry : entrySet) {
+			commit = mapCommits.get(entry.getKey());
 			commitinfo = mapCommitsInfo.get(entry.getKey());
 			userGithub = mapUserGithub.get(commit.getUsergithub());
 			methodMetrics = mapMethodMetrics.get(entry.getKey());
@@ -317,8 +316,8 @@ public class MetricsOperations {
 			json.put("RMA", couplingMetrics.getRma());
 
 			array.put(json);
-        }
-		
+		}
+
 		return array.toString();
 	}
 
@@ -397,9 +396,7 @@ public class MetricsOperations {
 		return mapCommitInfo;
 	}
 
-	
-
-	public synchronized void saveRepoMetrics(String repository, String owner) throws ParserConfigurationException, SAXException {
+	public void saveRepoMetrics(String repository, String owner) throws ParserConfigurationException, SAXException {
 
 		String server = serverftp;
 		int port = 21;
@@ -438,7 +435,7 @@ public class MetricsOperations {
 				dbf.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
 
 				String fileRoute = "commitsmetrics\\" + filesList.get(i);
-				
+
 				Document doc = obtenerXML(ftpClient, fileRoute, dbf);
 
 				doc.getDocumentElement().normalize();
@@ -472,7 +469,6 @@ public class MetricsOperations {
 				saveCohesionMetrics(data);
 				saveCouplingMetrics(data);
 
-				
 				while (!ftpClient.completePendingCommand())
 					;
 				LOG.info("-------[END:" + filesList.get(i) + "]---------------------");
@@ -499,7 +495,8 @@ public class MetricsOperations {
 
 	}
 
-	private Document obtenerXML(FTPClient ftpClient, String fileRoute, DocumentBuilderFactory dbf) throws IOException, ParserConfigurationException, SAXException {
+	private Document obtenerXML(FTPClient ftpClient, String fileRoute, DocumentBuilderFactory dbf)
+			throws IOException, ParserConfigurationException, SAXException {
 		InputStream stream = ftpClient.retrieveFileStream(fileRoute);
 		BufferedReader reader = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8));
 
@@ -508,7 +505,7 @@ public class MetricsOperations {
 		dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
 
 		DocumentBuilder db = dbf.newDocumentBuilder();
-		
+
 		stream.close();
 
 		return db.parse(new InputSource(new StringReader(xmlData)));
@@ -729,7 +726,5 @@ public class MetricsOperations {
 		return updatedFiles;
 
 	}
-
-	
 
 }

@@ -10,7 +10,7 @@ import edu.uclm.esi.devopsmetrics.services.UserGithubService;
 
 @Service
 public class UserGithubOperations {
-	
+
 	private final UserGithubService userGithubService;
 
 	/**
@@ -20,44 +20,44 @@ public class UserGithubOperations {
 		this.userGithubService = userGithubService;
 	}
 
-	public UserGithub saveAuthor(String [] authorValues) {
-		
+	public UserGithub saveAuthor(String[] authorValues) {
+
 		String authorLogin = authorValues[0];
-		String authorName  = authorValues[1];
+		String authorName = authorValues[1];
 		String authorEmail = authorValues[3];
 		String authorAvatarURL = authorValues[4];
-		
+
 		UserGithub userGithub;
-		
+
 		String uuid = UUID.randomUUID().toString().replace("-", "");
-		
-		if( authorLogin != null && !authorLogin.equals("")) {
+
+		if (authorLogin != null && !authorLogin.equals("")) {
 			userGithub = userGithubService.findByLogin(authorLogin);
-			
-			if(userGithub==null) {
+
+			if (userGithub == null) {
 				userGithub = new UserGithub(authorLogin, authorEmail, authorAvatarURL, uuid, authorName);
 				userGithubService.saveUserGithub(userGithub);
 			}
-		
+
 		}
-		
-		else if( authorName != null && !authorName.equals("")) {
+
+		else if (authorName != null && !authorName.equals("")) {
 			userGithub = userGithubService.findByName(authorName);
-			
-			if(userGithub==null) {
+
+			if (userGithub == null) {
 				userGithub = new UserGithub(authorLogin, authorEmail, authorAvatarURL, uuid, authorName);
 				userGithubService.saveUserGithub(userGithub);
 			}
-		
+
 		}
-		
+
 		userGithub = userGithubService.findByLogin(authorLogin);
-		if(userGithub==null) {
+		if (userGithub == null) {
 			userGithub = userGithubService.findByName(authorName);
 		}
-		
+
 		return userGithub;
-		
+
 	}
 
 	public UserGithub findById(String id) {
