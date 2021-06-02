@@ -486,7 +486,6 @@ public class IssuesGithub {
 	private Object[] introducirIssue(JsonNode parameterNode) {
 		Issue issue = null;
 		IssueRepo issueRepo = null;
-		IssueAssignee issueAssignee = null;
 		UserGithub userGithubAuthor = null;
 		UserGithub userGithubAsignee = null;
 		Iterator<JsonNode> iter;
@@ -548,6 +547,12 @@ public class IssuesGithub {
 
 		JsonNode parameterNodeAssignee;
 
+		issue = new Issue(state, title, body, createdAt, closedAt);
+		issue.setId(idGithub);
+
+		issueRepo = new IssueRepo(repository, owner, userGithubAuthor.getId());
+		issueRepo.setId(idGithub);
+		
 		if (comprobarValorInt(nodesAssignees, "totalCount") == 0) {
 			assigneesNull = true;
 		}
@@ -566,9 +571,7 @@ public class IssuesGithub {
 
 					userGithubAsignee = this.userGithubOperations.saveAuthor(asigneeValues);
 
-					issueAssignee = new IssueAssignee(idGithub, userGithubAsignee.getId());
-
-					this.issueAssigneeService.saveIssueAssignee(issueAssignee);
+					comprobarExisteIssueAssignee(userGithubAsignee, issue);
 
 					parameterNodeAssignee = iter.next();
 
@@ -579,9 +582,7 @@ public class IssuesGithub {
 
 					userGithubAsignee = this.userGithubOperations.saveAuthor(asigneeValues);
 
-					issueAssignee = new IssueAssignee(idGithub, userGithubAsignee.getId());
-
-					this.issueAssigneeService.saveIssueAssignee(issueAssignee);
+					comprobarExisteIssueAssignee(userGithubAsignee, issue);
 
 				}
 			} else {
@@ -590,19 +591,11 @@ public class IssuesGithub {
 
 				userGithubAsignee = this.userGithubOperations.saveAuthor(asigneeValues);
 
-				issueAssignee = new IssueAssignee(idGithub, userGithubAsignee.getId());
-
-				this.issueAssigneeService.saveIssueAssignee(issueAssignee);
+				comprobarExisteIssueAssignee(userGithubAsignee, issue);
 
 			}
 
 		}
-
-		issue = new Issue(state, title, body, createdAt, closedAt);
-		issue.setId(idGithub);
-
-		issueRepo = new IssueRepo(repository, owner, userGithubAuthor.getId());
-		issueRepo.setId(idGithub);
 
 		Object[] result = new Object[2];
 
