@@ -3,6 +3,7 @@ package edu.uclm.esi.devopsmetrics.domain;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import edu.uclm.esi.devopsmetrics.utilities.KeyValue;
@@ -14,6 +15,7 @@ import okhttp3.Response;
 
 
 @Service
+@Scope("singleton")
 public class ResponseHTTP {
 	
 	

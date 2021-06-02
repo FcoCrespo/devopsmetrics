@@ -1,31 +1,9 @@
 package edu.uclm.esi.devopsmetrics.bdd;
 
-import io.cucumber.junit.Cucumber;
-import io.cucumber.junit.CucumberOptions;
-import io.cucumber.spring.CucumberContextConfiguration;
 
-import java.io.File;
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
-import java.io.FileInputStream;
-import java.io.InputStream;
-
-import org.junit.AfterClass;
-import org.junit.runner.RunWith;
-
-import org.apache.commons.net.ftp.FTP;
-import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPReply;
-
-@CucumberContextConfiguration
-@RunWith(Cucumber.class)
-@CucumberOptions(features = "src/test/resources/features", monochrome = true, plugin = {
-		"json:target/reports/JSONReports/TestReport.json", "pretty" })
 public class TestRunner {
 
-	final static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy-HH-mm");
+	/*final static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy-HH-mm");
 	final static LocalDateTime now = LocalDateTime.now();
 	
 	private static void showServerReply(FTPClient ftpClient) {
@@ -113,6 +91,6 @@ public class TestRunner {
 			}
 		}
 
-	}
+	}*/
 
 }

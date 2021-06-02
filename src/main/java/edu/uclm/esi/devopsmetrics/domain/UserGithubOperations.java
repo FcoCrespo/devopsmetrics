@@ -13,21 +13,13 @@ import edu.uclm.esi.devopsmetrics.services.UserGithubService;
 @Scope("singleton")
 public class UserGithubOperations {
 	
-	private UserGithubService userGithubService;
+	private final UserGithubService userGithubService;
 
 	/**
 	 * @author FcoCrespo
 	 */
-	private UserGithubOperations() {
-		
-	}
-	
-	private static class UserGithubOperationsHolder {
-		static UserGithubOperations singleton=new UserGithubOperations();
-	}
-	
-	public static UserGithubOperations get() {
-		return UserGithubOperationsHolder.singleton;
+	public UserGithubOperations(final UserGithubService userGithubService) {
+		this.userGithubService = userGithubService;
 	}
 
 	public UserGithub saveAuthor(String [] authorValues) {
@@ -71,14 +63,14 @@ public class UserGithubOperations {
 	}
 
 	public UserGithub findById(String id) {
-		return userGithubService.findById(id);
+		return this.userGithubService.findById(id);
 	}
 
 	public List<UserGithub> findAll() {
-		return userGithubService.findAll();
+		return this.userGithubService.findAll();
 	}
 
 	public UserGithub findByName(String authorName) {
-		return userGithubService.findByName(authorName);
+		return this.userGithubService.findByName(authorName);
 	}
 }

@@ -35,6 +35,9 @@ import edu.uclm.esi.devopsmetrics.domain.UserOperations;
 public class MetricsController {
 	
 	private static final Log LOG = LogFactory.getLog(MetricsController.class);
+
+	private final MetricsOperations metricsOperations;
+	private final UserOperations userOperations;
 	
 	private String message;
 	private final String errorMessage;
@@ -44,8 +47,10 @@ public class MetricsController {
 	 * @author FcoCrespo
 	 */
 
-	public MetricsController() {
+	public MetricsController(final MetricsOperations metricsOperations, final UserOperations userOperations) {
 
+		this.metricsOperations = metricsOperations;
+		this.userOperations = userOperations;
 		this.message = "Operation completed.";
 		this.errorMessage = "[SERVER] No se ha encontrado ningún usuario con esos datos.";
 
@@ -63,7 +68,7 @@ public class MetricsController {
 
 		try {
 			LOG.info("Save repo metrics");
-			MetricsOperations.get().saveRepoMetrics(repository, owner);
+			this.metricsOperations.saveRepoMetrics(repository, owner);
 			return ResponseEntity.ok(this.message);
 		}
 		catch(Exception e) {
@@ -84,10 +89,10 @@ public class MetricsController {
 	public ResponseEntity<String> allMetrics(@RequestParam("tokenpass") final String tokenpass,
 			@RequestParam("reponame") final String repository, @RequestParam("owner") final String owner) throws IOException {
 
-		boolean existe = UserOperations.get().getUserByTokenPass(tokenpass);
+		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
 		if (existe) {
 			LOG.info("Get repo metrics");
-			return ResponseEntity.ok(MetricsOperations.get().getRepoMetrics(repository, owner, tokenpass));
+			return ResponseEntity.ok(this.metricsOperations.getRepoMetrics(repository, owner, tokenpass));
 		} else {
 			LOG.info(this.errorMessage);
 			return ResponseEntity.badRequest().build();
@@ -107,11 +112,11 @@ public class MetricsController {
 	public ResponseEntity<String> allMetricsDate(@RequestParam("tokenpass") final String tokenpass,
 			@RequestBody final String message) throws IOException {
 
-		boolean existe = UserOperations.get().getUserByTokenPass(tokenpass);
+		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
 		if (existe) {
 			LOG.info("Get repo test metrics");
 			
-			return ResponseEntity.ok(MetricsOperations.get().getRepoMetricsDate(tokenpass, message));
+			return ResponseEntity.ok(this.metricsOperations.getRepoMetricsDate(tokenpass, message));
 		} else {
 			LOG.info(this.errorMessage);
 			return ResponseEntity.badRequest().build();
@@ -151,7 +156,7 @@ public class MetricsController {
 	public ResponseEntity<String> allTestMetrics(@RequestParam("tokenpass") final String tokenpass,
 			@RequestParam("reponame") final String repository, @RequestParam("owner") final String owner) {
 
-		boolean existe = UserOperations.get().getUserByTokenPass(tokenpass);
+		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
 		if (existe) {
 			LOG.info("Get repo test metrics");
 			return ResponseEntity.ok(TestOperations.get().getRepoTestMetrics(repository, owner));
@@ -177,7 +182,7 @@ public class MetricsController {
 			@RequestBody final String message) {
 
 		
-		boolean existe = UserOperations.get().getUserByTokenPass(tokenpass);
+		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
 		if (existe) {
 			final JSONObject jso = new JSONObject(message);
 			String reponame = jso.getString("reponame");
