@@ -50,14 +50,14 @@ public class LoginSteps {
 	@When("user enters username and password")
 	public void user_enters_username_and_password() {
 		
-		driver.findElement(By.xpath("//input[@placeholder='usuario']")).sendKeys(System.getProperty("app.user"));
+		driver.findElement(By.xpath("//input[@placeholder='user']")).sendKeys(System.getProperty("app.user"));
 	    driver.findElement(By.xpath("//input[@placeholder='password']")).sendKeys(System.getProperty("app.password"));    
 	}
 
 	@And("clicks on login button")
 	public void clicks_on_login_button() {
 		
-		driver.findElement(By.xpath("//button[@value='Acceder']")).click();
+		driver.findElement(By.xpath("//button[@value='Login']")).click();
 		
 	}
 
