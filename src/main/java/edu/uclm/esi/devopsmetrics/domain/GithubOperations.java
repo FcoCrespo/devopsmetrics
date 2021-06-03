@@ -189,7 +189,7 @@ public class GithubOperations {
 		boolean seguir = true;
 		int index = 0;
 		for (int i = 0; i < branchesRequest.size() && seguir; i++) {
-			if (branchesRequest.get(i).getName().equals("master")) {
+			if (respuesta(branchesRequest.get(i))) {
 				index = i;
 				seguir = false;
 			}
@@ -218,6 +218,15 @@ public class GithubOperations {
 		this.branchService.saveBranch(branch);
 
 		httpclient.close();
+	}
+
+	private boolean respuesta(Branch branch) {
+		if(branch.getName().equals("master")||branch.getName().equals("main")) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	private List<Branch> getBranches(List<String> branchesNamesRequest, String reponame) {
