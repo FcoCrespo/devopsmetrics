@@ -213,20 +213,28 @@ public class GithubOperations {
 			this.branchService.saveBranch(branch);
 		}
 
-		branch = this.branchService.getBranchByRepositoryyName(reponame, "master");
-		branch.setOrder(0);
-		this.branchService.saveBranch(branch);
+		saveMainOrMaster(reponame);
+		
+		
 
 		httpclient.close();
 	}
 
-	private boolean respuesta(Branch branch) {
-		if(branch.getName().equals("master")||branch.getName().equals("main")) {
-			return true;
+	private void saveMainOrMaster(String reponame) {
+		Branch branch = this.branchService.getBranchByRepositoryyName(reponame, "master");
+		if(branch==null) {
+			branch = this.branchService.getBranchByRepositoryyName(reponame, "main");
+			branch.setOrder(0);
+			this.branchService.saveBranch(branch);
 		}
 		else {
-			return false;
+			branch.setOrder(0);
+			this.branchService.saveBranch(branch);
 		}
+	}
+
+	private boolean respuesta(Branch branch) {
+		return (branch.getName().equals("master")||branch.getName().equals("main"));		
 	}
 
 	private List<Branch> getBranches(List<String> branchesNamesRequest, String reponame) {
