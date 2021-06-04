@@ -55,6 +55,8 @@ public class IssuesGithub {
 
 	private String graphqlUri;
 	private String filenameCursor;
+	
+	private String ownerStr= "owner";
 
 	/**
 	 * @author FcoCrespo
@@ -293,7 +295,7 @@ public class IssuesGithub {
 	private ObjectNode getVariablesUpdate(String[] variablesPut, IssueCursor issueCursor, String endCursor) {
 		ObjectNode variables = new ObjectMapper().createObjectNode();
 		variables.put("repo", variablesPut[0]);
-		variables.put("owner", variablesPut[1]);
+		variables.put(this.ownerStr, variablesPut[1]);
 		if (endCursor != null) {
 			if (variablesPut[2].equals(this.filenameCursor) && issueCursor != null) {
 				variables.put(this.cursorString, issueCursor.getEndCursor());
@@ -487,7 +489,7 @@ public class IssuesGithub {
 	private ObjectNode getVariables(String[] variablesPut, IssueCursor issueCursor, String startCursor) {
 		ObjectNode variables = new ObjectMapper().createObjectNode();
 		variables.put("repo", variablesPut[0]);
-		variables.put("owner", variablesPut[1]);
+		variables.put(this.ownerStr, variablesPut[1]);
 		if (startCursor != null) {
 			if (variablesPut[2].equals(this.filenameCursor) && issueCursor != null) {
 				variables.put(this.cursorString, issueCursor.getEndCursor());
@@ -566,7 +568,7 @@ public class IssuesGithub {
 		nodeRepository = parameterNode.path(this.repositoryString);
 
 		JsonNode nodeOwner;
-		nodeOwner = parameterNode.path(this.repositoryString).path("owner");
+		nodeOwner = parameterNode.path(this.repositoryString).path(this.ownerStr);
 
 		String owner = comprobarValorString(nodeOwner, this.loginString);
 
