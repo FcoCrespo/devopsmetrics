@@ -161,6 +161,33 @@ public class CommitsGithub {
 	public String updateRepositoryCommits(String[] info, String filename, boolean initialStarCursorFind,
 			List<Commit> commitsBranch, CommitCursor commitCursor) throws IOException {
 
+		
+
+		CommitCursor commitCursorInitial = this.commitCursorService.getCommitCursorByEndCursoryHasNextPage(info[2],
+				info[0]);
+		
+		if(commitCursorInitial==null) {
+			getNewRepositoryCommits(info, "src/main/resources/graphql/commits.graphql", null);
+			return "Fin.";
+		}
+		else {
+			
+			updateNormal(info, filename, initialStarCursorFind, commitsBranch, commitCursor);
+			
+			
+			return "Ok.";
+		}
+
+		
+
+	}
+
+	private String updateNormal(String[] info, String filename, boolean initialStarCursorFind, List<Commit> commitsBranch,
+			CommitCursor commitCursor) throws IOException {
+		
+		CommitCursor commitCursorInitial = this.commitCursorService.getCommitCursorByEndCursoryHasNextPage(info[2],
+				info[0]);
+		
 		String graphqlPayload;
 
 		ObjectNode variables;
@@ -173,10 +200,7 @@ public class CommitsGithub {
 		Iterator<JsonNode> iter;
 
 		File file = new File(filename);
-
-		CommitCursor commitCursorInitial = this.commitCursorService.getCommitCursorByEndCursoryHasNextPage(info[2],
-				info[0]);
-
+		
 		String commitCursorStart = commitCursorInitial.getStartCursor().substring(0,
 				commitCursorInitial.getStartCursor().indexOf(" "));
 
@@ -264,8 +288,8 @@ public class CommitsGithub {
 		}
 
 		actualizarCommitsBranch(info, initialStarCursorFind, commitsBranch, commitCursor);
+		
 		return "Ok.";
-
 	}
 
 	private boolean checkInitialStarCursorFind(Commit commit, CommitInfo commitInfo, String commitCursorStart,

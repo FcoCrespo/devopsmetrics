@@ -163,14 +163,8 @@ public class GithubOperations {
 		String branchname;
 		String commitoid;
 
-		List<Commit> firstCommitByBranch = new ArrayList<Commit>();
-
 		List<String> commitOidRequest = new ArrayList<String>();
-		List<String> branchesNamesRequest = new ArrayList<String>();
-
-		branchname = parameterNode.get(this.branchnameStr).textValue();
-		commitoid = parameterNode.get(this.commitoidStr).textValue();
-		
+		List<String> branchesNamesRequest = new ArrayList<String>();	
 		
 		if(iter.hasNext()) {
 			while (iter.hasNext()) {
@@ -194,28 +188,46 @@ public class GithubOperations {
 			}
 		}
 		else {
+			branchname = parameterNode.get(this.branchnameStr).textValue();
+			commitoid = parameterNode.get(this.commitoidStr).textValue();
 			if (!commitoid.equals(this.emptyStr)) {
 				commitOidRequest.add(commitoid);
 				branchesNamesRequest.add(branchname);
 			}
 		}
 		
+		iter = jsonNode.iterator();
 
 		List<Branch> branchesRequest = getBranches(branchesNamesRequest, reponame);
-
 		
 		int index = getIndex(branchesRequest);
 		
 		branchesRequest.remove(index);
 		commitOidRequest.remove(index);
 
+		List<Commit> firstCommitByBranch = getListFirstCommitByBranch(commitOidRequest, branchesRequest);
+		
+		Collections.sort(firstCommitByBranch);
+		
+		saveOrder(firstCommitByBranch);		
+
+		saveMainOrMaster(reponame);	
+
+		httpclient.close();
+	}
+
+	private List<Commit> getListFirstCommitByBranch(List<String> commitOidRequest, List<Branch> branchesRequest) {
+		
+		List<Commit> firstCommitByBranch = new ArrayList<Commit>();
 		for (int i = 0; i < commitOidRequest.size(); i++) {
 			firstCommitByBranch.add(this.commitService.getCommitByOidyBranch(commitOidRequest.get(i),
 					branchesRequest.get(i).getIdGithub()));
 		}
+		
+		return firstCommitByBranch;
+	}
 
-		Collections.sort(firstCommitByBranch);
-
+	private void saveOrder(List<Commit> firstCommitByBranch) {
 		Branch branch;
 		for (int i = 0; i < firstCommitByBranch.size(); i++) {
 			branch = this.branchService.findById(firstCommitByBranch.get(i).getBranchId());
@@ -224,12 +236,7 @@ public class GithubOperations {
 			branch.setOrder(i + 1);
 			this.branchService.saveBranch(branch);
 		}
-
-		saveMainOrMaster(reponame);
 		
-		
-
-		httpclient.close();
 	}
 
 	private int getIndex(List<Branch> branchesRequest) {
@@ -276,7 +283,8 @@ public class GithubOperations {
 
 		List<Commit> commits;
 
-		if (branch.getOrder() == 0 || branch.getOrder() == 1) {
+		//if (branch.getOrder() == 0 || branch.getOrder() == 1) {
+		if (branch.getOrder() == 0) {
 			commits = this.commitService.getAllCommitsByBranch(branch.getIdGithub());
 			Collections.sort(commits);
 		} else {
@@ -336,7 +344,8 @@ public class GithubOperations {
 		Branch branch = this.branchService.getBranchByRepositoryyName(reponame, name);
 		List<Commit> commits;
 
-		if (branch.getOrder() == 0 || branch.getOrder() == 1) {
+		//if (branch.getOrder() == 0 || branch.getOrder() == 1) {
+				if (branch.getOrder() == 0) {
 			commits = this.commitService.getAllByBranchBeginEndDate(branch.getIdGithub(), beginDateInstant,
 					endDateInstant);
 			Collections.sort(commits);
@@ -366,7 +375,8 @@ public class GithubOperations {
 		UserGithub userGithub = this.commitsGithub.getUserGithubByName(authorName);
 		List<Commit> commits;
 
-		if (branch.getOrder() == 0 || branch.getOrder() == 1) {
+		//if (branch.getOrder() == 0 || branch.getOrder() == 1) {
+				if (branch.getOrder() == 0) {
 			commits = this.commitService.getAllByBranchBeginEndDateByAuthor(branch.getIdGithub(), beginDateInstant,
 					endDateInstant, userGithub.getId());
 			Collections.sort(commits);
@@ -389,7 +399,8 @@ public class GithubOperations {
 		UserGithub userGithub = this.commitsGithub.getUserGithubByName(authorName);
 		List<Commit> commits;
 
-		if (branch.getOrder() == 0 || branch.getOrder() == 1) {
+		//if (branch.getOrder() == 0 || branch.getOrder() == 1) {
+		if (branch.getOrder() == 0) {
 			commits = this.commitService.getAllCommitsByBranchAndAuthor(branch.getIdGithub(), userGithub.getId());
 			Collections.sort(commits);
 		} else {
