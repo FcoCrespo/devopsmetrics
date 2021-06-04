@@ -142,12 +142,14 @@ public class GithubOperations {
 
 		
 		CloseableHttpClient httpclient=null;
+		String reponameGet=reponame;
+		String ownerGet=owner;
 		
 		try {
-			List<Branch> branchesRepo = this.branchService.getBranchesByRepository(reponame, false);
+			List<Branch> branchesRepo = this.branchService.getBranchesByRepository(reponameGet, false);
 
 			httpclient = HttpClients.createDefault();
-			HttpGet httpget = new HttpGet("http://" + serverftp + ":8080/serverdevopsmetrics/branchesorder?owner=" + owner
+			HttpGet httpget = new HttpGet("http://" + serverftp + ":8080/serverdevopsmetrics/branchesorder?owner=" + ownerGet
 					+ "&reponame=" + branchesRepo.get(0).getRepository());
 
 			LOG.info("Request Type: " + httpget.getMethod());

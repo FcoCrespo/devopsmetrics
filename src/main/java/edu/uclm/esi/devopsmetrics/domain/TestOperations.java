@@ -3,9 +3,9 @@ package edu.uclm.esi.devopsmetrics.domain;
 import java.io.BufferedReader;
 
 import org.apache.commons.net.ftp.FTP;
-import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
+import org.apache.commons.net.ftp.FTPSClient;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -134,7 +134,7 @@ public class TestOperations {
 		String server = serverftp;
 		int port = 21;
 
-		FTPClient ftpClient = new FTPClient();
+		FTPSClient ftpClient = new FTPSClient();
 
 		String[] variables;
 
@@ -236,7 +236,7 @@ public class TestOperations {
 
 	}
 
-	private String obtenerJSON(FTPClient ftpClient, String fileRoute) throws IOException {
+	private String obtenerJSON(FTPSClient ftpClient, String fileRoute) throws IOException {
 
 		InputStream stream = ftpClient.retrieveFileStream(fileRoute);
 		BufferedReader reader = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8));
@@ -246,7 +246,7 @@ public class TestOperations {
 		return json;
 	}
 
-	static void listDirectory(FTPClient ftpClient, List<String> filesList, String parentDir, String currentDir,
+	static void listDirectory(FTPSClient ftpClient, List<String> filesList, String parentDir, String currentDir,
 			int level) throws IOException {
 		String dirToList = parentDir;
 		if (!currentDir.equals("")) {

@@ -399,7 +399,6 @@ public class IssuesGithub {
 		
 		else {
 			issueCursor = new IssueCursor(hasNextPage, endCursor, startCursor, reponame, null);
-			LOG.info(issueCursor.toString());
 		}
 
 
