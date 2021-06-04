@@ -140,88 +140,87 @@ public class GithubOperations {
 
 	public void getFirstCommitByBranch(String reponame, String owner) throws IOException {
 
-		List<Branch> branchesRepo = this.branchService.getBranchesByRepository(reponame, false);
-
-		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpGet httpget = new HttpGet("http://" + serverftp + ":8080/serverdevopsmetrics/branchesorder?owner=" + owner
-				+ "&reponame=" + branchesRepo.get(0).getRepository());
-
-		LOG.info("Request Type: " + httpget.getMethod());
-
-		HttpResponse httpresponse = httpclient.execute(httpget);
-
-		HttpEntity entity = httpresponse.getEntity();
-		String jsonData = EntityUtils.toString(entity, "UTF-8");
-		JsonNode jsonNode = new ObjectMapper().readTree(jsonData);
-
-		Iterator<JsonNode> iter;
-		iter = jsonNode.iterator();
-
-		JsonNode parameterNode;
-		parameterNode = iter.next();
-
-		String branchname;
-		String commitoid;
-
-		List<String> commitOidRequest = new ArrayList<String>();
-		List<String> branchesNamesRequest = new ArrayList<String>();	
 		
-		if(iter.hasNext()) {
-			while (iter.hasNext()) {
-				branchname = parameterNode.get(this.branchnameStr).textValue();
-				commitoid = parameterNode.get(this.commitoidStr).textValue();
-				if (!commitoid.equals(this.emptyStr)) {
-					commitOidRequest.add(commitoid);
-					branchesNamesRequest.add(branchname);
-				}
+		CloseableHttpClient httpclient=null;
+		
+		try {
+			List<Branch> branchesRepo = this.branchService.getBranchesByRepository(reponame, false);
 
-				parameterNode = iter.next();
-				if (!iter.hasNext()) {
-					branchname = parameterNode.get(this.branchnameStr).textValue();
-					commitoid = parameterNode.get(this.commitoidStr).textValue();
-					if (!commitoid.equals(this.emptyStr)) {
-						commitOidRequest.add(commitoid);
-						branchesNamesRequest.add(branchname);
+			httpclient = HttpClients.createDefault();
+			HttpGet httpget = new HttpGet("http://" + serverftp + ":8080/serverdevopsmetrics/branchesorder?owner=" + owner
+					+ "&reponame=" + branchesRepo.get(0).getRepository());
+
+			LOG.info("Request Type: " + httpget.getMethod());
+
+			HttpResponse httpresponse = httpclient.execute(httpget);
+
+			HttpEntity entity = httpresponse.getEntity();
+			String jsonData = EntityUtils.toString(entity, "UTF-8");
+			JsonNode jsonNode = new ObjectMapper().readTree(jsonData);
+
+			Iterator<JsonNode> iter;
+			iter = jsonNode.iterator();
+
+			JsonNode parameterNode;
+			parameterNode = iter.next();
+
+			List<String> commitOidRequest = new ArrayList<String>();
+			List<String> branchesNamesRequest = new ArrayList<String>();	
+			
+			if(iter.hasNext()) {
+				while (iter.hasNext()) {
+					branchesNamesRequest.add(parameterNode.get(this.branchnameStr).textValue());
+					commitOidRequest.add(parameterNode.get(this.commitoidStr).textValue());
+					
+					parameterNode = iter.next();
+					if (!iter.hasNext()) {
+						branchesNamesRequest.add(parameterNode.get(this.branchnameStr).textValue());
+						commitOidRequest.add(parameterNode.get(this.commitoidStr).textValue());
 					}
-
 				}
 			}
-		}
-		else {
-			branchname = parameterNode.get(this.branchnameStr).textValue();
-			commitoid = parameterNode.get(this.commitoidStr).textValue();
-			if (!commitoid.equals(this.emptyStr)) {
-				commitOidRequest.add(commitoid);
-				branchesNamesRequest.add(branchname);
+			else {
+				branchesNamesRequest.add(parameterNode.get(this.branchnameStr).textValue());
+				commitOidRequest.add(parameterNode.get(this.commitoidStr).textValue());		
 			}
+			
+			List<Branch> branchesRequest = getBranches(branchesNamesRequest, reponame);
+			
+			int index = getIndex(branchesRequest);
+			
+			branchesRequest.remove(index);
+			commitOidRequest.remove(index);
+
+			List<Commit> firstCommitByBranch = getListFirstCommitByBranch(commitOidRequest, branchesRequest);
+			
+			Collections.sort(firstCommitByBranch);
+			
+			saveOrder(firstCommitByBranch);		
+
+			saveMainOrMaster(reponame);	
+		}
+		catch(IOException e) {
+			LOG.info("Error saving branches order");
+		}
+		finally {
+			if(httpclient!=null) {
+				httpclient.close();
+			}
+
 		}
 		
-		iter = jsonNode.iterator();
-
-		List<Branch> branchesRequest = getBranches(branchesNamesRequest, reponame);
-		
-		int index = getIndex(branchesRequest);
-		
-		branchesRequest.remove(index);
-		commitOidRequest.remove(index);
-
-		List<Commit> firstCommitByBranch = getListFirstCommitByBranch(commitOidRequest, branchesRequest);
-		
-		Collections.sort(firstCommitByBranch);
-		
-		saveOrder(firstCommitByBranch);		
-
-		saveMainOrMaster(reponame);	
-
-		httpclient.close();
 	}
 
 	private List<Commit> getListFirstCommitByBranch(List<String> commitOidRequest, List<Branch> branchesRequest) {
 		
 		List<Commit> firstCommitByBranch = new ArrayList<Commit>();
 		for (int i = 0; i < commitOidRequest.size(); i++) {
-			firstCommitByBranch.add(this.commitService.getCommitByOidyBranch(commitOidRequest.get(i),
-					branchesRequest.get(i).getIdGithub()));
+			
+			if (!commitOidRequest.get(i).equals(this.emptyStr)) {
+				firstCommitByBranch.add(this.commitService.getCommitByOidyBranch(commitOidRequest.get(i),
+						branchesRequest.get(i).getIdGithub()));
+			}
+			
 		}
 		
 		return firstCommitByBranch;
@@ -283,7 +282,6 @@ public class GithubOperations {
 
 		List<Commit> commits;
 
-		//if (branch.getOrder() == 0 || branch.getOrder() == 1) {
 		if (branch.getOrder() == 0) {
 			commits = this.commitService.getAllCommitsByBranch(branch.getIdGithub());
 			Collections.sort(commits);
@@ -344,8 +342,8 @@ public class GithubOperations {
 		Branch branch = this.branchService.getBranchByRepositoryyName(reponame, name);
 		List<Commit> commits;
 
-		//if (branch.getOrder() == 0 || branch.getOrder() == 1) {
-				if (branch.getOrder() == 0) {
+
+		if (branch.getOrder() == 0) {
 			commits = this.commitService.getAllByBranchBeginEndDate(branch.getIdGithub(), beginDateInstant,
 					endDateInstant);
 			Collections.sort(commits);
@@ -375,8 +373,8 @@ public class GithubOperations {
 		UserGithub userGithub = this.commitsGithub.getUserGithubByName(authorName);
 		List<Commit> commits;
 
-		//if (branch.getOrder() == 0 || branch.getOrder() == 1) {
-				if (branch.getOrder() == 0) {
+		
+		if (branch.getOrder() == 0) {
 			commits = this.commitService.getAllByBranchBeginEndDateByAuthor(branch.getIdGithub(), beginDateInstant,
 					endDateInstant, userGithub.getId());
 			Collections.sort(commits);
@@ -399,7 +397,7 @@ public class GithubOperations {
 		UserGithub userGithub = this.commitsGithub.getUserGithubByName(authorName);
 		List<Commit> commits;
 
-		//if (branch.getOrder() == 0 || branch.getOrder() == 1) {
+		
 		if (branch.getOrder() == 0) {
 			commits = this.commitService.getAllCommitsByBranchAndAuthor(branch.getIdGithub(), userGithub.getId());
 			Collections.sort(commits);
