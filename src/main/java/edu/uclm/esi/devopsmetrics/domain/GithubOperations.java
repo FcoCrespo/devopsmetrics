@@ -45,6 +45,11 @@ public class GithubOperations {
 	private final BranchService branchService;
 	private final BranchesGithub branchesGithub;
 	private final CommitsGithub commitsGithub;
+	
+	private String branchnameStr = "branchname";
+	private String commitoidStr = "commit";
+	private String emptyStr = "empty";
+	
 
 	@Value("${app.serverftp}")
 	private String serverftp;
@@ -163,20 +168,27 @@ public class GithubOperations {
 		List<String> commitOidRequest = new ArrayList<String>();
 		List<String> branchesNamesRequest = new ArrayList<String>();
 
+		branchname = parameterNode.get(this.branchnameStr).textValue();
+		commitoid = parameterNode.get(this.commitoidStr).textValue();
+		if (!commitoid.equals(this.emptyStr)) {
+			commitOidRequest.add(commitoid);
+			branchesNamesRequest.add(branchname);
+		}
+		
+		
 		while (iter.hasNext()) {
-			branchname = parameterNode.get("branchname").textValue();
-			commitoid = parameterNode.get("commit").textValue();
-			if (!commitoid.equals("empty")) {
+			branchname = parameterNode.get(this.branchnameStr).textValue();
+			commitoid = parameterNode.get(this.commitoidStr).textValue();
+			if (!commitoid.equals(this.emptyStr)) {
 				commitOidRequest.add(commitoid);
 				branchesNamesRequest.add(branchname);
 			}
 
 			parameterNode = iter.next();
 			if (!iter.hasNext()) {
-				branchname = parameterNode.get("branchname").textValue();
-				commitoid = parameterNode.get("commit").textValue();
-
-				if (!commitoid.equals("empty")) {
+				branchname = parameterNode.get(this.branchnameStr).textValue();
+				commitoid = parameterNode.get(this.commitoidStr).textValue();
+				if (!commitoid.equals(this.emptyStr)) {
 					commitOidRequest.add(commitoid);
 					branchesNamesRequest.add(branchname);
 				}
@@ -186,14 +198,9 @@ public class GithubOperations {
 
 		List<Branch> branchesRequest = getBranches(branchesNamesRequest, reponame);
 
-		boolean seguir = true;
-		int index = 0;
-		for (int i = 0; i < branchesRequest.size() && seguir; i++) {
-			if (respuesta(branchesRequest.get(i))) {
-				index = i;
-				seguir = false;
-			}
-		}
+		
+		int index = getIndex(branchesRequest);
+		
 		branchesRequest.remove(index);
 		commitOidRequest.remove(index);
 
@@ -218,6 +225,19 @@ public class GithubOperations {
 		
 
 		httpclient.close();
+	}
+
+	private int getIndex(List<Branch> branchesRequest) {
+		boolean seguir = true;
+		int index = 0;
+		for (int i = 0; i < branchesRequest.size() && seguir; i++) {
+			if (respuesta(branchesRequest.get(i))) {
+				index = i;
+				seguir = false;
+			}
+		}
+		
+		return index;
 	}
 
 	private void saveMainOrMaster(String reponame) {
