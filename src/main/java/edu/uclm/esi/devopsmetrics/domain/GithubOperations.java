@@ -170,22 +170,10 @@ public class GithubOperations {
 
 		branchname = parameterNode.get(this.branchnameStr).textValue();
 		commitoid = parameterNode.get(this.commitoidStr).textValue();
-		if (!commitoid.equals(this.emptyStr)) {
-			commitOidRequest.add(commitoid);
-			branchesNamesRequest.add(branchname);
-		}
 		
 		
-		while (iter.hasNext()) {
-			branchname = parameterNode.get(this.branchnameStr).textValue();
-			commitoid = parameterNode.get(this.commitoidStr).textValue();
-			if (!commitoid.equals(this.emptyStr)) {
-				commitOidRequest.add(commitoid);
-				branchesNamesRequest.add(branchname);
-			}
-
-			parameterNode = iter.next();
-			if (!iter.hasNext()) {
+		if(iter.hasNext()) {
+			while (iter.hasNext()) {
 				branchname = parameterNode.get(this.branchnameStr).textValue();
 				commitoid = parameterNode.get(this.commitoidStr).textValue();
 				if (!commitoid.equals(this.emptyStr)) {
@@ -193,8 +181,25 @@ public class GithubOperations {
 					branchesNamesRequest.add(branchname);
 				}
 
+				parameterNode = iter.next();
+				if (!iter.hasNext()) {
+					branchname = parameterNode.get(this.branchnameStr).textValue();
+					commitoid = parameterNode.get(this.commitoidStr).textValue();
+					if (!commitoid.equals(this.emptyStr)) {
+						commitOidRequest.add(commitoid);
+						branchesNamesRequest.add(branchname);
+					}
+
+				}
 			}
 		}
+		else {
+			if (!commitoid.equals(this.emptyStr)) {
+				commitOidRequest.add(commitoid);
+				branchesNamesRequest.add(branchname);
+			}
+		}
+		
 
 		List<Branch> branchesRequest = getBranches(branchesNamesRequest, reponame);
 
