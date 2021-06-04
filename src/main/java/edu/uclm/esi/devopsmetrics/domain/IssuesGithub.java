@@ -175,14 +175,12 @@ public class IssuesGithub {
 
 		IssueCursor issueCursorInitial = this.issueCursorService.getByRepository(info[0]);
 
-		String issueInitial = issueCursorInitial.getIdLastIssue();
-
 		String[] variablesPut = new String[3];
 		variablesPut[0] = info[0];
 		variablesPut[1] = info[1];
 		variablesPut[2] = info[2];
 
-		variables = getVariables(variablesPut, issueCursor, issueCursorInitial.getStartCursor());
+		variables = getVariablesUpdate(variablesPut, issueCursor, issueCursorInitial.getEndCursor());
 
 		graphqlPayload = GraphqlTemplate.parseGraphql(file, variables);
 		responseGiven = this.response.prepareResponse(graphqlPayload, this.graphqlUri, info[1]);
@@ -215,14 +213,12 @@ public class IssuesGithub {
 				issue = (Issue) result[0];
 				issueRepo = (IssueRepo) result[1];
 
-				initialStartCursorFind = checkInitialIssueFind(issue, issueInitial, initialStartCursorFind);
 
 				parameterNode = iter.next();
 
-				if (initialStartCursorFind) {
-					issuesList.add(issue);
-					issuesRepoList.add(issueRepo);
-				}
+				issuesList.add(issue);
+				issuesRepoList.add(issueRepo);
+				
 
 			}
 			if (!iter.hasNext()) {
@@ -230,13 +226,12 @@ public class IssuesGithub {
 				issue = (Issue) result[0];
 				issueRepo = (IssueRepo) result[1];
 
-				initialStartCursorFind = checkInitialIssueFind(issue, issueInitial, initialStartCursorFind);
-
-				if (initialStartCursorFind) {
-					actualizarCursor(issueCursor, issue);
-					issuesList.add(issue);
-					issuesRepoList.add(issueRepo);
-				}
+				actualizarCursor(issueCursor, issue);
+				issuesList.add(issue);
+				issuesRepoList.add(issueRepo);
+				
+				saveUpdateIssues(issuesList, issuesRepoList);
+				
 			}
 
 		} else {
@@ -244,18 +239,76 @@ public class IssuesGithub {
 			issue = (Issue) result[0];
 			issueRepo = (IssueRepo) result[1];
 
-			initialStartCursorFind = checkInitialIssueFind(issue, issueInitial, initialStartCursorFind);
-
-			if (initialStartCursorFind) {
-				actualizarCursor(issueCursor, issue);
-				issuesList.add(issue);
-				issuesRepoList.add(issueRepo);
-			}
+		    actualizarCursor(issueCursor, issue);
+		    
+		    this.issueService.saveIssue(issue);
+		    this.issueRepoService.saveIssueRepo(issueRepo);
+			
 		}
 
 		actualizarIssuesRepository(info, initialStartCursorFind, issuesList, issuesRepoList, issueCursor);
 		return "Ok.";
 
+	}
+	
+	private void saveUpdateIssues(List<Issue> issuesList, List<IssueRepo> issuesRepoList) {
+		for(int i=0; i<issuesList.size(); i++) {
+			this.issueService.saveIssue(issuesList.get(i));
+		    this.issueRepoService.saveIssueRepo(issuesRepoList.get(i));
+		}		
+	}
+
+	private IssueCursor updateIssueCursor(JsonNode jsonNode, String reponame) {
+		JsonNode cursorNode = jsonNode.path("data").path(this.repositoryString).path(this.issuesString)
+				.path("pageInfo");
+
+		LOG.info(cursorNode.toString());
+
+		boolean hasNextPage = cursorNode.get("hasNextPage").booleanValue();
+		String endCursor = cursorNode.get("endCursor").textValue();
+		String startCursor = cursorNode.get("startCursor").textValue();
+
+		if (endCursor == null || startCursor == null) {
+			return null;
+		}
+
+		IssueCursor issueCursor = this.issueCursorService.getByRepository(reponame);
+
+		if (issueCursor == null) {
+			issueCursor = new IssueCursor(hasNextPage, endCursor, startCursor, reponame, null);
+			this.issueCursorService.saveIssueCursor(issueCursor);
+		} else {
+			issueCursor.setHasNextPage(hasNextPage);
+			issueCursor.setStartCursor(startCursor);
+			issueCursor.setEndCursor(endCursor);
+
+			this.issueCursorService.updateIssueCursor(issueCursor);
+		}
+
+		LOG.info("IssueCursor-> end : " + issueCursor.getEndCursor() + " start: " + issueCursor.getStartCursor());
+
+		return issueCursor;
+	}
+	
+	private ObjectNode getVariablesUpdate(String[] variablesPut, IssueCursor issueCursor, String endCursor) {
+		ObjectNode variables = new ObjectMapper().createObjectNode();
+		variables.put("repo", variablesPut[0]);
+		variables.put("owner", variablesPut[1]);
+		if (endCursor != null) {
+			if (variablesPut[2].equals(this.filenameCursor) && issueCursor != null) {
+				variables.put(this.cursorString, issueCursor.getEndCursor());
+			} else {
+				variables.put(this.cursorString, endCursor);
+			}
+		} else {
+			LOG.info(variablesPut[2]);
+			if (variablesPut[2].equals(this.filenameCursor) && issueCursor != null) {
+				LOG.info("Cursor end actual: " + issueCursor.getEndCursor());
+				variables.put(this.cursorString, issueCursor.getEndCursor());
+			}
+		}
+		LOG.info(variables.toPrettyString());
+		return variables;
 	}
 
 	public void actualizarValores(String[] info, String filename, IssueCursor issueCursor) throws IOException {
@@ -325,7 +378,7 @@ public class IssuesGithub {
 		}
 
 	}
-
+	
 	private IssueCursor obtenerIssueCursor(JsonNode jsonNode, String reponame) {
 		JsonNode cursorNode = jsonNode.path("data").path(this.repositoryString).path(this.issuesString)
 				.path("pageInfo");
@@ -350,7 +403,7 @@ public class IssuesGithub {
 
 		return issueCursor;
 	}
-
+	
 	private void actualizarIssue(JsonNode parameterNode, Issue issue) {
 
 		issue.setState(parameterNode.get(this.stateString).asText());
@@ -430,6 +483,31 @@ public class IssuesGithub {
 
 		this.issueService.updateIssue(issue);
 	}
+	
+	private ObjectNode getVariables(String[] variablesPut, IssueCursor issueCursor, String startCursor) {
+		ObjectNode variables = new ObjectMapper().createObjectNode();
+		variables.put("repo", variablesPut[0]);
+		variables.put("owner", variablesPut[1]);
+		if (startCursor != null) {
+			if (variablesPut[2].equals(this.filenameCursor) && issueCursor != null) {
+				variables.put(this.cursorString, issueCursor.getEndCursor());
+			} else {
+				variables.put(this.cursorString, startCursor);
+			}
+		} else {
+			LOG.info(variablesPut[2]);
+			if (variablesPut[2].equals(this.filenameCursor) && issueCursor != null) {
+				LOG.info("Cursor end actual: " + issueCursor.getEndCursor());
+				variables.put(this.cursorString, issueCursor.getEndCursor());
+			}
+		}
+		LOG.info(variables.toPrettyString());
+		return variables;
+	}
+
+	
+
+	
 
 	private void comprobarExisteIssueAssignee(UserGithub userGithubAsignee, Issue issue) {
 		IssueAssignee issueAssignee = this.issueAssigneeService.getByAssigneeAndIssue(userGithubAsignee.getId(), issue.getId());
@@ -441,14 +519,6 @@ public class IssuesGithub {
 			
 		}
 		
-	}
-
-	private boolean checkInitialIssueFind(Issue issue, String issueInitial, boolean initialStartCursorFind) {
-		if (initialStartCursorFind) {
-			return true;
-		} else {
-			return (issue != null && issueInitial.equals(issue.getId()));
-		}
 	}
 
 	private void actualizarCursor(IssueCursor issueCursor, Issue issue) {
@@ -482,6 +552,8 @@ public class IssuesGithub {
 			this.issueRepoService.saveIssueRepo(issuesRepoList.get(i));
 		}
 	}
+	
+	
 
 	private Object[] introducirIssue(JsonNode parameterNode) {
 		Issue issue = null;
@@ -651,57 +723,8 @@ public class IssuesGithub {
 
 	}
 
-	private IssueCursor updateIssueCursor(JsonNode jsonNode, String reponame) {
-		JsonNode cursorNode = jsonNode.path("data").path(this.repositoryString).path(this.issuesString)
-				.path("pageInfo");
+	
 
-		LOG.info(cursorNode.toString());
-
-		boolean hasNextPage = cursorNode.get("hasNextPage").booleanValue();
-		String endCursor = cursorNode.get("endCursor").textValue();
-		String startCursor = cursorNode.get("startCursor").textValue();
-
-		if (endCursor == null || startCursor == null) {
-			return null;
-		}
-
-		IssueCursor issueCursor = this.issueCursorService.getByRepository(reponame);
-
-		if (issueCursor == null) {
-			issueCursor = new IssueCursor(hasNextPage, endCursor, startCursor, reponame, null);
-			this.issueCursorService.saveIssueCursor(issueCursor);
-		} else {
-			issueCursor.setHasNextPage(hasNextPage);
-			issueCursor.setStartCursor(startCursor);
-			issueCursor.setEndCursor(endCursor);
-
-			this.issueCursorService.updateIssueCursor(issueCursor);
-		}
-
-		LOG.info("IssueCursor-> end : " + issueCursor.getEndCursor() + " start: " + issueCursor.getStartCursor());
-
-		return issueCursor;
-	}
-
-	private ObjectNode getVariables(String[] variablesPut, IssueCursor issueCursor, String startCursor) {
-		ObjectNode variables = new ObjectMapper().createObjectNode();
-		variables.put("repo", variablesPut[0]);
-		variables.put("owner", variablesPut[1]);
-		if (startCursor != null) {
-			if (variablesPut[2].equals(this.filenameCursor) && issueCursor != null) {
-				variables.put(this.cursorString, issueCursor.getEndCursor());
-			} else {
-				variables.put(this.cursorString, startCursor);
-			}
-		} else {
-			LOG.info(variablesPut[2]);
-			if (variablesPut[2].equals(this.filenameCursor) && issueCursor != null) {
-				LOG.info("Cursor end actual: " + issueCursor.getEndCursor());
-				variables.put(this.cursorString, issueCursor.getEndCursor());
-			}
-		}
-		LOG.info(variables.toPrettyString());
-		return variables;
-	}
+	
 
 }
