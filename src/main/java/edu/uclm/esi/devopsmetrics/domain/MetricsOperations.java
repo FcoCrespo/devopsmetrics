@@ -22,9 +22,9 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.net.ftp.FTP;
-import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
+import org.apache.commons.net.ftp.FTPSClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -103,9 +103,12 @@ public class MetricsOperations {
 
 	public String getRepoMetrics(String repository, String owner, String tokenpass) throws IOException {
 
+		String repositoryGet=repository;
+		String ownerGet=owner;
+		String tokenpassGet=tokenpass;
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/commits/allbranches?owner=" + owner
-				+ "&reponame=" + repository + "&tokenpass=" + tokenpass);
+		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/commits/allbranches?owner=" + ownerGet
+				+ "&reponame=" + repositoryGet + "&tokenpass=" + tokenpassGet);
 		try {
 
 			LOG.info("Request Type: " + httpget.getMethod());
@@ -128,6 +131,9 @@ public class MetricsOperations {
 	}
 
 	public String getRepoMetricsDate(String tokenpass, String message) throws IOException {
+		
+		
+		String tokenpassGet=tokenpass;
 
 		final JSONObject jso = new JSONObject(message);
 		String reponame = jso.getString("reponame");
@@ -137,7 +143,7 @@ public class MetricsOperations {
 
 		CloseableHttpClient httpclient = HttpClients.createDefault();
 		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/commits/allbranches?owner=" + owner
-				+ "&reponame=" + reponame + "&tokenpass=" + tokenpass);
+				+ "&reponame=" + reponame + "&tokenpass=" + tokenpassGet);
 		try {
 
 			LOG.info("Request Type: " + httpget.getMethod());
@@ -172,19 +178,32 @@ public class MetricsOperations {
 		parameterNode = iter.next();
 
 		List<Commit> listaCommits = new ArrayList<>();
+		List<Commit> listaNueva;
 
 		if (!iter.hasNext()) {
 			listaCommits = this.commitServices.getCommitService().getAllByBranchBeginEndDate(
-					parameterNode.get(this.idGithubStr).textValue(), beginDateInstant, endDateInstant);
+			parameterNode.get(this.idGithubStr).textValue(), beginDateInstant, endDateInstant);
 		} else {
 			while (iter.hasNext()) {
 
-				listaCommits = obtenerCommitsDate(parameterNode, listaCommits, beginDateInstant, endDateInstant);
+				
+				listaNueva = this.commitServices.getCommitService().getAllByBranchBeginEndDate(
+						parameterNode.get(this.idGithubStr).textValue(), beginDateInstant, endDateInstant);
+
+				for (int i = 0; i < listaNueva.size(); i++) {
+					listaCommits.add(listaNueva.get(i));
+				}
+
 				parameterNode = iter.next();
 
 				if (!iter.hasNext()) {
+					
+					listaNueva = this.commitServices.getCommitService().getAllByBranchBeginEndDate(
+							parameterNode.get(this.idGithubStr).textValue(), beginDateInstant, endDateInstant);
 
-					listaCommits = obtenerCommitsDate(parameterNode, listaCommits, beginDateInstant, endDateInstant);
+					for (int i = 0; i < listaNueva.size(); i++) {
+						listaCommits.add(listaNueva.get(i));
+					}
 
 				}
 			}
@@ -192,32 +211,7 @@ public class MetricsOperations {
 		return obtenerMetricasCommits(listaCommits);
 	}
 
-	private List<Commit> obtenerCommitsDate(JsonNode parameterNode, List<Commit> listaCommits, Instant beginDateInstant,
-			Instant endDateInstant) {
-		List<Commit> listaOriginal = listaCommits;
-		List<Commit> listaNueva = this.commitServices.getCommitService().getAllByBranchBeginEndDate(
-				parameterNode.get(this.idGithubStr).textValue(), beginDateInstant, endDateInstant);
 
-		for (int i = 0; i < listaNueva.size(); i++) {
-			listaOriginal.add(listaNueva.get(i));
-		}
-
-		return listaOriginal;
-	}
-
-	private List<Commit> obtenerCommits(JsonNode parameterNode, List<Commit> listaCommits) {
-
-		List<Commit> listaOriginal = listaCommits;
-		List<Commit> listaNueva = this.commitServices.getCommitService()
-				.getAllCommitsByBranch(parameterNode.get(this.idGithubStr).textValue());
-
-		for (int i = 0; i < listaNueva.size(); i++) {
-			listaOriginal.add(listaNueva.get(i));
-		}
-
-		return listaOriginal;
-
-	}
 
 	private String obtenerRepoMetrics(JsonNode jsonNode) {
 		Iterator<JsonNode> iter;
@@ -227,6 +221,7 @@ public class MetricsOperations {
 		parameterNode = iter.next();
 
 		List<Commit> listaCommits = new ArrayList<>();
+		List<Commit> listaNueva;
 
 		if (!iter.hasNext()) {
 			listaCommits = this.commitServices.getCommitService()
@@ -234,13 +229,22 @@ public class MetricsOperations {
 		} else {
 			while (iter.hasNext()) {
 
-				listaCommits = obtenerCommits(parameterNode, listaCommits);
+				listaNueva = this.commitServices.getCommitService()
+						.getAllCommitsByBranch(parameterNode.get(this.idGithubStr).textValue());
+
+				for (int i = 0; i < listaNueva.size(); i++) {
+					listaCommits.add(listaNueva.get(i));
+				}
 				parameterNode = iter.next();
 
 				if (!iter.hasNext()) {
 
-					listaCommits = obtenerCommits(parameterNode, listaCommits);
+					listaNueva = this.commitServices.getCommitService()
+							.getAllCommitsByBranch(parameterNode.get(this.idGithubStr).textValue());
 
+					for (int i = 0; i < listaNueva.size(); i++) {
+						listaCommits.add(listaNueva.get(i));
+					}
 				}
 			}
 		}
@@ -401,7 +405,7 @@ public class MetricsOperations {
 		String server = serverftp;
 		int port = 21;
 
-		FTPClient ftpClient = new FTPClient();
+		FTPSClient ftpClient = new FTPSClient();
 
 		try {
 
@@ -495,14 +499,19 @@ public class MetricsOperations {
 
 	}
 
-	private Document obtenerXML(FTPClient ftpClient, String fileRoute, DocumentBuilderFactory dbf)
+	private Document obtenerXML(FTPSClient ftpClient, String fileRoute, DocumentBuilderFactory dbf)
 			throws IOException, ParserConfigurationException, SAXException {
+		
+		dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+		dbf.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+		dbf.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "");
+		
 		InputStream stream = ftpClient.retrieveFileStream(fileRoute);
 		BufferedReader reader = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8));
 
 		String xmlData = reader.lines().collect(Collectors.joining());
 
-		dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+		
 
 		DocumentBuilder db = dbf.newDocumentBuilder();
 
@@ -511,7 +520,7 @@ public class MetricsOperations {
 		return db.parse(new InputSource(new StringReader(xmlData)));
 	}
 
-	static void listDirectory(FTPClient ftpClient, List<String> filesList, String parentDir, String currentDir,
+	static void listDirectory(FTPSClient ftpClient, List<String> filesList, String parentDir, String currentDir,
 			int level) throws IOException {
 		String dirToList = parentDir;
 		if (!currentDir.equals("")) {
