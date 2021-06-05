@@ -92,7 +92,7 @@ public class GetAllBranchesSteps {
 			i++;
 		}
 		
-		assertEquals(4, i);
+		assertEquals(3, i);
 		
 		
 	}
