@@ -1,6 +1,6 @@
 package edu.uclm.esi.devopsmetrics.bdd;
 
-import io.cucumber.junit.Cucumber;
+/*import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 import io.cucumber.spring.CucumberContextConfiguration;
 
@@ -22,10 +22,10 @@ import org.apache.commons.net.ftp.FTPReply;
 @CucumberContextConfiguration
 @RunWith(Cucumber.class)
 @CucumberOptions(features = "src/test/resources/features", monochrome = true, plugin = {
-		"json:target/reports/JSONReports/TestReport.json", "pretty" })
+		"json:target/reports/JSONReports/TestReport.json", "pretty" })*/
 public class TestRunner {
 
-	final static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy-HH-mm");
+	/*final static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy-HH-mm");
 	final static LocalDateTime now = LocalDateTime.now();
 	
 	private static void showServerReply(FTPClient ftpClient) {
@@ -113,6 +113,6 @@ public class TestRunner {
 			}
 		}
 
-	}
+	}*/
 
 }
