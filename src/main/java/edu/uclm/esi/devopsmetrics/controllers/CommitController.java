@@ -5,8 +5,6 @@ import java.io.IOException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.JSONObject;
-import org.springframework.amqp.core.DirectExchange;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -44,10 +42,6 @@ public class CommitController {
 	private String message;
 
 	@Autowired
-    private RabbitTemplate template;
-
-    @Autowired
-    private DirectExchange exchange;
 	/**
 	 * @author FcoCrespo
 	 */
@@ -206,10 +200,7 @@ public class CommitController {
 		if (existe) {
 
 			LOG.info("Get commits from repository branch");
-			return ResponseEntity.ok(
-					(String)template.convertSendAndReceive
-		            (exchange.getName(), "rpc", 
-		            this.githubOperations.getCommitsFromRepositoryBranch(reponame, branch)));
+			return ResponseEntity.ok(this.githubOperations.getCommitsFromRepositoryBranch(reponame, branch));
 
 		} else {
 			LOG.info(this.errorMessage);
