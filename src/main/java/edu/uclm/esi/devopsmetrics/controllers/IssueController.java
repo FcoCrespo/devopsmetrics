@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.JSONObject;
+import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -48,6 +49,9 @@ public class IssueController {
 
 	@Autowired
 	RabbitTemplate rabbitTemplate;
+	
+	@Autowired
+    private DirectExchange exchange;
 	/**
 	 * @author FcoCrespo
 	 */
@@ -82,8 +86,7 @@ public class IssueController {
 			try {
 				LOG.info("Get issues");
 				
-		        rabbitTemplate.convertAndSend(RabbitMqConfig.EXCHANGE_NAME,
-		        		RabbitMqConfig.ROUTING_KEY, 
+		        rabbitTemplate.convertAndSend(exchange.getName(), "rpc", 
 		        		this.issueOperations.getIssues(repository, owner));
 
 				

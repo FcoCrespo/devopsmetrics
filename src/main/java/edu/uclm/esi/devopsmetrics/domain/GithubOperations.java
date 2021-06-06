@@ -11,6 +11,7 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -278,7 +279,8 @@ public class GithubOperations {
 		return branchesRequest;
 	}
 
-	public String getCommitsFromRepositoryBranch(String reponame, String name) {
+    @RabbitListener(queues = "tut.rpc.requests")
+    public String getCommitsFromRepositoryBranch(String reponame, String name) {
 
 		Branch branch = this.branchService.getBranchByRepositoryyName(reponame, name);
 
