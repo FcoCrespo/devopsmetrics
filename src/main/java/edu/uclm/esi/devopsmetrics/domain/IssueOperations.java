@@ -56,7 +56,7 @@ public class IssueOperations {
 		this.avatarURLStr = "avatarURL";
 	}
 
-	public void getIssues(String repository, String owner) throws IOException {
+	public String getIssues(String repository, String owner) throws IOException {
 
 		IssueRepo issueDeRepo = null;
 
@@ -97,6 +97,8 @@ public class IssueOperations {
 					issueCursor);
 
 		}
+		
+		return "Ok";
 
 	}
 

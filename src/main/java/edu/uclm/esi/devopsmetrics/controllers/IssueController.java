@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.JSONObject;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,6 +21,7 @@ import com.wordnik.swagger.annotations.ApiOperation;
 
 import edu.uclm.esi.devopsmetrics.domain.IssueOperations;
 import edu.uclm.esi.devopsmetrics.domain.UserOperations;
+import esi.uclm.esi.devopsmetrics.config.RabbitMqConfig;
 
 @RestController
 @RequestMapping("/issues")
@@ -45,6 +47,7 @@ public class IssueController {
 	private String message;
 
 	@Autowired
+	RabbitTemplate rabbitTemplate;
 	/**
 	 * @author FcoCrespo
 	 */
@@ -78,7 +81,12 @@ public class IssueController {
 		if (existe) {
 			try {
 				LOG.info("Get issues");
-				this.issueOperations.getIssues(repository, owner);
+				
+		        rabbitTemplate.convertAndSend(RabbitMqConfig.EXCHANGE_NAME,
+		        		RabbitMqConfig.ROUTING_KEY, 
+		        		this.issueOperations.getIssues(repository, owner));
+
+				
 				return ResponseEntity.ok(this.message);
 			} catch (IOException e) {
 				return ResponseEntity.badRequest().build();
