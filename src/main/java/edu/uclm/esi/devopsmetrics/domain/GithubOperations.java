@@ -279,7 +279,7 @@ public class GithubOperations {
 		return branchesRequest;
 	}
 
-	@RabbitListener(queues = "devopsmetrics_queue")
+	//@RabbitListener(queues = "devopsmetrics_queue")
 	public String getCommitsFromRepositoryBranch(String reponame, String name) {
 
 		Branch branch = this.branchService.getBranchByRepositoryyName(reponame, name);
