@@ -24,7 +24,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
-import org.apache.commons.net.ftp.FTPSClient;
+import org.apache.commons.net.ftp.FTPClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -405,7 +405,7 @@ public class MetricsOperations {
 		String server = serverftp;
 		int port = 21;
 
-		FTPSClient ftpClient = new FTPSClient();
+		FTPClient ftpClient = new FTPClient();
 
 		try {
 
@@ -429,10 +429,12 @@ public class MetricsOperations {
 			List<String> filesList = new ArrayList<>();
 
 			listDirectory(ftpClient, filesList, "/commitsmetrics/", "", 0);
+			
+			LOG.info("Total new files to save: "+filesList.size());
 
 			for (int i = 0; i < filesList.size(); i++) {
 
-				LOG.info(filesList.get(i));
+				LOG.info("Saving file: "+filesList.get(i));
 
 				DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 				dbf.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
@@ -499,19 +501,15 @@ public class MetricsOperations {
 
 	}
 
-	private Document obtenerXML(FTPSClient ftpClient, String fileRoute, DocumentBuilderFactory dbf)
+	private Document obtenerXML(FTPClient ftpClient, String fileRoute, DocumentBuilderFactory dbf)
 			throws IOException, ParserConfigurationException, SAXException {
-		
-		dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
-		dbf.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
-		dbf.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "");
-		
+			
 		InputStream stream = ftpClient.retrieveFileStream(fileRoute);
 		BufferedReader reader = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8));
 
 		String xmlData = reader.lines().collect(Collectors.joining());
 
-		
+		dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
 
 		DocumentBuilder db = dbf.newDocumentBuilder();
 
@@ -520,7 +518,7 @@ public class MetricsOperations {
 		return db.parse(new InputSource(new StringReader(xmlData)));
 	}
 
-	static void listDirectory(FTPSClient ftpClient, List<String> filesList, String parentDir, String currentDir,
+	static void listDirectory(FTPClient ftpClient, List<String> filesList, String parentDir, String currentDir,
 			int level) throws IOException {
 		String dirToList = parentDir;
 		if (!currentDir.equals("")) {

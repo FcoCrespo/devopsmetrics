@@ -49,7 +49,6 @@ public class IssuesGithub {
 	private String loginString;
 	private String issuesString;
 	private String nodesString;
-	private String stateString;
 	private String closedString;
 	private String assigneesString;
 
@@ -80,7 +79,6 @@ public class IssuesGithub {
 		this.loginString = "login";
 		this.issuesString = "issues";
 		this.nodesString = "nodes";
-		this.stateString = "state";
 		this.closedString = "closedAt";
 		this.assigneesString="assignees";
 

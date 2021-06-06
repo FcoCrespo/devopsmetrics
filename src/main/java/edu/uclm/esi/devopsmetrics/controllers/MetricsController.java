@@ -67,16 +67,25 @@ public class MetricsController {
 	@GetMapping(value = "/savemetrics")
 	@ApiOperation(value = "Get all metrics from repo", notes = "Get all metrics from repo")
 
-	public ResponseEntity<String> saveMetrics(@RequestParam("reponame") final String repository,
+	public ResponseEntity<String> saveMetrics(@RequestParam("tokenpass") final String tokenpass,
+			@RequestParam("reponame") final String repository,
 			@RequestParam("owner") final String owner) {
-
-		try {
-			LOG.info("Save repo metrics");
-			this.metricsOperations.saveRepoMetrics(repository, owner);
-			return ResponseEntity.ok(this.message);
-		} catch (Exception e) {
-			return ResponseEntity.ok("Error al guardar los datos de los archivos de las métricas.");
+		
+		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
+		if (existe) {
+			try {
+				LOG.info("Save repo metrics");
+				this.metricsOperations.saveRepoMetrics(repository, owner);
+				return ResponseEntity.ok(this.message);
+			} catch (Exception e) {
+				return ResponseEntity.ok("Error al guardar los datos de los archivos de las métricas.");
+			}
+		} else {
+			LOG.info(this.errorMessage);
+			return ResponseEntity.badRequest().build();
 		}
+
+		
 
 	}
 
@@ -139,16 +148,25 @@ public class MetricsController {
 	@GetMapping(value = "/savetestmetrics")
 	@ApiOperation(value = "Get all test metrics from repo", notes = "Get all test metrics from repo")
 
-	public ResponseEntity<String> saveTestMetrics(@RequestParam("reponame") final String reponame,
+	public ResponseEntity<String> saveTestMetrics(@RequestParam("tokenpass") final String tokenpass,
+			@RequestParam("reponame") final String reponame,
 			@RequestParam("owner") final String owner) {
 
-		try {
-			LOG.info("Save repo test metrics");
-			this.testsOperations.saveRepoTestMetrics(reponame, owner);
-			return ResponseEntity.ok(this.message);
-		} catch (Exception e) {
-			return ResponseEntity.ok("Error al guardar los datos de los archivos de los test reports.");
+		
+		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
+		if (existe) {
+			try {
+				LOG.info("Save repo test metrics");
+				this.testsOperations.saveRepoTestMetrics(reponame, owner);
+				return ResponseEntity.ok(this.message);
+			} catch (Exception e) {
+				return ResponseEntity.ok("Error al guardar los datos de los archivos de los test reports.");
+			}
+	    } else {
+			LOG.info(this.errorMessage);
+			return ResponseEntity.badRequest().build();
 		}
+		
 
 	}
 
