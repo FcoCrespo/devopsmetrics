@@ -202,12 +202,20 @@ public class CommitController {
 
 		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
 		if (existe) {
-			String message;
-			LOG.info("Get commits from repository branch");
-	        rabbitTemplate.convertAndSend(RabbitMqConfig.EXCHANGE_NAME, RabbitMqConfig.ROUTING_KEY, message=this.githubOperations.getCommitsFromRepositoryBranch(reponame, branch));
-			LOG.info("Success.");		
 			
-			return ResponseEntity.ok(message);
+			LOG.info("Get commits from repository branch");
+			
+			String response = (String) rabbitTemplate.convertSendAndReceive(RabbitMqConfig.EXCHANGE_NAME, RabbitMqConfig.ROUTING_KEY, this.githubOperations.getCommitsFromRepositoryBranch(reponame, branch));
+			
+			LOG.info("Success.");
+			
+			if(response!=null) {
+				return ResponseEntity.ok(response);
+			}
+			else {
+				return ResponseEntity.badRequest().build();
+			}
+			
 
 		} else {
 			LOG.info(this.errorMessage);
