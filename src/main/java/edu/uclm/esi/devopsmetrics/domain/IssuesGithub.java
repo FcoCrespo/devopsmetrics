@@ -407,14 +407,24 @@ public class IssuesGithub {
 	
 	private void actualizarIssue(JsonNode parameterNode, Issue issue) {
 
-		issue.setState(parameterNode.get(this.stateString).asText());
+		
+		String title = comprobarValorString(parameterNode, "title");
+		String body = comprobarValorString(parameterNode, "body");
+		String state = comprobarValorString(parameterNode, "state");
 
 		String closedAtExtraido = comprobarValorString(parameterNode, this.closedString);
 
+		Instant closedAt = null;
+
 		if (closedAtExtraido != null) {
-			Instant closedAt = Instant.parse(closedAtExtraido).plus(1, ChronoUnit.HOURS);
-			issue.setClosedAt(closedAt);
+			closedAt = Instant.parse(closedAtExtraido).plus(1, ChronoUnit.HOURS);
 		}
+		
+		issue.setState(state);
+		issue.setTitle(title);
+		issue.setBody(body);
+		
+		issue.setClosedAt(closedAt);
 		
 		UserGithub userGithubAsignee = null;
 		Iterator<JsonNode> iter;
