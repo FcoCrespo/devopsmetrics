@@ -1,5 +1,6 @@
 package edu.uclm.esi.devopsmetrics.models;
 
+
 import java.time.Instant;
 
 /**
@@ -9,6 +10,7 @@ import java.time.Instant;
  */
 
 public class SecureUser implements Comparable<SecureUser> {
+	
 	/**
 	 * ID.
 	 * 

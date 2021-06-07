@@ -1,5 +1,7 @@
 package edu.uclm.esi.devopsmetrics.models;
 
+
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -9,7 +11,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author FcoCrespo
  */
 @Document(collection = "couplingmetrics")
-public class CouplingMetrics implements Comparable<CouplingMetrics> {
+public class CouplingMetrics implements Comparable<CouplingMetrics>{
+	
 	/**
 	 * ID.
 	 * 

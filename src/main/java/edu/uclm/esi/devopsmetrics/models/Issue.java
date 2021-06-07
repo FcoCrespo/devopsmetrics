@@ -1,4 +1,5 @@
 package edu.uclm.esi.devopsmetrics.models;
+import java.io.Serializable;
 import java.time.Instant;
 
 import javax.validation.constraints.NotNull;
@@ -13,8 +14,12 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author FcoCrespo
  */
 @Document(collection = "issues")
-public class Issue implements Comparable<Issue> {
+public class Issue implements Comparable<Issue>, Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/**
 	 * ID.
 	 * 

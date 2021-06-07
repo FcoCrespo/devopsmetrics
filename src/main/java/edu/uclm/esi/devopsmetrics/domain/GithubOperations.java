@@ -278,6 +278,7 @@ public class GithubOperations {
 		return branchesRequest;
 	}
 
+	
 	public String getCommitsFromRepositoryBranch(String reponame, String name) {
 
 		Branch branch = this.branchService.getBranchByRepositoryyName(reponame, name);
@@ -417,6 +418,7 @@ public class GithubOperations {
 		return getInfoCommits(commits, branch);
 	}
 
+	
 	private String getInfoCommits(List<Commit> commits, Branch branch) {
 		UserGithub userGithub = null;
 

@@ -1,5 +1,7 @@
 package edu.uclm.esi.devopsmetrics.models;
 
+
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -9,7 +11,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author FcoCrespo
  */
 @Document(collection = "cohesionmetrics")
-public class CohesionMetrics implements Comparable<CohesionMetrics> {
+public class CohesionMetrics implements Comparable<CohesionMetrics>{
+	
 	/**
 	 * ID.
 	 * 

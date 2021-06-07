@@ -1,5 +1,6 @@
 package edu.uclm.esi.devopsmetrics.models;
 
+
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.UUID;
@@ -16,6 +17,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 @Document(collection = "users")
 public class User implements Comparable<User> {
+	
 	/**
 	 * ID.
 	 * 

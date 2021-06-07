@@ -1,5 +1,8 @@
 package edu.uclm.esi.devopsmetrics.models;
 
+
+
+
 import javax.validation.constraints.NotNull;
 
 import org.springframework.data.annotation.Id;
@@ -12,6 +15,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 @Document(collection = "branches")
 public class Branch implements Comparable<Branch> {
+	
 	/**
 	 * ID.
 	 * 

@@ -1,5 +1,7 @@
 package edu.uclm.esi.devopsmetrics.models;
 
+
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -10,6 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 @Document(collection = "commitscursor")
 public class CommitCursor implements Comparable<CommitCursor> {
+	
 	/**
 	 * ID.
 	 * 

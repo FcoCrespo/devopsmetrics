@@ -1,5 +1,6 @@
 package edu.uclm.esi.devopsmetrics.models;
 
+
 import java.time.Instant;
 
 import javax.validation.constraints.NotNull;
@@ -14,7 +15,8 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author FcoCrespo
  */
 @Document(collection = "commits")
-public class Commit implements Comparable<Commit> {
+public class Commit implements Comparable<Commit>{
+	
 	/**
 	 * ID.
 	 * 
