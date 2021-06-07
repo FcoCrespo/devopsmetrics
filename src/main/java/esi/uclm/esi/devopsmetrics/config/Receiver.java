@@ -11,16 +11,15 @@ import org.springframework.stereotype.Service;
  *
  * @author crespo
  */
-
 @Service
 public class Receiver {
 	
 	private static final Log LOG = LogFactory.getLog(Receiver.class);
     
+    public static final String RECEIVE_METHOD_NAME = "receiveMessage";
     
 	@RabbitListener(queues = "devopsmetrics_queue")
     public void receiveMessage(final Message message) {
         LOG.info("Client has received  \"" + message.toString() + '"');
     }
-    
 }
