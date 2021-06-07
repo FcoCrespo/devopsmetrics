@@ -1,6 +1,4 @@
 package edu.uclm.esi.devopsmetrics.models;
-
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -11,7 +9,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 @Document(collection = "issuesrepo")
 public class IssueRepo implements Comparable<IssueRepo> {
-	
 	/**
 	 * ID.
 	 * 

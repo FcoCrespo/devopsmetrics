@@ -1,8 +1,6 @@
 package edu.uclm.esi.devopsmetrics.models;
 
 
-import java.io.Serializable;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -12,12 +10,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author FcoCrespo
  */
 @Document(collection = "usersgithub")
-public class UserGithub implements Comparable<UserGithub>, Serializable {
+public class UserGithub implements Comparable<UserGithub> {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	/**
 	 * ID.
 	 * 

@@ -1,7 +1,5 @@
 package edu.uclm.esi.devopsmetrics.models;
 
-
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -11,8 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author FcoCrespo
  */
 @Document(collection = "issuescursor")
-public class IssueCursor implements Comparable<IssueCursor>{
-	
+public class IssueCursor implements Comparable<IssueCursor> {
 	/**
 	 * ID.
 	 * 

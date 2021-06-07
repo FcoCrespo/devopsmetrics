@@ -5,6 +5,8 @@ import java.io.IOException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.JSONObject;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,6 +22,8 @@ import com.wordnik.swagger.annotations.ApiOperation;
 
 import edu.uclm.esi.devopsmetrics.domain.GithubOperations;
 import edu.uclm.esi.devopsmetrics.domain.UserOperations;
+import esi.uclm.esi.devopsmetrics.config.RabbitMqConfig;
+
 @RestController
 @RequestMapping("/commits")
 /**
@@ -39,6 +43,9 @@ public class CommitController {
 
 	private String message;
 
+	@Autowired
+    RabbitTemplate rabbitTemplate;
+	
 	/**
 	 * @author FcoCrespo
 	 */
@@ -195,8 +202,12 @@ public class CommitController {
 
 		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
 		if (existe) {
-			LOG.info("Return Branch commits");
-			return ResponseEntity.ok(this.githubOperations.getCommitsFromRepositoryBranch(reponame, branch));
+			
+			
+	        this.githubOperations.getCommitsFromRepositoryBranch(reponame, branch);
+			LOG.info("Success.");	
+			
+			return ResponseEntity.ok(message);
 
 		} else {
 			LOG.info(this.errorMessage);
