@@ -25,22 +25,22 @@ public class RabbitMqMongo {
     private static final boolean IS_DURABLE_QUEUE = false;
 
     @Bean
-    Queue queue() {
+    Queue queueMongo() {
         return new Queue(QUEUE_NAME, IS_DURABLE_QUEUE);
     }
 
     @Bean
-    TopicExchange exchange() {
+    TopicExchange exchangeMongo() {
         return new TopicExchange(EXCHANGE_NAME);
     }
 
     @Bean
-    Binding binding(Queue queue, TopicExchange exchange) {
+    Binding bindingMongo(Queue queue, TopicExchange exchange) {
         return BindingBuilder.bind(queue).to(exchange).with(ROUTING_KEY);
     }
 
     @Bean
-    SimpleMessageListenerContainer container(ConnectionFactory connectionFactory, MessageListenerAdapter listenerAdapter) {
+    SimpleMessageListenerContainer containerMongo(ConnectionFactory connectionFactory, MessageListenerAdapter listenerAdapter) {
         final SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
         container.setConnectionFactory(connectionFactory);
         container.setQueueNames(QUEUE_NAME);
@@ -49,12 +49,12 @@ public class RabbitMqMongo {
     }
 
     @Bean
-    MessageListenerAdapter listenerAdapter(ReceiverMongo receiver) {
+    MessageListenerAdapter listenerAdapterMongo(ReceiverMongo receiver) {
         return new MessageListenerAdapter(receiver, ReceiverMongo.RECEIVE_METHOD_NAME);
     }
 
     @Bean
-    ReceiverMongo receiver() {
+    ReceiverMongo receiverMongo() {
         return new ReceiverMongo();
     }
 
