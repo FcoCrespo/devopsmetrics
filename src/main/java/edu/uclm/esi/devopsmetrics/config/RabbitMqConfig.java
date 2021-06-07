@@ -1,4 +1,4 @@
-package esi.uclm.esi.devopsmetrics.config;
+package edu.uclm.esi.devopsmetrics.config;
 
 
 import org.springframework.amqp.core.Binding;
@@ -49,16 +49,13 @@ public class RabbitMqConfig {
     }
 
     @Bean
-    Receiver receiver() {
-        return new Receiver();
+    MessageListenerAdapter listenerAdapter(ReceiverMQ receiver) {
+        return new MessageListenerAdapter(receiver, ReceiverMQ.RECEIVE_METHOD_NAME);
     }
 
     @Bean
-    MessageListenerAdapter listenerAdapter(Receiver receiver) {
-        return new MessageListenerAdapter(receiver, Receiver.RECEIVE_METHOD_NAME);
+    ReceiverMQ receiver() {
+        return new ReceiverMQ();
     }
-    
-    
-  
 
 }

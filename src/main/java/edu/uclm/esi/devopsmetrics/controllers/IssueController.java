@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.wordnik.swagger.annotations.ApiOperation;
 
+import edu.uclm.esi.devopsmetrics.config.RabbitMqConfig;
 import edu.uclm.esi.devopsmetrics.domain.IssueOperations;
 import edu.uclm.esi.devopsmetrics.domain.UserOperations;
-import esi.uclm.esi.devopsmetrics.config.RabbitMqConfig;
 
 @RestController
 @RequestMapping("/issues")

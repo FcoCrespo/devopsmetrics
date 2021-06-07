@@ -1,4 +1,4 @@
-package esi.uclm.esi.devopsmetrics.config;
+package edu.uclm.esi.devopsmetrics.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,11 +16,13 @@ public class Sender {
     @Autowired
 	RabbitTemplate rabbitTemplate;
 
-    @Scheduled(fixedDelay = 2500)
+    @Scheduled(fixedDelay = 20000)
     public void sendMessage() {
     	String saludo= "Hello There!";
         String message = "{\"message\":\"" + saludo + "\"}";
         LOG.info("Sending message...");
+        LOG.info(saludo);
         rabbitTemplate.convertAndSend(RabbitMqConfig.EXCHANGE_NAME, RabbitMqConfig.ROUTING_KEY, message);
+        LOG.info("SEND OK!");
     }
 }
