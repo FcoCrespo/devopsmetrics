@@ -400,7 +400,7 @@ public class MetricsOperations {
 		return mapCommitInfo;
 	}
 
-	public void saveRepoMetrics(String repository, String owner) throws ParserConfigurationException, SAXException {
+	public String saveRepoMetrics(String repository, String owner) throws ParserConfigurationException, SAXException {
 
 		String server = serverftp;
 		int port = 21;
@@ -485,9 +485,12 @@ public class MetricsOperations {
 				success = ftpClient.rename(fileRoute, newName);
 
 			}
+			
+			return "ok";
 
 		} catch (IOException e) {
 			LOG.info("Error: " + e.getMessage());
+			return "error during saving metrics";
 		} finally {
 			try {
 				if (ftpClient.isConnected()) {
@@ -499,6 +502,7 @@ public class MetricsOperations {
 			}
 		}
 
+		
 	}
 
 	private Document obtenerXML(FTPClient ftpClient, String fileRoute, DocumentBuilderFactory dbf)

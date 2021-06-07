@@ -19,7 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.wordnik.swagger.annotations.ApiOperation;
 
-import edu.uclm.esi.devopsmetrics.config.RabbitMqConfig;
+
+import edu.uclm.esi.devopsmetrics.config.RabbitMqMongo;
 import edu.uclm.esi.devopsmetrics.domain.IssueOperations;
 import edu.uclm.esi.devopsmetrics.domain.UserOperations;
 
@@ -82,8 +83,8 @@ public class IssueController {
 			try {
 				LOG.info("Get issues");
 				
-		        rabbitTemplate.convertAndSend(RabbitMqConfig.EXCHANGE_NAME,
-		        		RabbitMqConfig.ROUTING_KEY, 
+		        rabbitTemplate.convertAndSend(RabbitMqMongo.EXCHANGE_NAME,
+		        		RabbitMqMongo.ROUTING_KEY, 
 		        		this.issueOperations.getIssues(repository, owner));
 
 				
@@ -116,8 +117,10 @@ public class IssueController {
 		if (existe) {
 			try {
 				LOG.info("Update issues");
+				rabbitTemplate.convertAndSend(RabbitMqMongo.EXCHANGE_NAME,
+		        		RabbitMqMongo.ROUTING_KEY, 
+		        		this.issueOperations.actualizarValores(repository, owner));
 				
-				this.issueOperations.actualizarValores(repository, owner);
 				return ResponseEntity.ok(this.message);
 			} catch (IOException e) {
 				return ResponseEntity.badRequest().build();

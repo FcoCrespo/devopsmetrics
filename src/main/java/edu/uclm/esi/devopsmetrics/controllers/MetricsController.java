@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.JSONObject;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.wordnik.swagger.annotations.ApiOperation;
 
+import edu.uclm.esi.devopsmetrics.config.RabbitMqMongo;
 import edu.uclm.esi.devopsmetrics.domain.MetricsOperations;
 import edu.uclm.esi.devopsmetrics.domain.TestOperations;
 import edu.uclm.esi.devopsmetrics.domain.UserOperations;
@@ -43,6 +45,7 @@ public class MetricsController {
 	private final String errorMessage;
 
 	@Autowired
+    RabbitTemplate rabbitTemplate;
 	/**
 	 * @author FcoCrespo
 	 */
@@ -75,7 +78,10 @@ public class MetricsController {
 		if (existe) {
 			try {
 				LOG.info("Save repo metrics");
-				this.metricsOperations.saveRepoMetrics(repository, owner);
+				rabbitTemplate.convertAndSend(RabbitMqMongo.EXCHANGE_NAME,
+		        		RabbitMqMongo.ROUTING_KEY, 
+		        		this.metricsOperations.saveRepoMetrics(repository, owner));
+				
 				return ResponseEntity.ok(this.message);
 			} catch (Exception e) {
 				return ResponseEntity.ok("Error al guardar los datos de los archivos de las métricas.");
@@ -157,7 +163,10 @@ public class MetricsController {
 		if (existe) {
 			try {
 				LOG.info("Save repo test metrics");
-				this.testsOperations.saveRepoTestMetrics(reponame, owner);
+				rabbitTemplate.convertAndSend(RabbitMqMongo.EXCHANGE_NAME,
+		        		RabbitMqMongo.ROUTING_KEY, 
+		        		this.testsOperations.saveRepoTestMetrics(reponame, owner));
+				
 				return ResponseEntity.ok(this.message);
 			} catch (Exception e) {
 				return ResponseEntity.ok("Error al guardar los datos de los archivos de los test reports.");

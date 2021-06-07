@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.wordnik.swagger.annotations.ApiOperation;
 
+import edu.uclm.esi.devopsmetrics.config.RabbitMqMongo;
 import edu.uclm.esi.devopsmetrics.domain.GithubOperations;
 import edu.uclm.esi.devopsmetrics.domain.UserOperations;
 
@@ -94,6 +95,9 @@ public class CommitController {
 		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
 		if (existe) {
 			LOG.info("Get repositories");
+			rabbitTemplate.convertAndSend(RabbitMqMongo.EXCHANGE_NAME,
+	        		RabbitMqMongo.ROUTING_KEY, 
+	        		this.githubOperations.getRepositories());
 			return ResponseEntity.ok(this.githubOperations.getRepositories());
 		} else {
 			LOG.info(this.errorMessage);
@@ -119,7 +123,10 @@ public class CommitController {
 		if (existe) {
 
 			try {
-				this.githubOperations.getCommits(repository, owner);
+				rabbitTemplate.convertAndSend(RabbitMqMongo.EXCHANGE_NAME,
+		        		RabbitMqMongo.ROUTING_KEY, 
+		        		this.githubOperations.getCommits(repository, owner));
+				
 				return ResponseEntity.ok(this.message);
 			} catch (IOException e) {
 				return ResponseEntity.badRequest().build();

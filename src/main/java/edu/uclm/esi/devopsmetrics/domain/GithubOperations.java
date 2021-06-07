@@ -81,7 +81,7 @@ public class GithubOperations {
 
 	}
 
-	public void getCommits(String reponame, String owner) throws IOException {
+	public String getCommits(String reponame, String owner) throws IOException {
 
 		getBranches(reponame, owner);
 
@@ -131,6 +131,8 @@ public class GithubOperations {
 						commitCursor);
 			}
 		}
+		
+		return "OK.";
 
 	}
 

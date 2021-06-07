@@ -102,7 +102,7 @@ public class IssueOperations {
 
 	}
 
-	public void actualizarValores(String repository, String owner) throws IOException {
+	public String actualizarValores(String repository, String owner) throws IOException {
 
 		String filename = "src/main/resources/graphql/issues.graphql";
 
@@ -113,6 +113,8 @@ public class IssueOperations {
 		IssueCursor issueCursor = null;
 
 		this.issuesGithub.actualizarValores(info, filename, issueCursor);
+		
+		return "OK.";
 	}
 
 	public String getIssuesRepository(String reponame, String owner) {

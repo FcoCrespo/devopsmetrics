@@ -122,7 +122,7 @@ public class TestOperations {
 		return array;
 	}
 
-	public void saveRepoTestMetrics(String repository, String owner) throws IOException {
+	public String saveRepoTestMetrics(String repository, String owner) throws IOException {
 
 		TestMetrics testMetrics;
 
@@ -220,9 +220,11 @@ public class TestOperations {
 				}
 
 			}
+			return "ok";
 
 		} catch (IOException ex) {
 			LOG.info("Error: " + ex.getMessage());
+			return "error during the saing of test metrics";
 		} finally {
 			try {
 				if (ftpClient.isConnected()) {
