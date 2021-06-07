@@ -105,7 +105,7 @@ public class GetAllTestMetricsDateSteps {
 						test = parameterNode.get("idMethodTest").textValue()+ " " + parameterNode.get("idTest").textValue();
 					}
 				}
-			} else {
+			} else { 
 				if (parameterNode.get("idMethodTest").textValue().equals("60b50334e42e5d405438045b") && parameterNode.get("idTest").textValue().equals("60b50332e42e5d4054380451")) {
 					test = parameterNode.get("idMethodTest").textValue()+ " " + parameterNode.get("idTest").textValue();
 				}
