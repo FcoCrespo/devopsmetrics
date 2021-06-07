@@ -3,7 +3,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-07T03:39:23.162Z",
+        "start_timestamp": "2021-06-07T03:51:13.100Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -13,7 +13,7 @@
         "steps": [
           {
             "result": {
-              "duration": 636578300,
+              "duration": 1229859600,
               "status": "passed"
             },
             "line": 4,
@@ -25,9 +25,8 @@
           },
           {
             "result": {
-              "error_message": "java.lang.NullPointerException\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.DeleteUserSteps.user_is_correct_he_chooses_the_user_id_of_the_user_to_delete_in_the_system(DeleteUserSteps.java:55)\r\n\tat ✽.user is correct he chooses the userId of the user to delete in the system(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/DeleteUser.feature:5)\r\n",
-              "duration": 145005900,
-              "status": "failed"
+              "duration": 367167500,
+              "status": "passed"
             },
             "line": 5,
             "name": "user is correct he chooses the userId of the user to delete in the system",
@@ -38,7 +37,8 @@
           },
           {
             "result": {
-              "status": "skipped"
+              "duration": 258003700,
+              "status": "passed"
             },
             "line": 6,
             "name": "the choosed user was deleted of the system",
@@ -61,7 +61,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-07T03:39:24.027Z",
+        "start_timestamp": "2021-06-07T03:51:15.018Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -71,7 +71,7 @@
         "steps": [
           {
             "result": {
-              "duration": 267672400,
+              "duration": 270438100,
               "status": "passed"
             },
             "line": 4,
@@ -83,9 +83,8 @@
           },
           {
             "result": {
-              "error_message": "java.lang.NullPointerException\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllBranchesSteps.user_is_correct_he_requests_all_branches_from_a_repository_by_his_owner(GetAllBranchesSteps.java:57)\r\n\tat ✽.user is correct he requests all branches from a repository by his owner(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetAllBranches.feature:5)\r\n",
-              "duration": 993200,
-              "status": "failed"
+              "duration": 1002400,
+              "status": "passed"
             },
             "line": 5,
             "name": "user is correct he requests all branches from a repository by his owner",
@@ -96,7 +95,8 @@
           },
           {
             "result": {
-              "status": "skipped"
+              "duration": 1146866800,
+              "status": "passed"
             },
             "line": 6,
             "name": "the user gets all branches from a repository by his owner",
@@ -119,7 +119,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-07T03:39:24.308Z",
+        "start_timestamp": "2021-06-07T03:51:16.453Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -129,7 +129,7 @@
         "steps": [
           {
             "result": {
-              "duration": 228501800,
+              "duration": 243130400,
               "status": "passed"
             },
             "line": 4,
@@ -141,9 +141,8 @@
           },
           {
             "result": {
-              "error_message": "java.lang.NullPointerException\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllCommitsSteps.user_is_correct_he_requests_all_commits_from_a_repository_by_his_owner(GetAllCommitsSteps.java:55)\r\n\tat ✽.user is correct he requests all commits from a repository by his owner(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetAllCommits.feature:5)\r\n",
-              "duration": 996400,
-              "status": "failed"
+              "duration": 1010200,
+              "status": "passed"
             },
             "line": 5,
             "name": "user is correct he requests all commits from a repository by his owner",
@@ -154,7 +153,8 @@
           },
           {
             "result": {
-              "status": "skipped"
+              "duration": 1623227800,
+              "status": "passed"
             },
             "line": 6,
             "name": "the user gets all commits from a repository by his owner",
@@ -177,7 +177,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-07T03:39:24.550Z",
+        "start_timestamp": "2021-06-07T03:51:18.333Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -187,7 +187,7 @@
         "steps": [
           {
             "result": {
-              "duration": 215603300,
+              "duration": 228020400,
               "status": "passed"
             },
             "line": 4,
@@ -199,8 +199,7 @@
           },
           {
             "result": {
-              "error_message": "java.lang.NullPointerException\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllIssuesSteps.user_is_correct_he_requests_all_issues_from_a_repository_by_his_owner(GetAllIssuesSteps.java:52)\r\n\tat ✽.user is correct he requests all issues from a repository by his owner(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetAllIssues.feature:5)\r\n",
-              "status": "failed"
+              "status": "passed"
             },
             "line": 5,
             "name": "user is correct he requests all issues from a repository by his owner",
@@ -211,7 +210,8 @@
           },
           {
             "result": {
-              "status": "skipped"
+              "duration": 8317800500,
+              "status": "passed"
             },
             "line": 6,
             "name": "the user gets all issues from a repository by his owner",
@@ -234,7 +234,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-07T03:39:24.780Z",
+        "start_timestamp": "2021-06-07T03:51:26.891Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -244,7 +244,7 @@
         "steps": [
           {
             "result": {
-              "duration": 214290000,
+              "duration": 243831100,
               "status": "passed"
             },
             "line": 4,
@@ -256,8 +256,7 @@
           },
           {
             "result": {
-              "error_message": "java.lang.NullPointerException\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllMetricsSteps.user_is_correct_he_requests_all_metrics_from_a_repository_by_his_owner(GetAllMetricsSteps.java:56)\r\n\tat ✽.user is correct he requests all metrics from a repository by his owner(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetAllMetrics.feature:5)\r\n",
-              "status": "failed"
+              "status": "passed"
             },
             "line": 5,
             "name": "user is correct he requests all metrics from a repository by his owner",
@@ -268,7 +267,8 @@
           },
           {
             "result": {
-              "status": "skipped"
+              "duration": 3145188200,
+              "status": "passed"
             },
             "line": 6,
             "name": "the user gets all metrics from a repository by his owner",
@@ -291,7 +291,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-07T03:39:25.006Z",
+        "start_timestamp": "2021-06-07T03:51:30.291Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -301,7 +301,7 @@
         "steps": [
           {
             "result": {
-              "duration": 223592600,
+              "duration": 234977400,
               "status": "passed"
             },
             "line": 4,
@@ -313,9 +313,7 @@
           },
           {
             "result": {
-              "error_message": "java.lang.NullPointerException\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllMetricsDateSteps.user_is_correct_he_requests_all_metrics_from_a_repository_by_his_owner_between_two_dates(GetAllMetricsDateSteps.java:57)\r\n\tat ✽.user is correct he requests all metrics from a repository by his owner between two dates(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetAllMetricsDate.feature:5)\r\n",
-              "duration": 1001900,
-              "status": "failed"
+              "status": "passed"
             },
             "line": 5,
             "name": "user is correct he requests all metrics from a repository by his owner between two dates",
@@ -326,7 +324,8 @@
           },
           {
             "result": {
-              "status": "skipped"
+              "duration": 4244525300,
+              "status": "passed"
             },
             "line": 6,
             "name": "the user gets all metrics from a repository by his owner between two dates",
@@ -349,7 +348,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-07T03:39:25.240Z",
+        "start_timestamp": "2021-06-07T03:51:34.781Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -359,7 +358,7 @@
         "steps": [
           {
             "result": {
-              "duration": 227016000,
+              "duration": 234241800,
               "status": "passed"
             },
             "line": 4,
@@ -371,8 +370,7 @@
           },
           {
             "result": {
-              "error_message": "java.lang.NullPointerException\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllRepositories.user_is_correct_he_requests_all_repositories_from_the_system(GetAllRepositories.java:57)\r\n\tat ✽.user is correct he requests all repositories from the system(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetAllRepositories.feature:5)\r\n",
-              "status": "failed"
+              "status": "passed"
             },
             "line": 5,
             "name": "user is correct he requests all repositories from the system",
@@ -383,7 +381,8 @@
           },
           {
             "result": {
-              "status": "skipped"
+              "duration": 342102800,
+              "status": "passed"
             },
             "line": 6,
             "name": "the user gets all repositories from the system",
@@ -406,7 +405,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-07T03:39:25.480Z",
+        "start_timestamp": "2021-06-07T03:51:35.377Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -416,7 +415,7 @@
         "steps": [
           {
             "result": {
-              "duration": 228901600,
+              "duration": 243035300,
               "status": "passed"
             },
             "line": 4,
@@ -428,9 +427,7 @@
           },
           {
             "result": {
-              "error_message": "java.lang.NullPointerException\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllTestMetricsSteps.user_is_correct_he_requests_all_test_metrics_from_a_repository_by_his_owner(GetAllTestMetricsSteps.java:57)\r\n\tat ✽.user is correct he requests all test metrics from a repository by his owner(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetAllTestMetrics.feature:5)\r\n",
-              "duration": 999600,
-              "status": "failed"
+              "status": "passed"
             },
             "line": 5,
             "name": "user is correct he requests all test metrics from a repository by his owner",
@@ -441,7 +438,8 @@
           },
           {
             "result": {
-              "status": "skipped"
+              "duration": 754378800,
+              "status": "passed"
             },
             "line": 6,
             "name": "the user gets all test metrics from a repository by his owner",
@@ -464,7 +462,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-07T03:39:25.719Z",
+        "start_timestamp": "2021-06-07T03:51:36.393Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -474,7 +472,7 @@
         "steps": [
           {
             "result": {
-              "duration": 207716100,
+              "duration": 245794700,
               "status": "passed"
             },
             "line": 4,
@@ -486,8 +484,8 @@
           },
           {
             "result": {
-              "error_message": "java.lang.NullPointerException\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllTestMetricsDateSteps.user_is_correct_he_requests_all_test_metrics_from_a_repository_by_his_owner_between_two_dates(GetAllTestMetricsDateSteps.java:60)\r\n\tat ✽.user is correct he requests all test metrics from a repository by his owner between two dates(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetAllTestMetricsDate.feature:5)\r\n",
-              "status": "failed"
+              "duration": 1012000,
+              "status": "passed"
             },
             "line": 5,
             "name": "user is correct he requests all test metrics from a repository by his owner between two dates",
@@ -498,7 +496,8 @@
           },
           {
             "result": {
-              "status": "skipped"
+              "duration": 603421700,
+              "status": "passed"
             },
             "line": 6,
             "name": "the user gets all test metrics from a repository by his owner between two dates",
@@ -521,7 +520,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-07T03:39:25.937Z",
+        "start_timestamp": "2021-06-07T03:51:37.256Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -531,7 +530,7 @@
         "steps": [
           {
             "result": {
-              "duration": 223191300,
+              "duration": 220034500,
               "status": "passed"
             },
             "line": 4,
@@ -543,8 +542,8 @@
           },
           {
             "result": {
-              "error_message": "java.lang.NullPointerException\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllUserListSteps.user_is_correct_he_gets_all_the_users_in_the_system(GetAllUserListSteps.java:53)\r\n\tat ✽.user is correct he gets all the users in the system(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetAllUsers.feature:5)\r\n",
-              "status": "failed"
+              "duration": 214961800,
+              "status": "passed"
             },
             "line": 5,
             "name": "user is correct he gets all the users in the system",
@@ -555,7 +554,8 @@
           },
           {
             "result": {
-              "status": "skipped"
+              "duration": 219998900,
+              "status": "passed"
             },
             "line": 6,
             "name": "the users were got correctly",
@@ -578,7 +578,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-07T03:39:26.170Z",
+        "start_timestamp": "2021-06-07T03:51:37.922Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -588,7 +588,7 @@
         "steps": [
           {
             "result": {
-              "duration": 224392600,
+              "duration": 241001800,
               "status": "passed"
             },
             "line": 4,
@@ -600,8 +600,8 @@
           },
           {
             "result": {
-              "error_message": "java.lang.NullPointerException\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllBranchesOrderSteps.user_is_correct_he_requests_all_branches_order_from_a_repository_by_his_owner(GetAllBranchesOrderSteps.java:53)\r\n\tat ✽.user is correct he requests all branches order from a repository by his owner(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetBranchOrder.feature:5)\r\n",
-              "status": "failed"
+              "duration": 1005100,
+              "status": "passed"
             },
             "line": 5,
             "name": "user is correct he requests all branches order from a repository by his owner",
@@ -612,7 +612,8 @@
           },
           {
             "result": {
-              "status": "skipped"
+              "duration": 1975262700,
+              "status": "passed"
             },
             "line": 6,
             "name": "the user gets all branches order from a repository by his owner",
@@ -635,7 +636,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-07T03:39:26.403Z",
+        "start_timestamp": "2021-06-07T03:51:40.156Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -645,7 +646,7 @@
         "steps": [
           {
             "result": {
-              "duration": 231439700,
+              "duration": 235995400,
               "status": "passed"
             },
             "line": 4,
@@ -657,8 +658,8 @@
           },
           {
             "result": {
-              "error_message": "java.lang.NullPointerException\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetCommitsBranchSteps.user_is_correct_he_requests_all_commits_from_a_branch_of_a_repository(GetCommitsBranchSteps.java:57)\r\n\tat ✽.user is correct he requests all commits from a branch of a repository(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetCommitsBranch.feature:5)\r\n",
-              "status": "failed"
+              "duration": 1003300,
+              "status": "passed"
             },
             "line": 5,
             "name": "user is correct he requests all commits from a branch of a repository",
@@ -669,7 +670,9 @@
           },
           {
             "result": {
-              "status": "skipped"
+              "error_message": "com.fasterxml.jackson.core.JsonParseException: Unrecognized token \u0027Operation\u0027: was expecting (JSON String, Number, Array, Object or token \u0027null\u0027, \u0027true\u0027 or \u0027false\u0027)\n at [Source: (String)\"Operation completed.\"; line: 1, column: 10]\r\n\tat com.fasterxml.jackson.core.JsonParser._constructError(JsonParser.java:1851)\r\n\tat com.fasterxml.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:717)\r\n\tat com.fasterxml.jackson.core.json.ReaderBasedJsonParser._reportInvalidToken(ReaderBasedJsonParser.java:2892)\r\n\tat com.fasterxml.jackson.core.json.ReaderBasedJsonParser._handleOddValue(ReaderBasedJsonParser.java:1938)\r\n\tat com.fasterxml.jackson.core.json.ReaderBasedJsonParser.nextToken(ReaderBasedJsonParser.java:776)\r\n\tat com.fasterxml.jackson.databind.ObjectMapper._readTreeAndClose(ObjectMapper.java:4511)\r\n\tat com.fasterxml.jackson.databind.ObjectMapper.readTree(ObjectMapper.java:2940)\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetCommitsBranchSteps.the_user_gets_all_commits_from_a_branch_of_a_repository(GetCommitsBranchSteps.java:74)\r\n\tat ✽.the user gets all commits from a branch of a repository(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetCommitsBranch.feature:6)\r\n",
+              "duration": 1025720700,
+              "status": "failed"
             },
             "line": 6,
             "name": "the user gets all commits from a branch of a repository",
@@ -692,7 +695,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-07T03:39:26.658Z",
+        "start_timestamp": "2021-06-07T03:51:41.439Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -702,7 +705,7 @@
         "steps": [
           {
             "result": {
-              "duration": 226998400,
+              "duration": 236998400,
               "status": "passed"
             },
             "line": 4,
@@ -714,9 +717,7 @@
           },
           {
             "result": {
-              "error_message": "java.lang.NullPointerException\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetCommitsBranchAuthorSteps.user_is_correct_he_requests_all_commits_from_a_branch_of_a_repository_by_the_author(GetCommitsBranchAuthorSteps.java:56)\r\n\tat ✽.user is correct he requests all commits from a branch of a repository by the author(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetCommitsBranchAuthor.feature:5)\r\n",
-              "duration": 1038200,
-              "status": "failed"
+              "status": "passed"
             },
             "line": 5,
             "name": "user is correct he requests all commits from a branch of a repository by the author",
@@ -727,7 +728,8 @@
           },
           {
             "result": {
-              "status": "skipped"
+              "duration": 1314082100,
+              "status": "passed"
             },
             "line": 6,
             "name": "the user gets all commits from a branch of a repository by the author",
@@ -750,7 +752,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-07T03:39:26.901Z",
+        "start_timestamp": "2021-06-07T03:51:43.011Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -760,7 +762,7 @@
         "steps": [
           {
             "result": {
-              "duration": 229010000,
+              "duration": 237998400,
               "status": "passed"
             },
             "line": 4,
@@ -772,8 +774,7 @@
           },
           {
             "result": {
-              "error_message": "java.lang.NullPointerException\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetCommitsBranchDateSteps.user_is_correct_he_requests_all_commits_from_a_branch_of_a_repository_between_a_date(GetCommitsBranchDateSteps.java:59)\r\n\tat ✽.user is correct he requests all commits from a branch of a repository between a date(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetCommitsBranchDate.feature:5)\r\n",
-              "status": "failed"
+              "status": "passed"
             },
             "line": 5,
             "name": "user is correct he requests all commits from a branch of a repository between a date",
@@ -784,8 +785,8 @@
           },
           {
             "result": {
-              "duration": 992800,
-              "status": "skipped"
+              "duration": 2651030600,
+              "status": "passed"
             },
             "line": 6,
             "name": "the user gets all commits from a branch of a repositorybetween a date",
@@ -808,7 +809,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-07T03:39:27.150Z",
+        "start_timestamp": "2021-06-07T03:51:45.918Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -818,7 +819,7 @@
         "steps": [
           {
             "result": {
-              "duration": 210999500,
+              "duration": 231033400,
               "status": "passed"
             },
             "line": 4,
@@ -830,9 +831,8 @@
           },
           {
             "result": {
-              "error_message": "java.lang.NullPointerException\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetCommitsBranchDateAuthorSteps.user_is_correct_he_requests_all_commits_from_a_branch_of_a_repository_between_a_date_by_the_author(GetCommitsBranchDateAuthorSteps.java:59)\r\n\tat ✽.user is correct he requests all commits from a branch of a repository between a date by the author(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetCommitsBranchDateAuthor.feature:5)\r\n",
-              "duration": 1001100,
-              "status": "failed"
+              "duration": 965200,
+              "status": "passed"
             },
             "line": 5,
             "name": "user is correct he requests all commits from a branch of a repository between a date by the author",
@@ -843,7 +843,8 @@
           },
           {
             "result": {
-              "status": "skipped"
+              "duration": 2391113100,
+              "status": "passed"
             },
             "line": 6,
             "name": "the user gets all commits from a branch of a repositorybetween a date by the author",
@@ -866,7 +867,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-07T03:39:27.379Z",
+        "start_timestamp": "2021-06-07T03:51:48.562Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -876,7 +877,7 @@
         "steps": [
           {
             "result": {
-              "duration": 235996200,
+              "duration": 265999300,
               "status": "passed"
             },
             "line": 4,
@@ -888,9 +889,7 @@
           },
           {
             "result": {
-              "error_message": "java.lang.NullPointerException\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetIssuesClosedDateSteps.user_is_correct_he_requests_all_issues_from_a_repository_by_his_owner_closed_between_two_dates_of_the_system(GetIssuesClosedDateSteps.java:57)\r\n\tat ✽.user is correct he requests all issues from a repository by his owner closed between two dates of the system(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetIssuesClosedDate.feature:5)\r\n",
-              "duration": 1004900,
-              "status": "failed"
+              "status": "passed"
             },
             "line": 5,
             "name": "user is correct he requests all issues from a repository by his owner closed between two dates of the system",
@@ -901,7 +900,8 @@
           },
           {
             "result": {
-              "status": "skipped"
+              "duration": 430200600,
+              "status": "passed"
             },
             "line": 6,
             "name": "the user gets all issues from a repository by his owner closed between two dates if the system",
@@ -924,7 +924,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-07T03:39:27.634Z",
+        "start_timestamp": "2021-06-07T03:51:49.267Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -934,7 +934,7 @@
         "steps": [
           {
             "result": {
-              "duration": 212022800,
+              "duration": 217998200,
               "status": "passed"
             },
             "line": 4,
@@ -946,8 +946,7 @@
           },
           {
             "result": {
-              "error_message": "java.lang.NullPointerException\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetIssuesCreatedDateSteps.user_is_correct_he_requests_all_issues_from_a_repository_by_his_owner_created_between_two_dates_of_the_system(GetIssuesCreatedDateSteps.java:56)\r\n\tat ✽.user is correct he requests all issues from a repository by his owner created between two dates of the system(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetIssuesCreatedByDate.feature:5)\r\n",
-              "status": "failed"
+              "status": "passed"
             },
             "line": 5,
             "name": "user is correct he requests all issues from a repository by his owner created between two dates of the system",
@@ -958,7 +957,8 @@
           },
           {
             "result": {
-              "status": "skipped"
+              "duration": 2401602800,
+              "status": "passed"
             },
             "line": 6,
             "name": "the user gets all issues from a repository by his owner created between two dates if the system",
@@ -981,7 +981,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-07T03:39:27.863Z",
+        "start_timestamp": "2021-06-07T03:51:51.896Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -991,7 +991,7 @@
         "steps": [
           {
             "result": {
-              "duration": 224000700,
+              "duration": 216998100,
               "status": "passed"
             },
             "line": 4,
@@ -1003,8 +1003,7 @@
           },
           {
             "result": {
-              "error_message": "java.lang.NullPointerException\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetIssuesOpenedDateSteps.user_is_correct_he_requests_all_issues_from_a_repository_by_his_owner_opened_between_two_dates_of_the_system(GetIssuesOpenedDateSteps.java:60)\r\n\tat ✽.user is correct he requests all issues from a repository by his owner opened between two dates of the system(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetIssuesOpenedDate.feature:5)\r\n",
-              "status": "failed"
+              "status": "passed"
             },
             "line": 5,
             "name": "user is correct he requests all issues from a repository by his owner opened between two dates of the system",
@@ -1015,7 +1014,8 @@
           },
           {
             "result": {
-              "status": "skipped"
+              "duration": 2170690900,
+              "status": "passed"
             },
             "line": 6,
             "name": "the user gets all issues from a repository by his owner opened between two dates if the system",
@@ -1038,7 +1038,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-07T03:39:28.102Z",
+        "start_timestamp": "2021-06-07T03:51:54.293Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -1048,7 +1048,7 @@
         "steps": [
           {
             "result": {
-              "duration": 234076800,
+              "duration": 230999600,
               "status": "passed"
             },
             "line": 4,
@@ -1060,8 +1060,7 @@
           },
           {
             "result": {
-              "error_message": "java.lang.NullPointerException\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetIssuesRepoSteps.user_is_correct_he_requests_all_issues_from_a_repository_by_his_owner_of_the_system(GetIssuesRepoSteps.java:53)\r\n\tat ✽.user is correct he requests all issues from a repository by his owner of the system(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetIssuesRepo.feature:5)\r\n",
-              "status": "failed"
+              "status": "passed"
             },
             "line": 5,
             "name": "user is correct he requests all issues from a repository by his owner of the system",
@@ -1072,7 +1071,8 @@
           },
           {
             "result": {
-              "status": "skipped"
+              "duration": 1807288100,
+              "status": "passed"
             },
             "line": 6,
             "name": "the user gets all issues from a repository by his owner if the system",
@@ -1095,7 +1095,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-07T03:39:28.353Z",
+        "start_timestamp": "2021-06-07T03:51:56.341Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -1105,7 +1105,7 @@
         "steps": [
           {
             "result": {
-              "duration": 253000800,
+              "duration": 238995900,
               "status": "passed"
             },
             "line": 4,
@@ -1117,9 +1117,8 @@
           },
           {
             "result": {
-              "error_message": "java.lang.NullPointerException\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetUserByTokenPassSteps.user_is_correct_he_gets_an_user_by_the_tokenpass_of_the_session_in_the_system(GetUserByTokenPassSteps.java:54)\r\n\tat ✽.user is correct he gets an user by the tokenpass of the session in the system(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetUserByTokenPass.feature:5)\r\n",
-              "duration": 998500,
-              "status": "failed"
+              "duration": 238078400,
+              "status": "passed"
             },
             "line": 5,
             "name": "user is correct he gets an user by the tokenpass of the session in the system",
@@ -1130,7 +1129,8 @@
           },
           {
             "result": {
-              "status": "skipped"
+              "duration": 925000,
+              "status": "passed"
             },
             "line": 6,
             "name": "the tokenpass exists and the user is correct",
@@ -1153,7 +1153,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-07T03:39:28.620Z",
+        "start_timestamp": "2021-06-07T03:51:56.833Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -1163,7 +1163,7 @@
         "steps": [
           {
             "result": {
-              "duration": 217994500,
+              "duration": 287999100,
               "status": "passed"
             },
             "line": 4,
@@ -1175,8 +1175,7 @@
           },
           {
             "result": {
-              "error_message": "java.lang.NullPointerException\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetUserPasswordSteps.user_is_correct_he_gets_an_user_by_the_username_and_the_password_in_the_system(GetUserPasswordSteps.java:55)\r\n\tat ✽.user is correct he gets an user by the username and the password in the system(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetUserPassword.feature:5)\r\n",
-              "status": "failed"
+              "status": "passed"
             },
             "line": 5,
             "name": "user is correct he gets an user by the username and the password in the system",
@@ -1187,7 +1186,7 @@
           },
           {
             "result": {
-              "status": "skipped"
+              "status": "passed"
             },
             "line": 6,
             "name": "by the username and the password in peer exists and the user is correct",
@@ -1210,7 +1209,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-07T03:39:28.856Z",
+        "start_timestamp": "2021-06-07T03:51:57.128Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -1220,7 +1219,7 @@
         "steps": [
           {
             "result": {
-              "duration": 4679486200,
+              "duration": 4575467900,
               "status": "passed"
             },
             "line": 4,
@@ -1232,7 +1231,7 @@
           },
           {
             "result": {
-              "duration": 118000900,
+              "duration": 135994700,
               "status": "passed"
             },
             "line": 5,
@@ -1244,7 +1243,7 @@
           },
           {
             "result": {
-              "duration": 43006800,
+              "duration": 52007100,
               "status": "passed"
             },
             "line": 6,
@@ -1256,9 +1255,8 @@
           },
           {
             "result": {
-              "error_message": "org.junit.ComparisonFailure: expected:\u003c...trics.herokuapp.com/[repos]\u003e but was:\u003c...trics.herokuapp.com/[login]\u003e\r\n\tat org.junit.Assert.assertEquals(Assert.java:117)\r\n\tat org.junit.Assert.assertEquals(Assert.java:146)\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.LoginSteps.user_is_navigated_to_the_home_page(LoginSteps.java:68)\r\n\tat ✽.user is navigated to the home page(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/Login.feature:7)\r\n",
-              "duration": 1015399300,
-              "status": "failed"
+              "duration": 1656009000,
+              "status": "passed"
             },
             "line": 7,
             "name": "user is navigated to the home page",
@@ -1281,7 +1279,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-07T03:39:34.736Z",
+        "start_timestamp": "2021-06-07T03:52:03.565Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -1291,7 +1289,7 @@
         "steps": [
           {
             "result": {
-              "duration": 207975800,
+              "duration": 220833300,
               "status": "passed"
             },
             "line": 4,
@@ -1303,9 +1301,8 @@
           },
           {
             "result": {
-              "error_message": "java.lang.NullPointerException\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.RegistrarUsuarioSteps.user_is_correct_he_registers_an_user_by_the_username_the_password_and_the_role_in_the_system(RegistrarUsuarioSteps.java:56)\r\n\tat ✽.user is correct he registers an user by the username, the password and the role in the system(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/RegistrarUsuario.feature:5)\r\n",
-              "duration": 996900,
-              "status": "failed"
+              "duration": 320437100,
+              "status": "passed"
             },
             "line": 5,
             "name": "user is correct he registers an user by the username, the password and the role in the system",
@@ -1316,7 +1313,8 @@
           },
           {
             "result": {
-              "status": "skipped"
+              "duration": 224302700,
+              "status": "passed"
             },
             "line": 6,
             "name": "by the username and the password in peer not exists and the user is registered correctly",
@@ -1339,7 +1337,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-07T03:39:34.956Z",
+        "start_timestamp": "2021-06-07T03:52:04.349Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -1349,7 +1347,7 @@
         "steps": [
           {
             "result": {
-              "duration": 214511100,
+              "duration": 234993400,
               "status": "passed"
             },
             "line": 4,
@@ -1361,9 +1359,8 @@
           },
           {
             "result": {
-              "error_message": "java.lang.NullPointerException\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.UpdateUserSteps.user_is_correct_it_updates_an_user_by_the_username_and_the_password_in_the_system(UpdateUserSteps.java:55)\r\n\tat ✽.user is correct it updates an user by the username and the password in the system(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/UpdateUsuario.feature:5)\r\n",
-              "duration": 1001300,
-              "status": "failed"
+              "duration": 217996100,
+              "status": "passed"
             },
             "line": 5,
             "name": "user is correct it updates an user by the username and the password in the system",
@@ -1374,7 +1371,8 @@
           },
           {
             "result": {
-              "status": "skipped"
+              "duration": 216540000,
+              "status": "passed"
             },
             "line": 6,
             "name": "by the username and the password in peer not exists and the user is updated correctly",

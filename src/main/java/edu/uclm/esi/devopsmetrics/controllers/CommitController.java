@@ -22,7 +22,6 @@ import com.wordnik.swagger.annotations.ApiOperation;
 
 import edu.uclm.esi.devopsmetrics.domain.GithubOperations;
 import edu.uclm.esi.devopsmetrics.domain.UserOperations;
-import esi.uclm.esi.devopsmetrics.config.RabbitMqConfig;
 
 @RestController
 @RequestMapping("/commits")
@@ -202,12 +201,10 @@ public class CommitController {
 
 		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
 		if (existe) {
+			 
+			LOG.info("Get commits from a branch of a repository.");	
 			
-			
-	        this.githubOperations.getCommitsFromRepositoryBranch(reponame, branch);
-			LOG.info("Success.");	
-			
-			return ResponseEntity.ok(message);
+			return ResponseEntity.ok(this.githubOperations.getCommitsFromRepositoryBranch(reponame, branch));
 
 		} else {
 			LOG.info(this.errorMessage);
