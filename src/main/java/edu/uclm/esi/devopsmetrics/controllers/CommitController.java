@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.JSONObject;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,6 +22,7 @@ import com.wordnik.swagger.annotations.ApiOperation;
 
 import edu.uclm.esi.devopsmetrics.domain.GithubOperations;
 import edu.uclm.esi.devopsmetrics.domain.UserOperations;
+import esi.uclm.esi.devopsmetrics.config.RabbitMqConfig;
 
 @RestController
 @RequestMapping("/commits")
@@ -42,6 +44,7 @@ public class CommitController {
 	private String message;
 
 	@Autowired
+	RabbitTemplate rabbitTemplate;
 	/**
 	 * @author FcoCrespo
 	 */
@@ -198,9 +201,12 @@ public class CommitController {
 
 		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
 		if (existe) {
+			
+			String response = (String) rabbitTemplate.convertSendAndReceive(RabbitMqConfig.EXCHANGE_NAME,
+		        		RabbitMqConfig.ROUTING_KEY, this.githubOperations.getCommitsFromRepositoryBranch(reponame, branch));
 
 			LOG.info("Get commits from repository branch");
-			return ResponseEntity.ok(this.githubOperations.getCommitsFromRepositoryBranch(reponame, branch));
+			return ResponseEntity.ok(response);
 
 		} else {
 			LOG.info(this.errorMessage);
