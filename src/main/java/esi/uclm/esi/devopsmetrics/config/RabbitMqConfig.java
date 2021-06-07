@@ -57,4 +57,8 @@ public class RabbitMqConfig {
     MessageListenerAdapter listenerAdapter(Receiver receiver) {
         return new MessageListenerAdapter(receiver, Receiver.RECEIVE_METHOD_NAME);
     }
+    
+    
+  
+
 }
