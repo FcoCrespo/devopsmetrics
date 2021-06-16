@@ -78,6 +78,14 @@ public interface CommitRepository {
    */
   Optional<List<Commit>> findAllByBranchAndUserGithub(String branchId, String usergithub);
   
+  
+  /**
+   * Método para obtener si existe por su branchId de repositorio y su autor.
+   * 
+   * @author FcoCrespo
+   */
+  Commit findByBranchAndUserGithub(String branchId, String usergithub);
+  
   /**
    * Método para obtener los commits por su branchId de repositorio entre unas fechas dadas.
    * 
@@ -91,5 +99,15 @@ public interface CommitRepository {
    * @author FcoCrespo
    */
   List<Commit> findAllByBranchBeginEndDateByAuthor(String branch, Instant beginDate, Instant endDate, String githubuser);
+
+
+  /**
+   * Método para obtener los commits  de repositorio entre unas fechas dadas realizadas por un autor.
+   * 
+   * @author FcoCrespo
+   */
+  List<Commit> findAllByAuthor(String githubuser);
+
+
 
 }

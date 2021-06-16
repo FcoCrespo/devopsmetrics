@@ -29,6 +29,7 @@ public class CommitRepositoryImpl implements CommitRepository {
 	  private final MongoOperations mongoOperations;
 	  private String branchString;
 
+	  private String usergithubString;
 	  /**
 	   * Constructor de la clase.
 	   * 
@@ -40,6 +41,7 @@ public class CommitRepositoryImpl implements CommitRepository {
 	    Assert.notNull(mongoOperations, "notNull");
 	    this.mongoOperations = mongoOperations;
 	    this.branchString = "branchId";
+	    this.usergithubString = "usergithub";
 	  }
 
 	  /**
@@ -111,7 +113,7 @@ public class CommitRepositoryImpl implements CommitRepository {
 
 	@Override
 	public Optional<List<Commit>> findAllByBranchAndUserGithub(String branchId, String usergithub) {
-		List<Commit> commits = this.mongoOperations.find(new Query(Criteria.where(this.branchString).is(branchId).and("usergithub").is(usergithub)), Commit.class);
+		List<Commit> commits = this.mongoOperations.find(new Query(Criteria.where(this.branchString).is(branchId).and(this.usergithubString).is(usergithub)), Commit.class);
 
 	    return Optional.ofNullable(commits);
 	}
@@ -131,9 +133,22 @@ public class CommitRepositoryImpl implements CommitRepository {
 		
 		return this.mongoOperations
 		        .find(new Query(Criteria.where(this.branchString).is(branch).
-		        		and("pushedDate").gte(beginDate).lte(endDate).and("usergithub").is(usergithub)), Commit.class);
+		        		and("pushedDate").gte(beginDate).lte(endDate).and(this.usergithubString).is(usergithub)), Commit.class);
 	}
+
+	@Override
+	public List<Commit> findAllByAuthor(String githubuser) {
+
+		return this.mongoOperations
+		        .find(new Query(Criteria.where(this.usergithubString).is(githubuser)), Commit.class);
 	
+	}
+
+	@Override
+	public Commit findByBranchAndUserGithub(String branchId, String usergithub) {
+		return this.mongoOperations
+		        .findOne(new Query(Criteria.where("branchId").is(branchId).and(this.usergithubString).is(usergithub)), Commit.class);
+	}
 
 	
 }

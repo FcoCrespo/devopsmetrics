@@ -63,4 +63,15 @@ public interface CommitService {
 	 * @author FcoCrespo
 	 */
 	List<Commit> getAllByBranchBeginEndDateByAuthor(String branchId, Instant beginDate, Instant endDate, String githubuser);
+
+	/**
+	 * @author FcoCrespo
+	 */
+	List<Commit> getAllByAuthor(String githubuser);
+	
+	/**
+	 * @author FcoCrespo
+	 */
+	Commit getByBranchAndAuthor(String branchId, String githubuser);
+
 }

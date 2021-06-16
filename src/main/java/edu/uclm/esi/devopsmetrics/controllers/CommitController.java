@@ -246,6 +246,32 @@ public class CommitController {
 		}
 
 	}
+	
+	/**
+	 * Devuelve los usuarios de github registrados en el sistema 
+	 * 
+	 * @author FcoCrespo
+	 */
+
+	@GetMapping(value = "/usersgithub")
+	@ApiOperation(value = "Find all user from github registered in the system", notes = "Find all user from github registered in the system")
+
+	public ResponseEntity<String> allUsersGithub(@RequestParam("tokenpass") final String tokenpass) {
+
+		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
+		if (existe) {
+
+			LOG.info("Get commits from repository branch by his author");
+			return ResponseEntity
+					.ok(this.githubOperations.getUsersGithub());
+
+		} else {
+			LOG.info(this.errorMessage);
+			return ResponseEntity.badRequest().build();
+		}
+
+	}
+	
 
 	/**
 	 * Devuelve los commits de una branch de un repositorio por el nombre del autor

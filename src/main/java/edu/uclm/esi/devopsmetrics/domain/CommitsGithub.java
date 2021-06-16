@@ -431,6 +431,7 @@ public class CommitsGithub {
 
 		} else {
 			authorName = comprobarValor(nodeAuthor, "name");
+			
 			authorEmail = comprobarValor(nodeAuthor, "email");
 			authorAvatarURL = comprobarValor(nodeAuthor, "avatarUrl");
 

@@ -35,6 +35,7 @@ import edu.uclm.esi.devopsmetrics.models.CommitInfo;
 import edu.uclm.esi.devopsmetrics.models.UserGithub;
 import edu.uclm.esi.devopsmetrics.services.BranchService;
 import edu.uclm.esi.devopsmetrics.services.CommitService;
+import edu.uclm.esi.devopsmetrics.services.UserGithubService;
 
 @Service
 public class GithubOperations {
@@ -45,6 +46,7 @@ public class GithubOperations {
 	private final BranchService branchService;
 	private final BranchesGithub branchesGithub;
 	private final CommitsGithub commitsGithub;
+	private final UserGithubService userGithubService;
 	
 	private String branchnameStr = "branchname";
 	private String commitoidStr = "commit";
@@ -58,12 +60,14 @@ public class GithubOperations {
 	 * @author FcoCrespo
 	 */
 	public GithubOperations(final CommitService commitService, final BranchService branchService,
-			final BranchesGithub branchesGithub, final CommitsGithub commitsGithub) {
+			final BranchesGithub branchesGithub, final CommitsGithub commitsGithub,
+			final UserGithubService userGithubService) {
 
 		this.commitService = commitService;
 		this.branchService = branchService;
 		this.branchesGithub = branchesGithub;
 		this.commitsGithub = commitsGithub;
+		this.userGithubService = userGithubService;
 
 	}
 
@@ -419,6 +423,33 @@ public class GithubOperations {
 
 		return getInfoCommits(commits, branch);
 	}
+	
+	public String getUsersGithub(){
+		List <UserGithub> listUserGithub = this.userGithubService.findAll();
+	
+		
+		
+		JSONArray array = new JSONArray();
+		JSONObject json;
+		
+		
+		for(int i=0; i<listUserGithub.size(); i++) {
+			
+			json = new JSONObject();
+			
+			json.put("id", listUserGithub.get(i).getId());
+			json.put("login", listUserGithub.get(i).getLogin());
+			json.put("email", listUserGithub.get(i).getEmail());
+			json.put("avatarURL", listUserGithub.get(i).getAvatarURL());
+			json.put("name", listUserGithub.get(i).getName());
+			json.put("idGithub", listUserGithub.get(i).getIdGithub());
+			
+			
+		}
+
+		return array.toString();
+	}
+	
 
 	
 	private String getInfoCommits(List<Commit> commits, Branch branch) {

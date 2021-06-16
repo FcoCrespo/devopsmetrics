@@ -22,6 +22,8 @@ public class UserGithubOperations {
 
 	public UserGithub saveAuthor(String[] authorValues) {
 
+		
+		
 		String authorLogin = authorValues[0];
 		String authorName = authorValues[1];
 		String authorEmail = authorValues[3];
@@ -51,8 +53,11 @@ public class UserGithubOperations {
 
 		}
 
-		userGithub = userGithubService.findByLogin(authorLogin);
-		if (userGithub == null) {
+		if (authorLogin != null && !authorLogin.equals("")) {
+			userGithub = userGithubService.findByLogin(authorLogin);
+		}
+		
+		else {
 			userGithub = userGithubService.findByName(authorName);
 		}
 

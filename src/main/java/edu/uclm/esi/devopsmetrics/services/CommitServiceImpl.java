@@ -160,4 +160,15 @@ public class CommitServiceImpl implements CommitService {
 		}
 	}
 
+	@Override
+	public List<Commit> getAllByAuthor(String githubuser) {
+		return commitRepository.findAllByAuthor(githubuser);
+	}
+
+	@Override
+	public Commit getByBranchAndAuthor(String branchId, String githubuser) {
+		return commitRepository.findByBranchAndUserGithub(branchId, githubuser);
+				
+	}
+
 }
