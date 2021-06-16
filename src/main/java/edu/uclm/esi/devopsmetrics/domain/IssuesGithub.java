@@ -22,12 +22,14 @@ import edu.uclm.esi.devopsmetrics.services.IssueAssigneeService;
 import edu.uclm.esi.devopsmetrics.services.IssueCursorService;
 import edu.uclm.esi.devopsmetrics.services.IssueRepoService;
 import edu.uclm.esi.devopsmetrics.services.IssueService;
+import edu.uclm.esi.devopsmetrics.services.UserGithubReposService;
 import edu.uclm.esi.devopsmetrics.utilities.GraphqlTemplate;
 import edu.uclm.esi.devopsmetrics.models.Issue;
 import edu.uclm.esi.devopsmetrics.models.IssueAssignee;
 import edu.uclm.esi.devopsmetrics.models.IssueCursor;
 import edu.uclm.esi.devopsmetrics.models.IssueRepo;
 import edu.uclm.esi.devopsmetrics.models.UserGithub;
+import edu.uclm.esi.devopsmetrics.models.UserGithubRepos;
 
 @Service
 public class IssuesGithub {
@@ -40,6 +42,7 @@ public class IssuesGithub {
 	private final IssueRepoService issueRepoService;
 	private final IssueAssigneeService issueAssigneeService;
 	private final UserGithubOperations userGithubOperations;
+	private final UserGithubReposService userGithubReposService;
 	private final ResponseHTTP response;
 
 	private String cursorString;
@@ -61,13 +64,14 @@ public class IssuesGithub {
 	 * @author FcoCrespo
 	 */
 	public IssuesGithub(final IssueServices issueServices, final UserGithubOperations userGithubOperations,
-			final ResponseHTTP response) {
+			final ResponseHTTP response, final UserGithubReposService userGithubReposService) {
 
 		this.issueServices = issueServices;
 		this.issueService = this.issueServices.getIssueService();
 		this.issueCursorService = this.issueServices.getIssueCursorService();
 		this.issueRepoService = this.issueServices.getIssueRepoService();
 		this.issueAssigneeService = this.issueServices.getIssueAssigneeService();
+		this.userGithubReposService = userGithubReposService;
 		this.userGithubOperations = userGithubOperations;
 		this.response = response;
 		this.graphqlUri = "https://api.github.com/graphql";
@@ -124,7 +128,7 @@ public class IssuesGithub {
 		IssueRepo issueRepo;
 
 		while (iter.hasNext()) {
-			result = introducirIssue(parameterNode);
+			result = introducirIssue(parameterNode, info);
 			issue = (Issue) result[0];
 			issueRepo = (IssueRepo) result[1];
 
@@ -135,7 +139,7 @@ public class IssuesGithub {
 			parameterNode = iter.next();
 
 			if (!iter.hasNext()) {
-				result = introducirIssue(parameterNode);
+				result = introducirIssue(parameterNode, info);
 				issue = (Issue) result[0];
 				issueRepo = (IssueRepo) result[1];
 
@@ -209,7 +213,7 @@ public class IssuesGithub {
 		if (iter.hasNext()) {
 			while (iter.hasNext()) {
 
-				result = introducirIssue(parameterNode);
+				result = introducirIssue(parameterNode, info);
 				issue = (Issue) result[0];
 				issueRepo = (IssueRepo) result[1];
 
@@ -222,7 +226,7 @@ public class IssuesGithub {
 
 			}
 			if (!iter.hasNext()) {
-				result = introducirIssue(parameterNode);
+				result = introducirIssue(parameterNode, info);
 				issue = (Issue) result[0];
 				issueRepo = (IssueRepo) result[1];
 
@@ -235,7 +239,7 @@ public class IssuesGithub {
 			}
 
 		} else {
-			result = introducirIssue(parameterNode);
+			result = introducirIssue(parameterNode, info);
 			issue = (Issue) result[0];
 			issueRepo = (IssueRepo) result[1];
 
@@ -564,7 +568,7 @@ public class IssuesGithub {
 	
 	
 
-	private Object[] introducirIssue(JsonNode parameterNode) {
+	private Object[] introducirIssue(JsonNode parameterNode, String [] info) {
 		Issue issue = null;
 		IssueRepo issueRepo = null;
 		UserGithub userGithubAuthor = null;
@@ -618,6 +622,8 @@ public class IssuesGithub {
 		authorValues[4] = authorAvatarURL;
 
 		userGithubAuthor = this.userGithubOperations.saveAuthor(authorValues);
+		
+		guardarUsuarioGithubRepo(userGithubAuthor, info);
 
 		JsonNode nodesAssignees;
 		nodesAssignees = parameterNode.path(this.assigneesString);
@@ -685,6 +691,16 @@ public class IssuesGithub {
 
 		return result;
 	}
+	
+	private void guardarUsuarioGithubRepo(UserGithub userGithub, String[] info) {
+		UserGithubRepos usergithubrepos = this.userGithubReposService.findByUserGithubReposData(userGithub.getId(), info[0], info[1]);
+		
+		if(usergithubrepos==null) {
+			usergithubrepos = new UserGithubRepos(userGithub.getId(), info[0], info[1]);
+			this.userGithubReposService.saveUserGithubRepos(usergithubrepos);
+		}
+	}
+
 
 	private String[] obtenerDatos(JsonNode parameterNodeAssignee) {
 

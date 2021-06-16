@@ -75,7 +75,7 @@ public class GetCommitsBranchDateAuthorSteps {
 		json.put("branch", "main");
 		json.put("begindate", "25/04/2021 10:00");
 		json.put("enddate", "25/04/2021 22:00");
-		json.put("authorname", "Crespo");
+		json.put("authorname", "FcoCrespo");
 		
 		StringEntity params = new StringEntity(json.toString());
 		httppost.addHeader("content-type", "application/json");

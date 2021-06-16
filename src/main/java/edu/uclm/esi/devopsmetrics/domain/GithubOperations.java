@@ -33,8 +33,10 @@ import edu.uclm.esi.devopsmetrics.models.Commit;
 import edu.uclm.esi.devopsmetrics.models.CommitCursor;
 import edu.uclm.esi.devopsmetrics.models.CommitInfo;
 import edu.uclm.esi.devopsmetrics.models.UserGithub;
+import edu.uclm.esi.devopsmetrics.models.UserGithubRepos;
 import edu.uclm.esi.devopsmetrics.services.BranchService;
 import edu.uclm.esi.devopsmetrics.services.CommitService;
+import edu.uclm.esi.devopsmetrics.services.UserGithubReposService;
 import edu.uclm.esi.devopsmetrics.services.UserGithubService;
 
 @Service
@@ -46,11 +48,15 @@ public class GithubOperations {
 	private final BranchService branchService;
 	private final BranchesGithub branchesGithub;
 	private final CommitsGithub commitsGithub;
+	private final UserGithubServices userGithubServices;
 	private final UserGithubService userGithubService;
+	private final UserGithubReposService userGithubReposService;
 	
 	private String branchnameStr = "branchname";
 	private String commitoidStr = "commit";
 	private String emptyStr = "empty";
+	private String ownerStr = "owner";
+	private String repositoryStr = "repository";
 	
 
 	@Value("${app.serverftp}")
@@ -61,13 +67,15 @@ public class GithubOperations {
 	 */
 	public GithubOperations(final CommitService commitService, final BranchService branchService,
 			final BranchesGithub branchesGithub, final CommitsGithub commitsGithub,
-			final UserGithubService userGithubService) {
+			final UserGithubServices userGithubServices) {
 
 		this.commitService = commitService;
 		this.branchService = branchService;
 		this.branchesGithub = branchesGithub;
 		this.commitsGithub = commitsGithub;
-		this.userGithubService = userGithubService;
+		this.userGithubServices = userGithubServices;
+		this.userGithubService =this.userGithubServices.getUserGithubService();
+		this.userGithubReposService =this.userGithubServices.getUserGithubReposService();
 
 	}
 
@@ -424,33 +432,7 @@ public class GithubOperations {
 		return getInfoCommits(commits, branch);
 	}
 	
-	public String getUsersGithub(){
-		List <UserGithub> listUserGithub = this.userGithubService.findAll();
 	
-		
-		
-		JSONArray array = new JSONArray();
-		JSONObject json;
-		
-		
-		for(int i=0; i<listUserGithub.size(); i++) {
-			
-			json = new JSONObject();
-			
-			json.put("id", listUserGithub.get(i).getId());
-			json.put("login", listUserGithub.get(i).getLogin());
-			json.put("email", listUserGithub.get(i).getEmail());
-			json.put("avatarURL", listUserGithub.get(i).getAvatarURL());
-			json.put("name", listUserGithub.get(i).getName());
-			json.put("idGithub", listUserGithub.get(i).getIdGithub());
-			
-			
-		}
-
-		return array.toString();
-	}
-	
-
 	
 	private String getInfoCommits(List<Commit> commits, Branch branch) {
 		UserGithub userGithub = null;
@@ -485,7 +467,7 @@ public class GithubOperations {
 			}
 
 			json.put("branch", branch.getName());
-			json.put("repository", branch.getRepository());
+			json.put(this.repositoryStr, branch.getRepository());
 
 			array.put(json);
 		}
@@ -539,12 +521,12 @@ public class GithubOperations {
 		for (int j = 0; j < repositories.size(); j++) {
 
 			json = new JSONObject();
-			json.put("repository", repositories.get(j));
+			json.put(this.repositoryStr, repositories.get(j));
 
 			if (repositories.get(j).equals("eSalud")) {
-				json.put("owner", "sherrerap");
+				json.put(this.ownerStr, "sherrerap");
 			} else {
-				json.put("owner", "FcoCrespo");
+				json.put(this.ownerStr, "FcoCrespo");
 			}
 
 			array.put(json);
@@ -552,5 +534,91 @@ public class GithubOperations {
 
 		return array;
 	}
+
+	public String getUsersGithub(){
+		List <UserGithub> listUserGithub = this.userGithubService.findAll();
+		List <UserGithubRepos> listUserGithubRepos = this.userGithubReposService.findAll();
+		
+		
+		JSONArray array = new JSONArray();
+		JSONObject json;
+		
+		JSONArray repositories;
+		JSONObject repos;
+				
+		for(int i=0; i<listUserGithub.size(); i++) {
+			
+			json = new JSONObject();
+			repositories = new JSONArray();
+			
+			json.put("id", listUserGithub.get(i).getId());
+			json.put("login", listUserGithub.get(i).getLogin());
+			json.put("email", listUserGithub.get(i).getEmail());
+			json.put("avatarURL", listUserGithub.get(i).getAvatarURL());
+			json.put("name", listUserGithub.get(i).getName());
+			json.put("idGithub", listUserGithub.get(i).getIdGithub());
+			
+			
+			for(int j=0; j<listUserGithubRepos.size(); j++) {
+				
+				if(listUserGithubRepos.get(j).getIdusergithub().equals(listUserGithub.get(i).getId())) {
+					repos = new JSONObject();
+					repos.put(this.repositoryStr, listUserGithubRepos.get(j).getRepository());
+					repos.put(this.ownerStr, listUserGithubRepos.get(j).getOwner());
+					repositories.put(repos);
+					json.put("repositories", repositories);
+				}
+				
+			}
+			
+			array.put(json);		
+		}
+
+		return array.toString();
+	}
+
+	public String getUsersGithubRepository(String repository, String owner) {
+		List <UserGithub> listUserGithub = this.userGithubService.findAll();
+		List <UserGithubRepos> listUserGithubRepos = this.userGithubReposService.findAllByRepositoryAndOwner(repository, owner);
+		
+		
+		JSONArray array = new JSONArray();
+		JSONObject json;
+		
+		JSONArray repositories;
+		JSONObject repos;
+				
+		for(int i=0; i<listUserGithub.size(); i++) {
+			
+			for(int j=0; j<listUserGithubRepos.size(); j++) {
+				
+				if(listUserGithubRepos.get(j).getIdusergithub().equals(listUserGithub.get(i).getId())) {
+					
+					json = new JSONObject();
+					repositories = new JSONArray();
+					
+					json.put("id", listUserGithub.get(i).getId());
+					json.put("login", listUserGithub.get(i).getLogin());
+					json.put("email", listUserGithub.get(i).getEmail());
+					json.put("avatarURL", listUserGithub.get(i).getAvatarURL());
+					json.put("name", listUserGithub.get(i).getName());
+					json.put("idGithub", listUserGithub.get(i).getIdGithub());
+					repos = new JSONObject();
+					repos.put(this.repositoryStr, listUserGithubRepos.get(j).getRepository());
+					repos.put(this.ownerStr, listUserGithubRepos.get(j).getOwner());
+					repositories.put(repos);
+					json.put("repositories", repositories);
+					array.put(json);
+					
+				}
+				
+			}
+			
+					
+		}
+
+		return array.toString();
+	}
+	
 
 }

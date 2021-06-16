@@ -247,30 +247,7 @@ public class CommitController {
 
 	}
 	
-	/**
-	 * Devuelve los usuarios de github registrados en el sistema 
-	 * 
-	 * @author FcoCrespo
-	 */
-
-	@GetMapping(value = "/usersgithub")
-	@ApiOperation(value = "Find all user from github registered in the system", notes = "Find all user from github registered in the system")
-
-	public ResponseEntity<String> allUsersGithub(@RequestParam("tokenpass") final String tokenpass) {
-
-		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
-		if (existe) {
-
-			LOG.info("Get commits from repository branch by his author");
-			return ResponseEntity
-					.ok(this.githubOperations.getUsersGithub());
-
-		} else {
-			LOG.info(this.errorMessage);
-			return ResponseEntity.badRequest().build();
-		}
-
-	}
+	
 	
 
 	/**
@@ -324,6 +301,58 @@ public class CommitController {
 
 			return ResponseEntity.ok(this.githubOperations.getAllByBranchBeginEndDateByAuthor(reponame, branch,
 					begindate, enddate, authorname));
+
+		} else {
+			LOG.info(this.errorMessage);
+			return ResponseEntity.badRequest().build();
+		}
+
+	}
+	
+	/**
+	 * Devuelve los usuarios de github registrados en el sistema 
+	 * 
+	 * @author FcoCrespo
+	 */
+
+	@GetMapping(value = "/usersgithub")
+	@ApiOperation(value = "Find all user from github registered in the system", notes = "Find all user from github registered in the system")
+
+	public ResponseEntity<String> allUsersGithub(@RequestParam("tokenpass") final String tokenpass) {
+
+		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
+		if (existe) {
+
+			LOG.info("Get github users.");
+			return ResponseEntity
+					.ok(this.githubOperations.getUsersGithub());
+
+		} else {
+			LOG.info(this.errorMessage);
+			return ResponseEntity.badRequest().build();
+		}
+
+	}
+	
+	/**
+	 * Devuelve los usuarios de github registrados en el sistema en un repositorio
+	 * 
+	 * @author FcoCrespo
+	 */
+	
+	@GetMapping(value = "/usersgithubrepo")
+	@ApiOperation(value = "Find all user from github registered in the system in a repository", notes = "Find all user from github registered in the system in a repository")
+
+	public ResponseEntity<String> allUsersGithub(@RequestParam("tokenpass") final String tokenpass,
+			@RequestParam("reponame") final String repository,
+			@RequestParam("owner") final String owner) {
+
+		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
+		if (existe) {
+
+			LOG.info("Get users github by repository and owner");
+			return ResponseEntity
+					.ok(this.githubOperations.getUsersGithubRepository(repository, owner));
 
 		} else {
 			LOG.info(this.errorMessage);

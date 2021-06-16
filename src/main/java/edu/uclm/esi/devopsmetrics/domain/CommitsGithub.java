@@ -21,12 +21,14 @@ import okhttp3.Response;
 import edu.uclm.esi.devopsmetrics.services.CommitCursorService;
 import edu.uclm.esi.devopsmetrics.services.CommitInfoService;
 import edu.uclm.esi.devopsmetrics.services.CommitService;
+import edu.uclm.esi.devopsmetrics.services.UserGithubReposService;
 import edu.uclm.esi.devopsmetrics.utilities.GraphqlTemplate;
 
 import edu.uclm.esi.devopsmetrics.models.Commit;
 import edu.uclm.esi.devopsmetrics.models.CommitCursor;
 import edu.uclm.esi.devopsmetrics.models.CommitInfo;
 import edu.uclm.esi.devopsmetrics.models.UserGithub;
+import edu.uclm.esi.devopsmetrics.models.UserGithubRepos;
 
 @Service
 public class CommitsGithub {
@@ -38,6 +40,7 @@ public class CommitsGithub {
 	private final CommitCursorService commitCursorService;
 	private final CommitInfoService commitInfoService;
 	private final UserGithubOperations userGithubOperations;
+	private final UserGithubReposService userGithubReposService;
 	private final ResponseHTTP response;
 
 	private String cursorString;
@@ -52,13 +55,15 @@ public class CommitsGithub {
 	 * @author FcoCrespo
 	 */
 	public CommitsGithub(final CommitServices commitServices, final UserGithubOperations userGithubOperations,
-			final ResponseHTTP response) {
+			final UserGithubReposService userGithubReposService,
+		    final ResponseHTTP response) {
 
 		this.commitServices = commitServices;
 		this.commitService = this.commitServices.getCommitService();
 		this.commitCursorService = this.commitServices.getCommitCursorService();
 		this.commitInfoService = this.commitServices.getCommitInfoService();
 		this.userGithubOperations = userGithubOperations;
+		this.userGithubReposService = userGithubReposService;
 		this.response = response;
 		this.graphqlUri = "https://api.github.com/graphql";
 		this.filenameCursor = "src/main/resources/graphql/commits-cursor.graphql";
@@ -113,7 +118,7 @@ public class CommitsGithub {
 
 		if (iter.hasNext()) {
 			while (iter.hasNext()) {
-				result = introducirCommit(parameterNode, info[3]);
+				result = introducirCommit(parameterNode, info);
 				commit = (Commit) result[0];
 				commitInfo = (CommitInfo) result[1];
 				commitService.saveCommit(commit);
@@ -123,7 +128,7 @@ public class CommitsGithub {
 				parameterNode = iter.next();
 			}
 			if (!iter.hasNext()) {
-				result = introducirCommit(parameterNode, info[3]);
+				result = introducirCommit(parameterNode, info);
 				commit = (Commit) result[0];
 				commitInfo = (CommitInfo) result[1];
 				commitService.saveCommit(commit);
@@ -131,7 +136,7 @@ public class CommitsGithub {
 				comprobarSaveCommitInfo(commitInfo);
 			}
 		} else {
-			result = introducirCommit(parameterNode, info[3]);
+			result = introducirCommit(parameterNode, info);
 			commit = (Commit) result[0];
 			commitInfo = (CommitInfo) result[1];
 			commitService.saveCommit(commit);
@@ -229,7 +234,7 @@ public class CommitsGithub {
 		Commit commit;
 		CommitInfo commitInfo;
 
-		result = introducirCommit(parameterNode, info[3]);
+		result = introducirCommit(parameterNode, info);
 
 		commit = (Commit) result[0];
 		commitInfo = (CommitInfo) result[1];
@@ -244,7 +249,7 @@ public class CommitsGithub {
 		if (iter.hasNext()) {
 			while (iter.hasNext()) {
 
-				result = introducirCommit(parameterNode, info[3]);
+				result = introducirCommit(parameterNode, info);
 
 				commit = (Commit) result[0];
 				commitInfo = (CommitInfo) result[1];
@@ -261,7 +266,7 @@ public class CommitsGithub {
 
 			}
 			if (!iter.hasNext()) {
-				result = introducirCommit(parameterNode, info[3]);
+				result = introducirCommit(parameterNode, info);
 				commit = (Commit) result[0];
 				commitInfo = (CommitInfo) result[1];
 				initialStarCursorFind = checkInitialStarCursorFind(commit, commitInfo, commitCursorStart,
@@ -274,7 +279,7 @@ public class CommitsGithub {
 			}
 
 		} else {
-			result = introducirCommit(parameterNode, info[3]);
+			result = introducirCommit(parameterNode, info);
 			commit = (Commit) result[0];
 			commitInfo = (CommitInfo) result[1];
 
@@ -382,7 +387,7 @@ public class CommitsGithub {
 
 	}
 
-	private Object[] introducirCommit(JsonNode parameterNode, String branchId) {
+	private Object[] introducirCommit(JsonNode parameterNode, String [] info) {
 
 		Commit commit = null;
 		CommitInfo commitInfo = null;
@@ -453,12 +458,14 @@ public class CommitsGithub {
 		authorValues[4] = authorAvatarURL;
 
 		userGithub = this.userGithubOperations.saveAuthor(authorValues);
+		
+		guardarUsuarioGithubRepo(userGithub, info);
 
 		LOG.info("Commit oid : " + oid);
 		LOG.info("MessageHeadline: " + messageHeadline);
 		LOG.info("Author" + userGithub.toString());
 
-		commit = new Commit(oid, pushedDate, userGithub.getId(), branchId);
+		commit = new Commit(oid, pushedDate, userGithub.getId(), info[3]);
 
 		commitInfo = new CommitInfo(oid, messageHeadline, message, changedFiles);
 
@@ -468,6 +475,15 @@ public class CommitsGithub {
 		result[1] = commitInfo;
 
 		return result;
+	}
+
+	private void guardarUsuarioGithubRepo(UserGithub userGithub, String[] info) {
+		UserGithubRepos usergithubrepos = this.userGithubReposService.findByUserGithubReposData(userGithub.getId(), info[0], info[1]);
+		
+		if(usergithubrepos==null) {
+			usergithubrepos = new UserGithubRepos(userGithub.getId(), info[0], info[1]);
+			this.userGithubReposService.saveUserGithubRepos(usergithubrepos);
+		}
 	}
 
 	private int comprobarValorchangedFiles(JsonNode parameterNode, String value) {
