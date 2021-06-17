@@ -126,19 +126,9 @@ public class IssuesGithub {
 
 		Issue issue;
 		IssueRepo issueRepo;
-
-		while (iter.hasNext()) {
-			result = introducirIssue(parameterNode, info);
-			issue = (Issue) result[0];
-			issueRepo = (IssueRepo) result[1];
-
-			this.issueService.saveIssue(issue);
-
-			this.issueRepoService.saveIssueRepo(issueRepo);
-
-			parameterNode = iter.next();
-
-			if (!iter.hasNext()) {
+		
+		if(iter.hasNext()) {
+			while (iter.hasNext()) {
 				result = introducirIssue(parameterNode, info);
 				issue = (Issue) result[0];
 				issueRepo = (IssueRepo) result[1];
@@ -147,13 +137,36 @@ public class IssuesGithub {
 
 				this.issueRepoService.saveIssueRepo(issueRepo);
 
-				if (issueCursor != null) {
-					issueCursor.setIdLastIssue(issue.getId());
-					this.issueCursorService.updateIssueCursor(issueCursor);
+				parameterNode = iter.next();
+
+				if (!iter.hasNext()) {
+					result = introducirIssue(parameterNode, info);
+					issue = (Issue) result[0];
+					issueRepo = (IssueRepo) result[1];
+
+					this.issueService.saveIssue(issue);
+
+					this.issueRepoService.saveIssueRepo(issueRepo);
+
+					if (issueCursor != null) {
+						issueCursor.setIdLastIssue(issue.getId());
+						this.issueCursorService.updateIssueCursor(issueCursor);
+					}
 				}
 			}
+
+		}
+		else {
+			result = introducirIssue(parameterNode, info);
+			issue = (Issue) result[0];
+			issueRepo = (IssueRepo) result[1];
+
+			this.issueService.saveIssue(issue);
+
+			this.issueRepoService.saveIssueRepo(issueRepo);
 		}
 
+		
 		if (issueCursor != null && issueCursor.isHasNextPage()) {
 			filename = this.filenameCursor;
 			getNewRepositoryIssues(info, filename, issueCursor);
