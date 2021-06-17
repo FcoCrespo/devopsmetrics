@@ -631,9 +631,9 @@ public class GithubOperations {
 			
 			if(listBranches.get(i).getRepository().equals(repository)&&listBranches.get(i).getOrder()!=-1) {
 				Commit commit = this.commitService.getLastCommitByBranch(listBranches.get(i).getIdGithub());
-				json.put("branchName", listBranches.get(i).getName());
+				json.put("name", listBranches.get(i).getName());
 				json.put("repository", listBranches.get(i).getRepository());
-				json.put("branchIdGithub", listBranches.get(i).getIdGithub());
+				json.put("idGithub", listBranches.get(i).getIdGithub());
 				json.put("oid", commit.getOid());
 				json.put("pushedDate", commit.getPushedDate());
 				array.put(json);
