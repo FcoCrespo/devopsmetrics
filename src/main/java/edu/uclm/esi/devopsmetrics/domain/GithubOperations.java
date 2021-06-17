@@ -622,6 +622,9 @@ public class GithubOperations {
 
 	public String getLastCommitBranches(String repository) {
 		List <Branch> listBranches = this.branchService.findAll();
+		List <UserGithub> listUserGithub = this.userGithubService.findAll();
+		Map<String, UserGithub> mapUserGithub = getMapUserGithub(listUserGithub);
+
 		
 		JSONArray array = new JSONArray();
 		JSONObject json;
@@ -632,6 +635,9 @@ public class GithubOperations {
 			if(listBranches.get(i).getRepository().equals(repository)&&listBranches.get(i).getOrder()!=-1) {
 				Commit commit = this.commitService.getLastCommitByBranch(listBranches.get(i).getIdGithub());
 				json.put("name", listBranches.get(i).getName());
+				json.put("authorname", mapUserGithub.get(commit.getUsergithub()).getName());
+				json.put("authorid", mapUserGithub.get(commit.getUsergithub()).getId());
+				json.put("authoridGithub", mapUserGithub.get(commit.getUsergithub()).getIdGithub());
 				json.put("repository", listBranches.get(i).getRepository());
 				json.put("idGithub", listBranches.get(i).getIdGithub());
 				json.put("oid", commit.getOid());
@@ -643,5 +649,11 @@ public class GithubOperations {
 		return array.toString();
 	}
 	
+	private Map<String, UserGithub> getMapUserGithub(List<UserGithub> listUserGithub) {
+		Map<String, UserGithub> map = new HashMap<String, UserGithub>();
+		for (UserGithub i : listUserGithub)
+			map.put(i.getId(), i);
+		return map;
+	}
 
 }
