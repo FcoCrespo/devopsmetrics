@@ -629,7 +629,7 @@ public class GithubOperations {
 		for(int i = 0; i<listBranches.size(); i++) {
 			json = new JSONObject();
 			
-			if(listBranches.get(i).getRepository().equals(repository)) {
+			if(listBranches.get(i).getRepository().equals(repository)&&listBranches.get(i).getOrder()!=-1) {
 				Commit commit = this.commitService.getLastCommitByBranch(listBranches.get(i).getIdGithub());
 				json.put("branchName", listBranches.get(i).getName());
 				json.put("repository", listBranches.get(i).getRepository());
