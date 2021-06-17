@@ -73,5 +73,10 @@ public interface CommitService {
 	 * @author FcoCrespo
 	 */
 	Commit getByBranchAndAuthor(String branchId, String githubuser);
+	
+	/**
+	 * @author FcoCrespo
+	 */
+	Commit getLastCommitByBranch(String branchId);
 
 }

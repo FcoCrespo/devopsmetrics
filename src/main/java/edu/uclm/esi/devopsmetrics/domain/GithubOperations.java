@@ -619,6 +619,29 @@ public class GithubOperations {
 
 		return array.toString();
 	}
+
+	public String getLastCommitBranches(String repository) {
+		List <Branch> listBranches = this.branchService.findAll();
+		
+		JSONArray array = new JSONArray();
+		JSONObject json;
+		
+		for(int i = 0; i<listBranches.size(); i++) {
+			json = new JSONObject();
+			
+			if(listBranches.get(i).getRepository().equals(repository)) {
+				Commit commit = this.commitService.getLastCommitByBranch(listBranches.get(i).getIdGithub());
+				json.put("branchName", listBranches.get(i).getName());
+				json.put("repository", listBranches.get(i).getRepository());
+				json.put("branchIdGithub", listBranches.get(i).getIdGithub());
+				json.put("oid", commit.getOid());
+				json.put("pushedDate", commit.getPushedDate());
+				array.put(json);
+			}
+		}
+		
+		return array.toString();
+	}
 	
 
 }

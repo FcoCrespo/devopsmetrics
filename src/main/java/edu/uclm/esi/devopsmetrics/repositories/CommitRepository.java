@@ -87,6 +87,13 @@ public interface CommitRepository {
   Commit findByBranchAndUserGithub(String branchId, String usergithub);
   
   /**
+   * Método para obtener el ultimo commit por fecha.
+   * 
+   * @author FcoCrespo
+   */
+  Commit findLastCommit(String branchId);
+  
+  /**
    * Método para obtener los commits por su branchId de repositorio entre unas fechas dadas.
    * 
    * @author FcoCrespo

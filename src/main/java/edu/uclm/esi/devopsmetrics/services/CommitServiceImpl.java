@@ -171,4 +171,9 @@ public class CommitServiceImpl implements CommitService {
 				
 	}
 
+	@Override
+	public Commit getLastCommitByBranch(String branchId) {
+		return this.commitRepository.findLastCommit(branchId);
+	}
+
 }

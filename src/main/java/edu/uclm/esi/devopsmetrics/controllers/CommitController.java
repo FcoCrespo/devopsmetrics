@@ -360,5 +360,32 @@ public class CommitController {
 		}
 
 	}
+	
+	
+	/**
+	 * Devuelve los ultimos commits de las branches de un repositorio
+	 * 
+	 * @author FcoCrespo
+	 */
+	
+	@GetMapping(value = "/getlastcommit")
+	@ApiOperation(value = "Find the last commit from a branch of a repository", notes = "Find the last commit from a branch of a repository")
+
+	public ResponseEntity<String> getLastCommitBranch(@RequestParam("tokenpass") final String tokenpass,
+			@RequestParam("reponame") final String repository) {
+
+		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
+		if (existe) {
+
+			LOG.info("Get last commit from a branch of a repository");
+			return ResponseEntity
+					.ok(this.githubOperations.getLastCommitBranches(repository));
+
+		} else {
+			LOG.info(this.errorMessage);
+			return ResponseEntity.badRequest().build();
+		}
+
+	}
 
 }

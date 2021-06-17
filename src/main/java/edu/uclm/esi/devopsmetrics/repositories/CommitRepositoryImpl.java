@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -148,6 +149,17 @@ public class CommitRepositoryImpl implements CommitRepository {
 	public Commit findByBranchAndUserGithub(String branchId, String usergithub) {
 		return this.mongoOperations
 		        .findOne(new Query(Criteria.where("branchId").is(branchId).and(this.usergithubString).is(usergithub)), Commit.class);
+	}
+
+	@Override
+	public Commit findLastCommit(String branchId) {
+		Query query = new Query();
+		query.addCriteria(Criteria.where("branchId").is(branchId));
+		query.with(Sort.by(Sort.Direction.DESC, "pushedDate"));
+		
+		return this.mongoOperations
+		        .findOne(query, Commit.class);
+
 	}
 
 	
