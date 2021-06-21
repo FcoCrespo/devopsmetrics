@@ -31,6 +31,7 @@ public class CommitRepositoryImpl implements CommitRepository {
 	  private String branchString;
 
 	  private String usergithubString;
+	  private String pushedDateStr;
 	  /**
 	   * Constructor de la clase.
 	   * 
@@ -43,6 +44,7 @@ public class CommitRepositoryImpl implements CommitRepository {
 	    this.mongoOperations = mongoOperations;
 	    this.branchString = "branchId";
 	    this.usergithubString = "usergithub";
+	    this.pushedDateStr="pushedDate";
 	  }
 
 	  /**
@@ -125,7 +127,7 @@ public class CommitRepositoryImpl implements CommitRepository {
 		
 		return this.mongoOperations
 		        .find(new Query(Criteria.where(this.branchString).is(branch).
-		        		and("pushedDate").gte(beginDate).lte(endDate)), Commit.class);
+		        		and(this.pushedDateStr).gte(beginDate).lte(endDate)), Commit.class);
 	}
 	  
 	@Override
@@ -134,7 +136,7 @@ public class CommitRepositoryImpl implements CommitRepository {
 		
 		return this.mongoOperations
 		        .find(new Query(Criteria.where(this.branchString).is(branch).
-		        		and("pushedDate").gte(beginDate).lte(endDate).and(this.usergithubString).is(usergithub)), Commit.class);
+		        		and(this.pushedDateStr).gte(beginDate).lte(endDate).and(this.usergithubString).is(usergithub)), Commit.class);
 	}
 
 	@Override
@@ -148,14 +150,14 @@ public class CommitRepositoryImpl implements CommitRepository {
 	@Override
 	public Commit findByBranchAndUserGithub(String branchId, String usergithub) {
 		return this.mongoOperations
-		        .findOne(new Query(Criteria.where("branchId").is(branchId).and(this.usergithubString).is(usergithub)), Commit.class);
+		        .findOne(new Query(Criteria.where(this.branchString).is(branchId).and(this.usergithubString).is(usergithub)), Commit.class);
 	}
 
 	@Override
 	public Commit findLastCommit(String branchId) {
 		Query query = new Query();
-		query.addCriteria(Criteria.where("branchId").is(branchId));
-		query.with(Sort.by(Sort.Direction.DESC, "pushedDate"));
+		query.addCriteria(Criteria.where(this.branchString).is(branchId));
+		query.with(Sort.by(Sort.Direction.DESC, this.pushedDateStr));
 		
 		return this.mongoOperations
 		        .findOne(query, Commit.class);

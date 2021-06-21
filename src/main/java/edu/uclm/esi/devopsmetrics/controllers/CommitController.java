@@ -95,9 +95,7 @@ public class CommitController {
 		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
 		if (existe) {
 			LOG.info("Get repositories");
-			rabbitTemplate.convertAndSend(RabbitMqMongo.EXCHANGE_NAME,
-	        		RabbitMqMongo.ROUTING_KEY, 
-	        		this.githubOperations.getRepositories());
+			
 			return ResponseEntity.ok(this.githubOperations.getRepositories());
 		} else {
 			LOG.info(this.errorMessage);
@@ -125,7 +123,7 @@ public class CommitController {
 			try {
 				rabbitTemplate.convertAndSend(RabbitMqMongo.EXCHANGE_NAME,
 		        		RabbitMqMongo.ROUTING_KEY, 
-		        		this.githubOperations.getCommits(repository, owner));
+		        		this.githubOperations.getCommits(repository, owner, tokenpass));
 				
 				return ResponseEntity.ok(this.message);
 			} catch (IOException e) {

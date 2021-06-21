@@ -57,6 +57,7 @@ public class GithubOperations {
 	private String emptyStr = "empty";
 	private String ownerStr = "owner";
 	private String repositoryStr = "repository";
+	private String idGithubStr = "idGithub";
 	
 
 	@Value("${app.serverftp}")
@@ -93,58 +94,84 @@ public class GithubOperations {
 
 	}
 
-	public String getCommits(String reponame, String owner) throws IOException {
-
-		getBranches(reponame, owner);
-
-		List<Branch> branches = this.branchService.getBranchesByRepository(reponame, false);
-
+	public String getCommits(String reponame, String owner, String tokenpass) throws IOException {
+		
+		CloseableHttpClient httpclient=null;
+		
 		Commit commitDeRepo;
 
 		CommitCursor commitCursor = null;
-
-		boolean seguir = true;
-		int j = 0;
-		while (seguir && j < branches.size()) {
-			commitDeRepo = commitService.getCommitByBranch(branches.get(j).getIdGithub());
-
-			if (commitDeRepo != null) {
-				seguir = false;
-			} else {
-				j++;
-			}
-
-		}
-
-		String filename;
-		boolean initialStarCursorFind = false;
-
-		String[] info = new String[5];
-		info[0] = reponame;
-		info[1] = owner;
-
-		if (seguir) {
-			LOG.info("INTRODUCIENDO NUEVOS COMMITS");
-			filename = "src/main/resources/graphql/commits.graphql";
-			for (int i = 0; i < branches.size(); i++) {
-				info[2] = branches.get(i).getName();
-				info[3] = branches.get(i).getIdGithub();
-				this.commitsGithub.getNewRepositoryCommits(info, filename, commitCursor);
-			}
-		} else {
-			LOG.info("ACTUALIZANDO COMMITS");
-			filename = "src/main/resources/graphql/commits-cursor-before.graphql";
-			List<Commit> commitsBranch = new ArrayList<Commit>();
-
-			for (int i = 0; i < branches.size(); i++) {
-				info[2] = branches.get(i).getName();
-				info[3] = branches.get(i).getIdGithub();
-				this.commitsGithub.updateRepositoryCommits(info, filename, initialStarCursorFind, commitsBranch,
-						commitCursor);
-			}
-		}
 		
-		return "OK.";
+		try {
+			getBranches(reponame, owner);
+
+			List<Branch> branches = this.branchService.getBranchesByRepository(reponame, false);
+
+			
+
+			boolean seguir = true;
+			int j = 0;
+			while (seguir && j < branches.size()) {
+				commitDeRepo = commitService.getCommitByBranch(branches.get(j).getIdGithub());
+
+				if (commitDeRepo != null) {
+					seguir = false;
+				} else {
+					j++;
+				}
+
+			}
+
+			String filename;
+			boolean initialStarCursorFind = false;
+
+			String[] info = new String[5];
+			info[0] = reponame;
+			info[1] = owner;
+
+			if (seguir) {
+				LOG.info("INTRODUCIENDO NUEVOS COMMITS");
+				filename = "src/main/resources/graphql/commits.graphql";
+				for (int i = 0; i < branches.size(); i++) {
+					info[2] = branches.get(i).getName();
+					info[3] = branches.get(i).getIdGithub();
+					this.commitsGithub.getNewRepositoryCommits(info, filename, commitCursor);
+				}
+			} else {
+				LOG.info("ACTUALIZANDO COMMITS");
+				filename = "src/main/resources/graphql/commits-cursor-before.graphql";
+				List<Commit> commitsBranch = new ArrayList<Commit>();
+
+				for (int i = 0; i < branches.size(); i++) {
+					info[2] = branches.get(i).getName();
+					info[3] = branches.get(i).getIdGithub();
+					this.commitsGithub.updateRepositoryCommits(info, filename, initialStarCursorFind, commitsBranch,
+							commitCursor);
+				}
+				httpclient = HttpClients.createDefault();
+				HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/commits/branchesfirstcommit?tokenpass="+tokenpass+"&owner=" + owner
+						+ "&reponame=" + reponame);
+
+				LOG.info("Request Type: " + httpget.getMethod());
+
+				httpclient.execute(httpget);
+				httpclient.close();
+			}
+			
+			return "OK.";
+		}
+		catch(IOException e) {
+			LOG.info("Error saving branches order");
+			return "Error";
+		}
+		finally {
+			if(httpclient!=null) {
+				httpclient.close();
+			}
+
+		}
+
+		
 
 	}
 
@@ -556,7 +583,7 @@ public class GithubOperations {
 			json.put("email", listUserGithub.get(i).getEmail());
 			json.put("avatarURL", listUserGithub.get(i).getAvatarURL());
 			json.put("name", listUserGithub.get(i).getName());
-			json.put("idGithub", listUserGithub.get(i).getIdGithub());
+			json.put(this.idGithubStr, listUserGithub.get(i).getIdGithub());
 			
 			
 			for(int j=0; j<listUserGithubRepos.size(); j++) {
@@ -602,7 +629,7 @@ public class GithubOperations {
 					json.put("email", listUserGithub.get(i).getEmail());
 					json.put("avatarURL", listUserGithub.get(i).getAvatarURL());
 					json.put("name", listUserGithub.get(i).getName());
-					json.put("idGithub", listUserGithub.get(i).getIdGithub());
+					json.put(this.idGithubStr, listUserGithub.get(i).getIdGithub());
 					repos = new JSONObject();
 					repos.put(this.repositoryStr, listUserGithubRepos.get(j).getRepository());
 					repos.put(this.ownerStr, listUserGithubRepos.get(j).getOwner());
@@ -639,7 +666,7 @@ public class GithubOperations {
 				json.put("authorid", mapUserGithub.get(commit.getUsergithub()).getId());
 				json.put("authoridGithub", mapUserGithub.get(commit.getUsergithub()).getIdGithub());
 				json.put("repository", listBranches.get(i).getRepository());
-				json.put("idGithub", listBranches.get(i).getIdGithub());
+				json.put(this.idGithubStr, listBranches.get(i).getIdGithub());
 				json.put("oid", commit.getOid());
 				json.put("pushedDate", commit.getPushedDate());
 				array.put(json);
