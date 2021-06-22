@@ -152,6 +152,8 @@ public class GithubOperations {
 				HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/commits/branchesfirstcommit?tokenpass="+tokenpass+"&owner=" + owner
 						+ "&reponame=" + reponame);
 
+				LOG.info("Request Type For Branches: " + httpget.getMethod());
+
 				httpclient.execute(httpget);
 				httpclient.close();
 			}
