@@ -59,14 +59,14 @@ public class BranchesGithub {
 				Iterator<JsonNode> iter = nodes.iterator();
 				JsonNode parameterNode = iter.next();
 
-				introducirRama(parameterNode, reponame);
+				introducirRama(parameterNode, reponame, owner);
 
 				while (iter.hasNext()) {
-					introducirRama(parameterNode, reponame);
+					introducirRama(parameterNode, reponame, owner);
 					parameterNode = iter.next();
 				}
 				if (!iter.hasNext()) {
-					introducirRama(parameterNode, reponame);
+					introducirRama(parameterNode, reponame, owner);
 				}
 			}
 
@@ -75,16 +75,16 @@ public class BranchesGithub {
 		}
 	}
 
-	private void introducirRama(JsonNode parameterNode, String reponame) {
+	private void introducirRama(JsonNode parameterNode, String reponame, String owner) {
 		String idGithub;
 		Branch branch;
 		Branch branchBD;
 
 		String branchName = parameterNode.get("branchName").textValue();
-		branchBD = branchService.getBranchByRepositoryyName(reponame, branchName);
+		branchBD = branchService.getBranchByRepositoryyNameAndOwner(reponame, owner, branchName);
 		if (branchBD == null && !branchName.contains("dependabot/npm_and_yarn")) {
 			idGithub = parameterNode.get("id").textValue();
-			branch = new Branch(idGithub, reponame, branchName, -1);
+			branch = new Branch(idGithub, reponame, branchName, -1, owner);
 			branchService.saveBranch(branch);
 		}
 	}

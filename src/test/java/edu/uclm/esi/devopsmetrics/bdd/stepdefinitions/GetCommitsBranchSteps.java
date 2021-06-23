@@ -64,7 +64,7 @@ public class GetCommitsBranchSteps {
 	@Then("the user gets all commits from a branch of a repository")
 	public void the_user_gets_all_commits_from_a_branch_of_a_repository() throws ParseException, IOException {
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/commits/commitsbranch?tokenpass="+this.secureUser.getTokenPass()+"&reponame=test&branch=main");
+		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/commits/commitsbranch?tokenpass="+this.secureUser.getTokenPass()+"&owner=FcoCrespo&reponame=test&branch=main");
 
 		HttpResponse httpresponse = httpclient.execute(httpget);
 

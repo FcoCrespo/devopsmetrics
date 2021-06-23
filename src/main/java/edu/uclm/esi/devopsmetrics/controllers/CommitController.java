@@ -108,12 +108,12 @@ public class CommitController {
 	@ApiOperation(value = "Delete commits from a branch", notes = "Delete commits from a branch")
 
 	public ResponseEntity<String> deleteRepository(@RequestParam("tokenpass") final String tokenpass,
-			@RequestParam("reponame") final String reponame) {
+			@RequestParam("reponame") final String reponame, @RequestParam("owner") final String owner) {
 
 		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
 		if (existe) {
 
-			this.githubOperations.deleteRepository(reponame);
+			this.githubOperations.deleteRepository(reponame, owner);
 			return ResponseEntity.ok(this.message);
 
 		} else {
@@ -221,14 +221,15 @@ public class CommitController {
 	@ApiOperation(value = "Find all commits of a repository branch", notes = "Return all commits of a repository branch")
 
 	public ResponseEntity<String> allCommitsFromRepositoryBranch(@RequestParam("tokenpass") final String tokenpass,
-			@RequestParam("reponame") final String reponame, @RequestParam("branch") final String branch) {
+			@RequestParam("owner") final String owner, @RequestParam("reponame") final String reponame, @RequestParam("branch") final String branch) {
 
 		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
 		if (existe) {
+			
 			 
 			LOG.info("Get commits from a branch of a repository.");	
 			
-			return ResponseEntity.ok(this.githubOperations.getCommitsFromRepositoryBranch(reponame, branch));
+			return ResponseEntity.ok(this.githubOperations.getCommitsFromRepositoryBranch(reponame, owner, branch));
 
 		} else {
 			LOG.info(this.errorMessage);
@@ -247,7 +248,7 @@ public class CommitController {
 	@ApiOperation(value = "Find all commits of a repository branch by his author", notes = "Return all commits of a repository branch by his author")
 
 	public ResponseEntity<String> allCommitsBranchAuthor(@RequestParam("tokenpass") final String tokenpass,
-			@RequestParam("reponame") final String reponame, @RequestParam("branch") final String branch,
+			@RequestParam("reponame") final String reponame, @RequestParam("owner") final String owner, @RequestParam("branch") final String branch,
 			@RequestParam("authorname") final String authorName) {
 
 		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
@@ -255,7 +256,7 @@ public class CommitController {
 
 			LOG.info("Get commits from repository branch by his author");
 			return ResponseEntity
-					.ok(this.githubOperations.getCommitsByBranchAndAuthorName(reponame, branch, authorName));
+					.ok(this.githubOperations.getCommitsByBranchAndAuthorName(reponame, owner, branch, authorName));
 
 		} else {
 			LOG.info(this.errorMessage);
@@ -282,15 +283,12 @@ public class CommitController {
 		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
 		if (existe) {
 			final JSONObject jso = new JSONObject(message);
-			String reponame = jso.getString("reponame");
-			String branch = jso.getString("branch");
-			String begindate = jso.getString("begindate");
-			String enddate = jso.getString("enddate");
+			
 
 			LOG.info("Get commits from repository branch between the dates.");
 
 			return ResponseEntity
-					.ok(this.githubOperations.getAllByBranchBeginEndDate(reponame, branch, begindate, enddate));
+					.ok(this.githubOperations.getAllByBranchBeginEndDate(jso));
 
 		} else {
 			LOG.info(this.errorMessage);
@@ -308,16 +306,11 @@ public class CommitController {
 		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
 		if (existe) {
 			final JSONObject jso = new JSONObject(message);
-			String reponame = jso.getString("reponame");
-			String branch = jso.getString("branch");
-			String begindate = jso.getString("begindate");
-			String enddate = jso.getString("enddate");
-			String authorname = jso.getString("authorname");
+			
 
 			LOG.info("Get commits from repository branch between the dates.");
 
-			return ResponseEntity.ok(this.githubOperations.getAllByBranchBeginEndDateByAuthor(reponame, branch,
-					begindate, enddate, authorname));
+			return ResponseEntity.ok(this.githubOperations.getAllByBranchBeginEndDateByAuthor(jso));
 
 		} else {
 			LOG.info(this.errorMessage);

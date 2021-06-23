@@ -119,15 +119,15 @@ public class BranchServiceImpl implements BranchService {
   }
 
   @Override
-  public Branch getBranchByRepositoryyName(final String repository, final String name) {
+  public Branch getBranchByRepositoryyNameAndOwner(final String repository, String owner, final String name) {
 
-    return branchRepository.findByRepositoryyName(repository, name);
+    return branchRepository.findByRepositoryyName(repository, owner, name);
     
   }
 
 	@Override
-	public List<Branch> getBranchesByRepository(String repository, boolean order) {
-		final List<Branch> branches = branchRepository.findAllbyRepository(repository);
+	public List<Branch> getBranchesByRepositoryAndOwner(String repository, String owner, boolean order) {
+		final List<Branch> branches = branchRepository.findAllbyRepositoryAndOwner(repository, owner);
 		
 		if(order) {
 			Collections.sort(branches);
@@ -151,8 +151,8 @@ public class BranchServiceImpl implements BranchService {
 	}
 
 	@Override
-	public List<Branch> getAllByRepository(String repository) {
-		return branchRepository.findAllbyRepository(repository);
+	public List<Branch> getAllByRepositoryAndOwner(String repository, String owner) {
+		return branchRepository.findAllbyRepositoryAndOwner(repository, owner);
 	}
 
 

@@ -85,9 +85,9 @@ public class BranchRepositoryImpl implements BranchRepository {
 	  }
 
 	  @Override
-	  public Branch findByRepositoryyName(final String reponame, final String name) {
+	  public Branch findByRepositoryyName(final String reponame, final String owner, final String name) {
 	    return this.mongoOperations.findOne(new Query(Criteria.where(this.repositoryString).is(reponame)
-	        		.and("name").is(name)), Branch.class);	 
+	    		.and("owner").is(owner).and("name").is(name)), Branch.class);	 
 	  }
 
 	@Override
@@ -98,8 +98,8 @@ public class BranchRepositoryImpl implements BranchRepository {
 	}
 	
 	@Override
-	public List<Branch> findAllbyRepository(String repository) {
-		return this.mongoOperations.find(new Query(Criteria.where(this.repositoryString).is(repository)), Branch.class);
+	public List<Branch> findAllbyRepositoryAndOwner(String repository, String owner) {
+		return this.mongoOperations.find(new Query(Criteria.where(this.repositoryString).is(repository).and("owner").is(owner)), Branch.class);
 	}
 
 	

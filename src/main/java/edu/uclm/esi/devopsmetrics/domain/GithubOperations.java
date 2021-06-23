@@ -32,10 +32,12 @@ import edu.uclm.esi.devopsmetrics.models.Branch;
 import edu.uclm.esi.devopsmetrics.models.Commit;
 import edu.uclm.esi.devopsmetrics.models.CommitCursor;
 import edu.uclm.esi.devopsmetrics.models.CommitInfo;
+import edu.uclm.esi.devopsmetrics.models.Repository;
 import edu.uclm.esi.devopsmetrics.models.UserGithub;
 import edu.uclm.esi.devopsmetrics.models.UserGithubRepos;
 import edu.uclm.esi.devopsmetrics.services.BranchService;
 import edu.uclm.esi.devopsmetrics.services.CommitService;
+import edu.uclm.esi.devopsmetrics.services.TokenGithubService;
 import edu.uclm.esi.devopsmetrics.services.UserGithubReposService;
 import edu.uclm.esi.devopsmetrics.services.UserGithubService;
 
@@ -44,6 +46,7 @@ public class GithubOperations {
 
 	private static final Log LOG = LogFactory.getLog(GithubOperations.class);
 
+	private final CommitServices commitServices;
 	private final CommitService commitService;
 	private final BranchService branchService;
 	private final BranchesGithub branchesGithub;
@@ -51,11 +54,13 @@ public class GithubOperations {
 	private final UserGithubServices userGithubServices;
 	private final UserGithubService userGithubService;
 	private final UserGithubReposService userGithubReposService;
+	private final TokenGithubService tokenGithubService;
 	
 	private String branchnameStr = "branchname";
 	private String commitoidStr = "commit";
 	private String emptyStr = "empty";
 	private String ownerStr = "owner";
+	private String branchStr = "branch";
 	private String repositoryStr = "repository";
 	private String idGithubStr = "idGithub";
 	
@@ -66,12 +71,14 @@ public class GithubOperations {
 	/**
 	 * @author FcoCrespo
 	 */
-	public GithubOperations(final CommitService commitService, final BranchService branchService,
+	public GithubOperations(final CommitServices commitServices, final TokenGithubService tokenGithubService,
 			final BranchesGithub branchesGithub, final CommitsGithub commitsGithub,
 			final UserGithubServices userGithubServices) {
 
-		this.commitService = commitService;
-		this.branchService = branchService;
+		this.commitServices = commitServices;
+		this.commitService = this.commitServices.getCommitService();
+		this.branchService = this.commitServices.getBranchService();
+		this.tokenGithubService = tokenGithubService;
 		this.branchesGithub = branchesGithub;
 		this.commitsGithub = commitsGithub;
 		this.userGithubServices = userGithubServices;
@@ -84,7 +91,7 @@ public class GithubOperations {
 
 		try {
 			this.branchesGithub.getBranches(reponame, owner);
-			List<Branch> listBranches = this.branchService.getBranchesByRepository(reponame, true);
+			List<Branch> listBranches = this.branchService.getBranchesByRepositoryAndOwner(reponame, owner, true);
 			Collections.sort(listBranches);
 			ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 			return ow.writeValueAsString(listBranches);
@@ -105,7 +112,7 @@ public class GithubOperations {
 		try {
 			getBranches(reponame, owner);
 
-			List<Branch> branches = this.branchService.getBranchesByRepository(reponame, false);
+			List<Branch> branches = this.branchService.getBranchesByRepositoryAndOwner(reponame, owner, false);
 
 			
 
@@ -187,11 +194,11 @@ public class GithubOperations {
 		String ownerGet=owner;
 		
 		try {
-			List<Branch> branchesRepo = this.branchService.getBranchesByRepository(reponameGet, false);
+			List<Branch> branchesRepo = this.branchService.getBranchesByRepositoryAndOwner(reponameGet, owner, false);
 
 			httpclient = HttpClients.createDefault();
 			HttpGet httpget = new HttpGet("http://" + serverftp + ":8080/serverdevopsmetrics/branchesorder?owner=" + ownerGet
-					+ "&reponame=" + branchesRepo.get(0).getRepository());
+					+ "&reponame=" + branchesRepo.get(0).getRepository()+"&tokenGithub="+this.tokenGithubService.findByOwner(ownerGet).getSecretT());
 
 			LOG.info("Request Type: " + httpget.getMethod());
 
@@ -227,7 +234,7 @@ public class GithubOperations {
 				commitOidRequest.add(parameterNode.get(this.commitoidStr).textValue());		
 			}
 			
-			List<Branch> branchesRequest = getBranches(branchesNamesRequest, reponame);
+			List<Branch> branchesRequest = getBranches(branchesNamesRequest, owner, reponame);
 			
 			int index = getIndex(branchesRequest);
 			
@@ -240,7 +247,7 @@ public class GithubOperations {
 			
 			saveOrder(firstCommitByBranch);		
 
-			saveMainOrMaster(reponame);	
+			saveMainOrMaster(reponame, owner);	
 		}
 		catch(IOException e) {
 			LOG.info("Error saving branches order");
@@ -294,10 +301,10 @@ public class GithubOperations {
 		return index;
 	}
 
-	private void saveMainOrMaster(String reponame) {
-		Branch branch = this.branchService.getBranchByRepositoryyName(reponame, "master");
+	private void saveMainOrMaster(String reponame, String owner) {
+		Branch branch = this.branchService.getBranchByRepositoryyNameAndOwner(reponame, owner, "master");
 		if(branch==null) {
-			branch = this.branchService.getBranchByRepositoryyName(reponame, "main");
+			branch = this.branchService.getBranchByRepositoryyNameAndOwner(reponame, owner, "main");
 			branch.setOrder(0);
 			this.branchService.saveBranch(branch);
 		}
@@ -311,18 +318,18 @@ public class GithubOperations {
 		return (branch.getName().equals("master")||branch.getName().equals("main"));		
 	}
 
-	private List<Branch> getBranches(List<String> branchesNamesRequest, String reponame) {
+	private List<Branch> getBranches(List<String> branchesNamesRequest, String owner, String reponame) {
 		List<Branch> branchesRequest = new ArrayList<Branch>();
 		for (int i = 0; i < branchesNamesRequest.size(); i++) {
-			branchesRequest.add(this.branchService.getBranchByRepositoryyName(reponame, branchesNamesRequest.get(i)));
+			branchesRequest.add(this.branchService.getBranchByRepositoryyNameAndOwner(reponame, owner, branchesNamesRequest.get(i)));
 		}
 		return branchesRequest;
 	}
 
 	
-	public String getCommitsFromRepositoryBranch(String reponame, String name) {
+	public String getCommitsFromRepositoryBranch(String reponame, String name, String owner) {
 
-		Branch branch = this.branchService.getBranchByRepositoryyName(reponame, name);
+		Branch branch = this.branchService.getBranchByRepositoryyNameAndOwner(reponame, owner, name);
 
 		List<Commit> commits;
 
@@ -376,14 +383,20 @@ public class GithubOperations {
 		return map;
 	}
 
-	public String getAllByBranchBeginEndDate(String reponame, String name, String begindate, String enddate) {
+	public String getAllByBranchBeginEndDate(JSONObject jso) {
+		
+		String reponame = jso.getString("reponame");
+		String name = jso.getString(this.branchnameStr);
+		String begindate = jso.getString("begindate");
+		String enddate = jso.getString("enddate");
+		String owner = jso.getString(this.ownerStr);
 
 		Instant[] dates = DateUtils.getDatesInstant(begindate, enddate);
 
 		Instant beginDateInstant = dates[0];
 		Instant endDateInstant = dates[1];
 
-		Branch branch = this.branchService.getBranchByRepositoryyName(reponame, name);
+		Branch branch = this.branchService.getBranchByRepositoryyNameAndOwner(reponame, owner, name);
 		List<Commit> commits;
 
 
@@ -405,15 +418,21 @@ public class GithubOperations {
 		return getInfoCommits(commits, branch);
 	}
 
-	public String getAllByBranchBeginEndDateByAuthor(String reponame, String name, String begindate, String enddate,
-			String authorName) {
+	public String getAllByBranchBeginEndDateByAuthor(JSONObject jso) {
+		
+		String reponame = jso.getString("reponame");
+		String name = jso.getString(this.branchStr);
+		String begindate = jso.getString("begindate");
+		String enddate = jso.getString("enddate");
+		String authorName = jso.getString("authorname");
+		String owner = jso.getString(this.ownerStr);
 
 		Instant[] dates = DateUtils.getDatesInstant(begindate, enddate);
 
 		Instant beginDateInstant = dates[0];
 		Instant endDateInstant = dates[1];
 
-		Branch branch = this.branchService.getBranchByRepositoryyName(reponame, name);
+		Branch branch = this.branchService.getBranchByRepositoryyNameAndOwner(reponame, owner, name);
 		UserGithub userGithub = this.commitsGithub.getUserGithubByName(authorName);
 		List<Commit> commits;
 
@@ -436,8 +455,8 @@ public class GithubOperations {
 		return getInfoCommits(commits, branch);
 	}
 
-	public String getCommitsByBranchAndAuthorName(String reponame, String name, String authorName) {
-		Branch branch = this.branchService.getBranchByRepositoryyName(reponame, name);
+	public String getCommitsByBranchAndAuthorName(String reponame,  String owner, String name, String authorName) {
+		Branch branch = this.branchService.getBranchByRepositoryyNameAndOwner(reponame, owner, name);
 		UserGithub userGithub = this.commitsGithub.getUserGithubByName(authorName);
 		List<Commit> commits;
 
@@ -493,7 +512,7 @@ public class GithubOperations {
 				json.put("changedFiles", commitInfo.getChangedFiles());
 			}
 
-			json.put("branch", branch.getName());
+			json.put(this.branchStr, branch.getName());
 			json.put(this.repositoryStr, branch.getRepository());
 
 			array.put(json);
@@ -512,20 +531,31 @@ public class GithubOperations {
 		List<Branch> branches = this.branchService.findAll();
 
 		boolean encontrado = false;
-		List<String> repositories = new ArrayList<>();
+		List<Repository> repositories = new ArrayList<>();
 
+		
+		Repository repository = null;
+		
 		for (int i = 0; i < branches.size(); i++) {
 
 			if (repositories.isEmpty()) {
-				repositories.add(branches.get(i).getRepository());
+				
+				repository = new Repository(branches.get(i).getRepository(),branches.get(i).getOwner());
+				
+				repositories.add(repository);
+				
 			} else {
-				for (int j = 0; j < repositories.size() && !encontrado; j++) {
-					if (branches.get(i).getRepository().equals(repositories.get(j))) {
+				for (int j = 0; j < repositories.size(); j++) {
+					if (branches.get(i).getRepository().equals(repositories.get(j).getRepository()) && branches.get(i).getOwner().equals(repositories.get(j).getOwner())) {
 						encontrado = true;
 					}
 				}
 				if (!encontrado) {
-					repositories.add(branches.get(i).getRepository());
+					
+					repository = new Repository(branches.get(i).getRepository(),branches.get(i).getOwner());
+					
+					repositories.add(repository);
+					
 				}
 			}
 
@@ -540,7 +570,7 @@ public class GithubOperations {
 		return array.toString();
 	}
 
-	private JSONArray createJSONRepositories(List<String> repositories) {
+	private JSONArray createJSONRepositories(List<Repository> repositories) {
 
 		JSONArray array = new JSONArray();
 		JSONObject json;
@@ -548,13 +578,9 @@ public class GithubOperations {
 		for (int j = 0; j < repositories.size(); j++) {
 
 			json = new JSONObject();
-			json.put(this.repositoryStr, repositories.get(j));
-
-			if (repositories.get(j).equals("eSalud")) {
-				json.put(this.ownerStr, "sherrerap");
-			} else {
-				json.put(this.ownerStr, "FcoCrespo");
-			}
+			json.put(this.repositoryStr, repositories.get(j).getRepository());
+			json.put(this.ownerStr, repositories.get(j).getOwner());
+			
 
 			array.put(json);
 		}
@@ -683,9 +709,9 @@ public class GithubOperations {
 		return map;
 	}
 
-	public void deleteRepository(String reponame) {
+	public void deleteRepository(String reponame, String owner) {
 		
-		List <Branch> listBranches = this.branchService.getAllByRepository(reponame);
+		List <Branch> listBranches = this.branchService.getAllByRepositoryAndOwner(reponame, owner);
 		
 		for(int i=0; i<listBranches.size(); i++) {
 			this.commitService.deleteCommits(listBranches.get(i).getIdGithub());

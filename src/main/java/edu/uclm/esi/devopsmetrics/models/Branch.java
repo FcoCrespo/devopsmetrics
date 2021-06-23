@@ -46,16 +46,23 @@ public class Branch implements Comparable<Branch> {
 	private int order;
 
 	/**
+	 * owner.
+	 * 
+	 * @author FcoCrespo
+	 */
+	private String owner;
+	/**
 	 * Constructor de Branch.
 	 * 
 	 * @author FcoCrespo
 	 */
-	public Branch(@NotNull final String idGithub, final String repository, final String name, final int order) {
+	public Branch(@NotNull final String idGithub, final String repository, final String name, final int order, final String owner) {
 		super();
 		this.idGithub = idGithub;
 		this.repository = repository;
 		this.name = name;
 		this.order = order;
+		this.owner = owner;
 	}
 
 	/**
@@ -127,10 +134,18 @@ public class Branch implements Comparable<Branch> {
 	public void setOrder(int order) {
 		this.order = order;
 	}
+	
+	public String getOwner() {
+		return owner;
+	}
+
+	public void setOwner(String owner) {
+		this.owner = owner;
+	}
 
 	@Override
 	public String toString() {
-		return "Branch [idGithub=" + idGithub + ", repository=" + repository + ", name=" + name + ", order=" + order
+		return "Branch [idGithub=" + idGithub + ", repository=" + repository + ", name=" + name + ", owner=" + owner + ", order=" + order
 				+ "]";
 	}
 

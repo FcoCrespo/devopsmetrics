@@ -42,12 +42,12 @@ public interface BranchService {
   /**
    * @author FcoCrespo
    */
-  Branch getBranchByRepositoryyName(String repository, String name);
+  Branch getBranchByRepositoryyNameAndOwner(String repository, String owner, String name);
 
   /**
    * @author FcoCrespo
    */
-  List<Branch> getBranchesByRepository(String repository, boolean order);
+  List<Branch> getBranchesByRepositoryAndOwner(String repository, String owner, boolean order);
   
   /**
    * @author FcoCrespo
@@ -57,6 +57,6 @@ public interface BranchService {
   /**
    * @author FcoCrespo
    */
-  List<Branch> getAllByRepository(String repository);
+  List<Branch> getAllByRepositoryAndOwner(String repository, String owner);
  
 }

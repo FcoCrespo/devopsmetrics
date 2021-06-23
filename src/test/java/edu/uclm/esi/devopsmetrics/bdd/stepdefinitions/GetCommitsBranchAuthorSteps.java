@@ -65,7 +65,7 @@ public class GetCommitsBranchAuthorSteps {
 	public void the_user_gets_all_commits_from_a_branch_of_a_repository_by_the_author() throws ClientProtocolException, IOException {
 		
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/commits/commitsbranchauthor?tokenpass="+this.secureUser.getTokenPass()+"&reponame=test&branch=main&authorname=FcoCrespo");
+		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/commits/commitsbranchauthor?tokenpass="+this.secureUser.getTokenPass()+"&reponame=test&owner=FcoCrespo&branch=main&authorname=FcoCrespo");
 
 		HttpResponse httpresponse = httpclient.execute(httpget);
 

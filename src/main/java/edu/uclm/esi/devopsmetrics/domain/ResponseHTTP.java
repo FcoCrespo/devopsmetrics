@@ -5,7 +5,8 @@ import java.util.concurrent.TimeUnit;
 
 import org.springframework.stereotype.Service;
 
-import edu.uclm.esi.devopsmetrics.utilities.KeyValue;
+import edu.uclm.esi.devopsmetrics.models.TokenGithub;
+import edu.uclm.esi.devopsmetrics.services.TokenGithubService;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -15,27 +16,22 @@ import okhttp3.Response;
 @Service
 public class ResponseHTTP {
 
-	private final KeyValue keyvalue;
-	private String token;
+	private final TokenGithubService tokenGithubService;
 
-	public ResponseHTTP(final KeyValue keyvalue) {
-		this.keyvalue = keyvalue;
-		this.token = "";
+	public ResponseHTTP(final TokenGithubService tokenGithubService) {
+		this.tokenGithubService = tokenGithubService;
 	}
-
+	 
 	public Response prepareResponse(final String graphqlPayload, final String graphqlUri, final String owner) {
 
-		if (owner.equals("FcoCrespo")) {
-			this.token = this.keyvalue.getTokenFcoCrespo();
-		} else {
-			this.token = this.keyvalue.getTokenSherrerap();
-		}
+		TokenGithub tokenGithub = this.tokenGithubService.findByOwner(owner);
+	
 
 		OkHttpClient clientHTTP = new OkHttpClient().newBuilder().connectTimeout(5, TimeUnit.MINUTES)
 				.writeTimeout(5, TimeUnit.MINUTES).readTimeout(5, TimeUnit.MINUTES).build();
 
 		RequestBody body = RequestBody.create(graphqlPayload, MediaType.get("application/json; charset=utf-8"));
-		Request request = new Request.Builder().url(graphqlUri).addHeader("Authorization", "Bearer " + this.token)
+		Request request = new Request.Builder().url(graphqlUri).addHeader("Authorization", "Bearer " + tokenGithub.getSecretT())
 				.post(body).build();
 		Response response;
 		try {

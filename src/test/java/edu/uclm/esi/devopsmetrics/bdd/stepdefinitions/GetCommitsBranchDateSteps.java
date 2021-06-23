@@ -72,6 +72,7 @@ public class GetCommitsBranchDateSteps {
 		JSONObject json = new JSONObject();
 		json.put("reponame", "test");
 		json.put("branch", "main");
+		json.put("owner", "FcoCrespo");
 		json.put("begindate", "25/04/2021 10:00");
 		json.put("enddate", "25/04/2021 22:00");
 		

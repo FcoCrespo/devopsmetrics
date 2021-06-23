@@ -51,18 +51,18 @@ public interface BranchRepository {
 
 
   /**
-   * Método para obtener un branch por repository y name.
+   * Método para obtener un branch por repository, owner y name.
    * 
    * @author FcoCrespo
    */
-  Branch findByRepositoryyName(String repository, String name);
+  Branch findByRepositoryyName(String repository, String owner, String name);
   
   /**
    * Método para obtener los branchs de un repositorio.
    * 
    * @author FcoCrespo
    */
-  List<Branch> findAllbyRepository(String repository);
+  List<Branch> findAllbyRepositoryAndOwner(String repository, String owner);
   
   /**
    * Método para obtener la branch siguiente a la consultada
