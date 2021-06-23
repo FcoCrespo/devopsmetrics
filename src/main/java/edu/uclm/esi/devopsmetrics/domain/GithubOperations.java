@@ -56,12 +56,12 @@ public class GithubOperations {
 	private final UserGithubReposService userGithubReposService;
 	private final TokenGithubService tokenGithubService;
 	
-	private String branchnameStr = "branchname";
+	private String branchStr = "branch";
 	private String commitoidStr = "commit";
 	private String emptyStr = "empty";
 	private String ownerStr = "owner";
-	private String branchStr = "name";
 	private String repositoryStr = "repository";
+	private String branchnameStr = "branchname";
 	private String idGithubStr = "idGithub";
 	
 
@@ -386,7 +386,7 @@ public class GithubOperations {
 	public String getAllByBranchBeginEndDate(JSONObject jso) {
 		
 		String reponame = jso.getString("reponame");
-		String name = jso.getString(this.branchnameStr);
+		String name = jso.getString(this.branchStr);
 		String begindate = jso.getString("begindate");
 		String enddate = jso.getString("enddate");
 		String owner = jso.getString(this.ownerStr);
