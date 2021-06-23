@@ -683,4 +683,16 @@ public class GithubOperations {
 		return map;
 	}
 
+	public void deleteRepository(String reponame) {
+		
+		List <Branch> listBranches = this.branchService.getAllByRepository(reponame);
+		
+		for(int i=0; i<listBranches.size(); i++) {
+			this.commitService.deleteCommits(listBranches.get(i).getIdGithub());
+			this.branchService.deleteBranch(listBranches.get(i).getId());
+		}
+		
+		
+	}
+
 }

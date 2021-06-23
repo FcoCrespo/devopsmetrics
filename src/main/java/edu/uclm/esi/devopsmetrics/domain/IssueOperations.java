@@ -39,7 +39,14 @@ public class IssueOperations {
 	private String loginStr;
 	private String emailStr;
 	private String avatarURLStr;
-
+	private String repositoryStr;
+	private String titleStr;
+	private String authorStr;
+	private String createdAtStr;
+	private String closedAtStr;
+	private String assigneesStr;
+	private String stateStr;
+	
 	/**
 	 * @author FcoCrespo
 	 */
@@ -54,6 +61,13 @@ public class IssueOperations {
 		this.loginStr = "login";
 		this.emailStr = "email";
 		this.avatarURLStr = "avatarURL";
+		this.repositoryStr = "repository";
+		this.titleStr = "title";
+		this.createdAtStr = "createdAt";
+		this.closedAtStr = "closedAt";
+		this.assigneesStr = "assignees";
+		this.authorStr = "author";
+		this.stateStr = "state";
 	}
 
 	public String getIssues(String repository, String owner) throws IOException {
@@ -151,19 +165,19 @@ public class IssueOperations {
 			jsonAuthor.put(this.emailStr, userGithub.getEmail());
 			jsonAuthor.put(this.avatarURLStr, userGithub.getAvatarURL());
 
-			json.put("repository", issueRepoList.get(i).getRepository());
-			json.put("author", jsonAuthor);
+			json.put(this.repositoryStr, issueRepoList.get(i).getRepository());
+			json.put(this.authorStr, jsonAuthor);
 
 			json.put("id", mapIssues.get(issueRepoList.get(i).getId()).getId());
-			json.put("title", mapIssues.get(issueRepoList.get(i).getId()).getTitle());
+			json.put(this.titleStr, mapIssues.get(issueRepoList.get(i).getId()).getTitle());
 			json.put("body", mapIssues.get(issueRepoList.get(i).getId()).getBody());
-			json.put("createdAt", mapIssues.get(issueRepoList.get(i).getId()).getCreatedAt());
-			json.put("closedAt", mapIssues.get(issueRepoList.get(i).getId()).getClosedAt());
-			json.put("state", mapIssues.get(issueRepoList.get(i).getId()).getState());
+			json.put(this.createdAtStr, mapIssues.get(issueRepoList.get(i).getId()).getCreatedAt());
+			json.put(this.closedAtStr, mapIssues.get(issueRepoList.get(i).getId()).getClosedAt());
+			json.put(this.stateStr, mapIssues.get(issueRepoList.get(i).getId()).getState());
 
 			jsonAssignees = getJSONAssignees(issuesAssignee, mapUsersGithub);
 
-			json.put("assignees", jsonAssignees);
+			json.put(this.assigneesStr, jsonAssignees);
 
 			array.put(json);
 
@@ -172,32 +186,76 @@ public class IssueOperations {
 		return array.toString();
 
 	}
-
-	private JSONArray getJSONAssignees(List<IssueAssignee> issuesAssignee, Map<String, UserGithub> mapUsersGithub) {
-
-		JSONArray array = new JSONArray();
-		JSONObject json;
+	
+	public String getIssuesRepositoryByAssignee(String reponame, String owner, String idUser) {
 
 		UserGithub userGithub = null;
 
-		for (int i = 0; i < issuesAssignee.size(); i++) {
+		JSONArray array = new JSONArray();
+		JSONObject json;
+		JSONArray jsonAssignees;
+		JSONObject jsonAuthor;
+
+		List<UserGithub> usersgithub = this.userGithubService.findAll();
+		List<Issue> issues = this.issueService.findAll();
+
+		List<IssueAssignee> issuesAssignee;
+
+		List<IssueRepo> issueRepoList = this.issueRepoService.getByRepoyOwner(reponame, owner);
+
+		Map<String, Issue> mapIssues = getMapIssues(issues);
+		Map<String, UserGithub> mapUsersGithub = getMapUsersGithub(usersgithub);
+		
+		boolean esAssignee = false;
+
+		for (int i = 0; i < issueRepoList.size(); i++) {
 
 			json = new JSONObject();
+			jsonAuthor = new JSONObject();
 
-			userGithub = mapUsersGithub.get(issuesAssignee.get(i).getUsergithub());
+			issuesAssignee = this.issueAssigneeService.getAllByIdIssue(issueRepoList.get(i).getId());
+			
+		  
+			for(int j = 0; j<issuesAssignee.size()&&!esAssignee; j++) {
+				if(issuesAssignee.get(j).getUsergithub().equals(idUser)) {
+					esAssignee=true;
+				}
+			}
+			if(esAssignee) {
+				userGithub = mapUsersGithub.get(issueRepoList.get(i).getAuthor());
 
-			json.put("id", userGithub.getId());
-			json.put("login", userGithub.getLogin());
-			json.put("name", userGithub.getName());
-			json.put("email", userGithub.getEmail());
-			json.put("avatarURL", userGithub.getAvatarURL());
+				jsonAuthor.put("id", userGithub.getId());
+				jsonAuthor.put(this.loginStr, userGithub.getLogin());
+				jsonAuthor.put("name", userGithub.getName());
+				jsonAuthor.put(this.emailStr, userGithub.getEmail());
+				jsonAuthor.put(this.avatarURLStr, userGithub.getAvatarURL());
 
-			array.put(json);
+				json.put(this.repositoryStr, issueRepoList.get(i).getRepository());
+				json.put(this.authorStr, jsonAuthor);
+
+				json.put("id", mapIssues.get(issueRepoList.get(i).getId()).getId());
+				json.put(this.titleStr, mapIssues.get(issueRepoList.get(i).getId()).getTitle());
+				json.put("body", mapIssues.get(issueRepoList.get(i).getId()).getBody());
+				json.put(this.createdAtStr, mapIssues.get(issueRepoList.get(i).getId()).getCreatedAt());
+				json.put(this.closedAtStr, mapIssues.get(issueRepoList.get(i).getId()).getClosedAt());
+				json.put(this.stateStr, mapIssues.get(issueRepoList.get(i).getId()).getState());
+
+				jsonAssignees = getJSONAssignees(issuesAssignee, mapUsersGithub);
+
+				json.put(this.assigneesStr, jsonAssignees);
+
+				array.put(json);
+			}
+			
+			esAssignee = false;
+
 		}
 
-		return array;
+		return array.toString();
+
 	}
 
+	
 	private Map<String, UserGithub> getMapUsersGithub(List<UserGithub> usersgithub) {
 		Map<String, UserGithub> map = new HashMap<String, UserGithub>();
 		for (UserGithub i : usersgithub)
@@ -211,21 +269,19 @@ public class IssueOperations {
 			map.put(i.getId(), i);
 		return map;
 	}
-
-	public String getIssuesRepositoryDatesCreation(String reponame, String owner, String begindate, String enddate) {
-		Instant[] dates = DateUtils.getDatesInstant(begindate, enddate);
-
-		Instant beginDateInstant = dates[0];
-		Instant endDateInstant = dates[1];
-		
-		List<Issue> issues = this.issueService.getAllByCreationBetweenBeginEndDate(beginDateInstant, endDateInstant);
-		
-		Map<String, Issue> mapIssues = getMapIssues(issues);
-
-		return obtenerIssuesBetweenDates(mapIssues, reponame, owner);
-		
-
+	
+	private Map<String, IssueRepo> getMapIssuesRepo(List<IssueRepo> issueRepoList, Map<String, Issue> mapIssues) {
+		Map<String, IssueRepo> mapMapIssuesRepo = new HashMap<String, IssueRepo>();
+		Issue issue;
+		for (IssueRepo i : issueRepoList) {
+			issue = mapIssues.get(i.getId());
+			if (issue != null && issue.getId().equals(i.getId())) {
+				mapMapIssuesRepo.put(i.getId(), i);
+			}
+		}
+		return mapMapIssuesRepo;
 	}
+	
 
 	public String getIssuesRepositoryDatesClosed(String reponame, String owner, String begindate, String enddate) {
 		Instant[] dates = DateUtils.getDatesInstant(begindate, enddate);
@@ -249,6 +305,62 @@ public class IssueOperations {
 		Map<String, Issue> mapIssues = getMapIssues(issues);
 
 		return obtenerIssuesBetweenDates(mapIssues, reponame, owner);
+	}
+
+	public String getIssuesRepositoryDatesCreation(String reponame, String owner, String begindate, String enddate) {
+		Instant[] dates = DateUtils.getDatesInstant(begindate, enddate);
+
+		Instant beginDateInstant = dates[0];
+		Instant endDateInstant = dates[1];
+		
+		List<Issue> issues = this.issueService.getAllByCreationBetweenBeginEndDate(beginDateInstant, endDateInstant);
+		
+		Map<String, Issue> mapIssues = getMapIssues(issues);
+
+		return obtenerIssuesBetweenDates(mapIssues, reponame, owner);
+		
+
+	}
+	
+	public String getIssuesRepositoryDatesCreationUser(String reponame, String owner, String begindate, String enddate,
+			String idUser) {
+		
+		Instant[] dates = DateUtils.getDatesInstant(begindate, enddate);
+
+		Instant beginDateInstant = dates[0];
+		Instant endDateInstant = dates[1];
+		
+		List<Issue> issues = this.issueService.getAllByCreationBetweenBeginEndDate(beginDateInstant, endDateInstant);
+		
+		Map<String, Issue> mapIssues = getMapIssues(issues);
+
+		return obtenerIssuesBetweenDatesUser(mapIssues, reponame, owner, idUser);
+	}
+	
+	public String getIssuesRepositoryDatesClosedUser(String reponame, String owner, String begindate, String enddate,
+			String idUser) {
+		Instant[] dates = DateUtils.getDatesInstant(begindate, enddate);
+
+		Instant beginDateInstant = dates[0];
+		Instant endDateInstant = dates[1];
+
+		List<Issue> issues = this.issueService.getAllByClosedBetweenBeginEndDate(beginDateInstant, endDateInstant);
+		Map<String, Issue> mapIssues = getMapIssues(issues);
+
+		return obtenerIssuesBetweenDatesUser(mapIssues, reponame, owner, idUser);
+	}
+	
+	public String getIssuesRepositoryDatesOpenedUser(String reponame, String owner, String begindate, String enddate,
+			String idUser) {
+		Instant[] dates = DateUtils.getDatesInstant(begindate, enddate);
+
+		Instant beginDateInstant = dates[0];
+		Instant endDateInstant = dates[1];
+
+		List<Issue> issues = this.issueService.getAllByOpenBetweenBeginEndDate(beginDateInstant, endDateInstant);
+		Map<String, Issue> mapIssues = getMapIssues(issues);
+
+		return obtenerIssuesBetweenDatesUser(mapIssues, reponame, owner, idUser);
 	}
 
 	private String obtenerIssuesBetweenDates(Map<String, Issue> mapIssues, String reponame, String owner) {
@@ -286,19 +398,19 @@ public class IssueOperations {
 			jsonAuthor.put(this.emailStr, userGithub.getEmail());
 			jsonAuthor.put(this.avatarURLStr, userGithub.getAvatarURL());
 
-			json.put("repository", issueRepo.getRepository());
-			json.put("author", jsonAuthor);
+			json.put(this.repositoryStr, issueRepo.getRepository());
+			json.put(this.authorStr, jsonAuthor);
 
-			json.put("title", mapIssues.get(issueRepo.getId()).getTitle());
+			json.put(this.titleStr, mapIssues.get(issueRepo.getId()).getTitle());
 			json.put("body", mapIssues.get(issueRepo.getId()).getBody());
-			json.put("createdAt", mapIssues.get(issueRepo.getId()).getCreatedAt());
-			json.put("closedAt", mapIssues.get(issueRepo.getId()).getClosedAt());
-			json.put("state", mapIssues.get(issueRepo.getId()).getState());
+			json.put(this.createdAtStr, mapIssues.get(issueRepo.getId()).getCreatedAt());
+			json.put(this.closedAtStr, mapIssues.get(issueRepo.getId()).getClosedAt());
+			json.put(this.stateStr, mapIssues.get(issueRepo.getId()).getState());
 			json.put("id", mapIssues.get(issueRepo.getId()).getId());
 
 			JSONArray jsonAssignees = getJSONAssignees(issuesAssignee, mapUsersGithub);
 
-			json.put("assignees", jsonAssignees);
+			json.put(this.assigneesStr, jsonAssignees);
 
 			array.put(json);
 			
@@ -306,17 +418,111 @@ public class IssueOperations {
 
 		return array.toString();
 	}
+	
+	private String obtenerIssuesBetweenDatesUser(Map<String, Issue> mapIssues, String reponame, String owner,
+			String idUser) {
+		
+		UserGithub userGithub = null;
 
-	private Map<String, IssueRepo> getMapIssuesRepo(List<IssueRepo> issueRepoList, Map<String, Issue> mapIssues) {
-		Map<String, IssueRepo> mapMapIssuesRepo = new HashMap<String, IssueRepo>();
-		Issue issue;
-		for (IssueRepo i : issueRepoList) {
-			issue = mapIssues.get(i.getId());
-			if (issue != null && issue.getId().equals(i.getId())) {
-				mapMapIssuesRepo.put(i.getId(), i);
+		JSONArray array = new JSONArray();
+		JSONObject json;
+		JSONObject jsonAuthor;
+
+		List<UserGithub> usersgithub = this.userGithubService.findAll();
+		Map<String, UserGithub> mapUsersGithub = getMapUsersGithub(usersgithub);
+		List<IssueRepo> issueRepoList = this.issueRepoService.getByRepoyOwner(reponame, owner);
+		Map<String, IssueRepo> mapIssuesRepo = getMapIssuesRepo(issueRepoList, mapIssues);
+
+		List<IssueAssignee> issuesAssignee;
+
+		Set<Entry<String, IssueRepo>> entrySet = mapIssuesRepo.entrySet();
+
+		IssueRepo issueRepo;
+
+		for (Entry<String, IssueRepo> entry : entrySet) {
+			
+			
+			json = new JSONObject();
+			jsonAuthor = new JSONObject();
+
+			issueRepo = mapIssuesRepo.get(entry.getKey());
+
+			issuesAssignee = this.issueAssigneeService.getAllByIdIssue(issueRepo.getId());
+			
+			if(comprobarExisteAssignee(issuesAssignee, idUser)) {
+				
+				JSONArray jsonAssignees = getJSONAssignees(issuesAssignee, mapUsersGithub);
+				
+				userGithub = mapUsersGithub.get(issueRepo.getAuthor());
+
+				jsonAuthor.put("id", userGithub.getId());
+				jsonAuthor.put(this.loginStr, userGithub.getLogin());
+				jsonAuthor.put("name", userGithub.getName());
+				jsonAuthor.put(this.emailStr, userGithub.getEmail());
+				jsonAuthor.put(this.avatarURLStr, userGithub.getAvatarURL());
+
+				json.put(this.repositoryStr, issueRepo.getRepository());
+				json.put(this.authorStr, jsonAuthor);
+
+				json.put(this.titleStr, mapIssues.get(issueRepo.getId()).getTitle());
+				json.put("body", mapIssues.get(issueRepo.getId()).getBody());
+				json.put(this.createdAtStr, mapIssues.get(issueRepo.getId()).getCreatedAt());
+				json.put(this.closedAtStr, mapIssues.get(issueRepo.getId()).getClosedAt());
+				json.put(this.stateStr, mapIssues.get(issueRepo.getId()).getState());
+				json.put("id", mapIssues.get(issueRepo.getId()).getId());
+
+				
+
+				json.put(this.assigneesStr, jsonAssignees);
+
+				array.put(json);
 			}
+			
 		}
-		return mapMapIssuesRepo;
+
+		return array.toString();
 	}
+
+	private boolean comprobarExisteAssignee(List<IssueAssignee> issuesAssignee, String idUser) {
+		 
+		boolean existe = false; 
+
+		for (int i = 0; i < issuesAssignee.size()&&!existe; i++) {
+			
+			if(issuesAssignee.get(i).getUsergithub().equals(idUser)) {
+				existe=true;
+			}
+			
+		}
+		return existe;
+	}
+
+	
+	private JSONArray getJSONAssignees(List<IssueAssignee> issuesAssignee, Map<String, UserGithub> mapUsersGithub) {
+
+		JSONArray array = new JSONArray();
+		JSONObject json;
+
+		UserGithub userGithub = null;
+
+		for (int i = 0; i < issuesAssignee.size(); i++) {
+
+			json = new JSONObject();
+
+			userGithub = mapUsersGithub.get(issuesAssignee.get(i).getUsergithub());
+
+			json.put("id", userGithub.getId());
+			json.put("login", userGithub.getLogin());
+			json.put("name", userGithub.getName());
+			json.put("email", userGithub.getEmail());
+			json.put("avatarURL", userGithub.getAvatarURL());
+
+			array.put(json);
+		}
+
+		return array;
+	}
+
+
 
 }

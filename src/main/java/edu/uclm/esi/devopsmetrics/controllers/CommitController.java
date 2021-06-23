@@ -103,6 +103,25 @@ public class CommitController {
 		}
 
 	}
+	
+	@DeleteMapping(value = "/deleterepository")
+	@ApiOperation(value = "Delete commits from a branch", notes = "Delete commits from a branch")
+
+	public ResponseEntity<String> deleteRepository(@RequestParam("tokenpass") final String tokenpass,
+			@RequestParam("reponame") final String reponame) {
+
+		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
+		if (existe) {
+
+			this.githubOperations.deleteRepository(reponame);
+			return ResponseEntity.ok(this.message);
+
+		} else {
+			LOG.info(this.errorMessage);
+			return ResponseEntity.badRequest().build();
+		}
+
+	}
 
 	/**
 	 * ATENCIÓN: Devuelve todos los commits del repositorio por su owner, nombre de

@@ -26,6 +26,7 @@ query GitHub($owner: String!, $repo: String!, $cursor: String!) {
                     createdAt
                     state
                     closedAt
+                    number
                     author {
                         login
                       	avatarUrl

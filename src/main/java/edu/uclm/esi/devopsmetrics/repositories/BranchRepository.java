@@ -71,6 +71,7 @@ public interface BranchRepository {
    */
   Branch findBeforeBranchByOrder(String repository, int order);
   
+  
   /**
    * Método para obtener un branch por su idGithub.
    * 

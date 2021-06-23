@@ -150,6 +150,11 @@ public class BranchServiceImpl implements BranchService {
 		return branchRepository.findBeforeBranchByOrder(repository, order);
 	}
 
+	@Override
+	public List<Branch> getAllByRepository(String repository) {
+		return branchRepository.findAllbyRepository(repository);
+	}
+
 
 
 
