@@ -60,7 +60,7 @@ public class GithubOperations {
 	private String commitoidStr = "commit";
 	private String emptyStr = "empty";
 	private String ownerStr = "owner";
-	private String branchStr = "branch";
+	private String branchStr = "name";
 	private String repositoryStr = "repository";
 	private String idGithubStr = "idGithub";
 	
