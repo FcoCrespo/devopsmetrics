@@ -327,7 +327,7 @@ public class GithubOperations {
 	}
 
 	
-	public String getCommitsFromRepositoryBranch(String reponame, String name, String owner) {
+	public String getCommitsFromRepositoryBranch(String reponame, String owner, String name) {
 
 		Branch branch = this.branchService.getBranchByRepositoryyNameAndOwner(reponame, owner, name);
 

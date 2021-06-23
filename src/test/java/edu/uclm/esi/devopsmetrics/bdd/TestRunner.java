@@ -24,8 +24,8 @@ import org.apache.commons.net.ftp.FTPReply;
 @CucumberOptions(features = "src/test/resources/features", monochrome = true, plugin = {
 		"json:target/reports/JSONReports/TestReport.json", "pretty" })*/
 public class TestRunner {
-
-	/*
+/*
+	
 	final static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy-HH-mm");
 	final static LocalDateTime now = LocalDateTime.now();
 	
@@ -114,6 +114,6 @@ public class TestRunner {
 			}
 		}
 
-	}*/
-
+	}
+*/
 }

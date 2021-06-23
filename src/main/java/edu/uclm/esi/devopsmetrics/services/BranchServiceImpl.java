@@ -121,7 +121,7 @@ public class BranchServiceImpl implements BranchService {
   @Override
   public Branch getBranchByRepositoryyNameAndOwner(final String repository, String owner, final String name) {
 
-    return branchRepository.findByRepositoryyName(repository, owner, name);
+    return branchRepository.findByRepositoryOwnerAndName(repository, owner, name);
     
   }
 
