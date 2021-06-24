@@ -602,6 +602,7 @@ public class IssuesGithub {
 		String body = comprobarValorString(parameterNode, "body");
 		String state = comprobarValorString(parameterNode, "state");
 		String idGithub = comprobarValorString(parameterNode, "id");
+		int number = comprobarValorInt(parameterNode, "number");
 
 		String createdAtExtraido = comprobarValorString(parameterNode, "createdAt");
 		String closedAtExtraido = comprobarValorString(parameterNode, this.closedString);
@@ -647,7 +648,7 @@ public class IssuesGithub {
 
 		JsonNode parameterNodeAssignee;
 
-		issue = new Issue(state, title, body, createdAt, closedAt);
+		issue = new Issue(state, title, body, createdAt, closedAt, number);
 		issue.setId(idGithub);
 
 		issueRepo = new IssueRepo(repository, owner, userGithubAuthor.getId());

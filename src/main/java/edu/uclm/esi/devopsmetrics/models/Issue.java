@@ -57,6 +57,13 @@ public class Issue implements Comparable<Issue> {
 	 */
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
 	private Instant closedAt;
+	/**
+	 * number.
+	 * 
+	 * @author FcoCrespo
+	 */
+	@NotNull
+	private int number;
 	
 	/**
 	 * Constructor de Issue
@@ -64,13 +71,15 @@ public class Issue implements Comparable<Issue> {
 	 * 
 	 * @author FcoCrespo
 	 */
-	public Issue(@NotNull final String state, @NotNull final String title, String body, final Instant createdAt, final Instant closedAt) {
+	public Issue(@NotNull final String state, @NotNull final String title, String body, final Instant createdAt, final Instant closedAt
+			, int number) {
 		super();
 		this.state = state;
 		this.title = title;
 		this.createdAt = createdAt;
 		this.closedAt = closedAt;
 		this.body = body;
+		this.number = number;
 	}
 
 	/**
@@ -127,6 +136,15 @@ public class Issue implements Comparable<Issue> {
 	public void setTitle(String title) {
 		this.title = title;
 	}
+	
+	public int getNumber() {
+		return number;
+	}
+
+	public void setNumber(int number) {
+		this.number = number;
+	}
+
 
 	public String getBody() {
 		return body;
@@ -154,7 +172,7 @@ public class Issue implements Comparable<Issue> {
 
 	@Override
 	public String toString() {
-		return "Issue [id=" + id + ", state=" + state + ", title=" + title + ", body=" + body + ", createdAt="
+		return "Issue [id=" + id + ", state=" + state + ", title=" + title + ", body=" + body + ", number: " + number + ", createdAt="
 				+ createdAt + ", closedAt=" + closedAt + "]";
 	}
 	
