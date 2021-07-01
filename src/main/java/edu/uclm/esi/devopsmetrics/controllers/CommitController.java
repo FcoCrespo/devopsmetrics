@@ -178,9 +178,9 @@ public class CommitController {
 
 		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
 		if (existe) {
-			LOG.info("Save token");
-			this.githubOperations.getBranches(repository, owner);
-			return ResponseEntity.ok(this.message);
+			LOG.info("get branches");
+			
+			return ResponseEntity.ok(this.githubOperations.getBranches(repository, owner));
 		} else {
 			LOG.info(this.errorMessage);
 			return ResponseEntity.badRequest().build();
