@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.wordnik.swagger.annotations.ApiOperation;
 
 import edu.uclm.esi.devopsmetrics.config.RabbitMqMongo;
@@ -58,6 +59,101 @@ public class CommitController {
 		this.message = "Operation completed.";
 
 	}
+	
+	/**
+	 * Devuelve las tokens de repositorios almacenados en el sistema
+	 * 
+	 * @author FcoCrespo
+	 * @throws JsonProcessingException 
+	 */
+	@GetMapping(value = "/alltokens")
+	@ApiOperation(value = "Find all tokens in the system", notes = "Find all tokens in the system")
+
+	public ResponseEntity<String> allBranches(@RequestParam("tokenpass") final String tokenpass) throws JsonProcessingException {
+
+		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
+		if (existe) {
+			LOG.info("Get token");
+			return ResponseEntity.ok(this.githubOperations.getTokens());
+		} else {
+			LOG.info(this.errorMessage);
+			return ResponseEntity.badRequest().build();
+		}
+
+	}
+	
+	/**
+	 * Guarda un nuevo token en el sistema
+	 * 
+	 * @author FcoCrespo
+	 * @throws JsonProcessingException 
+	 */
+	@PostMapping(value = "/savetoken")
+	@ApiOperation(value = "save new token", notes = "save new token")
+
+	public ResponseEntity<String> saveToken(@RequestParam("tokenpass") final String tokenpass,
+			@RequestParam("secretT") final String secretT, @RequestParam("owner") final String owner) {
+
+		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
+		if (existe) {
+			LOG.info("save token");
+			this.githubOperations.saveToken(owner, secretT);
+			return ResponseEntity.ok(this.message);
+		} else {
+			LOG.info(this.errorMessage);
+			return ResponseEntity.badRequest().build();
+		}
+
+	}
+	
+	/**
+	 * Actualiza un token en el sistema
+	 * 
+	 * @author FcoCrespo
+	 * @throws JsonProcessingException 
+	 */
+	@PostMapping(value = "/updatetoken")
+	@ApiOperation(value = "update token", notes = "update token")
+
+	public ResponseEntity<String> updateToken(@RequestParam("tokenpass") final String tokenpass,
+			@RequestParam("secretT") final String secretT, @RequestParam("owner") final String owner) {
+
+		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
+		if (existe) {
+			LOG.info("update token");
+			this.githubOperations.updateToken(owner, secretT);
+			return ResponseEntity.ok(this.message);
+		} else {
+			LOG.info(this.errorMessage);
+			return ResponseEntity.badRequest().build();
+		}
+
+	}
+	
+	/**
+	 * Elimina un token en el sistema
+	 * 
+	 * @author FcoCrespo
+	 * @throws JsonProcessingException 
+	 */
+	@DeleteMapping(value = "/deletetoken")
+	@ApiOperation(value = "delete token", notes = "delete token")
+
+	public ResponseEntity<String> deleteToken(@RequestParam("tokenpass") final String tokenpass,
+			@RequestParam("secretT") final String secretT, @RequestParam("owner") final String owner) {
+
+		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
+		if (existe) {
+			LOG.info("delete token");
+			this.githubOperations.deleteToken(owner);
+			return ResponseEntity.ok(this.message);
+		} else {
+			LOG.info(this.errorMessage);
+			return ResponseEntity.badRequest().build();
+		}
+
+	}
+
 
 	/**
 	 * Devuelve las ramas de un repositorio por su owner, nombre de repositorio y
@@ -73,8 +169,9 @@ public class CommitController {
 
 		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
 		if (existe) {
-			LOG.info("Get branches");
-			return ResponseEntity.ok(this.githubOperations.getBranches(repository, owner));
+			LOG.info("Save token");
+			this.githubOperations.getBranches(repository, owner);
+			return ResponseEntity.ok(this.message);
 		} else {
 			LOG.info(this.errorMessage);
 			return ResponseEntity.badRequest().build();

@@ -37,13 +37,6 @@ public class Issue implements Comparable<Issue> {
 	@NotNull
 	private String title;
 	/**
-	 * body.
-	 * 
-	 * @author FcoCrespo
-	 */
-	@NotNull
-	private String body;
-	/**
 	 * createdAt.
 	 * 
 	 * @author FcoCrespo
@@ -71,14 +64,13 @@ public class Issue implements Comparable<Issue> {
 	 * 
 	 * @author FcoCrespo
 	 */
-	public Issue(@NotNull final String state, @NotNull final String title, String body, final Instant createdAt, final Instant closedAt
+	public Issue(@NotNull final String state, @NotNull final String title, final Instant createdAt, final Instant closedAt
 			, int number) {
 		super();
 		this.state = state;
 		this.title = title;
 		this.createdAt = createdAt;
 		this.closedAt = closedAt;
-		this.body = body;
 		this.number = number;
 	}
 
@@ -145,15 +137,6 @@ public class Issue implements Comparable<Issue> {
 		this.number = number;
 	}
 
-
-	public String getBody() {
-		return body;
-	}
-
-	public void setBody(String body) {
-		this.body = body;
-	}
-
 	public Instant getCreatedAt() {
 		return createdAt;
 	}
@@ -172,7 +155,7 @@ public class Issue implements Comparable<Issue> {
 
 	@Override
 	public String toString() {
-		return "Issue [id=" + id + ", state=" + state + ", title=" + title + ", body=" + body + ", number: " + number + ", createdAt="
+		return "Issue [id=" + id + ", state=" + state + ", title=" + title + ", number: " + number + ", createdAt="
 				+ createdAt + ", closedAt=" + closedAt + "]";
 	}
 	

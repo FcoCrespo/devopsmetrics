@@ -424,7 +424,6 @@ public class IssuesGithub {
 
 		
 		String title = comprobarValorString(parameterNode, "title");
-		String body = comprobarValorString(parameterNode, "body");
 		String state = comprobarValorString(parameterNode, "state");
 
 		String closedAtExtraido = comprobarValorString(parameterNode, this.closedString);
@@ -437,7 +436,6 @@ public class IssuesGithub {
 		
 		issue.setState(state);
 		issue.setTitle(title);
-		issue.setBody(body);
 		
 		issue.setClosedAt(closedAt);
 		
@@ -598,8 +596,7 @@ public class IssuesGithub {
 
 		String repository = comprobarValorString(nodeRepository, "name");
 
-		String title = comprobarValorString(parameterNode, "title");
-		String body = comprobarValorString(parameterNode, "body");
+		String title = comprobarValorString(parameterNode, "title"); 
 		String state = comprobarValorString(parameterNode, "state");
 		String idGithub = comprobarValorString(parameterNode, "id");
 		int number = comprobarValorInt(parameterNode, "number");
@@ -648,7 +645,7 @@ public class IssuesGithub {
 
 		JsonNode parameterNodeAssignee;
 
-		issue = new Issue(state, title, body, createdAt, closedAt, number);
+		issue = new Issue(state, title, createdAt, closedAt, number);
 		issue.setId(idGithub);
 
 		issueRepo = new IssueRepo(repository, owner, userGithubAuthor.getId());

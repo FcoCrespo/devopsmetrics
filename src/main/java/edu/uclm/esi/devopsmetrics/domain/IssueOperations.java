@@ -170,7 +170,6 @@ public class IssueOperations {
 
 			json.put("id", mapIssues.get(issueRepoList.get(i).getId()).getId());
 			json.put(this.titleStr, mapIssues.get(issueRepoList.get(i).getId()).getTitle());
-			json.put("body", mapIssues.get(issueRepoList.get(i).getId()).getBody());
 			json.put(this.createdAtStr, mapIssues.get(issueRepoList.get(i).getId()).getCreatedAt());
 			json.put(this.closedAtStr, mapIssues.get(issueRepoList.get(i).getId()).getClosedAt());
 			json.put(this.stateStr, mapIssues.get(issueRepoList.get(i).getId()).getState());
@@ -235,7 +234,6 @@ public class IssueOperations {
 
 				json.put("id", mapIssues.get(issueRepoList.get(i).getId()).getId());
 				json.put(this.titleStr, mapIssues.get(issueRepoList.get(i).getId()).getTitle());
-				json.put("body", mapIssues.get(issueRepoList.get(i).getId()).getBody());
 				json.put(this.createdAtStr, mapIssues.get(issueRepoList.get(i).getId()).getCreatedAt());
 				json.put(this.closedAtStr, mapIssues.get(issueRepoList.get(i).getId()).getClosedAt());
 				json.put(this.stateStr, mapIssues.get(issueRepoList.get(i).getId()).getState());
@@ -402,7 +400,6 @@ public class IssueOperations {
 			json.put(this.authorStr, jsonAuthor);
 
 			json.put(this.titleStr, mapIssues.get(issueRepo.getId()).getTitle());
-			json.put("body", mapIssues.get(issueRepo.getId()).getBody());
 			json.put(this.createdAtStr, mapIssues.get(issueRepo.getId()).getCreatedAt());
 			json.put(this.closedAtStr, mapIssues.get(issueRepo.getId()).getClosedAt());
 			json.put(this.stateStr, mapIssues.get(issueRepo.getId()).getState());
@@ -465,7 +462,6 @@ public class IssueOperations {
 				json.put(this.authorStr, jsonAuthor);
 
 				json.put(this.titleStr, mapIssues.get(issueRepo.getId()).getTitle());
-				json.put("body", mapIssues.get(issueRepo.getId()).getBody());
 				json.put(this.createdAtStr, mapIssues.get(issueRepo.getId()).getCreatedAt());
 				json.put(this.closedAtStr, mapIssues.get(issueRepo.getId()).getClosedAt());
 				json.put(this.stateStr, mapIssues.get(issueRepo.getId()).getState());

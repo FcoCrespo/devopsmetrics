@@ -33,6 +33,7 @@ import edu.uclm.esi.devopsmetrics.models.Commit;
 import edu.uclm.esi.devopsmetrics.models.CommitCursor;
 import edu.uclm.esi.devopsmetrics.models.CommitInfo;
 import edu.uclm.esi.devopsmetrics.models.Repository;
+import edu.uclm.esi.devopsmetrics.models.TokenGithub;
 import edu.uclm.esi.devopsmetrics.models.UserGithub;
 import edu.uclm.esi.devopsmetrics.models.UserGithubRepos;
 import edu.uclm.esi.devopsmetrics.services.BranchService;
@@ -86,6 +87,54 @@ public class GithubOperations {
 		this.userGithubReposService =this.userGithubServices.getUserGithubReposService();
 
 	}
+	
+	public String getTokens() throws JsonProcessingException {
+		List <TokenGithub> listTokens = this.tokenGithubService.findAll();
+		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+		return ow.writeValueAsString(listTokens);
+	}
+	
+	public void saveToken(String owner, String secretT) {
+		TokenGithub newT = new TokenGithub(owner, secretT);
+		this.tokenGithubService.saveTokenGithub(newT);
+	}
+	
+	public void updateToken(String owner, String secretT) {
+		List<TokenGithub> listTokens = this.tokenGithubService.findAll();
+		TokenGithub updateToken = null;
+		
+		for(int i=0; i<listTokens.size(); i++) {
+			if(listTokens.get(i).getOwner().equals(owner)) {
+				updateToken = listTokens.get(i);
+			}
+		}
+		
+		if(updateToken!=null) {
+			updateToken.setSecretT(secretT);
+			
+			this.tokenGithubService.saveTokenGithub(updateToken);
+		}
+		
+	}
+	
+	
+	public void deleteToken(String owner) {
+		List<TokenGithub> listTokens = this.tokenGithubService.findAll();
+		TokenGithub deleteToken = null;
+		
+		for(int i=0; i<listTokens.size(); i++) {
+			if(listTokens.get(i).getOwner().equals(owner)) {
+				deleteToken = listTokens.get(i);
+			}
+		}
+		
+		if(deleteToken!=null) {
+			
+			this.tokenGithubService.deleteTokenGithub(deleteToken.getSecretT());
+		}
+		
+	}
+	
 
 	public String getBranches(String reponame, String owner) {
 

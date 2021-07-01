@@ -3,7 +3,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-24T14:33:12.850Z",
+        "start_timestamp": "2021-07-01T15:16:36.029Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -13,7 +13,7 @@
         "steps": [
           {
             "result": {
-              "duration": 1542738400,
+              "duration": 15392509100,
               "status": "passed"
             },
             "line": 4,
@@ -25,7 +25,7 @@
           },
           {
             "result": {
-              "duration": 340969800,
+              "duration": 393485100,
               "status": "passed"
             },
             "line": 5,
@@ -37,7 +37,7 @@
           },
           {
             "result": {
-              "duration": 282655800,
+              "duration": 224764100,
               "status": "passed"
             },
             "line": 6,
@@ -61,7 +61,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-24T14:33:15.078Z",
+        "start_timestamp": "2021-07-01T15:16:52.111Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -71,7 +71,7 @@
         "steps": [
           {
             "result": {
-              "duration": 211227800,
+              "duration": 297721300,
               "status": "passed"
             },
             "line": 4,
@@ -94,8 +94,9 @@
           },
           {
             "result": {
-              "duration": 2057375700,
-              "status": "passed"
+              "error_message": "java.lang.AssertionError: expected:\u003c3\u003e but was:\u003c5\u003e\r\n\tat org.junit.Assert.fail(Assert.java:89)\r\n\tat org.junit.Assert.failNotEquals(Assert.java:835)\r\n\tat org.junit.Assert.assertEquals(Assert.java:647)\r\n\tat org.junit.Assert.assertEquals(Assert.java:633)\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllBranchesSteps.the_user_gets_all_branches_from_a_repository_by_his_owner(GetAllBranchesSteps.java:95)\r\n\tat ✽.the user gets all branches from a repository by his owner(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetAllBranches.feature:6)\r\n",
+              "duration": 476855200,
+              "status": "failed"
             },
             "line": 6,
             "name": "the user gets all branches from a repository by his owner",
@@ -118,7 +119,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-24T14:33:17.361Z",
+        "start_timestamp": "2021-07-01T15:16:52.905Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -128,7 +129,7 @@
         "steps": [
           {
             "result": {
-              "duration": 263186700,
+              "duration": 244093000,
               "status": "passed"
             },
             "line": 4,
@@ -151,8 +152,9 @@
           },
           {
             "result": {
-              "duration": 3655478300,
-              "status": "passed"
+              "error_message": "org.junit.ComparisonFailure: expected:\u003c[Operation completed.]\u003e but was:\u003c[{\"timestamp\":\"2021-07-01T15:16:54.239+00:00\",\"status\":500,\"error\":\"Internal Server Error\",\"message\":\"\",\"path\":\"/commits/allcommits\"}]\u003e\r\n\tat org.junit.Assert.assertEquals(Assert.java:117)\r\n\tat org.junit.Assert.assertEquals(Assert.java:146)\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllCommitsSteps.the_user_gets_all_commits_from_a_repository_by_his_owner(GetAllCommitsSteps.java:72)\r\n\tat ✽.the user gets all commits from a repository by his owner(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetAllCommits.feature:6)\r\n",
+              "duration": 208028900,
+              "status": "failed"
             },
             "line": 6,
             "name": "the user gets all commits from a repository by his owner",
@@ -175,7 +177,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-24T14:33:21.294Z",
+        "start_timestamp": "2021-07-01T15:16:53.374Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -185,7 +187,7 @@
         "steps": [
           {
             "result": {
-              "duration": 232022300,
+              "duration": 214455300,
               "status": "passed"
             },
             "line": 4,
@@ -208,8 +210,9 @@
           },
           {
             "result": {
-              "duration": 702105100,
-              "status": "passed"
+              "error_message": "org.junit.ComparisonFailure: expected:\u003c[Operation completed.]\u003e but was:\u003c[{\"timestamp\":\"2021-07-01T15:16:54.730+00:00\",\"status\":500,\"error\":\"Internal Server Error\",\"message\":\"\",\"path\":\"/issues/allissues\"}]\u003e\r\n\tat org.junit.Assert.assertEquals(Assert.java:117)\r\n\tat org.junit.Assert.assertEquals(Assert.java:146)\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllIssuesSteps.the_user_gets_all_issues_from_a_repository_by_his_owner(GetAllIssuesSteps.java:70)\r\n\tat ✽.the user gets all issues from a repository by his owner(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetAllIssues.feature:6)\r\n",
+              "duration": 260835800,
+              "status": "failed"
             },
             "line": 6,
             "name": "the user gets all issues from a repository by his owner",
@@ -232,7 +235,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-24T14:33:22.238Z",
+        "start_timestamp": "2021-07-01T15:16:53.861Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -242,7 +245,7 @@
         "steps": [
           {
             "result": {
-              "duration": 242165900,
+              "duration": 215926200,
               "status": "passed"
             },
             "line": 4,
@@ -254,7 +257,6 @@
           },
           {
             "result": {
-              "duration": 1000800,
               "status": "passed"
             },
             "line": 5,
@@ -266,8 +268,9 @@
           },
           {
             "result": {
-              "duration": 3638233600,
-              "status": "passed"
+              "error_message": "com.fasterxml.jackson.core.JsonParseException: Unrecognized token \u0027Error\u0027: was expecting (JSON String, Number, Array, Object or token \u0027null\u0027, \u0027true\u0027 or \u0027false\u0027)\n at [Source: (String)\"Error al obtener las metricas de los commits\"; line: 1, column: 6]\r\n\tat com.fasterxml.jackson.core.JsonParser._constructError(JsonParser.java:1851)\r\n\tat com.fasterxml.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:717)\r\n\tat com.fasterxml.jackson.core.json.ReaderBasedJsonParser._reportInvalidToken(ReaderBasedJsonParser.java:2892)\r\n\tat com.fasterxml.jackson.core.json.ReaderBasedJsonParser._handleOddValue(ReaderBasedJsonParser.java:1938)\r\n\tat com.fasterxml.jackson.core.json.ReaderBasedJsonParser.nextToken(ReaderBasedJsonParser.java:776)\r\n\tat com.fasterxml.jackson.databind.ObjectMapper._readTreeAndClose(ObjectMapper.java:4511)\r\n\tat com.fasterxml.jackson.databind.ObjectMapper.readTree(ObjectMapper.java:2940)\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllMetricsSteps.the_user_gets_all_metrics_from_a_repository_by_his_owner(GetAllMetricsSteps.java:72)\r\n\tat ✽.the user gets all metrics from a repository by his owner(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetAllMetrics.feature:6)\r\n",
+              "duration": 563352700,
+              "status": "failed"
             },
             "line": 6,
             "name": "the user gets all metrics from a repository by his owner",
@@ -290,7 +293,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-24T14:33:26.128Z",
+        "start_timestamp": "2021-07-01T15:16:54.656Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -300,7 +303,7 @@
         "steps": [
           {
             "result": {
-              "duration": 225697100,
+              "duration": 204276200,
               "status": "passed"
             },
             "line": 4,
@@ -312,6 +315,7 @@
           },
           {
             "result": {
+              "duration": 998600,
               "status": "passed"
             },
             "line": 5,
@@ -323,8 +327,9 @@
           },
           {
             "result": {
-              "duration": 6369043500,
-              "status": "passed"
+              "error_message": "com.fasterxml.jackson.core.JsonParseException: Unrecognized token \u0027Error\u0027: was expecting (JSON String, Number, Array, Object or token \u0027null\u0027, \u0027true\u0027 or \u0027false\u0027)\n at [Source: (String)\"Error al obtener las metricas de los commits\"; line: 1, column: 6]\r\n\tat com.fasterxml.jackson.core.JsonParser._constructError(JsonParser.java:1851)\r\n\tat com.fasterxml.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:717)\r\n\tat com.fasterxml.jackson.core.json.ReaderBasedJsonParser._reportInvalidToken(ReaderBasedJsonParser.java:2892)\r\n\tat com.fasterxml.jackson.core.json.ReaderBasedJsonParser._handleOddValue(ReaderBasedJsonParser.java:1938)\r\n\tat com.fasterxml.jackson.core.json.ReaderBasedJsonParser.nextToken(ReaderBasedJsonParser.java:776)\r\n\tat com.fasterxml.jackson.databind.ObjectMapper._readTreeAndClose(ObjectMapper.java:4511)\r\n\tat com.fasterxml.jackson.databind.ObjectMapper.readTree(ObjectMapper.java:2940)\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllMetricsDateSteps.the_user_gets_all_metrics_from_a_repository_by_his_owner_between_two_dates(GetAllMetricsDateSteps.java:84)\r\n\tat ✽.the user gets all metrics from a repository by his owner between two dates(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetAllMetricsDate.feature:6)\r\n",
+              "duration": 493810300,
+              "status": "failed"
             },
             "line": 6,
             "name": "the user gets all metrics from a repository by his owner between two dates",
@@ -347,7 +352,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-24T14:33:32.739Z",
+        "start_timestamp": "2021-07-01T15:16:55.365Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -357,7 +362,7 @@
         "steps": [
           {
             "result": {
-              "duration": 213173400,
+              "duration": 216631600,
               "status": "passed"
             },
             "line": 4,
@@ -380,8 +385,9 @@
           },
           {
             "result": {
-              "duration": 220893300,
-              "status": "passed"
+              "error_message": "java.util.NoSuchElementException\r\n\tat java.base/java.util.ArrayList$Itr.next(ArrayList.java:1000)\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllRepositories.the_user_gets_all_repositories_from_the_system(GetAllRepositories.java:80)\r\n\tat ✽.the user gets all repositories from the system(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetAllRepositories.feature:6)\r\n",
+              "duration": 208416600,
+              "status": "failed"
             },
             "line": 6,
             "name": "the user gets all repositories from the system",
@@ -404,7 +410,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-24T14:33:33.197Z",
+        "start_timestamp": "2021-07-01T15:16:55.802Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -414,7 +420,7 @@
         "steps": [
           {
             "result": {
-              "duration": 242472800,
+              "duration": 206963300,
               "status": "passed"
             },
             "line": 4,
@@ -437,7 +443,7 @@
           },
           {
             "result": {
-              "duration": 1166428600,
+              "duration": 1005970500,
               "status": "passed"
             },
             "line": 6,
@@ -461,7 +467,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-24T14:33:34.622Z",
+        "start_timestamp": "2021-07-01T15:16:57.029Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -471,7 +477,7 @@
         "steps": [
           {
             "result": {
-              "duration": 214881700,
+              "duration": 241067400,
               "status": "passed"
             },
             "line": 4,
@@ -494,7 +500,7 @@
           },
           {
             "result": {
-              "duration": 820808800,
+              "duration": 637664400,
               "status": "passed"
             },
             "line": 6,
@@ -518,7 +524,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-24T14:33:35.671Z",
+        "start_timestamp": "2021-07-01T15:16:57.923Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -528,7 +534,7 @@
         "steps": [
           {
             "result": {
-              "duration": 207003000,
+              "duration": 237003100,
               "status": "passed"
             },
             "line": 4,
@@ -540,7 +546,7 @@
           },
           {
             "result": {
-              "duration": 222998300,
+              "duration": 215520100,
               "status": "passed"
             },
             "line": 5,
@@ -552,7 +558,7 @@
           },
           {
             "result": {
-              "duration": 191999700,
+              "duration": 221004500,
               "status": "passed"
             },
             "line": 6,
@@ -576,7 +582,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-24T14:33:36.306Z",
+        "start_timestamp": "2021-07-01T15:16:58.620Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -586,7 +592,7 @@
         "steps": [
           {
             "result": {
-              "duration": 213306600,
+              "duration": 223004000,
               "status": "passed"
             },
             "line": 4,
@@ -598,6 +604,7 @@
           },
           {
             "result": {
+              "duration": 1002000,
               "status": "passed"
             },
             "line": 5,
@@ -609,8 +616,9 @@
           },
           {
             "result": {
-              "duration": 1875829600,
-              "status": "passed"
+              "error_message": "org.junit.ComparisonFailure: expected:\u003c[Operation completed.]\u003e but was:\u003c[{\"timestamp\":\"2021-07-01T15:16:59.920+00:00\",\"status\":500,\"error\":\"Internal Server Error\",\"message\":\"\",\"path\":\"/commits/branchesfirstcommit\"}]\u003e\r\n\tat org.junit.Assert.assertEquals(Assert.java:117)\r\n\tat org.junit.Assert.assertEquals(Assert.java:146)\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetAllBranchesOrderSteps.the_user_gets_all_branches_order_from_a_repository_by_his_owner(GetAllBranchesOrderSteps.java:71)\r\n\tat ✽.the user gets all branches order from a repository by his owner(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetBranchOrder.feature:6)\r\n",
+              "duration": 192999400,
+              "status": "failed"
             },
             "line": 6,
             "name": "the user gets all branches order from a repository by his owner",
@@ -633,7 +641,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-24T14:33:38.411Z",
+        "start_timestamp": "2021-07-01T15:16:59.050Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -643,7 +651,7 @@
         "steps": [
           {
             "result": {
-              "duration": 206579900,
+              "duration": 223998700,
               "status": "passed"
             },
             "line": 4,
@@ -655,7 +663,6 @@
           },
           {
             "result": {
-              "duration": 1005900,
               "status": "passed"
             },
             "line": 5,
@@ -667,8 +674,9 @@
           },
           {
             "result": {
-              "duration": 1212896400,
-              "status": "passed"
+              "error_message": "java.lang.NullPointerException\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetCommitsBranchSteps.the_user_gets_all_commits_from_a_branch_of_a_repository(GetCommitsBranchSteps.java:84)\r\n\tat ✽.the user gets all commits from a branch of a repository(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetCommitsBranch.feature:6)\r\n",
+              "duration": 202087900,
+              "status": "failed"
             },
             "line": 6,
             "name": "the user gets all commits from a branch of a repository",
@@ -691,7 +699,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-24T14:33:39.848Z",
+        "start_timestamp": "2021-07-01T15:16:59.488Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -701,7 +709,7 @@
         "steps": [
           {
             "result": {
-              "duration": 237392600,
+              "duration": 217994500,
               "status": "passed"
             },
             "line": 4,
@@ -713,6 +721,7 @@
           },
           {
             "result": {
+              "duration": 1040200,
               "status": "passed"
             },
             "line": 5,
@@ -724,8 +733,9 @@
           },
           {
             "result": {
-              "duration": 1096085000,
-              "status": "passed"
+              "error_message": "java.lang.NullPointerException\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetCommitsBranchAuthorSteps.the_user_gets_all_commits_from_a_branch_of_a_repository_by_the_author(GetCommitsBranchAuthorSteps.java:84)\r\n\tat ✽.the user gets all commits from a branch of a repository by the author(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetCommitsBranchAuthor.feature:6)\r\n",
+              "duration": 227990100,
+              "status": "failed"
             },
             "line": 6,
             "name": "the user gets all commits from a branch of a repository by the author",
@@ -748,7 +758,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-24T14:33:41.197Z",
+        "start_timestamp": "2021-07-01T15:16:59.955Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -758,7 +768,7 @@
         "steps": [
           {
             "result": {
-              "duration": 236114300,
+              "duration": 219995800,
               "status": "passed"
             },
             "line": 4,
@@ -770,7 +780,6 @@
           },
           {
             "result": {
-              "duration": 1003000,
               "status": "passed"
             },
             "line": 5,
@@ -782,8 +791,9 @@
           },
           {
             "result": {
-              "duration": 2450999800,
-              "status": "passed"
+              "error_message": "java.lang.NullPointerException\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetCommitsBranchDateSteps.the_user_gets_all_commits_from_a_branch_of_a_repositorybetween_a_date(GetCommitsBranchDateSteps.java:99)\r\n\tat ✽.the user gets all commits from a branch of a repositorybetween a date(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetCommitsBranchDate.feature:6)\r\n",
+              "duration": 398215200,
+              "status": "failed"
             },
             "line": 6,
             "name": "the user gets all commits from a branch of a repositorybetween a date",
@@ -806,7 +816,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-24T14:33:43.902Z",
+        "start_timestamp": "2021-07-01T15:17:00.592Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -816,7 +826,7 @@
         "steps": [
           {
             "result": {
-              "duration": 258320300,
+              "duration": 217999400,
               "status": "passed"
             },
             "line": 4,
@@ -828,6 +838,7 @@
           },
           {
             "result": {
+              "duration": 1001600,
               "status": "passed"
             },
             "line": 5,
@@ -839,8 +850,9 @@
           },
           {
             "result": {
-              "duration": 2551614500,
-              "status": "passed"
+              "error_message": "java.lang.NullPointerException\r\n\tat edu.uclm.esi.devopsmetrics.bdd.stepdefinitions.GetCommitsBranchDateAuthorSteps.the_user_gets_all_commits_from_a_branch_of_a_repositorybetween_a_date_by_the_author(GetCommitsBranchDateAuthorSteps.java:101)\r\n\tat ✽.the user gets all commits from a branch of a repositorybetween a date by the author(file:///C:/Users/Crespo/eclipse-workspace/devopsmetrics/src/test/resources/features/GetCommitsBranchDateAuthor.feature:6)\r\n",
+              "duration": 414002100,
+              "status": "failed"
             },
             "line": 6,
             "name": "the user gets all commits from a branch of a repositorybetween a date by the author",
@@ -863,7 +875,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-24T14:33:46.729Z",
+        "start_timestamp": "2021-07-01T15:17:01.243Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -873,7 +885,7 @@
         "steps": [
           {
             "result": {
-              "duration": 210102900,
+              "duration": 205533400,
               "status": "passed"
             },
             "line": 4,
@@ -885,7 +897,6 @@
           },
           {
             "result": {
-              "duration": 987500,
               "status": "passed"
             },
             "line": 5,
@@ -897,7 +908,7 @@
           },
           {
             "result": {
-              "duration": 474311700,
+              "duration": 508741300,
               "status": "passed"
             },
             "line": 6,
@@ -921,7 +932,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-24T14:33:47.430Z",
+        "start_timestamp": "2021-07-01T15:17:01.967Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -931,7 +942,7 @@
         "steps": [
           {
             "result": {
-              "duration": 219553300,
+              "duration": 209531100,
               "status": "passed"
             },
             "line": 4,
@@ -943,6 +954,7 @@
           },
           {
             "result": {
+              "duration": 997800,
               "status": "passed"
             },
             "line": 5,
@@ -954,7 +966,7 @@
           },
           {
             "result": {
-              "duration": 2399872900,
+              "duration": 1876733700,
               "status": "passed"
             },
             "line": 6,
@@ -978,7 +990,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-24T14:33:50.059Z",
+        "start_timestamp": "2021-07-01T15:17:04.067Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -988,7 +1000,7 @@
         "steps": [
           {
             "result": {
-              "duration": 225486900,
+              "duration": 220074700,
               "status": "passed"
             },
             "line": 4,
@@ -1000,7 +1012,7 @@
           },
           {
             "result": {
-              "duration": 1010700,
+              "duration": 922000,
               "status": "passed"
             },
             "line": 5,
@@ -1012,7 +1024,7 @@
           },
           {
             "result": {
-              "duration": 1975268000,
+              "duration": 2562980200,
               "status": "passed"
             },
             "line": 6,
@@ -1036,7 +1048,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-24T14:33:52.269Z",
+        "start_timestamp": "2021-07-01T15:17:06.860Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -1046,7 +1058,7 @@
         "steps": [
           {
             "result": {
-              "duration": 215853100,
+              "duration": 226695600,
               "status": "passed"
             },
             "line": 4,
@@ -1058,7 +1070,7 @@
           },
           {
             "result": {
-              "duration": 968300,
+              "duration": 1026100,
               "status": "passed"
             },
             "line": 5,
@@ -1070,7 +1082,7 @@
           },
           {
             "result": {
-              "duration": 1542221800,
+              "duration": 946484100,
               "status": "passed"
             },
             "line": 6,
@@ -1094,7 +1106,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-24T14:33:54.046Z",
+        "start_timestamp": "2021-07-01T15:17:08.044Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -1104,7 +1116,7 @@
         "steps": [
           {
             "result": {
-              "duration": 202030700,
+              "duration": 208046600,
               "status": "passed"
             },
             "line": 4,
@@ -1116,7 +1128,7 @@
           },
           {
             "result": {
-              "duration": 215307900,
+              "duration": 212956000,
               "status": "passed"
             },
             "line": 5,
@@ -1128,6 +1140,7 @@
           },
           {
             "result": {
+              "duration": 999500,
               "status": "passed"
             },
             "line": 6,
@@ -1151,7 +1164,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-24T14:33:54.477Z",
+        "start_timestamp": "2021-07-01T15:17:08.479Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -1161,7 +1174,7 @@
         "steps": [
           {
             "result": {
-              "duration": 244015300,
+              "duration": 211070400,
               "status": "passed"
             },
             "line": 4,
@@ -1207,7 +1220,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-24T14:33:54.735Z",
+        "start_timestamp": "2021-07-01T15:17:08.709Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -1217,7 +1230,7 @@
         "steps": [
           {
             "result": {
-              "duration": 3669120900,
+              "duration": 23068204300,
               "status": "passed"
             },
             "line": 4,
@@ -1229,7 +1242,7 @@
           },
           {
             "result": {
-              "duration": 117003000,
+              "duration": 122979200,
               "status": "passed"
             },
             "line": 5,
@@ -1241,7 +1254,7 @@
           },
           {
             "result": {
-              "duration": 45999700,
+              "duration": 44353300,
               "status": "passed"
             },
             "line": 6,
@@ -1253,7 +1266,7 @@
           },
           {
             "result": {
-              "duration": 1640969800,
+              "duration": 1669327600,
               "status": "passed"
             },
             "line": 7,
@@ -1277,7 +1290,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-24T14:34:00.229Z",
+        "start_timestamp": "2021-07-01T15:17:33.631Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -1287,7 +1300,7 @@
         "steps": [
           {
             "result": {
-              "duration": 217000700,
+              "duration": 214342100,
               "status": "passed"
             },
             "line": 4,
@@ -1299,7 +1312,7 @@
           },
           {
             "result": {
-              "duration": 281003500,
+              "duration": 216568000,
               "status": "passed"
             },
             "line": 5,
@@ -1311,7 +1324,7 @@
           },
           {
             "result": {
-              "duration": 200998600,
+              "duration": 214997200,
               "status": "passed"
             },
             "line": 6,
@@ -1335,7 +1348,7 @@
     "line": 1,
     "elements": [
       {
-        "start_timestamp": "2021-06-24T14:34:00.944Z",
+        "start_timestamp": "2021-07-01T15:17:34.293Z",
         "line": 3,
         "name": "",
         "description": "",
@@ -1345,7 +1358,7 @@
         "steps": [
           {
             "result": {
-              "duration": 215998500,
+              "duration": 206007900,
               "status": "passed"
             },
             "line": 4,
@@ -1357,7 +1370,7 @@
           },
           {
             "result": {
-              "duration": 216999200,
+              "duration": 197323500,
               "status": "passed"
             },
             "line": 5,
@@ -1369,7 +1382,7 @@
           },
           {
             "result": {
-              "duration": 201999700,
+              "duration": 199004500,
               "status": "passed"
             },
             "line": 6,
