@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -92,7 +93,11 @@ public class CommitController {
 	@ApiOperation(value = "save new token", notes = "save new token")
 
 	public ResponseEntity<String> saveToken(@RequestParam("tokenpass") final String tokenpass,
-			@RequestParam("secretT") final String secretT, @RequestParam("owner") final String owner) {
+			@RequestBody final String tokenInfo) {
+		
+		final JSONObject jso = new JSONObject(tokenInfo);
+		final String owner = jso.getString("username");
+		final String secretT = jso.getString("secretT");
 
 		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
 		if (existe) {
@@ -112,12 +117,16 @@ public class CommitController {
 	 * @author FcoCrespo
 	 * @throws JsonProcessingException 
 	 */
-	@PostMapping(value = "/updatetoken")
+	@PutMapping(value = "/updatetoken")
 	@ApiOperation(value = "update token", notes = "update token")
 
 	public ResponseEntity<String> updateToken(@RequestParam("tokenpass") final String tokenpass,
-			@RequestParam("secretT") final String secretT, @RequestParam("owner") final String owner) {
-
+				@RequestBody final String tokenInfo) {
+		
+		final JSONObject jso = new JSONObject(tokenInfo);
+		final String owner = jso.getString("username");
+		final String secretT = jso.getString("secretT");
+		
 		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
 		if (existe) {
 			LOG.info("update token");
@@ -140,7 +149,7 @@ public class CommitController {
 	@ApiOperation(value = "delete token", notes = "delete token")
 
 	public ResponseEntity<String> deleteToken(@RequestParam("tokenpass") final String tokenpass,
-			@RequestParam("secretT") final String secretT, @RequestParam("owner") final String owner) {
+			@RequestParam("owner") final String owner) {
 
 		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
 		if (existe) {
