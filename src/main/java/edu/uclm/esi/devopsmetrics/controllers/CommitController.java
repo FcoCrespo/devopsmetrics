@@ -96,7 +96,7 @@ public class CommitController {
 			@RequestBody final String tokenInfo) {
 		
 		final JSONObject jso = new JSONObject(tokenInfo);
-		final String owner = jso.getString("username");
+		final String owner = jso.getString("owner");
 		final String secretT = jso.getString("secretT");
 
 		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
@@ -124,7 +124,7 @@ public class CommitController {
 				@RequestBody final String tokenInfo) {
 		
 		final JSONObject jso = new JSONObject(tokenInfo);
-		final String owner = jso.getString("username");
+		final String owner = jso.getString("owner");
 		final String secretT = jso.getString("secretT");
 		
 		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
