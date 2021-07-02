@@ -235,7 +235,7 @@ public class GithubOperations {
 		this.commitService.deleteCommits(branchId);
 	}
 
-	public void getFirstCommitByBranch(String reponame, String owner) throws IOException {
+	public String getFirstCommitByBranch(String reponame, String owner) throws IOException {
 
 		
 		CloseableHttpClient httpclient=null;
@@ -297,9 +297,12 @@ public class GithubOperations {
 			saveOrder(firstCommitByBranch);		
 
 			saveMainOrMaster(reponame, owner);	
+			
+			return "ok.";
 		}
 		catch(IOException e) {
 			LOG.info("Error saving branches order");
+			return "Error saving branches order";
 		}
 		finally {
 			if(httpclient!=null) {
@@ -316,8 +319,11 @@ public class GithubOperations {
 		for (int i = 0; i < commitOidRequest.size(); i++) {
 			
 			if (!commitOidRequest.get(i).equals(this.emptyStr)) {
-				firstCommitByBranch.add(this.commitService.getCommitByOidyBranch(commitOidRequest.get(i),
-						branchesRequest.get(i).getIdGithub()));
+				Commit commit = this.commitService.getCommitByOidyBranch(commitOidRequest.get(i),
+						branchesRequest.get(i).getIdGithub());
+				if(commit!=null) {
+					firstCommitByBranch.add(commit);
+				}			
 			}
 			
 		}

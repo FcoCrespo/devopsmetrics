@@ -304,7 +304,10 @@ public class CommitController {
 		if (existe) {
 
 			try {
-				this.githubOperations.getFirstCommitByBranch(reponame, owner);
+				rabbitTemplate.convertAndSend(RabbitMqMongo.EXCHANGE_NAME,
+		        		RabbitMqMongo.ROUTING_KEY, 
+		        		this.githubOperations.getFirstCommitByBranch(reponame, owner));
+				
 				return ResponseEntity.ok(this.message);
 			} catch (IOException e) {
 				return ResponseEntity.badRequest().build();
