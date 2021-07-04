@@ -670,7 +670,7 @@ public class GithubOperations {
 			
 			for(int j=0; j<listUserGithubRepos.size(); j++) {
 				
-				if(listUserGithubRepos.get(j).getIdusergithub().equals(listUserGithub.get(i).getId())) {
+				if(listUserGithubRepos.get(j).getIdusergithub().equals(listUserGithub.get(i).getIdGithub())) {
 					repos = new JSONObject();
 					repos.put(this.repositoryStr, listUserGithubRepos.get(j).getRepository());
 					repos.put(this.ownerStr, listUserGithubRepos.get(j).getOwner());
@@ -701,7 +701,7 @@ public class GithubOperations {
 			
 			for(int j=0; j<listUserGithubRepos.size(); j++) {
 				
-				if(listUserGithubRepos.get(j).getIdusergithub().equals(listUserGithub.get(i).getId())) {
+				if(listUserGithubRepos.get(j).getIdusergithub().equals(listUserGithub.get(i).getIdGithub())) {
 					
 					json = new JSONObject();
 					repositories = new JSONArray();
