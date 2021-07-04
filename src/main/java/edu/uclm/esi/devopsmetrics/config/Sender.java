@@ -16,7 +16,7 @@ public class Sender {
     @Autowired
 	RabbitTemplate rabbitTemplate;
 
-    @Scheduled(fixedDelay = 20000)
+   @Scheduled(fixedDelay = 20000)
     public void sendMessage() {
     	String saludo= "Hello There!";
         String message = "{\"message\":\"" + saludo + "\"}";

@@ -5,8 +5,6 @@ import java.io.IOException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.JSONObject;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,9 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.wordnik.swagger.annotations.ApiOperation;
 
-
-import edu.uclm.esi.devopsmetrics.config.RabbitMqMongo;
 import edu.uclm.esi.devopsmetrics.domain.IssueOperations;
+import edu.uclm.esi.devopsmetrics.domain.Manager;
 import edu.uclm.esi.devopsmetrics.domain.UserOperations;
 
 @RestController
@@ -48,8 +45,6 @@ public class IssueController {
 
 	private String message;
 
-	@Autowired
-	RabbitTemplate rabbitTemplate;
 	/**
 	 * @author FcoCrespo
 	 */
@@ -82,18 +77,21 @@ public class IssueController {
 
 		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
 		if (existe) {
-			try {
-				LOG.info("Get issues");
-				
-		        rabbitTemplate.convertAndSend(RabbitMqMongo.EXCHANGE_NAME,
-		        		RabbitMqMongo.ROUTING_KEY, 
-		        		this.issueOperations.getIssues(repository, owner));
 
+
+				LOG.info("Get issues");
+				Thread th = new Thread(() -> {
+					try {
+						this.issueOperations.getIssues(repository, owner);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				});
+				Manager.get().addElementIssue(th);
 				
 				return ResponseEntity.ok(this.message);
-			} catch (IOException e) {
-				return ResponseEntity.badRequest().build();
-			}
+
+
 
 		} else {
 			LOG.info(this.errorMessage);
@@ -117,16 +115,18 @@ public class IssueController {
 
 		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
 		if (existe) {
-			try {
-				LOG.info("Update issues");
-				rabbitTemplate.convertAndSend(RabbitMqMongo.EXCHANGE_NAME,
-		        		RabbitMqMongo.ROUTING_KEY, 
-		        		this.issueOperations.actualizarValores(repository, owner));
-				
-				return ResponseEntity.ok(this.message);
-			} catch (IOException e) {
-				return ResponseEntity.badRequest().build();
-			}
+			LOG.info("Get issues");
+			Thread th = new Thread(() -> {
+				try {
+					this.issueOperations.actualizarValores(repository, owner);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			});
+			Manager.get().addElementIssue(th);
+			
+			return ResponseEntity.ok(this.message);
+			
 
 		} else {
 			LOG.info(this.errorMessage);

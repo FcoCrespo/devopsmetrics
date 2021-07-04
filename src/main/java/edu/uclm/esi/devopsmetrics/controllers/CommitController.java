@@ -5,8 +5,6 @@ import java.io.IOException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.JSONObject;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,8 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.wordnik.swagger.annotations.ApiOperation;
 
-import edu.uclm.esi.devopsmetrics.config.RabbitMqMongo;
 import edu.uclm.esi.devopsmetrics.domain.GithubOperations;
+import edu.uclm.esi.devopsmetrics.domain.Manager;
 import edu.uclm.esi.devopsmetrics.domain.UserOperations;
 
 @RestController
@@ -44,9 +42,6 @@ public class CommitController {
 	private final GithubOperations githubOperations;
 
 	private String message;
-
-	@Autowired
-    RabbitTemplate rabbitTemplate;
 	
 	/**
 	 * @author FcoCrespo
@@ -234,6 +229,7 @@ public class CommitController {
 	 * repositorio y token de acceso
 	 * 
 	 * @author FcoCrespo
+	 * @throws InterruptedException 
 	 */
 
 	@GetMapping(value = "/allcommits")
@@ -244,16 +240,16 @@ public class CommitController {
 
 		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
 		if (existe) {
-
-			try {
-				rabbitTemplate.convertAndSend(RabbitMqMongo.EXCHANGE_NAME,
-		        		RabbitMqMongo.ROUTING_KEY, 
-		        		this.githubOperations.getCommits(repository, owner, tokenpass));
-				
-				return ResponseEntity.ok(this.message);
-			} catch (IOException e) {
-				return ResponseEntity.badRequest().build();
-			}
+			Thread th = new Thread(() -> {
+				try {
+					this.githubOperations.getCommits(repository, owner, tokenpass);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			});
+			Manager.get().addElementCommits(th);
+			
+			return ResponseEntity.ok(this.message);
 
 		} else {
 			LOG.info(this.errorMessage);
@@ -303,15 +299,16 @@ public class CommitController {
 		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
 		if (existe) {
 
-			try {
-				rabbitTemplate.convertAndSend(RabbitMqMongo.EXCHANGE_NAME,
-		        		RabbitMqMongo.ROUTING_KEY, 
-		        		this.githubOperations.getFirstCommitByBranch(reponame, owner));
-				
-				return ResponseEntity.ok(this.message);
-			} catch (IOException e) {
-				return ResponseEntity.badRequest().build();
-			}
+			Thread th = new Thread(() -> {
+				try {
+					this.githubOperations.getFirstCommitByBranch(reponame, owner);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			});
+			Manager.get().addElementCommits(th);		
+			
+			return ResponseEntity.ok(this.message);
 
 		} else {
 			LOG.info(this.errorMessage);

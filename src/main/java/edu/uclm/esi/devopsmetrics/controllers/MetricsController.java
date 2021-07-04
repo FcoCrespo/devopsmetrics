@@ -2,11 +2,11 @@ package edu.uclm.esi.devopsmetrics.controllers;
 
 import java.io.IOException;
 
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.JSONObject;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,10 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.xml.sax.SAXException;
 
 import com.wordnik.swagger.annotations.ApiOperation;
 
-import edu.uclm.esi.devopsmetrics.config.RabbitMqMongo;
+import edu.uclm.esi.devopsmetrics.domain.Manager;
 import edu.uclm.esi.devopsmetrics.domain.MetricsOperations;
 import edu.uclm.esi.devopsmetrics.domain.TestOperations;
 import edu.uclm.esi.devopsmetrics.domain.UserOperations;
@@ -44,8 +45,7 @@ public class MetricsController {
 	private String message;
 	private final String errorMessage;
 
-	@Autowired
-    RabbitTemplate rabbitTemplate;
+	
 	/**
 	 * @author FcoCrespo
 	 */
@@ -78,9 +78,15 @@ public class MetricsController {
 		if (existe) {
 			try {
 				LOG.info("Save repo metrics");
-				rabbitTemplate.convertAndSend(RabbitMqMongo.EXCHANGE_NAME,
-		        		RabbitMqMongo.ROUTING_KEY, 
-		        		this.metricsOperations.saveRepoMetrics(repository, owner));
+			
+				Thread th = new Thread(() -> {
+						try {
+							this.metricsOperations.saveRepoMetrics(repository, owner);
+						} catch (ParserConfigurationException | SAXException e) {
+							e.printStackTrace();
+						}
+				});
+				Manager.get().addElementProduct(th);
 				
 				return ResponseEntity.ok(this.message);
 			} catch (Exception e) {
@@ -162,10 +168,17 @@ public class MetricsController {
 		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
 		if (existe) {
 			try {
+				
 				LOG.info("Save repo test metrics");
-				rabbitTemplate.convertAndSend(RabbitMqMongo.EXCHANGE_NAME,
-		        		RabbitMqMongo.ROUTING_KEY, 
-		        		this.testsOperations.saveRepoTestMetrics(reponame, owner));
+				Thread th = new Thread(() -> {
+						try {
+							this.testsOperations.saveRepoTestMetrics(reponame, owner);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					
+				});
+				Manager.get().addElementTest(th);
 				
 				return ResponseEntity.ok(this.message);
 			} catch (Exception e) {

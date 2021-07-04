@@ -217,7 +217,7 @@ public class GithubOperations {
 			return "OK.";
 		}
 		catch(IOException e) {
-			LOG.info("Error saving branches order");
+			LOG.info("Error saving branches order..");
 			return "Error";
 		}
 		finally {
@@ -301,7 +301,7 @@ public class GithubOperations {
 			return "ok.";
 		}
 		catch(IOException e) {
-			LOG.info("Error saving branches order");
+			LOG.info("Error saving branches order.");
 			return "Error saving branches order";
 		}
 		finally {
