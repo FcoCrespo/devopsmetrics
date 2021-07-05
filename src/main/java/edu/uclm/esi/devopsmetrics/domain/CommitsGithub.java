@@ -104,7 +104,7 @@ public class CommitsGithub {
 
 		LOG.info(jsonData);
 
-		commitCursor = updateCommitCursor(jsonNode, info[2], info[0], info[3]);
+		commitCursor = updateCommitCursor(jsonNode, info[3]);
 
 		nodes = jsonNode.path("data").path(this.repositoryString).path("ref").path(this.targetString)
 				.path(this.historyString).path("nodes");
@@ -220,7 +220,7 @@ public class CommitsGithub {
 		jsonData = responseGiven.body().string();
 		jsonNode = new ObjectMapper().readTree(jsonData);
 
-		commitCursor = updateCommitCursor(jsonNode, info[2], info[0], info[3]);
+		commitCursor = updateCommitCursor(jsonNode, info[3]);
 
 		nodes = jsonNode.path("data").path(this.repositoryString).path("ref").path(this.targetString)
 				.path(this.historyString).path("nodes");
@@ -354,7 +354,7 @@ public class CommitsGithub {
 		return variables;
 	}
 
-	private CommitCursor updateCommitCursor(JsonNode jsonNode, String branch, String reponame, String branchIdGithub) {
+	private CommitCursor updateCommitCursor(JsonNode jsonNode, String branchIdGithub) {
 
 		JsonNode cursorNode = jsonNode.path("data").path("repository").path("ref").path("target").path("history")
 				.path("pageInfo");

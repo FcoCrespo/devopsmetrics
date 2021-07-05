@@ -29,6 +29,8 @@ public class UserGithubReposRepositoryImpl implements UserGithubReposRepository{
 	 */
 	
 	MongoOperations mongoOperations;
+	private String ownerStr = "owner";
+	private String repositoryStr = "repository";
 	
 	/**
 	 * Constructor de la clase.
@@ -64,20 +66,20 @@ public class UserGithubReposRepositoryImpl implements UserGithubReposRepository{
 
 	@Override
 	public void deleteUserGithubRepos(String repository, String owner) {
-		this.mongoOperations.findAllAndRemove(new Query(Criteria.where("repository").is(repository).and("owner").is(owner)), UserGithubRepos.class);
+		this.mongoOperations.findAllAndRemove(new Query(Criteria.where(this.repositoryStr).is(repository).and(this.ownerStr).is(owner)), UserGithubRepos.class);
 		
 	}
 
 	@Override
 	public UserGithubRepos findByUserGithubReposData(String idusergithub, String repository, String owner) {
 		return this.mongoOperations.findOne(new Query(Criteria.where("idusergithub").is(idusergithub)
-				.and("repository").is(repository).and("owner").is(owner)), UserGithubRepos.class);
+				.and(this.repositoryStr).is(repository).and(this.ownerStr).is(owner)), UserGithubRepos.class);
 
 	}
 
 	@Override
 	public List<UserGithubRepos> findByAllByRepoAndOwner(String repository, String owner) {
-		return this.mongoOperations.find(new Query(Criteria.where("repository").is(repository).and("owner").is(owner)), UserGithubRepos.class);
+		return this.mongoOperations.find(new Query(Criteria.where(this.repositoryStr).is(repository).and(this.ownerStr).is(owner)), UserGithubRepos.class);
 
 	}
 
