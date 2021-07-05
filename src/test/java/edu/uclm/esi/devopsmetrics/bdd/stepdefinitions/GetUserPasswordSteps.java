@@ -17,7 +17,6 @@ import io.cucumber.java.en.When;
 import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
-import java.time.Instant;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -56,7 +55,7 @@ public class GetUserPasswordSteps {
 										 node.get("username").textValue(),
 										 node.get("role").textValue(),
 										 node.get("tokenPass").textValue(),
-										 Instant.ofEpochSecond(node.get("tokenValidity").get("epochSecond").longValue())
+										 node.get("userGithub").textValue()
 										);
 		
 	}

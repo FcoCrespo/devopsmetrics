@@ -1,7 +1,6 @@
 package edu.uclm.esi.devopsmetrics.models;
 
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
+
 import java.util.UUID;
 
 import javax.validation.constraints.NotNull;
@@ -52,11 +51,11 @@ public class User implements Comparable<User> {
 	private String tokenPass;
 
 	/**
-	 * tokenValidity.
+	 * userGithub.
 	 * 
 	 * @author FcoCrespo
 	 */
-	private Instant tokenValidity;
+	private String userGithub;
 
 
 	/**
@@ -136,13 +135,12 @@ public class User implements Comparable<User> {
 		this.tokenPass = UUID.randomUUID().toString();
 	}
 
-	public Instant getTokenValidity() {
-		return tokenValidity;
+	public String getUserGithub() {
+		return userGithub;
 	}
 
-	public void setTokenValidity() {
-		this.tokenValidity = Instant.now().plus(3, ChronoUnit.HOURS)
-				.plus(17, ChronoUnit.MINUTES).plus(41, ChronoUnit.SECONDS);
+	public void setUserGithub(String newUserGithub) {
+		this.userGithub = newUserGithub;
 	}
 
 	@Override

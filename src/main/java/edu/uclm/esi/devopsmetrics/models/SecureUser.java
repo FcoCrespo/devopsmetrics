@@ -1,7 +1,5 @@
 package edu.uclm.esi.devopsmetrics.models;
 
-import java.time.Instant;
-
 /**
  * Documento usuario en la base de datos.
  * 
@@ -37,23 +35,23 @@ public class SecureUser implements Comparable<SecureUser> {
 	private String tokenPass;
 
 	/**
-	 * tokenValidity.
+	 * userGithub.
 	 * 
 	 * @author FcoCrespo
 	 */
-	private Instant tokenValidity;
+	private String userGithub;
 
 	/**
 	 * Constructor de Usuario.
 	 * 
 	 * @author FcoCrespo
 	 */
-	public SecureUser(String id, String username, String role, String tokenPass, Instant tokenValidity) {
+	public SecureUser(String id, String username, String role, String tokenPass, String userGithub) {
 		this.id = id;
 		this.username = username;
 		this.role = role;
 		this.tokenPass = tokenPass;
-		this.tokenValidity = tokenValidity;
+		this.userGithub = userGithub;
 	}
 
 	@Override
@@ -109,18 +107,18 @@ public class SecureUser implements Comparable<SecureUser> {
 		this.tokenPass = tokenPass;
 	}
 
-	public Instant getTokenValidity() {
-		return tokenValidity;
+	public String getUserGithub() {
+		return userGithub;
 	}
 
-	public void setTokenValidity(Instant tokenValidity) {
-		this.tokenValidity = tokenValidity;
+	public void setTokenValidity(String newUserGithub) {
+		this.userGithub = newUserGithub;
 	}
 
 	@Override
 	public String toString() {
 		return "SecureUser [id=" + id + ", username=" + username + ", role=" + role + ", tokenPass=" + tokenPass
-				+ ", tokenValidity=" + tokenValidity + "]";
+				+ ", userGithub=" + userGithub + "]";
 	}
 
 }

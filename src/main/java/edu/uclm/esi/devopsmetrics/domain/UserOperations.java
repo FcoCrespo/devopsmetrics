@@ -60,13 +60,12 @@ public class UserOperations {
 			usuariologin.setUsernameUser(this.utilities.encriptar(username));
 			usuariologin.setPasswordUser(this.utilities.encriptar(password));
 			usuariologin.newTokenPass();
-			usuariologin.setTokenValidity();
 
 			this.userService.updateUser(usuariologin);
 
 			SecureUser secureUser = new SecureUser(usuariologin.getIdUser(), username,
 					this.utilities.desencriptar(usuariologin.getRoleUser()), usuariologin.getTokenPass(),
-					usuariologin.getTokenValidity());
+					usuariologin.getUserGithub());
 
 			ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 			return ow.writeValueAsString(secureUser);
@@ -108,7 +107,7 @@ public class UserOperations {
 		try {
 			User user = this.userService.findByUsername(username);
 			SecureUser secureUser = new SecureUser(user.getIdUser(), username,
-					this.utilities.desencriptar(user.getRoleUser()), user.getTokenPass(), user.getTokenValidity());
+					this.utilities.desencriptar(user.getRoleUser()), user.getTokenPass(), user.getUserGithub());
 
 			ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 			return ow.writeValueAsString(secureUser);
@@ -132,7 +131,7 @@ public class UserOperations {
 				userSecure = new SecureUser(users.get(i).getIdUser(),
 						this.utilities.desencriptar(users.get(i).getUsernameUser()),
 						this.utilities.desencriptar(users.get(i).getRoleUser()), users.get(i).getTokenPass(),
-						users.get(i).getTokenValidity());
+						users.get(i).getUserGithub());
 				listaSecureUsers.add(userSecure);
 			}
 

@@ -15,7 +15,6 @@ import io.cucumber.java.en.When;
 import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
-import java.time.Instant;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -56,7 +55,7 @@ public class DeleteUserSteps {
 										 node.get("username").textValue(),
 										 node.get("role").textValue(),
 										 node.get("tokenPass").textValue(),
-										 Instant.ofEpochSecond(node.get("tokenValidity").get("epochSecond").longValue())
+										 node.get("userGithub").textValue()
 										);
 		
 		assertEquals("5f7b28ae85c04e348011de43", this.secureUser.getId());
@@ -75,7 +74,7 @@ public class DeleteUserSteps {
 										 node2.get("username").textValue(),
 										 node2.get("role").textValue(),
 										 node2.get("tokenPass").textValue(),
-										 Instant.ofEpochSecond(node2.get("tokenValidity").get("epochSecond").longValue())
+										 node.get("userGithub").textValue()
 										);
 		
 		

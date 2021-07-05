@@ -17,7 +17,6 @@ import io.cucumber.java.en.When;
 import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
-import java.time.Instant;
 import java.util.Iterator;
 
 import org.apache.http.HttpEntity;
@@ -59,7 +58,7 @@ public class GetIssuesOpenedDateSteps {
 
 		this.secureUser = new SecureUser(node.get("id").textValue(), node.get("username").textValue(),
 				node.get("role").textValue(), node.get("tokenPass").textValue(),
-				Instant.ofEpochSecond(node.get("tokenValidity").get("epochSecond").longValue()));
+				node.get("userGithub").textValue());
 	}
 
 	@Then("the user gets all issues from a repository by his owner opened between two dates if the system")
