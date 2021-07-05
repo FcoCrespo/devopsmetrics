@@ -37,6 +37,7 @@ import edu.uclm.esi.devopsmetrics.models.TokenGithub;
 import edu.uclm.esi.devopsmetrics.models.UserGithub;
 import edu.uclm.esi.devopsmetrics.models.UserGithubRepos;
 import edu.uclm.esi.devopsmetrics.services.BranchService;
+import edu.uclm.esi.devopsmetrics.services.CommitCursorService;
 import edu.uclm.esi.devopsmetrics.services.CommitService;
 import edu.uclm.esi.devopsmetrics.services.TokenGithubService;
 import edu.uclm.esi.devopsmetrics.services.UserGithubReposService;
@@ -50,6 +51,7 @@ public class GithubOperations {
 	private final CommitServices commitServices;
 	private final CommitService commitService;
 	private final BranchService branchService;
+	private final CommitCursorService commitCursorService;
 	private final BranchesGithub branchesGithub;
 	private final CommitsGithub commitsGithub;
 	private final UserGithubServices userGithubServices;
@@ -79,6 +81,7 @@ public class GithubOperations {
 		this.commitServices = commitServices;
 		this.commitService = this.commitServices.getCommitService();
 		this.branchService = this.commitServices.getBranchService();
+		this.commitCursorService = this.commitServices.getCommitCursorService();
 		this.tokenGithubService = tokenGithubService;
 		this.branchesGithub = branchesGithub;
 		this.commitsGithub = commitsGithub;
@@ -193,6 +196,7 @@ public class GithubOperations {
 					info[3] = branches.get(i).getIdGithub();
 					this.commitsGithub.getNewRepositoryCommits(info, filename, commitCursor);
 				}
+				
 			} else {
 				LOG.info("ACTUALIZANDO COMMITS");
 				filename = "src/main/resources/graphql/commits-cursor-before.graphql";
@@ -204,16 +208,16 @@ public class GithubOperations {
 					this.commitsGithub.updateRepositoryCommits(info, filename, initialStarCursorFind, commitsBranch,
 							commitCursor);
 				}
-				httpclient = HttpClients.createDefault();
-				HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/commits/branchesfirstcommit?tokenpass="+tokenpass+"&owner=" + owner
-						+ "&reponame=" + reponame);
-
-				LOG.info("Request Type For Branches: " + httpget.getMethod());
-
-				httpclient.execute(httpget);
-				httpclient.close();
+				
 			}
-			
+			httpclient = HttpClients.createDefault();
+			HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/commits/branchesfirstcommit?tokenpass="+tokenpass+"&owner=" + owner
+					+ "&reponame=" + reponame);
+
+			LOG.info("Request Type For Branches: " + httpget.getMethod());
+
+			httpclient.execute(httpget);
+			httpclient.close();
 			return "OK.";
 		}
 		catch(IOException e) {
@@ -771,7 +775,9 @@ public class GithubOperations {
 		
 		for(int i=0; i<listBranches.size(); i++) {
 			this.commitService.deleteCommits(listBranches.get(i).getIdGithub());
+			this.commitCursorService.deleteCommitCursor(listBranches.get(i).getIdGithub());
 			this.branchService.deleteBranch(listBranches.get(i).getId());
+			this.userGithubReposService.deleteUserGithubRepos(reponame, owner);
 		}
 		
 		

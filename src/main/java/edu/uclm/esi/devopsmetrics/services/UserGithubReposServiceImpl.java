@@ -70,8 +70,8 @@ public class UserGithubReposServiceImpl implements UserGithubReposService{
 	}
 
 	@Override
-	public void deleteUserGithubRepos(String id) {
-		this.userGithubReposRepository.deleteUserGithubRepos(id);
+	public void deleteUserGithubRepos(String repository, String owner) {
+		this.userGithubReposRepository.deleteUserGithubRepos(repository, owner);
 		
 	}
 

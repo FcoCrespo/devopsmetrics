@@ -63,8 +63,8 @@ public class UserGithubReposRepositoryImpl implements UserGithubReposRepository{
 	}
 
 	@Override
-	public void deleteUserGithubRepos(String id) {
-		this.mongoOperations.findAllAndRemove(new Query(Criteria.where("id").is(id)), UserGithubRepos.class);
+	public void deleteUserGithubRepos(String repository, String owner) {
+		this.mongoOperations.findAllAndRemove(new Query(Criteria.where("repository").is(repository).and("owner").is(owner)), UserGithubRepos.class);
 		
 	}
 

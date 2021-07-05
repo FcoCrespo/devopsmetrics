@@ -42,7 +42,7 @@ public interface UserGithubReposRepository {
 	   * 
 	   * @author FcoCrespo
 	   */
-	  void deleteUserGithubRepos(String id);
+	  void deleteUserGithubRepos(String repository, String owner);
 
 	  /**
 	   * Método para obtener usergithubrepos por sus datos
