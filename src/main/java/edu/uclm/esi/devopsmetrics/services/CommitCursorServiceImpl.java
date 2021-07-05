@@ -106,16 +106,16 @@ public List<CommitCursor> findAll(){
   /**
    * @author FcoCrespo
    */
-  public void deleteCommitCursor(final String commitId) {
+  public void deleteCommitCursor(final String branchIdGithub) {
 
-	  commitCursorRepository.deleteCommitCursor(commitId);
+	  commitCursorRepository.deleteCommitCursor(branchIdGithub);
 
   }
 
   @Override
-  public CommitCursor getCommitCursorByEndCursoryHasNextPage(String branch, String repository) {
+  public CommitCursor getCommitCursorByBranchIdGithub(String branchIdGithub) {
 
-    return commitCursorRepository.findByEndCursoryHasNextPage(branch, repository);
+    return commitCursorRepository.findByBranchIdGithub(branchIdGithub);
 
   }
 

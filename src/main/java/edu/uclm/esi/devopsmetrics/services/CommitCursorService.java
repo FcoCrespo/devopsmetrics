@@ -31,12 +31,12 @@ public interface CommitCursorService {
   /**
    * @author FcoCrespo
    */
-  void deleteCommitCursor(String commitId);
+  void deleteCommitCursor(String branchIdGithub);
 
   /**
    * @author FcoCrespo
    */
-  CommitCursor getCommitCursorByEndCursoryHasNextPage(String branch, String repository);
+  CommitCursor getCommitCursorByBranchIdGithub(String branchIdGithub);
 
  
 }

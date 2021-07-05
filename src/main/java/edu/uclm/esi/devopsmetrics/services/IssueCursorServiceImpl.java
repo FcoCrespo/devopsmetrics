@@ -73,8 +73,8 @@ public class IssueCursorServiceImpl implements IssueCursorService{
 	}
 
 	@Override
-	public IssueCursor getByRepository(String repository) {
-		return this.issueCursorRepository.findByRepository(repository);
+	public IssueCursor getByRepositoryAndOwner(String repository, String owner) {
+		return this.issueCursorRepository.findByRepositoryAndOwner(repository, owner);
 	}
 
 	

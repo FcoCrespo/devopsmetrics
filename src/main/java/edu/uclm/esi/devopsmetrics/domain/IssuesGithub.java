@@ -116,7 +116,7 @@ public class IssuesGithub {
 		jsonData = responseGiven.body().string();
 		jsonNode = new ObjectMapper().readTree(jsonData);
 
-		issueCursor = updateIssueCursor(jsonNode, info[0]);
+		issueCursor = updateIssueCursor(jsonNode, info[0], info[1]);
 
 		nodes = jsonNode.path("data").path(this.repositoryString).path(this.issuesString).path(this.nodesString);
 		iter = nodes.iterator();
@@ -149,7 +149,6 @@ public class IssuesGithub {
 					this.issueRepoService.saveIssueRepo(issueRepo);
 
 					if (issueCursor != null) {
-						issueCursor.setIdLastIssue(issue.getId());
 						this.issueCursorService.updateIssueCursor(issueCursor);
 					}
 				}
@@ -190,7 +189,7 @@ public class IssuesGithub {
 
 		File file = new File(info[2]);
 
-		IssueCursor issueCursorInitial = this.issueCursorService.getByRepository(info[0]);
+		IssueCursor issueCursorInitial = this.issueCursorService.getByRepositoryAndOwner(info[0], info[1]);
 
 		String[] variablesPut = new String[3];
 		variablesPut[0] = info[0];
@@ -206,7 +205,7 @@ public class IssuesGithub {
 
 		jsonNode = new ObjectMapper().readTree(jsonData);
 
-		issueCursor = updateIssueCursor(jsonNode, info[0]);
+		issueCursor = updateIssueCursor(jsonNode, info[0], info[1]);
 
 		if (issueCursor == null) {
 			return "Fin.";
@@ -275,7 +274,7 @@ public class IssuesGithub {
 		}		
 	}
 
-	private IssueCursor updateIssueCursor(JsonNode jsonNode, String reponame) {
+	private IssueCursor updateIssueCursor(JsonNode jsonNode, String reponame, String owner) {
 		JsonNode cursorNode = jsonNode.path("data").path(this.repositoryString).path(this.issuesString)
 				.path("pageInfo");
 
@@ -289,10 +288,10 @@ public class IssuesGithub {
 			return null;
 		}
 
-		IssueCursor issueCursor = this.issueCursorService.getByRepository(reponame);
+		IssueCursor issueCursor = this.issueCursorService.getByRepositoryAndOwner(reponame, owner);
 
 		if (issueCursor == null) {
-			issueCursor = new IssueCursor(hasNextPage, endCursor, startCursor, reponame, null);
+			issueCursor = new IssueCursor(hasNextPage, endCursor, startCursor, reponame, owner);
 			this.issueCursorService.saveIssueCursor(issueCursor);
 		} else {
 			issueCursor.setHasNextPage(hasNextPage);
@@ -547,7 +546,6 @@ public class IssuesGithub {
 
 	private void actualizarCursor(IssueCursor issueCursor, Issue issue) {
 		if (issue != null) {
-			issueCursor.setIdLastIssue(issue.getId());
 			this.issueCursorService.updateIssueCursor(issueCursor);
 		}
 	}

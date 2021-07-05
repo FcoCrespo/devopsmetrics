@@ -36,17 +36,12 @@ public class CommitCursor implements Comparable<CommitCursor> {
 	 */
 	private String startCursor;
 	/**
-	 * branch.
+	 * branchIdGithub.
 	 * 
 	 * @author FcoCrespo
 	 */
-	private String branch;
-	/**
-	 * repository.
-	 * 
-	 * @author FcoCrespo
-	 */
-	private String repository;
+	private String branchIdGithub;
+	
 
 	/**
 	 * Constructor de CommitCursor.
@@ -54,13 +49,13 @@ public class CommitCursor implements Comparable<CommitCursor> {
 	 * @author FcoCrespo
 	 */
 	public CommitCursor(final boolean hasNextPage, final String endCursor, final String startCursor,
-			final String branch, final String repository) {
+			final String branchIdGithub) {
 		super();
 		this.hasNextPage = hasNextPage;
 		this.endCursor = endCursor;
 		this.startCursor = startCursor;
-		this.branch = branch;
-		this.repository = repository;
+		this.branchIdGithub = branchIdGithub;
+		
 	}
 
 	
@@ -117,26 +112,20 @@ public class CommitCursor implements Comparable<CommitCursor> {
 		this.startCursor = startCursor;
 	}
 
-	public String getBranch() {
-		return branch;
+	public String getBranchIdGithub() {
+		return branchIdGithub;
 	}
 
-	public void setBranch(String branch) {
-		this.branch = branch;
+	public void setBranchIdGithub(String branchIdGithub) {
+		this.branchIdGithub = branchIdGithub;
 	}
 
-	public String getRepository() {
-		return repository;
-	}
-
-	public void setRepository(String repository) {
-		this.repository = repository;
-	}
+	
 
 	@Override
 	public String toString() {
 		return "CommitCursor [id=" + id + ", hasNextPage=" + hasNextPage + ", endCursor=" + endCursor + ", startCursor="
-				+ startCursor + ", branch=" + branch + ", repository=" + repository + "]";
+				+ startCursor + ", branchIdGithub=" + branchIdGithub + "]";
 	}
 
 }

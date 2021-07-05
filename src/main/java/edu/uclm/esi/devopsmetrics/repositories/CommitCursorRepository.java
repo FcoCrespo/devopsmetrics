@@ -40,7 +40,7 @@ public interface CommitCursorRepository {
    * 
    * @author FcoCrespo
    */
-  void deleteCommitCursor(String commitCursorId);
+  void deleteCommitCursor(String branchIdGithub);
 
   /**
    * Método para obtener un CommitCursor por su nextCursor.
@@ -54,7 +54,7 @@ public interface CommitCursorRepository {
    * 
    * @author FcoCrespo
    */
-  CommitCursor findByEndCursoryHasNextPage(String branch, String repository);
+  CommitCursor findByBranchIdGithub(String branchIdGithub);
 
 
 }

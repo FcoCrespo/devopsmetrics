@@ -46,6 +46,6 @@ public interface IssueCursorService{
 	   * 
 	   * @author FcoCrespo
 	   */
-	  IssueCursor getByRepository(String repository);
+	  IssueCursor getByRepositoryAndOwner(String repository, String owner);
 
 }

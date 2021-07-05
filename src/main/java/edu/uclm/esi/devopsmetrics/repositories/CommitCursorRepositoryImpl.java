@@ -88,17 +88,16 @@ public class CommitCursorRepositoryImpl implements CommitCursorRepository {
 	   * 
 	   * @author FcoCrespo
 	   */
-	  public void deleteCommitCursor(final String id) {
+	  public void deleteCommitCursor(final String branchIdGithub) {
 
-	    this.mongoOperations.findAndRemove(new Query(Criteria.where("id").is(id)), CommitCursor.class);
+	    this.mongoOperations.findAndRemove(new Query(Criteria.where("branchIdGithub").is(branchIdGithub)), CommitCursor.class);
 
 	  }
 
 	  @Override
-	  public CommitCursor findByEndCursoryHasNextPage(String branch, String repository) {
+	  public CommitCursor findByBranchIdGithub(String branchIdGithub) {
 	    return this.mongoOperations
-	        .findOne(new Query(Criteria.where("branch").is(branch)
-	        		.and("repository").is(repository)), CommitCursor.class);
+	        .findOne(new Query(Criteria.where("branchIdGithub").is(branchIdGithub)), CommitCursor.class);
 	  }
 
 	

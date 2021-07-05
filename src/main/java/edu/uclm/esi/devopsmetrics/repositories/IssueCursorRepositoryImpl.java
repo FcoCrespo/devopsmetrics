@@ -71,9 +71,9 @@ public class IssueCursorRepositoryImpl implements IssueCursorRepository{
 	}
 
 	@Override
-	public IssueCursor findByRepository(String repository) {
+	public IssueCursor findByRepositoryAndOwner(String repository, String owner) {
 		return this.mongoOperations
-		        .findOne(new Query(Criteria.where("repository").is(repository)), IssueCursor.class);
+		        .findOne(new Query(Criteria.where("repository").is(repository).and("owner").is(owner)), IssueCursor.class);
 	}
 
 }

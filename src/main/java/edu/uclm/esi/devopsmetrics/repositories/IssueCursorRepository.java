@@ -54,7 +54,7 @@ public interface IssueCursorRepository{
    * 
    * @author FcoCrespo
    */
-  IssueCursor findByRepository(String repository);
+  IssueCursor findByRepositoryAndOwner(String repository, String owner);
 
 
 }

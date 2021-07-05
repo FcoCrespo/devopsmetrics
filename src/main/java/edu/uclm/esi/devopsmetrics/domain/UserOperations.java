@@ -16,7 +16,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
-import edu.uclm.esi.devopsmetrics.exceptions.UserNotFoundException;
 import edu.uclm.esi.devopsmetrics.models.SecureUser;
 import edu.uclm.esi.devopsmetrics.models.User;
 import edu.uclm.esi.devopsmetrics.services.UserService;
@@ -114,7 +113,7 @@ public class UserOperations {
 
 		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
 				| InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException
-				| JsonProcessingException | UserNotFoundException e) {
+				| JsonProcessingException e) {
 			return null;
 		}
 
@@ -141,7 +140,7 @@ public class UserOperations {
 
 		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
 				| InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException
-				| UserNotFoundException | JsonProcessingException e) {
+				| JsonProcessingException e) {
 			return null;
 		}
 

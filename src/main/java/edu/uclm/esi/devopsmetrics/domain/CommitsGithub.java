@@ -104,7 +104,7 @@ public class CommitsGithub {
 
 		LOG.info(jsonData);
 
-		commitCursor = updateCommitCursor(jsonNode, info[2], info[0]);
+		commitCursor = updateCommitCursor(jsonNode, info[2], info[0], info[3]);
 
 		nodes = jsonNode.path("data").path(this.repositoryString).path("ref").path(this.targetString)
 				.path(this.historyString).path("nodes");
@@ -168,8 +168,7 @@ public class CommitsGithub {
 
 		
 
-		CommitCursor commitCursorInitial = this.commitCursorService.getCommitCursorByEndCursoryHasNextPage(info[2],
-				info[0]);
+		CommitCursor commitCursorInitial = this.commitCursorService.getCommitCursorByBranchIdGithub(info[3]);
 		
 		if(commitCursorInitial==null) {
 			getNewRepositoryCommits(info, "src/main/resources/graphql/commits.graphql", null);
@@ -190,8 +189,7 @@ public class CommitsGithub {
 	private String updateNormal(String[] info, String filename, boolean initialStarCursorFind, List<Commit> commitsBranch,
 			CommitCursor commitCursor) throws IOException {
 		
-		CommitCursor commitCursorInitial = this.commitCursorService.getCommitCursorByEndCursoryHasNextPage(info[2],
-				info[0]);
+		CommitCursor commitCursorInitial = this.commitCursorService.getCommitCursorByBranchIdGithub(info[3]);
 		
 		String graphqlPayload;
 
@@ -222,7 +220,7 @@ public class CommitsGithub {
 		jsonData = responseGiven.body().string();
 		jsonNode = new ObjectMapper().readTree(jsonData);
 
-		commitCursor = updateCommitCursor(jsonNode, info[2], info[0]);
+		commitCursor = updateCommitCursor(jsonNode, info[2], info[0], info[3]);
 
 		nodes = jsonNode.path("data").path(this.repositoryString).path("ref").path(this.targetString)
 				.path(this.historyString).path("nodes");
@@ -356,7 +354,7 @@ public class CommitsGithub {
 		return variables;
 	}
 
-	private CommitCursor updateCommitCursor(JsonNode jsonNode, String branch, String reponame) {
+	private CommitCursor updateCommitCursor(JsonNode jsonNode, String branch, String reponame, String branchIdGithub) {
 
 		JsonNode cursorNode = jsonNode.path("data").path("repository").path("ref").path("target").path("history")
 				.path("pageInfo");
@@ -367,10 +365,10 @@ public class CommitsGithub {
 		String endCursor = cursorNode.get("endCursor").textValue();
 		String startCursor = cursorNode.get("startCursor").textValue();
 
-		CommitCursor commitCursor = commitCursorService.getCommitCursorByEndCursoryHasNextPage(branch, reponame);
+		CommitCursor commitCursor = commitCursorService.getCommitCursorByBranchIdGithub(branchIdGithub);
 
 		if (commitCursor == null) {
-			commitCursor = new CommitCursor(hasNextPage, endCursor, startCursor, branch, reponame);
+			commitCursor = new CommitCursor(hasNextPage, endCursor, startCursor, branchIdGithub);
 			commitCursorService.saveCommitCursor(commitCursor);
 		} else {
 			commitCursor.setHasNextPage(hasNextPage);
@@ -380,7 +378,7 @@ public class CommitsGithub {
 			commitCursorService.updateCommitCursor(commitCursor);
 		}
 
-		LOG.info("CommitCursor->  " + commitCursor.getBranch() + " end : " + commitCursor.getEndCursor() + " start: "
+		LOG.info("CommitCursor->  " + commitCursor.getBranchIdGithub() + " end : " + commitCursor.getEndCursor() + " start: "
 				+ commitCursor.getStartCursor());
 
 		return commitCursor;

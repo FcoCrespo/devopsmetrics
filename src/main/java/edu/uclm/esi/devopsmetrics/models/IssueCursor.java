@@ -42,11 +42,11 @@ public class IssueCursor implements Comparable<IssueCursor> {
 	 */
 	private String repository;
 	/**
-	 * idLastIssue.
+	 * owner.
 	 * 
 	 * @author FcoCrespo
 	 */
-	private String idLastIssue;
+	private String owner;
 
 	/**
 	 * Constructor de IssueCursor.
@@ -54,13 +54,13 @@ public class IssueCursor implements Comparable<IssueCursor> {
 	 * @author FcoCrespo
 	 */
 	public IssueCursor(final boolean hasNextPage, final String endCursor, final String startCursor,
-			final String repository, String idLastIssue) {
+			final String repository, String owner) {
 		super();
 		this.hasNextPage = hasNextPage;
 		this.endCursor = endCursor;
 		this.startCursor = startCursor;
 		this.repository = repository;
-		this.idLastIssue = idLastIssue;
+		this.owner = owner;
 	}
 
 	
@@ -108,13 +108,13 @@ public class IssueCursor implements Comparable<IssueCursor> {
 		this.id = id;
 	}
 	
-	public String getIdLastIssue() {
-		return idLastIssue;
+	public String getOwner() {
+		return owner;
 	}
 
 
-	public void setIdLastIssue(String idLastIssue) {
-		this.idLastIssue = idLastIssue;
+	public void setOwner(String owner) {
+		this.owner = owner;
 	}
 	
 	public String getEndCursor() {
