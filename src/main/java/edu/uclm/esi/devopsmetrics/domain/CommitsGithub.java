@@ -478,10 +478,10 @@ public class CommitsGithub {
 	}
 
 	private void guardarUsuarioGithubRepo(UserGithub userGithub, String[] info) {
-		UserGithubRepos usergithubrepos = this.userGithubReposService.findByUserGithubReposData(userGithub.getIdGithub(), info[0], info[1]);
+		UserGithubRepos usergithubrepos = this.userGithubReposService.findByUserGithubReposData(userGithub.getId(), info[0], info[1]);
 		
 		if(usergithubrepos==null) {
-			usergithubrepos = new UserGithubRepos(userGithub.getIdGithub(), info[0], info[1]);
+			usergithubrepos = new UserGithubRepos(userGithub.getId(), info[0], info[1]);
 			this.userGithubReposService.saveUserGithubRepos(usergithubrepos);
 		}
 	}
