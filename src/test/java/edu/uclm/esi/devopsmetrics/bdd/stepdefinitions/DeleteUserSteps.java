@@ -51,11 +51,18 @@ public class DeleteUserSteps {
 		
 		JsonNode node = new ObjectMapper().readTree(this.jsonData);
 		
+		String userGithub;
+		if (node.get("userGithub") == null) {
+			userGithub =  "";
+		} else {
+			userGithub = node.get("userGithub").textValue();
+		}
+		
 		this.secureUser = new SecureUser(node.get("id").textValue(),
 										 node.get("username").textValue(),
 										 node.get("role").textValue(),
 										 node.get("tokenPass").textValue(),
-										 node.get("userGithub").textValue()
+										 userGithub
 										);
 		
 		assertEquals("5f7b28ae85c04e348011de43", this.secureUser.getId());
@@ -69,12 +76,18 @@ public class DeleteUserSteps {
 		this.jsonData = EntityUtils.toString(entity, "UTF-8");
 
 		JsonNode node2 = new ObjectMapper().readTree(this.jsonData);
+	
+		if (node2.get("userGithub") == null) {
+			userGithub =  "";
+		} else {
+			userGithub = node2.get("userGithub").textValue();
+		}
 				
 		this.secureUserDelete = new SecureUser(node2.get("id").textValue(),
 										 node2.get("username").textValue(),
 										 node2.get("role").textValue(),
-										 node2.get("tokenPass").textValue(),
-										 node.get("userGithub").textValue()
+										 "",
+										 userGithub
 										);
 		
 		
@@ -83,7 +96,7 @@ public class DeleteUserSteps {
 	public void the_choosed_user_was_deleted_of_the_system() throws ClientProtocolException, IOException {
 		
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpDelete httpdelete = new HttpDelete("https://devopsmetrics.herokuapp.com/usuarios/"+this.secureUserDelete.getId()+"?tokenpass="+this.secureUser.getTokenPass());
+		HttpDelete httpdelete = new HttpDelete("https://devopsmetrics.herokuapp.com/usuarios/deleteuser?username="+this.secureUserDelete.getUsername()+"&tokenpass="+this.secureUser.getTokenPass());
 		
 		httpclient.execute(httpdelete);
 		

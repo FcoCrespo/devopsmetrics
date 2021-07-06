@@ -55,13 +55,19 @@ public class GetCommitsBranchDateAuthorSteps {
 
 		JsonNode node = new ObjectMapper().readTree(this.jsonData);
 		
+		String userGithub;
+		if (node.get("userGithub") == null) {
+			userGithub =  "";
+		} else {
+			userGithub = node.get("userGithub").textValue();
+		}
+		
 		this.secureUser = new SecureUser(node.get("id").textValue(),
 										 node.get("username").textValue(),
 										 node.get("role").textValue(),
 										 node.get("tokenPass").textValue(),
-										 node.get("userGithub").textValue()
+										 userGithub
 										);
-		
 	}
 	@Then("the user gets all commits from a branch of a repositorybetween a date by the author")
 	public void the_user_gets_all_commits_from_a_branch_of_a_repositorybetween_a_date_by_the_author() throws ClientProtocolException, IOException {

@@ -52,11 +52,18 @@ public class RegistrarUsuarioSteps {
 		
 		JsonNode node = new ObjectMapper().readTree(this.jsonData);
 		
+		String userGithub;
+		if (node.get("userGithub") == null) {
+			userGithub =  "";
+		} else {
+			userGithub = node.get("userGithub").textValue();
+		}
+		
 		this.secureUser = new SecureUser(node.get("id").textValue(),
 										 node.get("username").textValue(),
 										 node.get("role").textValue(),
 										 node.get("tokenPass").textValue(),
-										 node.get("userGithub").textValue()
+										 userGithub
 										);
 		
 		assertEquals("5f7b28ae85c04e348011de43", this.secureUser.getId());
@@ -66,8 +73,9 @@ public class RegistrarUsuarioSteps {
 		
 		JSONObject json = new JSONObject();
 		json.put("username", "test");
-		json.put("password", "test");
 		json.put("role", "admin");
+		json.put("email", "esidevopsmetrics@gmail.com");
+		json.put("userGithub", "");
 		
 		StringEntity params = new StringEntity(json.toString());
 		httppost.addHeader("content-type", "application/json");
@@ -80,7 +88,7 @@ public class RegistrarUsuarioSteps {
 	public void by_the_username_and_the_password_in_peer_not_exists_and_the_user_is_registered_correctly() throws ClientProtocolException, IOException {
 		
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/usuarios?username=test&password=test");
+		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/usuarios/getuser?username=test&tokenpass="+this.secureUser.getTokenPass());
 
 		HttpResponse httpresponse = httpclient.execute(httpget);
 
@@ -89,11 +97,18 @@ public class RegistrarUsuarioSteps {
 		
 		JsonNode node = new ObjectMapper().readTree(this.jsonData);
 		
+		String userGithub;
+		if (node.get("userGithub") == null) {
+			userGithub =  "";
+		} else {
+			userGithub = node.get("userGithub").textValue();
+		}
+		
 		this.secureUser = new SecureUser(node.get("id").textValue(),
 										 node.get("username").textValue(),
 										 node.get("role").textValue(),
-										 node.get("tokenPass").textValue(),
-										 node.get("userGithub").textValue()
+										 "",
+										 userGithub
 										);
 		
 		assertEquals("test", this.secureUser.getUsername());

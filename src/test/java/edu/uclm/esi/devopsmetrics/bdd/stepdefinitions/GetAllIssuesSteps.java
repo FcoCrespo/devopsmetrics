@@ -48,11 +48,18 @@ public class GetAllIssuesSteps {
 	public void user_is_correct_he_requests_all_issues_from_a_repository_by_his_owner() throws JsonMappingException, JsonProcessingException {
 		JsonNode node = new ObjectMapper().readTree(this.jsonData);
 		
+		String userGithub;
+		if (node.get("userGithub") == null) {
+			userGithub =  "";
+		} else {
+			userGithub = node.get("userGithub").textValue();
+		}
+		
 		this.secureUser = new SecureUser(node.get("id").textValue(),
 										 node.get("username").textValue(),
 										 node.get("role").textValue(),
 										 node.get("tokenPass").textValue(),
-										 node.get("userGithub").textValue()
+										 userGithub
 										);
 	}
 	

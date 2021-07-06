@@ -50,15 +50,22 @@ public class GetUserByTokenPassSteps {
 		
 		JsonNode node = new ObjectMapper().readTree(this.jsonData);
 		
+		String userGithub;
+		if (node.get("userGithub") == null) {
+			userGithub =  "";
+		} else {
+			userGithub = node.get("userGithub").textValue();
+		}
+		
 		this.secureUser = new SecureUser(node.get("id").textValue(),
 										 node.get("username").textValue(),
 										 node.get("role").textValue(),
 										 node.get("tokenPass").textValue(),
-										 node.get("userGithub").textValue()
+										 userGithub
 										);
 	
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/usuarios/"+System.getProperty("app.user")+"?tokenpass="+this.secureUser.getTokenPass());
+		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/usuarios/getuser?username="+System.getProperty("app.user")+"&tokenpass="+this.secureUser.getTokenPass());
 
 		HttpResponse httpresponse = httpclient.execute(httpget);
 
@@ -71,11 +78,18 @@ public class GetUserByTokenPassSteps {
 
 		JsonNode node = new ObjectMapper().readTree(this.jsonData);
 		
+		String userGithub;
+		if (node.get("userGithub") == null) {
+			userGithub =  "";
+		} else {
+			userGithub = node.get("userGithub").textValue();
+		}
+		
 		this.secureUserTokenPass = new SecureUser(node.get("id").textValue(),
 										 node.get("username").textValue(),
 										 node.get("role").textValue(),
 										 node.get("tokenPass").textValue(),
-										 node.get("userGithub").textValue()
+										 userGithub
 										);
 		
 		assertEquals(this.secureUserTokenPass.getTokenPass(), this.secureUser.getTokenPass());

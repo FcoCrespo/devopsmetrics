@@ -51,11 +51,18 @@ public class GetUserPasswordSteps {
 	public void user_is_correct_he_gets_an_user_by_the_username_and_the_password_in_the_system() throws JsonMappingException, JsonProcessingException {
 		JsonNode node = new ObjectMapper().readTree(this.jsonData);
 		
+		String userGithub;
+		if (node.get("userGithub") == null) {
+			userGithub =  "";
+		} else {
+			userGithub = node.get("userGithub").textValue();
+		}
+		
 		this.secureUser = new SecureUser(node.get("id").textValue(),
 										 node.get("username").textValue(),
 										 node.get("role").textValue(),
 										 node.get("tokenPass").textValue(),
-										 node.get("userGithub").textValue()
+										 userGithub
 										);
 		
 	}

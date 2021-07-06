@@ -9,7 +9,6 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import edu.uclm.esi.devopsmetrics.models.Commit;
 import edu.uclm.esi.devopsmetrics.models.SecureUser;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -28,16 +27,17 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
+
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = {SecureUser.class, Commit.class})
-public class GetAllBranchesSteps {
+@SpringBootTest(classes = {SecureUser.class})
+public class GetAllUsersGithub {
 
 	private SecureUser secureUser;
 	private String jsonData;
 	
-	@Given("user is logging in the system for getting all branches from a repository by his owner")
-	public void user_is_logging_in_the_system_for_getting_all_branches_from_a_repository_by_his_owner() throws ClientProtocolException, IOException {
-
+	@Given("user is logging in the system for getting users of github")
+	public void user_is_logging_in_the_system_for_getting_users_of_github() throws ClientProtocolException, IOException {
+	    
 		CloseableHttpClient httpclient = HttpClients.createDefault();
 		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/usuarios?username="+System.getProperty("app.user")+"&password="+System.getProperty("app.password"));
 
@@ -47,10 +47,10 @@ public class GetAllBranchesSteps {
 		this.jsonData = EntityUtils.toString(entity, "UTF-8");
 		
 	}
-
-	@When("user is correct he requests all branches from a repository by his owner")
-	public void user_is_correct_he_requests_all_branches_from_a_repository_by_his_owner() throws JsonMappingException, JsonProcessingException {
-		
+	
+	@When("user is correct he gets an user by the username and the password in the system for getting users of github")
+	public void user_is_correct_he_gets_an_user_by_the_username_and_the_password_in_the_system_for_getting_users_of_github() throws JsonMappingException, JsonProcessingException {
+	    
 		JsonNode node = new ObjectMapper().readTree(this.jsonData);
 		
 		String userGithub;
@@ -66,41 +66,46 @@ public class GetAllBranchesSteps {
 										 node.get("tokenPass").textValue(),
 										 userGithub
 										);
+		
 	}
-	@Then("the user gets all branches from a repository by his owner")
-	public void the_user_gets_all_branches_from_a_repository_by_his_owner() throws ClientProtocolException, IOException {
+	
+	@Then("by the username and the password in peer exists and the user get users of github")
+	public void by_the_username_and_the_password_in_peer_exists_and_the_user_get_users_of_github() throws ClientProtocolException, IOException {
 		
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/commits/allbranches?tokenpass="+this.secureUser.getTokenPass()+"&reponame=eSalud&owner=sherrerap");
+		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/commits/usersgithub?tokenpass="+this.secureUser.getTokenPass());
 
 		HttpResponse httpresponse = httpclient.execute(httpget);
 
 		HttpEntity entity = httpresponse.getEntity();
 		this.jsonData = EntityUtils.toString(entity, "UTF-8");
-		
 		JsonNode nodes = new ObjectMapper().readTree(this.jsonData);
 		Iterator<JsonNode> iter = nodes.iterator();
-		
-		iter.next();
-		
-		int i = 0;
-		
-		if(iter.hasNext()){
+		JsonNode parameterNode;
+
+		parameterNode = iter.next();
+		String login = "";
+
+		if (iter.hasNext()) {
 			while (iter.hasNext()) {
-				i++;
-				iter.next();
+
+				if (parameterNode.get("login").textValue().equals("FcoCrespo")) {
+					login = parameterNode.get("login").textValue();
+				}
+
+				parameterNode = iter.next();
 			}
 			if (!iter.hasNext()) {
-				i++;
+				if (parameterNode.get("login").textValue().equals("FcoCrespo")) {
+					login = parameterNode.get("login").textValue();
+				}
+			}
+		} else {
+			if (parameterNode.get("login").textValue().equals("FcoCrespo")) {
+				login = parameterNode.get("login").textValue();
 			}
 		}
-		else {
-			i++;
-		}
 		
-		assertEquals(3, i);
-		
-		
+		assertEquals("FcoCrespo", login);
 	}
-
 }
