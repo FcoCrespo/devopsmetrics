@@ -31,6 +31,7 @@ public interface UserService {
    */
   User findByUsername(String username) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException;
 
+ 
   /**
    * @author FcoCrespo
    */
@@ -44,7 +45,7 @@ public interface UserService {
   /**
    * @author FcoCrespo
    */
-  void deleteUser(String userId);
+  void deleteUser(String username);
 
   /**
    * @author FcoCrespo

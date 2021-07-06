@@ -40,14 +40,16 @@ public interface UserRepository {
    * 
    * @author FcoCrespo
    */
-  void deleteUser(String userId);
+  void deleteUser(String username);
 
   /**
    * Método para obtener un usuario por su username.
    * 
    * @author FcoCrespo
    */
-  Optional<User> findOne(String username);
+  Optional<User> findByUsername(String username);
+  
+  
 
   /**
    * Método para obtener un usuario por su nombre de usuario y contraseña.

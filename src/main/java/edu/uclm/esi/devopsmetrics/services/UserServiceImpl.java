@@ -128,9 +128,9 @@ public class UserServiceImpl implements UserService {
   /**
    * @author FcoCrespo
    */
-  public void deleteUser(final String userId) {
+  public void deleteUser(final String username) {
 
-    userRepository.deleteUser(userId);
+    userRepository.deleteUser(username);
 
   }
 

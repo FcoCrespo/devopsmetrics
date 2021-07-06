@@ -58,10 +58,11 @@ public class UserRepositoryImpl implements UserRepository {
 	   * 
 	   * @author FcoCrespo
 	   */
-	  public Optional<User> findOne(final String username) {
-	    User d = this.mongoOperations.findOne(new Query(Criteria.where("username").is(username)), User.class);
+	  public Optional<User> findByUsername(final String username) {
+	    User d = this.mongoOperations.findOne(new Query(Criteria.where("UsernameUser").is(username)), User.class);
 	    return Optional.ofNullable(d);
 	  }
+	  
 
 	  /**
 	   * Guarda un usuario en la base de datos.
@@ -88,16 +89,16 @@ public class UserRepositoryImpl implements UserRepository {
 	   * 
 	   * @author FcoCrespo
 	   */
-	  public void deleteUser(final String id) {
+	  public void deleteUser(final String username) {
 
-	    this.mongoOperations.findAndRemove(new Query(Criteria.where("id").is(id)), User.class);
+	    this.mongoOperations.findAndRemove(new Query(Criteria.where("usernameUser").is(username)), User.class);
 
 	  }
 
 	  @Override
 	  public User findByUsernameAndPassword(final String username, final String password) {
 	    return this.mongoOperations
-	        .findOne(new Query(Criteria.where("username").is(username).and("password").is(password)), User.class);
+	        .findOne(new Query(Criteria.where("usernameUser").is(username).and("passwordUser").is(password)), User.class);
 	  }
 
 	  @Override
