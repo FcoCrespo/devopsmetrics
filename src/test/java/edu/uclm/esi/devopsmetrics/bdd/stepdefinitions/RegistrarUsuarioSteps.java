@@ -75,7 +75,7 @@ public class RegistrarUsuarioSteps {
 		json.put("username", "test");
 		json.put("role", "admin");
 		json.put("email", "esidevopsmetrics@gmail.com");
-		json.put("userGithub", "");
+		json.put("userGithub", "5fb2ac907ac4b82a6966740b");
 		
 		StringEntity params = new StringEntity(json.toString());
 		httppost.addHeader("content-type", "application/json");
@@ -107,7 +107,7 @@ public class RegistrarUsuarioSteps {
 		this.secureUser = new SecureUser(node.get("id").textValue(),
 										 node.get("username").textValue(),
 										 node.get("role").textValue(),
-										 "",
+										 node.get("userGithub").textValue(),
 										 userGithub
 										);
 		

@@ -4,6 +4,7 @@ import java.security.InvalidAlgorithmParameterException;
 
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.UUID;
@@ -21,7 +22,11 @@ import org.springframework.stereotype.Service;
 
 import edu.uclm.esi.devopsmetrics.models.User;
 import edu.uclm.esi.devopsmetrics.models.UserEmail;
+import edu.uclm.esi.devopsmetrics.models.UserGithub;
+import edu.uclm.esi.devopsmetrics.models.UserGithubRepos;
 import edu.uclm.esi.devopsmetrics.services.UserEmailService;
+import edu.uclm.esi.devopsmetrics.services.UserGithubReposService;
+import edu.uclm.esi.devopsmetrics.services.UserGithubService;
 import edu.uclm.esi.devopsmetrics.services.UserService;
 import edu.uclm.esi.devopsmetrics.utilities.Utilities;
 
@@ -50,6 +55,8 @@ public class UserOperations {
 	private final UserService userService;
 	private final UserEmailService userEmailService;
 	private final Utilities utilities;
+	private final UserGithubService userGithubService;
+	private final UserGithubReposService userGithubReposService;
 	
 	private final String idStr;
 	private final String usernameStr;
@@ -61,9 +68,13 @@ public class UserOperations {
 	/**
 	 * @author FcoCrespo
 	 */
-	public UserOperations(final UserService userService, final UserEmailService userEmailService, final Utilities utilities) {
+	public UserOperations(final UserService userService, final UserEmailService userEmailService
+			, final Utilities utilities, final UserGithubService userGithubService,
+			final UserGithubReposService userGithubReposService) {
 		this.userService = userService;
 		this.userEmailService =  userEmailService;
+		this.userGithubService =  userGithubService;
+		this.userGithubReposService = userGithubReposService;
 		this.utilities = utilities;
 		this.idStr = "id";
 		this.usernameStr = "username";
@@ -175,8 +186,6 @@ public class UserOperations {
 
 	public String getAllUsers() throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
 
-		
-
 			List<User> users = this.userService.findAll();
 			
 			JSONArray array = new JSONArray();
@@ -196,6 +205,72 @@ public class UserOperations {
 			}
 
 			return array.toString();
+	}
+	
+	public String getAllUsersGithubFree() throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
+		
+		List<User> users = this.userService.findAll();
+		List<User> usersnoadmin = obtenerUsersNoAdmins(users);
+		
+		List<UserGithub> userGithub = this.userGithubService.findAll();
+		
+		List<UserGithub> userGithubFree = new ArrayList<UserGithub>();
+		
+		boolean libre=true;
+		for(int i=0; i<userGithub.size(); i++) {
+			for(int j=0; j<usersnoadmin.size()&&libre; j++) {
+				if(usersnoadmin.get(j).getUserGithub().equals(userGithub.get(i).getId())) {
+					libre=false;
+				}
+			}
+			if(libre) {
+				userGithubFree.add(userGithub.get(i));
+			}
+			libre=true;
+		}
+		
+		
+		JSONArray array = new JSONArray();
+		JSONObject userGithubjson;
+		
+		JSONArray arrayrepos;
+		JSONObject reposjson;
+		for (int i = 0; i < userGithubFree.size(); i++) {
+			userGithubjson = new JSONObject();
+			
+			userGithubjson.put(this.idStr, userGithubFree.get(i).getId());
+			userGithubjson.put("login", userGithubFree.get(i).getLogin());
+			userGithubjson.put("name", userGithubFree.get(i).getName());
+			
+			List<UserGithubRepos>repos = this.userGithubReposService.findAll();
+			arrayrepos = new JSONArray();
+			for(int j=0; j<repos.size(); j++) {
+				
+				if(repos.get(j).getIdusergithub().equals(userGithubFree.get(i).getId())){
+					reposjson = new JSONObject();
+					reposjson.put("repository", repos.get(j).getRepository());
+					reposjson.put("owner", repos.get(j).getOwner());
+					arrayrepos.put(reposjson);
+				}
+				
+			}
+			userGithubjson.put("repositories", arrayrepos);
+			array.put(userGithubjson);
+		}
+
+		return array.toString();
+		
+	}
+
+	private List<User> obtenerUsersNoAdmins(List<User> users) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
+		List<User> usersnoadmin = new ArrayList<User>();
+		for(int i=0; i<users.size(); i++) {
+			String role = this.utilities.desencriptar(users.get(i).getRoleUser());
+			if(!role.equals("admin")) {
+				usersnoadmin.add(users.get(i));
+			}
+		}
+		return usersnoadmin;
 	}
 
 	public void deleteUser(String username) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
@@ -317,4 +392,6 @@ public class UserOperations {
         LOG.info(mensaje);
 		
 	}
+
+	
 }

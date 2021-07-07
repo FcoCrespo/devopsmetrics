@@ -102,6 +102,33 @@ public class UserController {
 			return ResponseEntity.ok(this.userOperations.getAllUsers());
 		} else {
 			LOG.info(this.errorMesage);
+			return ResponseEntity.badRequest().body("El usuario no esta iniciado.");
+		}
+
+	}
+	
+	/**
+	 * Obtiene los usuarios mediante el token de acceso.
+	 * 
+	 * @author FcoCrespo
+	 * @throws BadPaddingException 
+	 * @throws IllegalBlockSizeException 
+	 * @throws InvalidAlgorithmParameterException 
+	 * @throws NoSuchPaddingException 
+	 * @throws NoSuchAlgorithmException 
+	 * @throws InvalidKeyException 
+	 */
+	@GetMapping(value = "/usersgithubfree")
+	@ApiOperation(value = "Find all user", notes = "Return all users")
+
+	public ResponseEntity<String> getUsersGithubFree(@RequestParam("tokenpass") final String tokenpass) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
+
+		final boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
+		if (existe) {
+			LOG.info("Get all Users Github Free");
+			return ResponseEntity.ok(this.userOperations.getAllUsersGithubFree());
+		} else {
+			LOG.info(this.errorMesage);
 			return ResponseEntity.badRequest().body("El usuario no tiene iniciada sus sesión.");
 		}
 
