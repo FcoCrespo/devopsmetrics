@@ -139,14 +139,14 @@ public class User implements Comparable<User> {
 		return userGithub;
 	}
 
-	public void setUserGithub(String newUserGithub) {
-		this.userGithub = newUserGithub;
+	public void setUserGithub(String userGithub) {
+		this.userGithub = userGithub;
 	}
 
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", usernameUser=" + usernameUser + ", passwordUser=" + passwordUser + ", roleUser="
-				+ roleUser + ", tokenPass=" + tokenPass + "]";
+				+ roleUser + ", userGithub=" + userGithub +", tokenPass=" + tokenPass + "]";
 	}
 
 	

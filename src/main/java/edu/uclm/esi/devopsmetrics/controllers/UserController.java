@@ -296,7 +296,7 @@ public class UserController {
 			return ResponseEntity.ok("Password recovered.");
 		} else {
 			LOG.info(this.errorMesage);
-			return ResponseEntity.badRequest().body("No existe un suario con ese usuario y email en el sistema.");
+			return ResponseEntity.badRequest().body("No existe un usuario con ese usuario y email en el sistema.");
 		}
 
 	}

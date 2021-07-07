@@ -38,6 +38,14 @@ public class UserOperations {
 	private String emailsystem;
 	@Value("${system.emailpass}")
 	private String emailsystempass;
+	@Value("${mail.host}")
+	private String mailhost;
+	@Value("${mail.port}")
+	private String mailport;
+	@Value("${mail.auth}")
+	private String mailauth;
+	@Value("${mail.enable}")
+	private String mailenable;
 	
 	private final UserService userService;
 	private final UserEmailService userEmailService;
@@ -214,12 +222,13 @@ public class UserOperations {
 			String temporalPassword = uuidAsString.substring(0, 12);
 			User usuario = new User(this.utilities.encriptar(username), this.utilities.encriptar(temporalPassword),
 					this.utilities.encriptar(role));
-			this.userService.saveUser(usuario);
+			
 			UserEmail userEmail = new UserEmail(this.utilities.encriptar(username), this.utilities.encriptar(email));
 			this.userEmailService.saveUserEmail(userEmail);
 			if(userGithub!=null) {
 				usuario.setUserGithub(userGithub);
 			}
+			this.userService.saveUser(usuario);
 			
 			sendEmail(username, temporalPassword, role, email);
 		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
@@ -271,10 +280,10 @@ public class UserOperations {
 	
 	private void sendEmail(String username, String temporalPassword, String role, String email) throws MessagingException {
 		Properties prop = new Properties();
-		prop.put("mail.smtp.host", "smtp.gmail.com");
-        prop.put("mail.smtp.port", "587");
-        prop.put("mail.smtp.auth", "true");
-        prop.put("mail.smtp.starttls.enable", "true"); 
+		prop.put("mail.smtp.host", mailhost);
+        prop.put("mail.smtp.port", mailport);
+        prop.put("mail.smtp.auth", mailauth);
+        prop.put("mail.smtp.starttls.enable", mailenable); 
         
         Session session = Session.getInstance(prop,
                 new javax.mail.Authenticator() {
