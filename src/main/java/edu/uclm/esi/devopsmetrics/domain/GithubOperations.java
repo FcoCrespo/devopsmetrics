@@ -561,6 +561,8 @@ public class GithubOperations {
 			json.put("pushedDate", commits.get(i).getPushedDate());
 
 			userGithub = mapUsersGithub.get(commits.get(i).getUsergithub());
+			
+			json.put("idusergithub", userGithub.getId());
 
 			json.put("authorName", userGithub.getName());
 
