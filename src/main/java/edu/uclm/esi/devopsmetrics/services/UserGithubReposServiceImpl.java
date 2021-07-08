@@ -86,4 +86,9 @@ public class UserGithubReposServiceImpl implements UserGithubReposService{
 
 	}
 
+	@Override
+	public List<UserGithubRepos> findAllByUserGithub(String idusergithub) {
+		return this.userGithubReposRepository.findByByUserGithub(idusergithub);
+	}
+
 }

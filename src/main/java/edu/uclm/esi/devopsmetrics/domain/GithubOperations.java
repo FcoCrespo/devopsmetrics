@@ -783,4 +783,24 @@ public class GithubOperations {
 		
 	}
 
+	public String getReposUserGithub(String idusergithub) {
+		List <UserGithubRepos> listUserGithubRepos = this.userGithubReposService.findAllByUserGithub(idusergithub);
+		
+		JSONArray array = new JSONArray();
+		JSONObject json;
+		
+		for(int i = 0; i<listUserGithubRepos.size(); i++) {
+			json = new JSONObject();
+			
+			json.put("idusergithub", listUserGithubRepos.get(i).getIdusergithub());
+			json.put("repository", listUserGithubRepos.get(i).getRepository());
+			json.put("owner", listUserGithubRepos.get(i).getOwner());
+				
+			array.put(json);
+		}
+		
+		return array.toString();
+		
+	}
+
 }

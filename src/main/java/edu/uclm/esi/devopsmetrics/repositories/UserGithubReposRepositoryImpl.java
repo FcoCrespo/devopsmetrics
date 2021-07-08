@@ -83,4 +83,10 @@ public class UserGithubReposRepositoryImpl implements UserGithubReposRepository{
 
 	}
 
+	@Override
+	public List<UserGithubRepos> findByByUserGithub(String idusergithub) {
+		return this.mongoOperations.find(new Query(Criteria.where("idusergithub").is(idusergithub)), UserGithubRepos.class);
+
+	}
+
 }

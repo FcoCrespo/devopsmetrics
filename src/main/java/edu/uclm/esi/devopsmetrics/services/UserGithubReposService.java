@@ -48,4 +48,11 @@ public interface UserGithubReposService {
 	   */
 	  List<UserGithubRepos> findAllByRepositoryAndOwner(String repository, String owner);
 	  
+	  /**
+	   * Método para obtener los repositorios por su user github
+	   * 
+	   * @author FcoCrespo
+	   */
+	  List<UserGithubRepos> findAllByUserGithub(String idusergithub);
+	  
 }

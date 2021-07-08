@@ -477,6 +477,33 @@ public class CommitController {
 
 	}
 	
+	/**
+	 * Devuelve los repositorios registrados para  un usuario de github 
+	 * 
+	 * @author FcoCrespo
+	 */
+	
+	@GetMapping(value = "/getuserrepos")
+	@ApiOperation(value = "Find all repos from github registered for a user github", notes = "Find all user from github registered in the system in a repository")
+
+	public ResponseEntity<String> allReposUsersGithub(@RequestParam("tokenpass") final String tokenpass,
+			@RequestParam("idusergithub") final String idusergithub) {
+
+		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
+		if (existe) {
+
+			LOG.info("Get users github by repository and owner");
+			return ResponseEntity
+					.ok(this.githubOperations.getReposUserGithub(idusergithub));
+
+		} else {
+			LOG.info(this.errorMessage);
+			return ResponseEntity.badRequest().build();
+		}
+
+	}
+	
+	
 	
 	/**
 	 * Devuelve los ultimos commits de las branches de un repositorio
