@@ -72,9 +72,6 @@ public class UpdateUserSteps {
 		
 		JSONObject json = new JSONObject();
 		json.put("password", "test2");
-		json.put("role", "dev");
-		json.put("email", "esidevopsmetrics@gmail.com");
-		json.put("userGithub", "");
 		
 		StringEntity params = new StringEntity(json.toString());
 		httpput.addHeader("content-type", "application/json");
@@ -111,7 +108,6 @@ public class UpdateUserSteps {
 										);
 		
 		assertEquals("test", this.secureUser.getUsername());
-		assertEquals("dev", this.secureUser.getRole());
 		
 	}
 

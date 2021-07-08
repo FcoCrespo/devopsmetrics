@@ -276,10 +276,8 @@ public class UserController {
 					LOG.info("Actualizando usuario...");
 
 					final String password = jso.getString("password");
-					final String role = jso.getString("role");
-					final String newmail = jso.getString("email");
 
-					this.userOperations.actualizarUsuario(username, password, role, newmail);
+					this.userOperations.actualizarUsuario(username, password);
 
 					LOG.info("[SERVER] Usuario actualizado.");
 					return ResponseEntity.ok("Usuario actualizado correctamente.");

@@ -314,16 +314,17 @@ public class UserOperations {
 
 	
 
-	public void actualizarUsuario(String username, String password, String role, String email) {
+	public void actualizarUsuario(String username, String password) {
 
 		try {
 			User usuario = this.userService.findByUsername(username);
 			UserEmail userEmail =  this.userEmailService.findByUsername(username);
+			
 
 			String usernameEncriptado = this.utilities.encriptar(username);
 			String passwordEncriptado = this.utilities.encriptar(password);
-			String roleEncriptado = this.utilities.encriptar(role);
-			String emailEncriptado = this.utilities.encriptar(email);
+			String roleEncriptado = usuario.getRoleUser();
+			String emailEncriptado = userEmail.getEmail();
 			usuario.setUsernameUser(usernameEncriptado);
 			usuario.setPasswordUser(passwordEncriptado);
 			usuario.setRoleUser(roleEncriptado);
