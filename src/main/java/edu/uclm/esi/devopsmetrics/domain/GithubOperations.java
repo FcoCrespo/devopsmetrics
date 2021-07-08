@@ -483,7 +483,7 @@ public class GithubOperations {
 		String name = jso.getString(this.branchStr);
 		String begindate = jso.getString("begindate");
 		String enddate = jso.getString("enddate");
-		String authorName = jso.getString("authorname");
+		String idusergithub = jso.getString("idusergithub");
 		String owner = jso.getString(this.ownerStr);
 
 		Instant[] dates = DateUtils.getDatesInstant(begindate, enddate);
@@ -492,20 +492,20 @@ public class GithubOperations {
 		Instant endDateInstant = dates[1];
 
 		Branch branch = this.branchService.getBranchByRepositoryyNameAndOwner(reponame, owner, name);
-		UserGithub userGithub = this.commitsGithub.getUserGithubByName(authorName);
+		
 		List<Commit> commits;
 
 		
 		if (branch.getOrder() == 0) {
 			commits = this.commitService.getAllByBranchBeginEndDateByAuthor(branch.getIdGithub(), beginDateInstant,
-					endDateInstant, userGithub.getId());
+					endDateInstant, idusergithub);
 			Collections.sort(commits);
 		} else {
 			Branch branchBefore = branchService.getBeforeBranchByOrder(reponame, branch.getOrder());
 			List<Commit> commitsQuery = this.commitService.getAllByBranchBeginEndDateByAuthor(branch.getIdGithub(),
-					beginDateInstant, endDateInstant, userGithub.getId());
+					beginDateInstant, endDateInstant, idusergithub);
 			List<Commit> commitsBefore = this.commitService.getAllByBranchBeginEndDateByAuthor(
-					branchBefore.getIdGithub(), beginDateInstant, endDateInstant, userGithub.getId());
+					branchBefore.getIdGithub(), beginDateInstant, endDateInstant, idusergithub);
 
 			commits = filterCommits(commitsQuery, commitsBefore);
 			Collections.sort(commits);
@@ -514,21 +514,21 @@ public class GithubOperations {
 		return getInfoCommits(commits, branch);
 	}
 
-	public String getCommitsByBranchAndAuthorName(String reponame,  String owner, String name, String authorName) {
+	public String getCommitsByBranchAndAuthorName(String reponame,  String owner, String name, String idusergithub) {
 		Branch branch = this.branchService.getBranchByRepositoryyNameAndOwner(reponame, owner, name);
-		UserGithub userGithub = this.commitsGithub.getUserGithubByName(authorName);
+		
 		List<Commit> commits;
 
 		
 		if (branch.getOrder() == 0) {
-			commits = this.commitService.getAllCommitsByBranchAndAuthor(branch.getIdGithub(), userGithub.getId());
+			commits = this.commitService.getAllCommitsByBranchAndAuthor(branch.getIdGithub(), idusergithub);
 			Collections.sort(commits);
 		} else {
 			Branch branchBefore = branchService.getBeforeBranchByOrder(reponame, branch.getOrder());
 			List<Commit> commitsQuery = this.commitService.getAllCommitsByBranchAndAuthor(branch.getIdGithub(),
-					userGithub.getId());
+					idusergithub);
 			List<Commit> commitsBefore = this.commitService.getAllCommitsByBranchAndAuthor(branchBefore.getIdGithub(),
-					userGithub.getId());
+					idusergithub);
 
 			commits = filterCommits(commitsQuery, commitsBefore);
 			Collections.sort(commits);

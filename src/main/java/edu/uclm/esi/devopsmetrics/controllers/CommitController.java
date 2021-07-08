@@ -355,14 +355,14 @@ public class CommitController {
 
 	public ResponseEntity<String> allCommitsBranchAuthor(@RequestParam("tokenpass") final String tokenpass,
 			@RequestParam("reponame") final String reponame, @RequestParam("owner") final String owner, @RequestParam("branch") final String branch,
-			@RequestParam("authorname") final String authorName) {
+			@RequestParam("idusergithub") final String idusergithub) {
 
 		boolean existe = this.userOperations.getUserByTokenPass(tokenpass);
 		if (existe) {
 
 			LOG.info("Get commits from repository branch by his author");
 			return ResponseEntity
-					.ok(this.githubOperations.getCommitsByBranchAndAuthorName(reponame, owner, branch, authorName));
+					.ok(this.githubOperations.getCommitsByBranchAndAuthorName(reponame, owner, branch, idusergithub));
 
 		} else {
 			LOG.info(this.errorMessage);

@@ -80,7 +80,7 @@ public class GetCommitsBranchDateAuthorSteps {
 		json.put("branch", "main");
 		json.put("begindate", "25/04/2021 10:00");
 		json.put("enddate", "25/04/2021 22:00");
-		json.put("authorname", "FcoCrespo");
+		json.put("idusergithub", "60ca1b1ac4667959635fd3e6");
 		json.put("owner", "FcoCrespo");
 		
 		StringEntity params = new StringEntity(json.toString());
