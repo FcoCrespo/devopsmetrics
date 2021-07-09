@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import edu.uclm.esi.devopsmetrics.exceptions.TokenGithubNotFoundException;
 import edu.uclm.esi.devopsmetrics.models.TokenGithub;
 import edu.uclm.esi.devopsmetrics.repositories.TokenGithubRepository;
 
@@ -55,7 +56,15 @@ public class TokenGithubServiceImpl implements TokenGithubService{
 
 	@Override
 	public TokenGithub findByOwner(String owner) {
-		return this.tokenGithubRepository.findByOwner(owner);
+		
+		TokenGithub tokenGithub = this.tokenGithubRepository.findByOwner(owner);
+		
+		if(tokenGithub != null) {
+			return tokenGithub;
+		}
+		else {
+			throw new TokenGithubNotFoundException(owner);
+		}
 	}
 
 	@Override

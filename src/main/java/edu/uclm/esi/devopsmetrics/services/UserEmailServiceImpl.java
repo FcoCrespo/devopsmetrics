@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import edu.uclm.esi.devopsmetrics.exceptions.UserEmailNotFoundException;
 import edu.uclm.esi.devopsmetrics.models.UserEmail;
 import edu.uclm.esi.devopsmetrics.repositories.UserEmailRepository;
 import edu.uclm.esi.devopsmetrics.utilities.Utilities;
@@ -109,7 +110,7 @@ public class UserEmailServiceImpl implements UserEmailService{
 	    	return user;
 	    }
 	    else {
-	    	return null;
+	    	throw new UserEmailNotFoundException(username, email);
 	    }
 	}
 

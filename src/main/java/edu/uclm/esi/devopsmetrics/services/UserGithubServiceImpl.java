@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import edu.uclm.esi.devopsmetrics.exceptions.UserGithubNotFoundException;
 import edu.uclm.esi.devopsmetrics.models.UserGithub;
 
 import edu.uclm.esi.devopsmetrics.repositories.UserGithubRepository;
@@ -64,7 +65,7 @@ public class UserGithubServiceImpl implements UserGithubService{
 		if(userGithub!=null) {
 			return userGithub;
 	    } else {
-	    	return null;
+	    	throw new UserGithubNotFoundException(id);
 	    }
 	}
 	
@@ -74,7 +75,7 @@ public class UserGithubServiceImpl implements UserGithubService{
 		if(userGithub!=null) {
 			return userGithub;
 	    } else {
-	    	return null;
+	    	throw new UserGithubNotFoundException(login);
 	    }
 	}
 	
@@ -85,7 +86,7 @@ public class UserGithubServiceImpl implements UserGithubService{
 		if(userGithub!=null) {
 			return userGithub;
 	    } else {
-	    	return null;
+	    	throw new UserGithubNotFoundException(name);
 	    }
 	}
 

@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
+import edu.uclm.esi.devopsmetrics.exceptions.UserNotFoundException;
 import edu.uclm.esi.devopsmetrics.models.User;
 import edu.uclm.esi.devopsmetrics.repositories.UserRepository;
 import edu.uclm.esi.devopsmetrics.utilities.Utilities;
@@ -159,7 +159,7 @@ public class UserServiceImpl implements UserService {
     	return user;
     }
     else {
-    	return null;
+    	throw new UserNotFoundException(username);
     }
     
   }
