@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
+import edu.uclm.esi.devopsmetrics.exceptions.UserGithubReposNotFoundException;
 import edu.uclm.esi.devopsmetrics.models.UserGithubRepos;
 import edu.uclm.esi.devopsmetrics.repositories.UserGithubReposRepository;
 
@@ -77,7 +77,16 @@ public class UserGithubReposServiceImpl implements UserGithubReposService{
 
 	@Override
 	public UserGithubRepos findByUserGithubReposData(String idusergithub, String repository, String owner) {
-		return this.userGithubReposRepository.findByUserGithubReposData(idusergithub, repository, owner);
+		
+		UserGithubRepos userGithubRepos = this.userGithubReposRepository.findByUserGithubReposData(idusergithub, repository, owner);
+		
+		if(userGithubRepos!=null) {
+			return userGithubRepos;
+		}
+		else {
+			throw new UserGithubReposNotFoundException(idusergithub, repository, owner);
+		}
+		
 	}
 
 	@Override
