@@ -63,6 +63,7 @@ public class GithubOperations {
 	private String commitoidStr = "commit";
 	private String emptyStr = "empty";
 	private String ownerStr = "owner";
+	private String idUserGithubStr = "idusergithub";
 	private String repositoryStr = "repository";
 	private String branchnameStr = "branchname";
 	private String idGithubStr = "idGithub";
@@ -483,7 +484,7 @@ public class GithubOperations {
 		String name = jso.getString(this.branchStr);
 		String begindate = jso.getString("begindate");
 		String enddate = jso.getString("enddate");
-		String idusergithub = jso.getString("idusergithub");
+		String idusergithub = jso.getString(this.idGithubStr);
 		String owner = jso.getString(this.ownerStr);
 
 		Instant[] dates = DateUtils.getDatesInstant(begindate, enddate);
@@ -557,12 +558,12 @@ public class GithubOperations {
 
 			json.put("id", commits.get(i).getId());
 			json.put("oid", commits.get(i).getOid());
-			json.put("owner", branch.getOwner());
+			json.put(this.ownerStr, branch.getOwner());
 			json.put("pushedDate", commits.get(i).getPushedDate());
 
 			userGithub = mapUsersGithub.get(commits.get(i).getUsergithub());
 			
-			json.put("idusergithub", userGithub.getId());
+			json.put(this.idUserGithubStr, userGithub.getId());
 
 			json.put("authorName", userGithub.getName());
 
@@ -753,7 +754,7 @@ public class GithubOperations {
 				json.put("authorname", mapUserGithub.get(commit.getUsergithub()).getName());
 				json.put("authorid", mapUserGithub.get(commit.getUsergithub()).getId());
 				json.put("authoridGithub", mapUserGithub.get(commit.getUsergithub()).getIdGithub());
-				json.put("repository", listBranches.get(i).getRepository());
+				json.put(this.repositoryStr, listBranches.get(i).getRepository());
 				json.put(this.idGithubStr, listBranches.get(i).getIdGithub());
 				json.put("oid", commit.getOid());
 				json.put("pushedDate", commit.getPushedDate());
@@ -794,9 +795,9 @@ public class GithubOperations {
 		for(int i = 0; i<listUserGithubRepos.size(); i++) {
 			json = new JSONObject();
 			
-			json.put("idusergithub", listUserGithubRepos.get(i).getIdusergithub());
-			json.put("repository", listUserGithubRepos.get(i).getRepository());
-			json.put("owner", listUserGithubRepos.get(i).getOwner());
+			json.put(this.idUserGithubStr, listUserGithubRepos.get(i).getIdusergithub());
+			json.put(this.repositoryStr, listUserGithubRepos.get(i).getRepository());
+			json.put(this.ownerStr, listUserGithubRepos.get(i).getOwner());
 				
 			array.put(json);
 		}

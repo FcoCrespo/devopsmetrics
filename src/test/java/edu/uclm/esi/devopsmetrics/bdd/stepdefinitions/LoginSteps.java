@@ -11,7 +11,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import edu.uclm.esi.devopsmetrics.utilities.SleepClass;
 import edu.uclm.esi.devopsmetrics.utilities.Utilities;
 
 import org.junit.runner.RunWith;
@@ -63,7 +62,7 @@ public class LoginSteps {
 
 	@Then("user is navigated to the home page")
 	public void user_is_navigated_to_the_home_page() throws InterruptedException {	
-		SleepClass.sleep(1000);
+		
 		String expectedUrl = driver.getCurrentUrl();
 		assertEquals("https://webesidevopsmetrics.herokuapp.com/repos", expectedUrl);	
 		
