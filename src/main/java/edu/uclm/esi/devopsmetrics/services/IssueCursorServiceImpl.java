@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import edu.uclm.esi.devopsmetrics.exceptions.IssueCursorNotFoundException;
 import edu.uclm.esi.devopsmetrics.models.IssueCursor;
 import edu.uclm.esi.devopsmetrics.repositories.IssueCursorRepository;
 
@@ -69,7 +70,20 @@ public class IssueCursorServiceImpl implements IssueCursorService{
 
 	@Override
 	public IssueCursor findOne(String endCursor) {
-		return this.issueCursorRepository.findOne(endCursor);
+		
+		IssueCursor issuecursor = this.issueCursorRepository.findOne(endCursor);
+
+	    if (issuecursor!=null) {
+
+	      return issuecursor;
+
+	    } else {
+
+	      throw new IssueCursorNotFoundException(endCursor);
+
+	    }
+
+		
 	}
 
 	@Override

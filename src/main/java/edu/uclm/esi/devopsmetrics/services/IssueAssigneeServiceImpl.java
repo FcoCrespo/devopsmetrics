@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import edu.uclm.esi.devopsmetrics.exceptions.IssueAssigneeNotFoundException;
 import edu.uclm.esi.devopsmetrics.models.IssueAssignee;
 import edu.uclm.esi.devopsmetrics.repositories.IssueAssigneeRepository;
 
@@ -68,7 +69,18 @@ public class IssueAssigneeServiceImpl implements IssueAssigneeService{
 
 	@Override
 	public IssueAssignee findOne(String issueid) {
-		return this.issueAssigneeRepository.findOne(issueid);
+		IssueAssignee issueassignee = this.issueAssigneeRepository.findOne(issueid);
+
+	    if (issueassignee!=null) {
+
+	      return issueassignee;
+
+	    } else {
+
+	      throw new IssueAssigneeNotFoundException(issueid);
+
+	    }
+
 	}
 
 	@Override

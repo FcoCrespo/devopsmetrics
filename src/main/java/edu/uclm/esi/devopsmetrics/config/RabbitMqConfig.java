@@ -21,26 +21,26 @@ public class RabbitMqConfig {
     public static final String EXCHANGE_NAME = "devopsmetrics_exchange";
     public static final String ROUTING_KEY = "devopsmetrics_routing_key";
 
-    private static final String QUEUE_NAME = "devopsmetrics_queue";
-    private static final boolean IS_DURABLE_QUEUE = false;
+    public static final String QUEUE_NAME = "devopsmetrics_queue";
+    public static final boolean IS_DURABLE_QUEUE = false;
 
     @Bean
-    Queue queue() {
+    public Queue queue() {
         return new Queue(QUEUE_NAME, IS_DURABLE_QUEUE);
     }
 
     @Bean
-    TopicExchange exchange() {
+    public TopicExchange exchange() {
         return new TopicExchange(EXCHANGE_NAME);
     }
 
     @Bean
-    Binding binding(Queue queue, TopicExchange exchange) {
+    public Binding binding(Queue queue, TopicExchange exchange) {
         return BindingBuilder.bind(queue).to(exchange).with(ROUTING_KEY);
     }
 
     @Bean
-    SimpleMessageListenerContainer container(ConnectionFactory connectionFactory, MessageListenerAdapter listenerAdapter) {
+    public SimpleMessageListenerContainer container(ConnectionFactory connectionFactory, MessageListenerAdapter listenerAdapter) {
         final SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
         container.setConnectionFactory(connectionFactory);
         container.setQueueNames(QUEUE_NAME);
@@ -49,12 +49,12 @@ public class RabbitMqConfig {
     }
 
     @Bean
-    MessageListenerAdapter listenerAdapter(ReceiverMQ receiver) {
+    public MessageListenerAdapter listenerAdapter(ReceiverMQ receiver) {
         return new MessageListenerAdapter(receiver, ReceiverMQ.RECEIVE_METHOD_NAME);
     }
 
     @Bean
-    ReceiverMQ receiver() {
+    public ReceiverMQ receiver() {
         return new ReceiverMQ();
     }
 

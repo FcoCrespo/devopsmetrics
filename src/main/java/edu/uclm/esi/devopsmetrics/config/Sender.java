@@ -14,7 +14,7 @@ public class Sender {
     private static final Logger LOG = LoggerFactory.getLogger(Sender.class);
     
     @Autowired
-	RabbitTemplate rabbitTemplate;
+	private RabbitTemplate rabbitTemplate;
 
    @Scheduled(fixedDelay = 20000)
     public void sendMessage() {

@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import edu.uclm.esi.devopsmetrics.exceptions.IssueRepoNotFoundException;
 import edu.uclm.esi.devopsmetrics.models.IssueRepo;
 import edu.uclm.esi.devopsmetrics.repositories.IssueRepoRepository;
 
@@ -69,7 +70,17 @@ public class IssueRepoServiceImpl implements IssueRepoService{
 
 	@Override
 	public IssueRepo findOne(String issueid) {
-		return this.issueRepoRepository.findOne(issueid);
+		IssueRepo issuerepo = this.issueRepoRepository.findOne(issueid);
+
+	    if (issuerepo!=null) {
+
+	      return issuerepo;
+
+	    } else {
+
+	      throw new IssueRepoNotFoundException(issueid);
+
+	    }
 	}
 
 	@Override

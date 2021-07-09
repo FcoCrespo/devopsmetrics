@@ -15,6 +15,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.security.InvalidAlgorithmParameterException;
@@ -24,11 +25,8 @@ import java.util.Base64;
 @Component
 public class Utilities {
 	
-	private final KeyValue keyvalue;
-	
-	protected Utilities(KeyValue keyvalue) {
-		this.keyvalue = keyvalue;
-	}
+	@Value("${app.key}")
+	private String accessKey;
 	
 	private static final int GCM_IV_LENGTH = 12;
     private static final int GCM_TAG_LENGTH = 16;
@@ -38,7 +36,7 @@ public class Utilities {
 		byte[] iv = new byte[GCM_IV_LENGTH];
         (new SecureRandom()).nextBytes(iv);
         
-        String secretKey = this.keyvalue.getSecret();
+        String secretKey = accessKey;
     	MessageDigest md = MessageDigest.getInstance("SHA-256");
     	byte[] digestOfPassword = md.digest(secretKey.getBytes(StandardCharsets.UTF_8));
         byte[] keyBytes = Arrays.copyOf(digestOfPassword, 24);
@@ -58,7 +56,7 @@ public class Utilities {
 
     public String desencriptar(String encrypted) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException  {
     	
-    	String secretKey = this.keyvalue.getSecret();
+    	String secretKey = accessKey;
     	MessageDigest md = MessageDigest.getInstance("SHA-256");
     	byte[] digestOfPassword = md.digest(secretKey.getBytes(StandardCharsets.UTF_8));
         byte[] keyBytes = Arrays.copyOf(digestOfPassword, 24);

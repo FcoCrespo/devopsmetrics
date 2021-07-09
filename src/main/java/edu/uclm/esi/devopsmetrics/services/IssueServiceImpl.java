@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import edu.uclm.esi.devopsmetrics.exceptions.IssueNotFoundException;
 import edu.uclm.esi.devopsmetrics.models.Issue;
 import edu.uclm.esi.devopsmetrics.repositories.IssueRepository;
 
@@ -56,7 +57,17 @@ public class IssueServiceImpl implements IssueService{
 
 	@Override
 	public Issue findOne(String id) {
-		return this.issueRepository.findOne(id);
+		Issue issue = this.issueRepository.findOne(id);
+
+	    if (issue!=null) {
+
+	      return issue;
+
+	    } else {
+
+	      throw new IssueNotFoundException(id);
+
+	    }
 	}
 
 	@Override
