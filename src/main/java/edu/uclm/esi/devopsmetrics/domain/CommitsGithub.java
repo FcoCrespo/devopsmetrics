@@ -40,6 +40,7 @@ public class CommitsGithub {
 	private final CommitCursorService commitCursorService;
 	private final CommitInfoService commitInfoService;
 	private final UserGithubOperations userGithubOperations;
+	private final UserGithubServices userGithubServices;
 	private final UserGithubReposService userGithubReposService;
 	private final ResponseHTTP response;
 
@@ -55,7 +56,7 @@ public class CommitsGithub {
 	 * @author FcoCrespo
 	 */
 	public CommitsGithub(final CommitServices commitServices, final UserGithubOperations userGithubOperations,
-			final UserGithubReposService userGithubReposService,
+			final UserGithubServices userGithubServices,
 		    final ResponseHTTP response) {
 
 		this.commitServices = commitServices;
@@ -63,7 +64,8 @@ public class CommitsGithub {
 		this.commitCursorService = this.commitServices.getCommitCursorService();
 		this.commitInfoService = this.commitServices.getCommitInfoService();
 		this.userGithubOperations = userGithubOperations;
-		this.userGithubReposService = userGithubReposService;
+		this.userGithubServices = userGithubServices;
+		this.userGithubReposService = this.userGithubServices.getUserGithubReposService();
 		this.response = response;
 		this.graphqlUri = "https://api.github.com/graphql";
 		this.filenameCursor = "src/main/resources/graphql/commits-cursor.graphql";

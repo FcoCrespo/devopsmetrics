@@ -42,6 +42,7 @@ public class IssuesGithub {
 	private final IssueRepoService issueRepoService;
 	private final IssueAssigneeService issueAssigneeService;
 	private final UserGithubOperations userGithubOperations;
+	private final UserGithubServices userGithubServices;
 	private final UserGithubReposService userGithubReposService;
 	private final ResponseHTTP response;
 
@@ -64,14 +65,15 @@ public class IssuesGithub {
 	 * @author FcoCrespo
 	 */
 	public IssuesGithub(final IssueServices issueServices, final UserGithubOperations userGithubOperations,
-			final ResponseHTTP response, final UserGithubReposService userGithubReposService) {
+			final ResponseHTTP response, final UserGithubServices userGithubServices) {
 
 		this.issueServices = issueServices;
 		this.issueService = this.issueServices.getIssueService();
 		this.issueCursorService = this.issueServices.getIssueCursorService();
 		this.issueRepoService = this.issueServices.getIssueRepoService();
 		this.issueAssigneeService = this.issueServices.getIssueAssigneeService();
-		this.userGithubReposService = userGithubReposService;
+		this.userGithubServices = userGithubServices;
+		this.userGithubReposService = this.userGithubServices.getUserGithubReposService();
 		this.userGithubOperations = userGithubOperations;
 		this.response = response;
 		this.graphqlUri = "https://api.github.com/graphql";

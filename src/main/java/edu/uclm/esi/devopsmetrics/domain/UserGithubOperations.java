@@ -11,13 +11,15 @@ import edu.uclm.esi.devopsmetrics.services.UserGithubService;
 @Service
 public class UserGithubOperations {
 
+	private final UserGithubServices userGithubServices;
 	private final UserGithubService userGithubService;
 
 	/**
 	 * @author FcoCrespo
 	 */
-	public UserGithubOperations(final UserGithubService userGithubService) {
-		this.userGithubService = userGithubService;
+	public UserGithubOperations(final UserGithubServices userGithubServices) {
+		this.userGithubServices = userGithubServices;
+		this.userGithubService = this.userGithubServices.getUserGithubService();
 	}
 
 	public UserGithub saveAuthor(String[] authorValues) {

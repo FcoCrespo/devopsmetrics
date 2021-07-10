@@ -55,6 +55,8 @@ public class UserOperations {
 	private final UserService userService;
 	private final UserEmailService userEmailService;
 	private final Utilities utilities;
+	
+	private final UserGithubServices userGithubServices;
 	private final UserGithubService userGithubService;
 	private final UserGithubReposService userGithubReposService;
 	
@@ -68,13 +70,12 @@ public class UserOperations {
 	/**
 	 * @author FcoCrespo
 	 */
-	public UserOperations(final UserService userService, final UserEmailService userEmailService
-			, final Utilities utilities, final UserGithubService userGithubService,
-			final UserGithubReposService userGithubReposService) {
-		this.userService = userService;
-		this.userEmailService =  userEmailService;
-		this.userGithubService =  userGithubService;
-		this.userGithubReposService = userGithubReposService;
+	public UserOperations(UserGithubServices userGithubServices ,final Utilities utilities) {
+		this.userGithubServices = userGithubServices;
+		this.userService = this.userGithubServices.getUserService();
+		this.userEmailService =  this.userGithubServices.getUserEmailService();
+		this.userGithubService =  this.userGithubServices.getUserGithubService();
+		this.userGithubReposService = this.userGithubServices.getUserGithubReposService();
 		this.utilities = utilities;
 		this.idStr = "id";
 		this.usernameStr = "username";

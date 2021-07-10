@@ -20,6 +20,7 @@ import edu.uclm.esi.devopsmetrics.models.Branch;
 @Service
 public class BranchesGithub {
 
+	private CommitServices commitServices;
 	private final BranchService branchService;
 	private final ResponseHTTP response;
 
@@ -28,9 +29,10 @@ public class BranchesGithub {
 	/**
 	 * @author FcoCrespo
 	 */
-	public BranchesGithub(final BranchService branchService, final ResponseHTTP response) {
+	public BranchesGithub(final CommitServices commitServices, final ResponseHTTP response) {
 
-		this.branchService = branchService;
+		this.commitServices = commitServices;
+		this.branchService = this.commitServices.getBranchService();
 		this.response = response;
 		this.graphqlUri = "https://api.github.com/graphql";
 

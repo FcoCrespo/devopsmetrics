@@ -35,6 +35,7 @@ public class IssueOperations {
 	private final IssueRepoService issueRepoService;
 	private final IssueAssigneeService issueAssigneeService;
 	private final IssueService issueService;
+	private final UserGithubServices userGithubServices;
 	private final UserGithubService userGithubService;
 	private String loginStr;
 	private String emailStr;
@@ -51,13 +52,14 @@ public class IssueOperations {
 	 * @author FcoCrespo
 	 */
 	public IssueOperations(final IssuesGithub issuesGithub, final IssueServices issueServices,
-			final UserGithubService userGithubService) {
+			final UserGithubServices userGithubServices) {
 		this.issuesGithub = issuesGithub;
 		this.issueServices = issueServices;
 		this.issueRepoService = this.issueServices.getIssueRepoService();
 		this.issueAssigneeService = this.issueServices.getIssueAssigneeService();
 		this.issueService = this.issueServices.getIssueService();
-		this.userGithubService = userGithubService;
+		this.userGithubServices = userGithubServices;
+		this.userGithubService = this.userGithubServices.getUserGithubService();
 		this.loginStr = "login";
 		this.emailStr = "email";
 		this.avatarURLStr = "avatarURL";
