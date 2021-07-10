@@ -484,7 +484,7 @@ public class GithubOperations {
 		String name = jso.getString(this.branchStr);
 		String begindate = jso.getString("begindate");
 		String enddate = jso.getString("enddate");
-		String idusergithub = jso.getString(this.idGithubStr);
+		String idusergithub = jso.getString(this.idUserGithubStr);
 		String owner = jso.getString(this.ownerStr);
 
 		Instant[] dates = DateUtils.getDatesInstant(begindate, enddate);
