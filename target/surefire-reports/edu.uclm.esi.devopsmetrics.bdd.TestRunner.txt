@@ -1,0 +1,82 @@
+-------------------------------------------------------------------------------
+Test set: edu.uclm.esi.devopsmetrics.bdd.TestRunner
+-------------------------------------------------------------------------------
+Tests run: 26, Failures: 0, Errors: 26, Skipped: 0, Time elapsed: 76.33 s <<< FAILURE! - in edu.uclm.esi.devopsmetrics.bdd.TestRunner
+{feature to test the function to delete an user in the system}  Time elapsed: 48.343 s  <<< ERROR!
+java.lang.NullPointerException
+
+{feature to test the function to get all branches from a repository by his owner}  Time elapsed: 0.258 s  <<< ERROR!
+java.lang.NullPointerException
+
+{feature to test the function to get all commits from a repository by his owner}  Time elapsed: 0.267 s  <<< ERROR!
+java.lang.NullPointerException
+
+{feature to test the function to get all issues from a repository by his owner from Github}  Time elapsed: 0.243 s  <<< ERROR!
+java.lang.NullPointerException
+
+{feature to test the function to get all metrics from a repository by his owner}  Time elapsed: 0.225 s  <<< ERROR!
+java.lang.NullPointerException
+
+{feature to test the function to get all metrics from a repository by his owner between two dates}  Time elapsed: 0.306 s  <<< ERROR!
+java.lang.NullPointerException
+
+{feature to test the function to get all repositories from the system}  Time elapsed: 0.244 s  <<< ERROR!
+java.lang.NullPointerException
+
+{feature to test the function to get all test metrics from a repository by his owner}  Time elapsed: 0.278 s  <<< ERROR!
+java.lang.NullPointerException
+
+{feature to test the function to get all test metrics from a repository by his owner between two dates}  Time elapsed: 0.238 s  <<< ERROR!
+java.lang.NullPointerException
+
+{feature to test the function to get all users in the system}  Time elapsed: 0.3 s  <<< ERROR!
+java.lang.NullPointerException
+
+{feature to test the function to get all branches order from a repository by his owner}  Time elapsed: 0.247 s  <<< ERROR!
+java.lang.NullPointerException
+
+{feature to test the function to get all commits from a branch of a repository}  Time elapsed: 0.235 s  <<< ERROR!
+java.lang.NullPointerException
+
+{feature to test the function to get all commits from a branch of a repository by the author}  Time elapsed: 0.24 s  <<< ERROR!
+java.lang.NullPointerException
+
+{feature to test the function to get all commits from a branch of a repository between a date}  Time elapsed: 0.259 s  <<< ERROR!
+java.lang.NullPointerException
+
+{feature to test the function to get all commits from a branch of a repository between a date by the author}  Time elapsed: 0.225 s  <<< ERROR!
+java.lang.NullPointerException
+
+{feature to test the function to get all issues from a repository by his owner closed between two dates from the system}  Time elapsed: 0.226 s  <<< ERROR!
+java.lang.NullPointerException
+
+{feature to test the function to get all issues from a repository by his owner created between two dates from the system}  Time elapsed: 0.254 s  <<< ERROR!
+java.lang.NullPointerException
+
+{feature to test the function to get all issues from a repository by his owner opened between two dates from the system}  Time elapsed: 0.259 s  <<< ERROR!
+java.lang.NullPointerException
+
+{feature to test the function to get all issues from a repository by his owner from the system}  Time elapsed: 0.256 s  <<< ERROR!
+java.lang.NullPointerException
+
+{feature to test the function to get an user by the tokenpass in the system}  Time elapsed: 1.244 s  <<< ERROR!
+java.lang.NullPointerException
+
+{feature to test the function to get an user by the username and the password in the system}  Time elapsed: 0.258 s  <<< ERROR!
+java.lang.NullPointerException
+
+{feature to test the function to get an user of github by the username and the password in the system}  Time elapsed: 0.242 s  <<< ERROR!
+java.lang.NullPointerException
+
+{feature to test the function to get an user of github in a repository by the username and the password in the system}  Time elapsed: 0.321 s  <<< ERROR!
+java.lang.NullPointerException
+
+{feature to test login functionality}  Time elapsed: 20.857 s  <<< ERROR!
+java.lang.IllegalArgumentException: Keys to send should be a not null CharSequence
+
+{feature to test the function to register an user in the system}  Time elapsed: 0.24 s  <<< ERROR!
+java.lang.NullPointerException
+
+{feature to test the function to update an user in the system}  Time elapsed: 0.236 s  <<< ERROR!
+java.lang.NullPointerException
+
