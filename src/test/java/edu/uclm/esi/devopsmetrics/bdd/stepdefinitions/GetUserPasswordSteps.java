@@ -70,8 +70,8 @@ public class GetUserPasswordSteps {
 	public void by_the_username_and_the_password_in_peer_exists_and_the_user_is_correct() {
 		
 		assertEquals("5f7b28ae85c04e348011de43", this.secureUser.getId());
-		assertEquals("admin", this.secureUser.getUsername());	
-		assertEquals("admin", this.secureUser.getRole());
+		assertEquals(System.getProperty("app.user"), this.secureUser.getUsername());	
+		assertEquals(System.getProperty("app.password"), this.secureUser.getRole());
 	
 	}
 }
