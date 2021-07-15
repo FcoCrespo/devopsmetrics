@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import edu.uclm.esi.devopsmetrics.models.TokenGithub;
+import edu.uclm.esi.devopsmetrics.entities.TokenGithub;
 
 /**
  * Interfaz de UserRepository.

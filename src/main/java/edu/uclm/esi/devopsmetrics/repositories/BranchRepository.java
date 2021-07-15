@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
-import edu.uclm.esi.devopsmetrics.models.Branch;
+import edu.uclm.esi.devopsmetrics.entities.Branch;
 
 /**
  * Interfaz de BranchRepository.

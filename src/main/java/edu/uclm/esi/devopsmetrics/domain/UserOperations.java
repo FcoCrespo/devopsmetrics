@@ -20,10 +20,10 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import edu.uclm.esi.devopsmetrics.models.User;
-import edu.uclm.esi.devopsmetrics.models.UserEmail;
-import edu.uclm.esi.devopsmetrics.models.UserGithub;
-import edu.uclm.esi.devopsmetrics.models.UserGithubRepos;
+import edu.uclm.esi.devopsmetrics.entities.User;
+import edu.uclm.esi.devopsmetrics.entities.UserEmail;
+import edu.uclm.esi.devopsmetrics.entities.UserGithub;
+import edu.uclm.esi.devopsmetrics.entities.UserGithubRepos;
 import edu.uclm.esi.devopsmetrics.services.UserEmailService;
 import edu.uclm.esi.devopsmetrics.services.UserGithubReposService;
 import edu.uclm.esi.devopsmetrics.services.UserGithubService;

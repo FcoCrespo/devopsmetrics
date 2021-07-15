@@ -8,8 +8,8 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import edu.uclm.esi.devopsmetrics.entities.Issue;
 import edu.uclm.esi.devopsmetrics.exceptions.IssueNotFoundException;
-import edu.uclm.esi.devopsmetrics.models.Issue;
 import edu.uclm.esi.devopsmetrics.repositories.IssueRepository;
 
 

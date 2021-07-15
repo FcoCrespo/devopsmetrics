@@ -9,8 +9,8 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import edu.uclm.esi.devopsmetrics.entities.Commit;
 import edu.uclm.esi.devopsmetrics.exceptions.CommitNotFoundException;
-import edu.uclm.esi.devopsmetrics.models.Commit;
 import edu.uclm.esi.devopsmetrics.repositories.CommitRepository;
 
 @Service("CommitService")

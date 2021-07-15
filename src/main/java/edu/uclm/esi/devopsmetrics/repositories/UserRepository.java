@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
-import edu.uclm.esi.devopsmetrics.models.User;
+import edu.uclm.esi.devopsmetrics.entities.User;
 
 /**
  * Interfaz de UserRepository.

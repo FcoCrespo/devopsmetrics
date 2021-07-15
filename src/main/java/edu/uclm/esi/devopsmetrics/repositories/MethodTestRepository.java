@@ -4,7 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
-import edu.uclm.esi.devopsmetrics.models.MethodTest;
+
+import edu.uclm.esi.devopsmetrics.entities.MethodTest;
 /**
  * Interfaz de MethodTestRepository.
  * 

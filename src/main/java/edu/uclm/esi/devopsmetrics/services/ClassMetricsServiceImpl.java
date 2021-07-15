@@ -8,8 +8,8 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import edu.uclm.esi.devopsmetrics.entities.ClassMetrics;
 import edu.uclm.esi.devopsmetrics.exceptions.ClassMetricsNotFoundException;
-import edu.uclm.esi.devopsmetrics.models.ClassMetrics;
 import edu.uclm.esi.devopsmetrics.repositories.ClassMetricsRepository;
 
 @Service("ClassMetricsService")

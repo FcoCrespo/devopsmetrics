@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
-import edu.uclm.esi.devopsmetrics.models.Commit;
+import edu.uclm.esi.devopsmetrics.entities.Commit;
 
 /**
  * Interfaz de CommitRepository.

@@ -17,19 +17,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import okhttp3.Response;
-
+import edu.uclm.esi.devopsmetrics.entities.Issue;
+import edu.uclm.esi.devopsmetrics.entities.IssueAssignee;
+import edu.uclm.esi.devopsmetrics.entities.IssueCursor;
+import edu.uclm.esi.devopsmetrics.entities.IssueRepo;
+import edu.uclm.esi.devopsmetrics.entities.UserGithub;
+import edu.uclm.esi.devopsmetrics.entities.UserGithubRepos;
 import edu.uclm.esi.devopsmetrics.services.IssueAssigneeService;
 import edu.uclm.esi.devopsmetrics.services.IssueCursorService;
 import edu.uclm.esi.devopsmetrics.services.IssueRepoService;
 import edu.uclm.esi.devopsmetrics.services.IssueService;
 import edu.uclm.esi.devopsmetrics.services.UserGithubReposService;
 import edu.uclm.esi.devopsmetrics.utilities.GraphqlTemplate;
-import edu.uclm.esi.devopsmetrics.models.Issue;
-import edu.uclm.esi.devopsmetrics.models.IssueAssignee;
-import edu.uclm.esi.devopsmetrics.models.IssueCursor;
-import edu.uclm.esi.devopsmetrics.models.IssueRepo;
-import edu.uclm.esi.devopsmetrics.models.UserGithub;
-import edu.uclm.esi.devopsmetrics.models.UserGithubRepos;
 
 @Service
 public class IssuesGithub {

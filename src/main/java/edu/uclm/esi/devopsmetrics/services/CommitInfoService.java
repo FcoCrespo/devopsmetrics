@@ -2,7 +2,7 @@ package edu.uclm.esi.devopsmetrics.services;
 
 import java.util.List;
 
-import edu.uclm.esi.devopsmetrics.models.CommitInfo;
+import edu.uclm.esi.devopsmetrics.entities.CommitInfo;
 
 /**
  * @author FcoCrespo

@@ -2,7 +2,7 @@ package edu.uclm.esi.devopsmetrics.services;
 
 import java.util.List;
 
-import edu.uclm.esi.devopsmetrics.models.MethodMetrics;
+import edu.uclm.esi.devopsmetrics.entities.MethodMetrics;
 
 /**
  * @author FcoCrespo

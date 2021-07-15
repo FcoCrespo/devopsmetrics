@@ -15,11 +15,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
-import edu.uclm.esi.devopsmetrics.models.Issue;
-import edu.uclm.esi.devopsmetrics.models.IssueAssignee;
-import edu.uclm.esi.devopsmetrics.models.IssueCursor;
-import edu.uclm.esi.devopsmetrics.models.IssueRepo;
-import edu.uclm.esi.devopsmetrics.models.UserGithub;
+import edu.uclm.esi.devopsmetrics.entities.Issue;
+import edu.uclm.esi.devopsmetrics.entities.IssueAssignee;
+import edu.uclm.esi.devopsmetrics.entities.IssueCursor;
+import edu.uclm.esi.devopsmetrics.entities.IssueRepo;
+import edu.uclm.esi.devopsmetrics.entities.UserGithub;
 import edu.uclm.esi.devopsmetrics.services.IssueAssigneeService;
 import edu.uclm.esi.devopsmetrics.services.IssueRepoService;
 import edu.uclm.esi.devopsmetrics.services.IssueService;

@@ -3,7 +3,7 @@ package edu.uclm.esi.devopsmetrics.services;
 import java.time.Instant;
 import java.util.List;
 
-import edu.uclm.esi.devopsmetrics.models.Commit;
+import edu.uclm.esi.devopsmetrics.entities.Commit;
 
 /**
  * @author FcoCrespo

@@ -9,9 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import edu.uclm.esi.devopsmetrics.entities.UserGithub;
 import edu.uclm.esi.devopsmetrics.exceptions.UserGithubNotFoundException;
-import edu.uclm.esi.devopsmetrics.models.UserGithub;
-
 import edu.uclm.esi.devopsmetrics.repositories.UserGithubRepository;
 
 @Service("UserGithubService")

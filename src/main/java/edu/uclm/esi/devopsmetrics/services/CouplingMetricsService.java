@@ -2,7 +2,7 @@ package edu.uclm.esi.devopsmetrics.services;
 
 import java.util.List;
 
-import edu.uclm.esi.devopsmetrics.models.CouplingMetrics;
+import edu.uclm.esi.devopsmetrics.entities.CouplingMetrics;
 
 /**
  * @author FcoCrespo

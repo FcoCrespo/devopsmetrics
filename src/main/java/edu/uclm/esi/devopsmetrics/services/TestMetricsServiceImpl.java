@@ -9,8 +9,8 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import edu.uclm.esi.devopsmetrics.entities.TestMetrics;
 import edu.uclm.esi.devopsmetrics.exceptions.TestMetricsNotFoundException;
-import edu.uclm.esi.devopsmetrics.models.TestMetrics;
 import edu.uclm.esi.devopsmetrics.repositories.TestMetricsRepository;
 
 @Service("TestMetricsService")

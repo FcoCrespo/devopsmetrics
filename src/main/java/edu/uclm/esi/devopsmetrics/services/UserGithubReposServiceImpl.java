@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import edu.uclm.esi.devopsmetrics.entities.UserGithubRepos;
 import edu.uclm.esi.devopsmetrics.exceptions.UserGithubReposNotFoundException;
-import edu.uclm.esi.devopsmetrics.models.UserGithubRepos;
 import edu.uclm.esi.devopsmetrics.repositories.UserGithubReposRepository;
 
 @Service("UserGithubReposService")

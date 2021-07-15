@@ -8,7 +8,7 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
-import edu.uclm.esi.devopsmetrics.models.UserEmail;
+import edu.uclm.esi.devopsmetrics.entities.UserEmail;
 
 public interface UserEmailService {
 

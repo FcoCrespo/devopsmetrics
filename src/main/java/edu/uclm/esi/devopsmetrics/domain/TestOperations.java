@@ -34,8 +34,8 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import edu.uclm.esi.devopsmetrics.models.MethodTest;
-import edu.uclm.esi.devopsmetrics.models.TestMetrics;
+import edu.uclm.esi.devopsmetrics.entities.MethodTest;
+import edu.uclm.esi.devopsmetrics.entities.TestMetrics;
 import edu.uclm.esi.devopsmetrics.services.MethodTestService;
 import edu.uclm.esi.devopsmetrics.services.TestMetricsService;
 

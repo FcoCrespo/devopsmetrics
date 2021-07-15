@@ -8,8 +8,8 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import edu.uclm.esi.devopsmetrics.entities.IssueCursor;
 import edu.uclm.esi.devopsmetrics.exceptions.IssueCursorNotFoundException;
-import edu.uclm.esi.devopsmetrics.models.IssueCursor;
 import edu.uclm.esi.devopsmetrics.repositories.IssueCursorRepository;
 
 @Service("IssueCursorService")

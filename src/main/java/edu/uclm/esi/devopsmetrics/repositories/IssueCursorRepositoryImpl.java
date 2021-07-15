@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 
-import edu.uclm.esi.devopsmetrics.models.IssueCursor;
+import edu.uclm.esi.devopsmetrics.entities.IssueCursor;
 
 /**
  * Clase que implementa la interfaz IssueCursorRepository.

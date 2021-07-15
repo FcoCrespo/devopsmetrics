@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 
-import edu.uclm.esi.devopsmetrics.models.IssueAssignee;
+import edu.uclm.esi.devopsmetrics.entities.IssueAssignee;
 
 /**
  * Clase que implementa la interfaz IssueAssigneeRepository.

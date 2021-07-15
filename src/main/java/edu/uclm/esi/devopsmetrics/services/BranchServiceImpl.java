@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import edu.uclm.esi.devopsmetrics.entities.Branch;
 import edu.uclm.esi.devopsmetrics.exceptions.BranchNotFoundException;
-import edu.uclm.esi.devopsmetrics.models.Branch;
 import edu.uclm.esi.devopsmetrics.repositories.BranchRepository;
 
 

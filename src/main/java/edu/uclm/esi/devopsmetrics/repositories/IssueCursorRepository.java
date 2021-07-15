@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
-import edu.uclm.esi.devopsmetrics.models.IssueCursor;
+import edu.uclm.esi.devopsmetrics.entities.IssueCursor;
 
 /**
  * Interfaz de IssueCursorRepository.

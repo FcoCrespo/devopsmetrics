@@ -2,7 +2,7 @@ package edu.uclm.esi.devopsmetrics.services;
 
 import java.util.List;
 
-import edu.uclm.esi.devopsmetrics.models.UserGithubRepos;
+import edu.uclm.esi.devopsmetrics.entities.UserGithubRepos;
 
 public interface UserGithubReposService {
 

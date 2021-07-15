@@ -5,7 +5,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.springframework.stereotype.Service;
 
-import edu.uclm.esi.devopsmetrics.models.TokenGithub;
+import edu.uclm.esi.devopsmetrics.entities.TokenGithub;
 import edu.uclm.esi.devopsmetrics.services.TokenGithubService;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;

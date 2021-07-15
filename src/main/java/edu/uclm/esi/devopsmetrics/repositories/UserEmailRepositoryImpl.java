@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 
-import edu.uclm.esi.devopsmetrics.models.UserEmail;
+import edu.uclm.esi.devopsmetrics.entities.UserEmail;
 
 /**
  * Clase que implementa la interfaz UserGithubRepository.

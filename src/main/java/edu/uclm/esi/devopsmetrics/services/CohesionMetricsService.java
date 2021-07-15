@@ -2,7 +2,7 @@ package edu.uclm.esi.devopsmetrics.services;
 
 import java.util.List;
 
-import edu.uclm.esi.devopsmetrics.models.CohesionMetrics;
+import edu.uclm.esi.devopsmetrics.entities.CohesionMetrics;
 
 /**
  * @author FcoCrespo

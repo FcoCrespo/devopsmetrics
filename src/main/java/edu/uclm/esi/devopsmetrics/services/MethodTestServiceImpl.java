@@ -8,8 +8,8 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import edu.uclm.esi.devopsmetrics.entities.MethodTest;
 import edu.uclm.esi.devopsmetrics.exceptions.MethodTestNotFoundException;
-import edu.uclm.esi.devopsmetrics.models.MethodTest;
 import edu.uclm.esi.devopsmetrics.repositories.MethodTestRepository;
 
 @Service("MethodTestService")

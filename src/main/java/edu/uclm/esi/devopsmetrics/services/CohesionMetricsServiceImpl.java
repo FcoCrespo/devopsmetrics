@@ -8,8 +8,8 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import edu.uclm.esi.devopsmetrics.entities.CohesionMetrics;
 import edu.uclm.esi.devopsmetrics.exceptions.CohesionMetricsNotFoundException;
-import edu.uclm.esi.devopsmetrics.models.CohesionMetrics;
 import edu.uclm.esi.devopsmetrics.repositories.CohesionMetricsRepository;
 
 @Service("CohesionMetricsService")

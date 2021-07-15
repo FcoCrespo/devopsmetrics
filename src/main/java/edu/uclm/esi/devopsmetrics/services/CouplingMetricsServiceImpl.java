@@ -8,8 +8,8 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import edu.uclm.esi.devopsmetrics.entities.CouplingMetrics;
 import edu.uclm.esi.devopsmetrics.exceptions.CouplingMetricsNotFoundException;
-import edu.uclm.esi.devopsmetrics.models.CouplingMetrics;
 import edu.uclm.esi.devopsmetrics.repositories.CouplingMetricsRepository;
 
 @Service("CouplingMetricsService")

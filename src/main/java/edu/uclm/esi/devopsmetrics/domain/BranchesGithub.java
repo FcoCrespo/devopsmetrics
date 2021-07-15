@@ -12,10 +12,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import okhttp3.Response;
-
+import edu.uclm.esi.devopsmetrics.entities.Branch;
 import edu.uclm.esi.devopsmetrics.services.BranchService;
 import edu.uclm.esi.devopsmetrics.utilities.GraphqlTemplate;
-import edu.uclm.esi.devopsmetrics.models.Branch;
 
 @Service
 public class BranchesGithub {

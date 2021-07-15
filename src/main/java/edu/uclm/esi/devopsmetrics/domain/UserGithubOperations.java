@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
-import edu.uclm.esi.devopsmetrics.models.UserGithub;
+import edu.uclm.esi.devopsmetrics.entities.UserGithub;
 import edu.uclm.esi.devopsmetrics.services.UserGithubService;
 
 @Service

@@ -17,18 +17,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import okhttp3.Response;
-
+import edu.uclm.esi.devopsmetrics.entities.Commit;
+import edu.uclm.esi.devopsmetrics.entities.CommitCursor;
+import edu.uclm.esi.devopsmetrics.entities.CommitInfo;
+import edu.uclm.esi.devopsmetrics.entities.UserGithub;
+import edu.uclm.esi.devopsmetrics.entities.UserGithubRepos;
 import edu.uclm.esi.devopsmetrics.services.CommitCursorService;
 import edu.uclm.esi.devopsmetrics.services.CommitInfoService;
 import edu.uclm.esi.devopsmetrics.services.CommitService;
 import edu.uclm.esi.devopsmetrics.services.UserGithubReposService;
 import edu.uclm.esi.devopsmetrics.utilities.GraphqlTemplate;
-
-import edu.uclm.esi.devopsmetrics.models.Commit;
-import edu.uclm.esi.devopsmetrics.models.CommitCursor;
-import edu.uclm.esi.devopsmetrics.models.CommitInfo;
-import edu.uclm.esi.devopsmetrics.models.UserGithub;
-import edu.uclm.esi.devopsmetrics.models.UserGithubRepos;
 
 @Service
 public class CommitsGithub {

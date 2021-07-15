@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 
-import edu.uclm.esi.devopsmetrics.models.Branch;
+import edu.uclm.esi.devopsmetrics.entities.Branch;
 
 /**
  * Clase que implementa la interfaz CommitCursor.

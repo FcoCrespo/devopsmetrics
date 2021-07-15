@@ -3,7 +3,7 @@ package edu.uclm.esi.devopsmetrics.services;
 
 import java.util.List;
 
-import edu.uclm.esi.devopsmetrics.models.UserGithub;
+import edu.uclm.esi.devopsmetrics.entities.UserGithub;
 
 /**
  * @author FcoCrespo
