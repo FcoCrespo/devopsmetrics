@@ -39,7 +39,7 @@ public class GetAllBranchesSteps {
 	public void user_is_logging_in_the_system_for_getting_all_branches_from_a_repository_by_his_owner() throws ClientProtocolException, IOException {
 
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/usuarios?username="+System.getProperty("app.user")+"&password="+System.getProperty("app.password"));
+		HttpGet httpget = new HttpGet(System.getProperty("server.url")+"/usuarios?username="+System.getProperty("app.user")+"&password="+System.getProperty("app.password"));
 
 		HttpResponse httpresponse = httpclient.execute(httpget);
 
@@ -71,7 +71,7 @@ public class GetAllBranchesSteps {
 	public void the_user_gets_all_branches_from_a_repository_by_his_owner() throws ClientProtocolException, IOException {
 		
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/commits/allbranches?tokenpass="+this.secureUser.getTokenPass()+"&reponame=eSalud&owner=sherrerap");
+		HttpGet httpget = new HttpGet(System.getProperty("server.url")+"/commits/allbranches?tokenpass="+this.secureUser.getTokenPass()+"&reponame=eSalud&owner=sherrerap");
 
 		HttpResponse httpresponse = httpclient.execute(httpget);
 

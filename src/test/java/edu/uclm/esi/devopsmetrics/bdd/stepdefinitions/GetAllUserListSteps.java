@@ -35,7 +35,7 @@ public class GetAllUserListSteps {
 	public void user_is_logging_in_the_system_to_get_all_users_in_the_system() throws ClientProtocolException, IOException {
 		
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/usuarios?username="+System.getProperty("app.user")+"&password="+System.getProperty("app.password"));
+		HttpGet httpget = new HttpGet(System.getProperty("server.url")+"/usuarios?username="+System.getProperty("app.user")+"&password="+System.getProperty("app.password"));
 
 		HttpResponse httpresponse = httpclient.execute(httpget);
 
@@ -64,7 +64,7 @@ public class GetAllUserListSteps {
 										);
 		
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/usuarios/all?tokenpass="+this.secureUser.getTokenPass());
+		HttpGet httpget = new HttpGet(System.getProperty("server.url")+"/usuarios/all?tokenpass="+this.secureUser.getTokenPass());
 
 		HttpResponse httpresponse = httpclient.execute(httpget);
 
@@ -77,7 +77,7 @@ public class GetAllUserListSteps {
 	public void the_users_were_got_correctly() throws ClientProtocolException, IOException {
 		
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/usuarios/all?tokenpass="+this.secureUser.getTokenPass());
+		HttpGet httpget = new HttpGet(System.getProperty("server.url")+"/usuarios/all?tokenpass="+this.secureUser.getTokenPass());
 
 		HttpResponse httpresponse = httpclient.execute(httpget);
 

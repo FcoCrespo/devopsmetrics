@@ -41,7 +41,7 @@ public class GetCommitsBranchDateSteps {
 	public void user_is_logging_in_the_system_for_getting_all_commits_from_a_branch_of_a_repository_between_a_date() throws ClientProtocolException, IOException {
 
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/usuarios?username="+System.getProperty("app.user")+"&password="+System.getProperty("app.password"));
+		HttpGet httpget = new HttpGet(System.getProperty("server.url")+"/usuarios?username="+System.getProperty("app.user")+"&password="+System.getProperty("app.password"));
 
 		HttpResponse httpresponse = httpclient.execute(httpget);
 
@@ -73,7 +73,7 @@ public class GetCommitsBranchDateSteps {
 	public void the_user_gets_all_commits_from_a_branch_of_a_repositorybetween_a_date() throws ClientProtocolException, IOException {
 		
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpPost httppost = new HttpPost("https://devopsmetrics.herokuapp.com/commits/commitsbranchdate?tokenpass="+this.secureUser.getTokenPass());
+		HttpPost httppost = new HttpPost(System.getProperty("server.url")+"/commits/commitsbranchdate?tokenpass="+this.secureUser.getTokenPass());
 		
 		JSONObject json = new JSONObject();
 		json.put("reponame", "test");

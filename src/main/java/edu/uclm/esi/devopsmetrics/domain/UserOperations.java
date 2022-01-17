@@ -386,7 +386,7 @@ public class UserOperations {
         		+"Remember that you can change your password if you want in User Ops menu.\n\n"
         		+"Thank you.\n\n"
         		+"Kind regards. \n\n"
-        		+ "https://webesidevopsmetrics.herokuapp.com");
+        		+ "https://myesidevopsmetrics.herokuapp.com");
 
         Transport.send(message);
 

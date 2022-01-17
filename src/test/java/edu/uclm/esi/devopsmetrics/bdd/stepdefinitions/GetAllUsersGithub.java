@@ -39,7 +39,7 @@ public class GetAllUsersGithub {
 	public void user_is_logging_in_the_system_for_getting_users_of_github() throws ClientProtocolException, IOException {
 	    
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/usuarios?username="+System.getProperty("app.user")+"&password="+System.getProperty("app.password"));
+		HttpGet httpget = new HttpGet(System.getProperty("server.url")+"/usuarios?username="+System.getProperty("app.user")+"&password="+System.getProperty("app.password"));
 
 		HttpResponse httpresponse = httpclient.execute(httpget);
 
@@ -73,7 +73,7 @@ public class GetAllUsersGithub {
 	public void by_the_username_and_the_password_in_peer_exists_and_the_user_get_users_of_github() throws ClientProtocolException, IOException {
 		
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/commits/usersgithub?tokenpass="+this.secureUser.getTokenPass());
+		HttpGet httpget = new HttpGet(System.getProperty("server.url")+"/commits/usersgithub?tokenpass="+this.secureUser.getTokenPass());
 
 		HttpResponse httpresponse = httpclient.execute(httpget);
 

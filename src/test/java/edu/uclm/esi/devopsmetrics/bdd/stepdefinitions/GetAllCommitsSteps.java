@@ -37,7 +37,7 @@ public class GetAllCommitsSteps {
 	public void user_is_logging_in_the_system_for_getting_all_commits_from_a_repository_by_his_owner() throws ClientProtocolException, IOException {
 
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/usuarios?username="+System.getProperty("app.user")+"&password="+System.getProperty("app.password"));
+		HttpGet httpget = new HttpGet(System.getProperty("server.url")+"/usuarios?username="+System.getProperty("app.user")+"&password="+System.getProperty("app.password"));
 
 		HttpResponse httpresponse = httpclient.execute(httpget);
 
@@ -68,7 +68,7 @@ public class GetAllCommitsSteps {
 	@Then("the user gets all commits from a repository by his owner")
 	public void the_user_gets_all_commits_from_a_repository_by_his_owner() throws ClientProtocolException, IOException {
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/commits/allcommits?tokenpass="+this.secureUser.getTokenPass()+"&reponame=test&owner=FcoCrespo");
+		HttpGet httpget = new HttpGet(System.getProperty("server.url")+"/commits/allcommits?tokenpass="+this.secureUser.getTokenPass()+"&reponame=test&owner=FcoCrespo");
 
 		HttpResponse httpresponse = httpclient.execute(httpget);
 

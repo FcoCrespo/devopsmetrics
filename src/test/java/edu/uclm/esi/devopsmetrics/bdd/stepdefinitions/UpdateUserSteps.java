@@ -38,7 +38,7 @@ public class UpdateUserSteps {
 	@Given("user is logging in the system for updating an user")
 	public void user_is_logging_in_the_system_for_updating_an_user() throws ClientProtocolException, IOException {
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/usuarios?username="+System.getProperty("app.user")+"&password="+System.getProperty("app.password"));
+		HttpGet httpget = new HttpGet(System.getProperty("server.url")+"/usuarios?username="+System.getProperty("app.user")+"&password="+System.getProperty("app.password"));
 
 		HttpResponse httpresponse = httpclient.execute(httpget);
 
@@ -68,7 +68,7 @@ public class UpdateUserSteps {
 		assertEquals("5f7b28ae85c04e348011de43", this.secureUser.getId());
 		
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpPut httpput = new HttpPut("https://devopsmetrics.herokuapp.com/usuarios/test?tokenpass="+this.secureUser.getTokenPass());
+		HttpPut httpput = new HttpPut(System.getProperty("server.url")+"/usuarios/test?tokenpass="+this.secureUser.getTokenPass());
 		
 		JSONObject json = new JSONObject();
 		json.put("password", "test2");
@@ -84,7 +84,7 @@ public class UpdateUserSteps {
 	public void by_the_username_and_the_password_in_peer_not_exists_and_the_user_is_updated_correctly() throws ParseException, IOException {
 		
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/usuarios/getuser?username=test&tokenpass="+this.secureUser.getTokenPass());
+		HttpGet httpget = new HttpGet(System.getProperty("server.url")+"/usuarios/getuser?username=test&tokenpass="+this.secureUser.getTokenPass());
 
 		HttpResponse httpresponse = httpclient.execute(httpget);
 

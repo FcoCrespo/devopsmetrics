@@ -36,7 +36,7 @@ public class GetAllIssuesSteps {
 	@Given("user is logging in the system for getting all issues from a repository by his owner from Github")
 	public void user_is_logging_in_the_system_for_getting_all_issues_from_a_repository_by_his_owner_from_github() throws ClientProtocolException, IOException {
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/usuarios?username="+System.getProperty("app.user")+"&password="+System.getProperty("app.password"));
+		HttpGet httpget = new HttpGet(System.getProperty("server.url")+"/usuarios?username="+System.getProperty("app.user")+"&password="+System.getProperty("app.password"));
 
 		HttpResponse httpresponse = httpclient.execute(httpget);
 
@@ -66,7 +66,7 @@ public class GetAllIssuesSteps {
 	@Then("the user gets all issues from a repository by his owner")
 	public void the_user_gets_all_issues_from_a_repository_by_his_owner() throws ParseException, IOException {
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/issues/allissues?tokenpass="+this.secureUser.getTokenPass()+"&reponame=test&owner=FcoCrespo");
+		HttpGet httpget = new HttpGet(System.getProperty("server.url")+"/issues/allissues?tokenpass="+this.secureUser.getTokenPass()+"&reponame=test&owner=FcoCrespo");
 
 		HttpResponse httpresponse = httpclient.execute(httpget);
 

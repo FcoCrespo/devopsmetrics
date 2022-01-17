@@ -439,6 +439,8 @@ public class IssuesGithub {
 		
 		issue.setClosedAt(closedAt);
 		
+		System.out.println(issue.toString());
+		
 		UserGithub userGithubAsignee = null;
 		Iterator<JsonNode> iter;
 		

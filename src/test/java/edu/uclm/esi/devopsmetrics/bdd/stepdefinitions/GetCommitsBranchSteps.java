@@ -39,7 +39,7 @@ public class GetCommitsBranchSteps {
 	public void user_is_logging_in_the_system_for_getting_all_commits_from_a_branch_of_a_repository() throws ClientProtocolException, IOException {
 		
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/usuarios?username="+System.getProperty("app.user")+"&password="+System.getProperty("app.password"));
+		HttpGet httpget = new HttpGet(System.getProperty("server.url")+"/usuarios?username="+System.getProperty("app.user")+"&password="+System.getProperty("app.password"));
 
 		HttpResponse httpresponse = httpclient.execute(httpget);
 
@@ -70,7 +70,7 @@ public class GetCommitsBranchSteps {
 	@Then("the user gets all commits from a branch of a repository")
 	public void the_user_gets_all_commits_from_a_branch_of_a_repository() throws ParseException, IOException {
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/commits/commitsbranch?tokenpass="+this.secureUser.getTokenPass()+"&owner=FcoCrespo&reponame=test&branch=main");
+		HttpGet httpget = new HttpGet(System.getProperty("server.url")+"/commits/commitsbranch?tokenpass="+this.secureUser.getTokenPass()+"&owner=FcoCrespo&reponame=test&branch=main");
 
 		HttpResponse httpresponse = httpclient.execute(httpget);
 

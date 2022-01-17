@@ -42,7 +42,7 @@ public class GetIssuesOpenedDateSteps {
 			throws ClientProtocolException, IOException {
 
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/usuarios?username="
+		HttpGet httpget = new HttpGet(System.getProperty("server.url")+"/usuarios?username="
 				+ System.getProperty("app.user") + "&password=" + System.getProperty("app.password"));
 
 		HttpResponse httpresponse = httpclient.execute(httpget);
@@ -75,7 +75,7 @@ public class GetIssuesOpenedDateSteps {
 	public void the_user_gets_all_issues_from_a_repository_by_his_owner_opened_between_two_dates_if_the_system()
 			throws ClientProtocolException, IOException {
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpPost httppost = new HttpPost("https://devopsmetrics.herokuapp.com/issues/issuesrepoopeneddates?tokenpass="
+		HttpPost httppost = new HttpPost(System.getProperty("server.url")+"/issues/issuesrepoopeneddates?tokenpass="
 				+ this.secureUser.getTokenPass());
 
 		JSONObject json = new JSONObject();

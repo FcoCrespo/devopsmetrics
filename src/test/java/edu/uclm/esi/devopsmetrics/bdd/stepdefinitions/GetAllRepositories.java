@@ -38,7 +38,7 @@ public class GetAllRepositories {
 	public void user_is_logging_in_the_system_for_getting_all_repositories_from_the_system() throws ClientProtocolException, IOException {
 		
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/usuarios?username="
+		HttpGet httpget = new HttpGet(System.getProperty("server.url")+"/usuarios?username="
 				+ System.getProperty("app.user") + "&password=" + System.getProperty("app.password"));
 
 		HttpResponse httpresponse = httpclient.execute(httpget);
@@ -72,7 +72,7 @@ public class GetAllRepositories {
 	@Then("the user gets all repositories from the system")
 	public void the_user_gets_all_repositories_from_the_system() throws ClientProtocolException, IOException {
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/commits/allrepositories?tokenpass="
+		HttpGet httpget = new HttpGet(System.getProperty("server.url")+"/commits/allrepositories?tokenpass="
 				+ this.secureUser.getTokenPass());
 
 		HttpResponse httpresponse = httpclient.execute(httpget);

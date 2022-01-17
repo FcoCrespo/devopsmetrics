@@ -38,7 +38,7 @@ public class RegistrarUsuarioSteps {
 	public void user_is_logging_in_the_system_for_register_other() throws ClientProtocolException, IOException {
 		
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/usuarios?username="+System.getProperty("app.user")+"&password="+System.getProperty("app.password"));
+		HttpGet httpget = new HttpGet(System.getProperty("server.url")+"/usuarios?username="+System.getProperty("app.user")+"&password="+System.getProperty("app.password"));
 
 		HttpResponse httpresponse = httpclient.execute(httpget);
 
@@ -69,7 +69,7 @@ public class RegistrarUsuarioSteps {
 		assertEquals("5f7b28ae85c04e348011de43", this.secureUser.getId());
 		
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpPost httppost = new HttpPost("https://devopsmetrics.herokuapp.com/usuarios?tokenpass="+this.secureUser.getTokenPass());
+		HttpPost httppost = new HttpPost(System.getProperty("server.url")+"/usuarios?tokenpass="+this.secureUser.getTokenPass());
 		
 		JSONObject json = new JSONObject();
 		json.put("username", "test");
@@ -88,7 +88,7 @@ public class RegistrarUsuarioSteps {
 	public void by_the_username_and_the_password_in_peer_not_exists_and_the_user_is_registered_correctly() throws ClientProtocolException, IOException {
 		
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/usuarios/getuser?username=test&tokenpass="+this.secureUser.getTokenPass());
+		HttpGet httpget = new HttpGet(System.getProperty("server.url")+"/usuarios/getuser?username=test&tokenpass="+this.secureUser.getTokenPass());
 
 		HttpResponse httpresponse = httpclient.execute(httpget);
 

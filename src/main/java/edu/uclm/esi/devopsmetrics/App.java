@@ -6,10 +6,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 
 @SpringBootApplication
-@EnableScheduling
+@EnableScheduling 
 public class App {
 
-	/*cambio de commit*/
     public static void main(String[] args) {
         SpringApplication.run(App.class, args);
     }

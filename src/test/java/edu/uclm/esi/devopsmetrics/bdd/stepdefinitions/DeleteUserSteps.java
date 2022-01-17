@@ -37,7 +37,7 @@ public class DeleteUserSteps {
 	public void user_is_logging_in_the_system_for_deleting_another_user() throws ClientProtocolException, IOException {
 		
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/usuarios?username="+System.getProperty("app.user")+"&password="+System.getProperty("app.password"));
+		HttpGet httpget = new HttpGet(System.getProperty("server.url")+"/usuarios?username="+System.getProperty("app.user")+"&password="+System.getProperty("app.password"));
 
 		HttpResponse httpresponse = httpclient.execute(httpget);
 
@@ -68,7 +68,7 @@ public class DeleteUserSteps {
 		assertEquals("5f7b28ae85c04e348011de43", this.secureUser.getId());
 		
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/usuarios/getuser?username=test&tokenpass="+this.secureUser.getTokenPass());
+		HttpGet httpget = new HttpGet(System.getProperty("server.url")+"/usuarios/getuser?username=test&tokenpass="+this.secureUser.getTokenPass());
 
 		HttpResponse httpresponse = httpclient.execute(httpget);
 		
@@ -96,7 +96,7 @@ public class DeleteUserSteps {
 	public void the_choosed_user_was_deleted_of_the_system() throws ClientProtocolException, IOException {
 		
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpDelete httpdelete = new HttpDelete("https://devopsmetrics.herokuapp.com/usuarios/deleteuser?username="+this.secureUserDelete.getUsername()+"&tokenpass="+this.secureUser.getTokenPass());
+		HttpDelete httpdelete = new HttpDelete(System.getProperty("server.url")+"/usuarios/deleteuser?username="+this.secureUserDelete.getUsername()+"&tokenpass="+this.secureUser.getTokenPass());
 		
 		httpclient.execute(httpdelete);
 		

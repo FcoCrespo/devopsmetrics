@@ -40,7 +40,7 @@ public class GetIssuesCreatedDateSteps {
 	@Given("user is logging in the system for getting all issues from a repository by his owner created between two dates from the system")
 	public void user_is_logging_in_the_system_for_getting_all_issues_from_a_repository_by_his_owner_created_between_two_dates_from_the_system() throws ClientProtocolException, IOException {
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/usuarios?username="
+		HttpGet httpget = new HttpGet(System.getProperty("server.url")+"/usuarios?username="
 				+ System.getProperty("app.user") + "&password=" + System.getProperty("app.password"));
 
 		HttpResponse httpresponse = httpclient.execute(httpget);
@@ -69,7 +69,7 @@ public class GetIssuesCreatedDateSteps {
 	@Then("the user gets all issues from a repository by his owner created between two dates if the system")
 	public void the_user_gets_all_issues_from_a_repository_by_his_owner_created_between_two_dates_if_the_system() throws ClientProtocolException, IOException {
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpPost httppost = new HttpPost("https://devopsmetrics.herokuapp.com/issues/issuesrepocreationdates?tokenpass="
+		HttpPost httppost = new HttpPost(System.getProperty("server.url")+"/issues/issuesrepocreationdates?tokenpass="
 				+ this.secureUser.getTokenPass());
 
 		JSONObject json = new JSONObject();

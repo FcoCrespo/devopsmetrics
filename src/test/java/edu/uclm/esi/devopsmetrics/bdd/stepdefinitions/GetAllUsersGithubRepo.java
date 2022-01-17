@@ -35,7 +35,7 @@ public class GetAllUsersGithubRepo {
 	@Given("user is logging in the system for getting users of github in a repository")
 	public void user_is_logging_in_the_system_for_getting_users_of_github_in_a_repository() throws ClientProtocolException, IOException {
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/usuarios?username="+System.getProperty("app.user")+"&password="+System.getProperty("app.password"));
+		HttpGet httpget = new HttpGet(System.getProperty("server.url")+"/usuarios?username="+System.getProperty("app.user")+"&password="+System.getProperty("app.password"));
 
 		HttpResponse httpresponse = httpclient.execute(httpget);
 
@@ -65,7 +65,7 @@ JsonNode node = new ObjectMapper().readTree(this.jsonData);
 	@Then("by the username and the password in peer exists and the user get users of github in a repository")
 	public void by_the_username_and_the_password_in_peer_exists_and_the_user_get_users_of_github_in_a_repository() throws ClientProtocolException, IOException {
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/commits/usersgithubrepo?tokenpass="+this.secureUser.getTokenPass()+"&owner=sherrerap&reponame=eSalud");
+		HttpGet httpget = new HttpGet(System.getProperty("server.url")+"/commits/usersgithubrepo?tokenpass="+this.secureUser.getTokenPass()+"&owner=sherrerap&reponame=eSalud");
 
 		HttpResponse httpresponse = httpclient.execute(httpget);
 

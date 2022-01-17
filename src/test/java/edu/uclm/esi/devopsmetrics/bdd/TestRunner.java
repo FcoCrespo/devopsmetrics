@@ -1,6 +1,5 @@
 package edu.uclm.esi.devopsmetrics.bdd;
 
-/*
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 import io.cucumber.spring.CucumberContextConfiguration;
@@ -22,7 +21,8 @@ import org.apache.commons.net.ftp.FTPReply;
 
 @CucumberContextConfiguration
 @RunWith(Cucumber.class)
-@CucumberOptions(features = "src/test/resources/features", monochrome = true, plugin = {
+@CucumberOptions(features = "src/test/resources/features")
+/*@CucumberOptions(features = "src/test/resources/features", monochrome = true, plugin = {
 		"json:target/reports/JSONReports/TestReport.json", "pretty" })*/
 public class TestRunner {
 /*
@@ -54,7 +54,7 @@ public class TestRunner {
 		srcFile.renameTo(srcFileFinal);
 		
 		if(srcFileFinal.exists()) {
-			String server = "35.180.190.134";
+			String server = "esidevopsmetrics.ddns.net";
 			int port = 21;
 			String user = System.getProperty("server.user");
 			String pass = System.getProperty("server.key");
