@@ -41,16 +41,13 @@ public class TestRunner {
 	@AfterClass
 	public static void setupAfter() throws InterruptedException {
 		
-		System.out.println("termino funcionando");
-		
-		
 		String fecha = dtf.format(now);
 
-		String source = "C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\JSONReports\\TestReport.json";
+		String source = "C:\\Users\\Crespo\\.jenkins\\workspace\\backendesidevopsmetrics\\target\\reports\\JSONReports\\TestReport.json";
 		File srcFile = new File(source);
 		
 		String filename = "TestReport-devopsmetrics-FcoCrespo-"+ fecha + ".json";
-		String newName = "C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\JSONReports\\"+filename;
+		String newName = "C:\\Users\\Crespo\\.jenkins\\workspace\\backendesidevopsmetrics\\target\\reports\\JSONReports\\"+filename;
 		File srcFileFinal = new File(newName);
 
 		srcFile.renameTo(srcFileFinal);
