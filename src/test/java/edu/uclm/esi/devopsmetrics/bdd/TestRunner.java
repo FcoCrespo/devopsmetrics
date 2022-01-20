@@ -41,6 +41,9 @@ public class TestRunner {
 	@AfterClass
 	public static void setupAfter() throws InterruptedException {
 		
+		System.out.println("termino funcionando");
+		
+		
 		String fecha = dtf.format(now);
 
 		String source = "C:\\Users\\Crespo\\.jenkins\\workspace\\devopsmetrics\\target\\reports\\JSONReports\\TestReport.json";
