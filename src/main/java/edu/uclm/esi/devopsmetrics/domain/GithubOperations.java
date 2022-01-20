@@ -42,7 +42,13 @@ import edu.uclm.esi.devopsmetrics.services.CommitService;
 import edu.uclm.esi.devopsmetrics.services.TokenGithubService;
 import edu.uclm.esi.devopsmetrics.services.UserGithubReposService;
 import edu.uclm.esi.devopsmetrics.services.UserGithubService;
+import edu.uclm.esi.devopsmetrics.utilities.DateUtils;
 
+/**
+*
+* @author FcoCrespo
+* 
+*/
 @Service
 public class GithubOperations {
 
@@ -71,6 +77,9 @@ public class GithubOperations {
 
 	@Value("${app.serverftp}")
 	private String serverftp;
+	
+	@Value("${system.domain}")
+	private String server;
 
 	/**
 	 * @author FcoCrespo
@@ -212,7 +221,7 @@ public class GithubOperations {
 				
 			}
 			httpclient = HttpClients.createDefault();
-			HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/commits/branchesfirstcommit?tokenpass="+tokenpass+"&owner=" + owner
+			HttpGet httpget = new HttpGet(server+"commits/branchesfirstcommit?tokenpass="+tokenpass+"&owner=" + owner
 					+ "&reponame=" + reponame);
 
 			LOG.info("Request Type For Branches: " + httpget.getMethod());
@@ -305,7 +314,7 @@ public class GithubOperations {
 			
 			return "ok.";
 		}
-		catch(IOException e) {
+		catch(IOException|NullPointerException e) {
 			LOG.info("Error saving branches order.");
 			return "Error saving branches order";
 		}

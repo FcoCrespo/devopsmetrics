@@ -3,6 +3,11 @@ package edu.uclm.esi.devopsmetrics.config;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+*
+* @author FcoCrespo
+* src: https://www.rabbitmq.com/tutorials/tutorial-six-spring-amqp.html
+*/
 public class ReceiverMQ {
 
 	private static final Logger LOG = LoggerFactory.getLogger(ReceiverMQ.class);

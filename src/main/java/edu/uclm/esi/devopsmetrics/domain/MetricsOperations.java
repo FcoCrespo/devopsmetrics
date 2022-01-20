@@ -51,6 +51,7 @@ import edu.uclm.esi.devopsmetrics.services.ClassMetricsService;
 import edu.uclm.esi.devopsmetrics.services.CohesionMetricsService;
 import edu.uclm.esi.devopsmetrics.services.CouplingMetricsService;
 import edu.uclm.esi.devopsmetrics.services.MethodMetricsService;
+import edu.uclm.esi.devopsmetrics.utilities.DateUtils;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
@@ -64,6 +65,11 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+/**
+*
+* @author FcoCrespo
+* 
+*/
 @Service
 public class MetricsOperations {
 
@@ -84,6 +90,9 @@ public class MetricsOperations {
 
 	@Value("${app.serverftp}")
 	private String serverftp;
+	
+	@Value("${system.domain}")
+	private String serversystem;
 
 	/**
 	 * @author FcoCrespo
@@ -107,7 +116,7 @@ public class MetricsOperations {
 		String ownerGet=owner;
 		String tokenpassGet=tokenpass;
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/commits/allbranches?owner=" + ownerGet
+		HttpGet httpget = new HttpGet(serversystem+"commits/allbranches?owner=" + ownerGet
 				+ "&reponame=" + repositoryGet + "&tokenpass=" + tokenpassGet);
 		try {
 
@@ -142,7 +151,7 @@ public class MetricsOperations {
 		String enddate = jso.getString("enddate");
 
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpGet httpget = new HttpGet("https://devopsmetrics.herokuapp.com/commits/allbranches?owner=" + owner
+		HttpGet httpget = new HttpGet(serversystem+"commits/allbranches?owner=" + owner
 				+ "&reponame=" + reponame + "&tokenpass=" + tokenpassGet);
 		try {
 

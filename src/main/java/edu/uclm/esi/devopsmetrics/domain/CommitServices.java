@@ -8,6 +8,11 @@ import edu.uclm.esi.devopsmetrics.services.CommitInfoService;
 import edu.uclm.esi.devopsmetrics.services.CommitService;
 import edu.uclm.esi.devopsmetrics.services.UserGithubService;
 
+/**
+*
+* @author FcoCrespo
+* 
+*/
 @Service
 public class CommitServices {
 

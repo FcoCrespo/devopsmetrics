@@ -1,5 +1,10 @@
 package edu.uclm.esi.devopsmetrics.utilities;
 
+/**
+*
+* @author FcoCrespo
+* 
+*/
 public class SleepClass {
 
 	private SleepClass() {

@@ -28,7 +28,7 @@ import edu.uclm.esi.devopsmetrics.domain.UserOperations;
 @RequestMapping("/commits")
 /**
  * 
- * @author FcoCrespo "https://webesidevopsmetrics.herokuapp.com"
+ * @author FcoCrespo "https://myesidevopsmetrics.herokuapp.com"
  * 
  */
 @CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,

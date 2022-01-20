@@ -34,6 +34,11 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.*;
 
+/**
+*
+* @author FcoCrespo
+* 
+*/
 @Service
 public class UserOperations {
 

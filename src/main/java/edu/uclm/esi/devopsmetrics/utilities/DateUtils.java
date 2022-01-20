@@ -1,4 +1,4 @@
-package edu.uclm.esi.devopsmetrics.domain;
+package edu.uclm.esi.devopsmetrics.utilities;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -8,6 +8,11 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Locale;
 
+/**
+*
+* @author FcoCrespo
+* 
+*/
 public class DateUtils {
 
 	private DateUtils() {

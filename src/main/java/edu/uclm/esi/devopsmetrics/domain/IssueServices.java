@@ -7,6 +7,11 @@ import edu.uclm.esi.devopsmetrics.services.IssueCursorService;
 import edu.uclm.esi.devopsmetrics.services.IssueRepoService;
 import edu.uclm.esi.devopsmetrics.services.IssueService;
 
+/**
+*
+* @author FcoCrespo
+* 
+*/
 @Service
 public class IssueServices {
 

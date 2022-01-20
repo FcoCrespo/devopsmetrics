@@ -13,7 +13,8 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  *
- * @author crespo
+ * @author FcoCrespo
+ * src: https://www.rabbitmq.com/tutorials/tutorial-six-spring-amqp.html
  */
 @Configuration
 public class RabbitMqConfig {

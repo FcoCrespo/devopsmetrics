@@ -27,7 +27,13 @@ import edu.uclm.esi.devopsmetrics.services.CommitInfoService;
 import edu.uclm.esi.devopsmetrics.services.CommitService;
 import edu.uclm.esi.devopsmetrics.services.UserGithubReposService;
 import edu.uclm.esi.devopsmetrics.utilities.GraphqlTemplate;
+import edu.uclm.esi.devopsmetrics.utilities.ResponseHTTP;
 
+/**
+*
+* @author FcoCrespo
+* 
+*/
 @Service
 public class CommitsGithub {
 

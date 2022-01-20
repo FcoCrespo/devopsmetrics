@@ -29,7 +29,13 @@ import edu.uclm.esi.devopsmetrics.services.IssueRepoService;
 import edu.uclm.esi.devopsmetrics.services.IssueService;
 import edu.uclm.esi.devopsmetrics.services.UserGithubReposService;
 import edu.uclm.esi.devopsmetrics.utilities.GraphqlTemplate;
+import edu.uclm.esi.devopsmetrics.utilities.ResponseHTTP;
 
+/**
+*
+* @author FcoCrespo
+* 
+*/
 @Service
 public class IssuesGithub {
 
@@ -438,8 +444,6 @@ public class IssuesGithub {
 		issue.setTitle(title);
 		
 		issue.setClosedAt(closedAt);
-		
-		System.out.println(issue.toString());
 		
 		UserGithub userGithubAsignee = null;
 		Iterator<JsonNode> iter;

@@ -24,7 +24,13 @@ import edu.uclm.esi.devopsmetrics.services.IssueAssigneeService;
 import edu.uclm.esi.devopsmetrics.services.IssueRepoService;
 import edu.uclm.esi.devopsmetrics.services.IssueService;
 import edu.uclm.esi.devopsmetrics.services.UserGithubService;
+import edu.uclm.esi.devopsmetrics.utilities.DateUtils;
 
+/**
+*
+* @author FcoCrespo
+* 
+*/
 @Service
 public class IssueOperations {
 

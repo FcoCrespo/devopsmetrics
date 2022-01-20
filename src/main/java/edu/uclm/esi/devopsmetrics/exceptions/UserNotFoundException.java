@@ -2,6 +2,11 @@ package edu.uclm.esi.devopsmetrics.exceptions;
 
 import org.springframework.core.NestedRuntimeException;
 
+/**
+*
+* @author FcoCrespo
+* 
+*/
 public class UserNotFoundException  extends NestedRuntimeException {
 
 	  private static final long serialVersionUID = 1L;

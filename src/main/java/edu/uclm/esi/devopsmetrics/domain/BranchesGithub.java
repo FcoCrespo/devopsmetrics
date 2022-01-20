@@ -15,7 +15,13 @@ import okhttp3.Response;
 import edu.uclm.esi.devopsmetrics.entities.Branch;
 import edu.uclm.esi.devopsmetrics.services.BranchService;
 import edu.uclm.esi.devopsmetrics.utilities.GraphqlTemplate;
+import edu.uclm.esi.devopsmetrics.utilities.ResponseHTTP;
 
+/**
+*
+* @author FcoCrespo
+* 
+*/
 @Service
 public class BranchesGithub {
 

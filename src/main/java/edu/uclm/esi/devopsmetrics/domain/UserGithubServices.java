@@ -7,6 +7,11 @@ import edu.uclm.esi.devopsmetrics.services.UserGithubReposService;
 import edu.uclm.esi.devopsmetrics.services.UserGithubService;
 import edu.uclm.esi.devopsmetrics.services.UserService;
 
+/**
+*
+* @author FcoCrespo
+* 
+*/
 @Service
 public class UserGithubServices {
 

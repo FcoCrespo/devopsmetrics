@@ -1,5 +1,10 @@
 package edu.uclm.esi.devopsmetrics.entities;
 
+/**
+*
+* @author FcoCrespo
+* 
+*/
 public class SecureUser {
 
 	private String id;

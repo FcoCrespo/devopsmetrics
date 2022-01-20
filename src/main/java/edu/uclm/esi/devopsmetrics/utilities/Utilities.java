@@ -22,6 +22,11 @@ import java.security.InvalidAlgorithmParameterException;
 import java.security.SecureRandom;
 import java.util.Base64;
 
+/**
+*
+* @author FcoCrespo
+* 
+*/
 @Component
 public class Utilities {
 	

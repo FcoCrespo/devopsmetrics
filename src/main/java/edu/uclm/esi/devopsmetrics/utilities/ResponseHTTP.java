@@ -1,4 +1,4 @@
-package edu.uclm.esi.devopsmetrics.domain;
+package edu.uclm.esi.devopsmetrics.utilities;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -13,6 +13,11 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+/**
+*
+* @author FcoCrespo
+* 
+*/
 @Service
 public class ResponseHTTP {
 
